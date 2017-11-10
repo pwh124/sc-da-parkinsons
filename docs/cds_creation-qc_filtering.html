@@ -310,29 +310,11 @@ div.tocify {
 
 <div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level1">
 <h1>Setting important directories. Also loading important libraries and custom functions for analysis.</h1>
-<pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/Data&quot;
-file_dir &lt;- &quot;/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/file.output&quot;
-Rdata_dir &lt;- &quot;/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/rds&quot;
-Script_dir &lt;- &quot;/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/Scripts&quot;
+<pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
+file_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/output&quot;
+Rdata_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
+Script_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/code&quot;
 source(file.path(Script_dir,&#39;init.R&#39;))</code></pre>
-<pre><code>## Warning: package &#39;Matrix&#39; was built under R version 3.3.2</code></pre>
-<pre><code>## Warning: package &#39;ggplot2&#39; was built under R version 3.3.2</code></pre>
-<pre><code>## Warning: package &#39;DDRTree&#39; was built under R version 3.3.2</code></pre>
-<pre><code>## Warning: package &#39;irlba&#39; was built under R version 3.3.2</code></pre>
-<pre><code>## Warning: package &#39;limma&#39; was built under R version 3.3.1</code></pre>
-<pre><code>## Warning: package &#39;stringr&#39; was built under R version 3.3.2</code></pre>
-<pre><code>## Warning: package &#39;dplyr&#39; was built under R version 3.3.2</code></pre>
-<pre><code>## Warning: package &#39;tidyr&#39; was built under R version 3.3.2</code></pre>
-<pre><code>## Warning: package &#39;Rtsne&#39; was built under R version 3.3.2</code></pre>
-<pre><code>## Warning: package &#39;Hmisc&#39; was built under R version 3.3.2</code></pre>
-<pre><code>## Warning: package &#39;lattice&#39; was built under R version 3.3.2</code></pre>
-<pre><code>## Warning: package &#39;survival&#39; was built under R version 3.3.2</code></pre>
-<pre><code>## Warning: package &#39;Formula&#39; was built under R version 3.3.2</code></pre>
-<pre><code>## Warning: package &#39;MASS&#39; was built under R version 3.3.2</code></pre>
-<pre><code>## Warning: package &#39;vegan&#39; was built under R version 3.3.2</code></pre>
-<pre><code>## Warning: package &#39;gridExtra&#39; was built under R version 3.3.2</code></pre>
-<pre><code>## Warning: package &#39;jackstraw&#39; was built under R version 3.3.2</code></pre>
-<pre><code>## Warning: package &#39;scales&#39; was built under R version 3.3.2</code></pre>
 </div>
 <div id="untarring-big-files" class="section level1">
 <h1>Untarring big files</h1>
@@ -461,18 +443,18 @@ nrow(pData(dat.filter)) #431</code></pre>
 hist(pData(dat.filter)$total_mass,
      breaks=50,
      col=&quot;darkred&quot;,
-     main=&quot;Distribution of Total mass by cell&quot;)</code></pre>
-<p><img src="cds_creation-qc_filtering_files/figure-html/Cell%20mass%20threshold%20filtering-1.png" width="672" /></p>
-<pre class="r"><code># Setting the threshold based on the graph above
+     main=&quot;Distribution of Total mass by cell&quot;)
+
+# Setting the threshold based on the graph above
 massThreshold&lt;-1e+05 # Adjust this based on observation of mass distribution
 massThreshold.2 &lt;-13e+05
 hist(pData(dat.filter)$total_mass,
      breaks=50,
-     col=&quot;darkgreen&quot;,
+     col=&quot;darkred&quot;,
      main=&quot;Distribution of Total mass by cell&quot;)
 abline(v=massThreshold,lty=&quot;dashed&quot;)
 abline(v=massThreshold.2,lty=&quot;dashed&quot;)</code></pre>
-<p><img src="cds_creation-qc_filtering_files/figure-html/Cell%20mass%20threshold%20filtering-2.png" width="672" /></p>
+<p><img src="cds_creation-qc_filtering_files/figure-html/Cell%20mass%20threshold%20filtering-1.png" width="672" /></p>
 <pre class="r"><code># Filter out cells with &#39;low&#39; number of fragments and &#39;high&#39;
 nrow(pData(dat.filter))</code></pre>
 <pre><code>## [1] 431</code></pre>
@@ -483,11 +465,11 @@ nrow(pData(dat.filter)) # 410</code></pre>
 <pre class="r"><code># Replot to look at distribution
 hist(pData(dat.filter)$total_mass,
      breaks=50,
-     col=&quot;darkgreen&quot;,
+     col=&quot;darkred&quot;,
      main=&quot;Distribution of Total mass by cell&quot;)
 abline(v=massThreshold,lty=&quot;dashed&quot;)
 abline(v=massThreshold.2,lty=&quot;dashed&quot;)</code></pre>
-<p><img src="cds_creation-qc_filtering_files/figure-html/Cell%20mass%20threshold%20filtering-3.png" width="672" /></p>
+<p><img src="cds_creation-qc_filtering_files/figure-html/Cell%20mass%20threshold%20filtering-2.png" width="672" /></p>
 </div>
 <div id="filtering-based-on-the-total-mrnas-in-each-cell-and-removing-cells-that-fall-outside-of-determined-ranges" class="section level2">
 <h2>Filtering based on the total mRNAs in each cell and removing cells that fall outside of determined ranges</h2>
@@ -572,6 +554,13 @@ nrow(pData(P7.Fb.dat.filter)) # 84</code></pre>
 nrow(pData(P7.Ob.dat.filter)) # 74</code></pre>
 <pre><code>## [1] 74</code></pre>
 <pre class="r"><code>saveRDS(object = P7.Ob.dat.filter, file = file.path(Rdata_dir, &quot;P7.Ob.dat.filter.rds&quot;))</code></pre>
+<p>Removing uncompressed large files before commit</p>
+<pre class="r"><code>file.remove(file.path(seq_dir, &quot;isoforms.fpkm_table&quot;))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>file.remove(file.path(seq_dir, &quot;genes.fpkm_table&quot;))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<pre class="r"><code>file.remove(file.path(seq_dir, &quot;isoforms.count_table&quot;))</code></pre>
+<pre><code>## [1] TRUE</code></pre>
 </div>
 
 <hr>
