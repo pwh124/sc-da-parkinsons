@@ -1,0 +1,274 @@
+---
+title: "cds_creation-qc_filtering"
+author: "Paul Hook"
+date: "6/7/2017"
+output: html_document
+---
+
+# Setting important directories. Also loading important libraries and custom functions for analysis.
+```{r init}
+seq_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/Data"
+file_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/file.output"
+Rdata_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/rds"
+Script_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/Scripts"
+source(file.path(Script_dir,'init.R'))
+```
+
+# Untarring big files
+```{r untarring some stuff}
+untar(file.path(seq_dir,"genes.fpkm_table.tar.gz"), exdir = seq_dir)
+untar(file.path(seq_dir, "isoforms.fpkm_table.tar.gz"), exdir = seq_dir)
+untar(file.path(seq_dir, "isoforms.count_table.tar.gz"), exdir = seq_dir)
+```
+
+# Loading FPKM datasets generated through cuffquant at the gene and isoform levels
+```{r import}
+#Gene FPKMs
+fpkms<-read.delim(file.path(seq_dir,"genes.fpkm_table"),row.names=1) # reading in the fpkm table produced by cuffquant
+gene_ann<-read.delim(file.path(seq_dir,"genes.attr_table")) # reading in the gene annotation table
+rownames(gene_ann)<-gene_ann$tracking_id #renaming row names
+
+#Isoform FPKMs
+isoform_fpkms<-read.delim(file.path(seq_dir,"isoforms.fpkm_table")) # reading in isoform fpkm table produced from cuffquant
+row.names(isoform_fpkms) <- isoform_fpkms$tracking_id # renaming rows
+isoform_fpkms <- isoform_fpkms[,-1] # removing the first column
+```
+
+# Annotating the single-cell samples and genes
+```{r}
+#Sample Annotation
+sample_ann<-read.delim(file.path(seq_dir,"samples.table")) # reading in sample table
+sample_ann$cell_id<-str_extract(as.character(sample_ann$sample_id),"TH_0[0-9]+_[A-H][0-9]+") #assigning cell IDs to the sample annotation table
+rownames(sample_ann)<-sample_ann$cell_id # renaming rows the cell ID names
+colnames(fpkms)<-sample_ann$cell_id # renaming columns in fpkms table to the cell ID names
+
+master_cell_sheet<-read.delim(file.path(seq_dir,"CORRECTED_20160605_TH_master_sample_info_sheet.txt")) # reading in the master cell sheet that contains all pData about cells
+master_cell_sheet<-master_cell_sheet[,1:28] # keeping columns 1:28 only
+
+sample_info<-merge(sample_ann,master_cell_sheet,by.x=0,by.y='cell_id',sort=FALSE) # merging sample annotation with master_cell_sheet to get all information about cells in 1 place
+rownames(sample_info)<-sample_info$cell_id # renaming rows
+sample_info<-sample_info[,-1] # getting rid of "Row.names" column created by merging
+
+gene_info<-read.delim(file.path(seq_dir,"gencode.vM8.transcripts.filtered.gene_annotation-eGFP.tab")) # loading in gencode vM8 gene annotatin for mouse genes
+keyCols<-c("gene_status",'level','gene_type') # keeping only this information
+gene_info[,keyCols]
+
+tmp<-merge(gene_ann,gene_info[,keyCols],by=0,sort=FALSE) # merging gene ann and addition gencode gene information
+rownames(tmp)<-tmp$Row.names # renaming rows
+tmp<-tmp[,-1] # getting rid of "Row.names" column
+
+gene_ann<-tmp # create final annotation table
+
+lncRNA_geneIds<-gene_info$gene_id[gene_info$gene_type == "lincRNA"] # pulling out all long non-coding RNA genes
+```
+
+
+# Creating the CellDataSet (cds) and removing negative controls/empty wells
+```{r}
+fd<-new("AnnotatedDataFrame",data=gene_ann) # officially making fData for genes
+pd<-new("AnnotatedDataFrame",data=sample_info) # officially making pData for cells
+
+# Creating our new cellDataSet for use in Monocle applications
+dat.relative <- newCellDataSet(as(as.matrix(fpkms),"sparseMatrix"),
+                      phenoData=pd,
+                      featureData=fd)
+
+# Checking the number of cells in the experiment
+nrow(pData(dat.relative)) # 480 cells
+# Removing all the cells that are "neg_ctls" and "empty"
+dat.relative <- dat.relative[,pData(dat.relative)$type=="sample"]
+nrow(pData(dat.relative)) # 473 cells
+```
+
+# Using the Monocle Census algorithm to infer RNA copies per cell and creating a new cds
+```{r}
+# Infer RNA copies per cell using relative2abs on isoform-level estimated t with the Census algorithm
+fpkm_matrix_adj <- relative2abs(dat.relative, t_estimate=estimate_t(isoform_fpkms),cores=4)
+
+# Create new dat object with absolute RNA copies per cell (estimated).  Allows us to use faster and better characterized negbinom distribution for testing.
+fd<-new("AnnotatedDataFrame",data=fData(dat.relative))
+pd<-new("AnnotatedDataFrame",data=pData(dat.relative))
+
+dat <- newCellDataSet(as(as.matrix(fpkm_matrix_adj),"sparseMatrix"),
+                      phenoData = pd,
+                      featureData = fd,
+                      expressionFamily=negbinomial.size(),
+                      lowerDetectionLimit=0.1)
+
+```
+
+# Filtering on all cells 
+
+## Filtering based on number of genes detected in each cell and removing cells that fall outside of determined ranges
+```{r filter_by_num_genes_expressed}
+# Loading the data
+dat.filter <- dat
+
+# 'detect' genes and summarize by cell and by gene
+dat.filter<-detectGenes(dat.filter,min_expr=0.1)
+nrow(pData(dat.filter)) # number of cells 473
+
+# Plot num genes expressed across cells
+hist(pData(dat.filter)$num_genes_expressed,breaks=50,col="steelblue",main="Genes expressed per cell")
+
+# Setting the expressed genes threshold based on the plot above
+low.num.genes.threshold <- 2000 # determined by looking at the graph
+high.num.genes.threshold <- 10000 # determined by looking at the graph
+hist(pData(dat.filter)$num_genes_expressed,
+     breaks=50,
+     col="steelblue",
+     main="Genes expressed per cell",
+     xlim = c(0,10000))
+abline(v=low.num.genes.threshold,lty = "dashed")
+abline(v=high.num.genes.threshold,lty="dashed")
+
+nrow(pData(dat.filter)) # 473
+
+# Getting rid of the cells that are outside the thresholds
+dat.filter <- dat.filter[,row.names(subset(pData(dat.filter),num_genes_expressed >= low.num.genes.threshold))]
+dat.filter <- dat.filter[,row.names(subset(pData(dat.filter),num_genes_expressed <= high.num.genes.threshold))]
+
+# Replotting to check distribution
+hist(pData(dat.filter)$num_genes_expressed,
+     breaks=50,
+     col="steelblue",
+     main="Genes expressed per cell",
+     xlim = c(0,10000))
+abline(v=low.num.genes.threshold,lty = "dashed")
+abline(v=high.num.genes.threshold,lty="dashed")
+
+# Number of cells left
+nrow(pData(dat.filter)) #431
+```
+
+## Filtering based on the total mass of each cell and removing cells that fall outside of determined ranges
+```{r Cell mass threshold filtering}
+# Plotting the distribution of total cell mass
+hist(pData(dat.filter)$total_mass,
+     breaks=50,
+     col="darkred",
+     main="Distribution of Total mass by cell")
+
+# Setting the threshold based on the graph above
+massThreshold<-1e+05 # Adjust this based on observation of mass distribution
+massThreshold.2 <-13e+05
+hist(pData(dat.filter)$total_mass,
+     breaks=50,
+     col="darkgreen",
+     main="Distribution of Total mass by cell")
+abline(v=massThreshold,lty="dashed")
+abline(v=massThreshold.2,lty="dashed")
+
+# Filter out cells with 'low' number of fragments and 'high'
+nrow(pData(dat.filter))
+dat.filter<-dat.filter[,row.names(subset(pData(dat.filter),total_mass >= massThreshold))]
+dat.filter<-dat.filter[,row.names(subset(pData(dat.filter),total_mass <= massThreshold.2))]
+nrow(pData(dat.filter)) # 410
+
+# Replot to look at distribution
+hist(pData(dat.filter)$total_mass,
+     breaks=50,
+     col="darkgreen",
+     main="Distribution of Total mass by cell")
+abline(v=massThreshold,lty="dashed")
+abline(v=massThreshold.2,lty="dashed")
+
+```
+
+## Filtering based on the total mRNAs in each cell and removing cells that fall outside of determined ranges
+```{r copies_per_cell_qc} 
+# Calculate total RNA mass per cell
+pData(dat.filter)$Total_mRNAs <- colSums(exprs(dat.filter))
+
+# Plot the distribution of total RNA mass per cell
+hist(pData(dat.filter)$Total_mRNAs,breaks=50,
+     col="darkgreen",
+     main="Distribution of mRNA copies per cell",
+     xlim = c(0,5e+04))
+
+# Set high and low thresholds determined from the distribution above
+high.numGeneThreshold <- 4e+04
+low.num.genes.threshold <- 1000
+
+# Replot distribution with thresholds plotted
+hist(pData(dat.filter)$Total_mRNAs,breaks=50,
+     col="darkgreen",
+     main="Distribution of mRNA copies per cell",
+     xlim = c(0,5e+04))
+abline(v=high.numGeneThreshold,lty="dashed")
+abline(v=low.num.genes.threshold,lty="dashed")
+
+# Remove cells that fall under the high threshold
+nrow(pData(dat.filter)) # 410
+dat.filter<-dat.filter[,pData(dat.filter)$Total_mRNAs <= high.numGeneThreshold]
+nrow(pData(dat.filter)) # 410
+```
+
+# Now that only high quality cells are retained, the detectGenes function is used to recalculate the # of genes detected in each cell
+```{r}
+# Recalculate # of genes
+dat.filter<-detectGenes(dat.filter,min_expr=0.1)
+```
+
+# Before beginning Monocle analysis, the data needs to be checked to ensure that it follows a log-normal distribution. We find that our data follows a log-normal distribution. Script is pulled directly from Monocle manual.
+```{r Checking to see if final expression matrix is log-normal}
+# Log-transform each value in the expression matrix.
+L <- log(exprs(dat.filter))
+# Standardize each gene, so that they are all on the same scale, Then melt
+# the data with plyr so we can plot it easily
+melted_dens_df <- melt(t(scale(t(L))))
+# Plot the distribution of the standardized gene expression values.
+qplot(value, geom = "density", data = melted_dens_df) + stat_function(fun = dnorm,
+size = 0.5, color = "red") + xlab("Standardized log(Transcripts)") + ylab("Density")
+## Warning: Removed 11850640 rows containing non-finite values (stat_density).
+```
+
+# The data is subsetted according to age and region. These subsetted cds are saved as .rds objects to be used in subsequent analyses
+```{r Saving the original dat.filter .rds }
+nrow(pData(dat.filter)) # 410 cells
+saveRDS(object = dat.filter, file = file.path(Rdata_dir,"dat.filter.rds"))
+```
+
+```{r Subsetting e15.5 data }
+e15.dat.filter<-dat.filter[,pData(dat.filter)$age=="E15.5"]
+nrow(pData(e15.dat.filter)) # 172 cells at e15 before filtering
+saveRDS(object = e15.dat.filter, file = file.path(Rdata_dir,"e15.dat.filter.rds"))
+```
+
+```{r Subsetting e15.5 MB data }
+e15.Mb.dat.filter <- dat.filter[,pData(dat.filter)$age=="E15.5" & pData(dat.filter)$region=="MB"]
+nrow(pData(e15.Mb.dat.filter)) # 88 cells
+saveRDS(object = e15.Mb.dat.filter, file = file.path(Rdata_dir,"e15.Mb.dat.filter.rds"))
+```
+
+```{r Subsetting e15.5 FB data }
+e15.Fb.dat.filter <- dat.filter[,pData(dat.filter)$age=="E15.5" & pData(dat.filter)$region=="FB"]
+nrow(pData(e15.Fb.dat.filter)) # 84 cells
+saveRDS(object = e15.Fb.dat.filter, file = file.path(Rdata_dir,"e15.Fb.dat.filter.rds"))
+```
+
+```{r Subsetting P7 data }
+P7.dat.filter<-dat.filter[,pData(dat.filter)$age=="P7"]
+nrow(pData(P7.dat.filter)) # 238 cells at P7 before filtering
+saveRDS(object = P7.dat.filter, file = file.path(Rdata_dir,"P7.dat.filter.rds"))
+```
+
+```{r Subsetting P7 MB data }
+P7.Mb.dat.filter<-dat.filter[,pData(dat.filter)$age=="P7" & pData(dat.filter)$region=="MB"]
+nrow(pData(P7.Mb.dat.filter)) # 80
+saveRDS(object = P7.Mb.dat.filter, file = file.path(Rdata_dir, "P7.Mb.dat.filter.rds"))
+```
+
+```{r Subsetting P7 FB data }
+P7.Fb.dat.filter<-dat.filter[,pData(dat.filter)$age=="P7" & pData(dat.filter)$region=="FB"]
+nrow(pData(P7.Fb.dat.filter)) # 84
+saveRDS(object = P7.Fb.dat.filter, file = file.path(Rdata_dir, "P7.Fb.dat.filter.rds"))
+```
+
+```{r Subsetting P7 OB data }
+P7.Ob.dat.filter<-dat.filter[,pData(dat.filter)$age=="P7" & pData(dat.filter)$region=="OB"]
+nrow(pData(P7.Ob.dat.filter)) # 74
+saveRDS(object = P7.Ob.dat.filter, file = file.path(Rdata_dir, "P7.Ob.dat.filter.rds"))
+```
+
+
