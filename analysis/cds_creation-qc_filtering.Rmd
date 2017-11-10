@@ -6,7 +6,7 @@ output: html_document
 ---
 
 # Setting important directories. Also loading important libraries and custom functions for analysis.
-```{r init}
+```{r init, message=FALSE}
 seq_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/Data"
 file_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/file.output"
 Rdata_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/rds"
@@ -51,7 +51,6 @@ sample_info<-sample_info[,-1] # getting rid of "Row.names" column created by mer
 
 gene_info<-read.delim(file.path(seq_dir,"gencode.vM8.transcripts.filtered.gene_annotation-eGFP.tab")) # loading in gencode vM8 gene annotatin for mouse genes
 keyCols<-c("gene_status",'level','gene_type') # keeping only this information
-gene_info[,keyCols]
 
 tmp<-merge(gene_ann,gene_info[,keyCols],by=0,sort=FALSE) # merging gene ann and addition gencode gene information
 rownames(tmp)<-tmp$Row.names # renaming rows
