@@ -1,0 +1,5 @@
+param	value
+cmd_line	cuffnorm -o /home-3/lgoff2@jhu.edu/work/seq/lgoff/Th_McCallion/Th_wt_all_timepoints/data/norms/Th_WT_all_McCallion_norm_no_p30 -p 8 --use-sample-sheet /home-3/lgoff2@jhu.edu/work/seq/lgoff/Th_McCallion/Th_wt_all_timepoints/annotations/gencode.vM8.transcripts.filtered.Th-eGFP.gtf /home-3/lgoff2@jhu.edu/work/seq/lgoff/Th_McCallion/Th_wt_all_timepoints/data/quant_file_no_p30.txt 
+version	2.2.1
+SVN_revision	4237
+boost_version	104700
