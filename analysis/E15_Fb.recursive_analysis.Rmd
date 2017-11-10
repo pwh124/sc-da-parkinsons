@@ -1,0 +1,160 @@
+---
+title: "E15.5 FB Recursive Analysis"
+author: "Paul Hook"
+date: "6/13/2017"
+output: html_document
+---
+
+# Setting important directories. Also loading important libraries and custom functions for analysis.
+```{r init, message=FALSE, warning=FALSE}
+seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
+Rdata_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
+source(file.path(Script_dir,'init.R'))
+source(file.path(Script_dir,"tools_R.r"))
+```
+
+```{r Loading .rds}
+e15.Fb.dat.filter <- readRDS(file = file.path(Rdata_dir, "e15.Fb.dat.filter.rds"))
+```
+
+```{r filter by cells expressing each gene}
+# Plot number of cells expressing each gene as histogram
+hist(fData(e15.Fb.dat.filter)$num_cells_expressed,breaks=50,col="red",main="Cells expressed per gene")
+
+# Keep only expressed genes with expression in >= 5% of cells
+numCellThreshold<-nrow(pData(e15.Fb.dat.filter))*0.05
+e15.Fb.dat.expressed_genes<-row.names(subset(fData(e15.Fb.dat.filter),num_cells_expressed >= numCellThreshold))
+
+# Same plot as above with threshold
+hist(fData(e15.Fb.dat.filter)$num_cells_expressed,breaks=50,col="red",main="Cells expressed per gene - threshold")
+abline(v=numCellThreshold,lty="dashed")
+```
+
+```{r model_prep - Preparing the data for monocle analysis}
+# Only keeping "expressed" genes
+e15.Fb.dat.filter <-e15.Fb.dat.filter[e15.Fb.dat.expressed_genes,]
+
+# Estimating the size factors
+e15.Fb.dat.filter <-estimateSizeFactors(e15.Fb.dat.filter)
+
+# Estimating dispersions
+e15.Fb.dat.filter <- estimateDispersions(e15.Fb.dat.filter,cores=8)
+# Removing 130 outliers
+# Warning message:
+# Deprecated, use tibble::rownames_to_column() instead. 
+```
+
+```{r summary_stats}
+# Calculating summary stats
+fData(e15.Fb.dat.filter)$mean_expr<-apply(round(exprs(e15.Fb.dat.filter)),1,mean) # mean expression
+fData(e15.Fb.dat.filter)$sd_expr<-apply(round(exprs(e15.Fb.dat.filter)),1,sd) # sd expression
+fData(e15.Fb.dat.filter)$bcv<-(fData(e15.Fb.dat.filter)$sd_expr/fData(e15.Fb.dat.filter)$mean_expr)**2 # calculating biological coefficient of variation
+fData(e15.Fb.dat.filter)$percent_detection<-(fData(e15.Fb.dat.filter)$num_cells_expressed/dim(e15.Fb.dat.filter)[2])*100 # calculating % detection
+```
+
+```{r high_dispersion_genes_monocle - Pulling out the high dispersion genes for PCA analysis}
+e15.Fb.dat.filter.genes <- e15.Fb.dat.filter # spoofing the CellDataSet
+disp_table <- dispersionTable(e15.Fb.dat.filter.genes) # pulling out the dispersion table
+unsup_clustering_genes <-subset(disp_table, mean_expression >= 0.5 & dispersion_empirical >= 2 * dispersion_fit) # subsetting the data to pull out genes with expression above 0.5 and dispersion empirical > 2
+e15.Fb.dat.high_bcv_genes<-unsup_clustering_genes$gene_id # pulling out list of genes
+e15.Fb.dat.filter.order <- setOrderingFilter(e15.Fb.dat.filter, unsup_clustering_genes$gene_id)
+plot_ordering_genes(e15.Fb.dat.filter.order) # plotting the dispersion and genes
+length(e15.Fb.dat.high_bcv_genes) # 755
+```
+
+```{r Run PCA with high BCV genes}
+# BCV Identified high dispersion genes. Running PC analysis
+e15.Fb.dat.filter.BCV.pca<-prcomp(t(log2(exprs(e15.Fb.dat.filter[e15.Fb.dat.high_bcv_genes,])+1)),center=T,scale. = TRUE)
+
+# Plotting the PCA graphs
+# Plotting the first 2 PCs and coloring by age
+hvPCA1<-ggbiplot(e15.Fb.dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(e15.Fb.dat.filter)$age,ellipse=T,var.axes=F) + scale_color_manual(values=c("darkgreen","red")) + monocle:::monocle_theme_opts()
+
+# Plotting the first 2 PCs and coloring by region
+hvPCA2<-ggbiplot(e15.Fb.dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(e15.Fb.dat.filter)$region,ellipse=T,var.axes=F) + scale_color_brewer(palette="Set1") + monocle:::monocle_theme_opts()
+
+# Plotting the first 2 PCs and coloring by plate the cell was sequenced from
+hvPCA3<-ggbiplot(e15.Fb.dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(e15.Fb.dat.filter)$split_plate,ellipse=T,var.axes=F) + scale_color_brewer(palette="Set1") + monocle:::monocle_theme_opts()
+
+# Show the plots in the terminal
+hvPCA1
+hvPCA2
+hvPCA3
+
+# No real outliers seen
+```
+
+
+```{r Screeplots of Data,tidy=TRUE}
+# Making a screeplot of the BCV PCA. This will help determine how 
+# many principal components we should use in our tSNE visualization
+
+# Show this plot
+screeplot(e15.Fb.dat.filter.BCV.pca, npcs = 30, main = "e15.5 - High BCV Genes Screeplot")
+abline(v=6, lwd=2, col="red")
+ggscreeplot(e15.Fb.dat.filter.BCV.pca)
+# Conclustion: Seems to be clear that just the 
+# first 5 PCs explain the most variation in our data
+```
+
+```{r tsne}
+nComponents<-5 # estimated from the screeplots
+#seed <- runif(1,1,9999) # determined by testing random seeds
+seed <- 396.0516
+set.seed(seed) #setting seed
+
+e15.Fb.dat.filter.BCV.tsne<-tsne(e15.Fb.dat.filter.BCV.pca$x[,1:nComponents],perplexity=15,max_iter=5000,whiten = FALSE)
+
+pData(e15.Fb.dat.filter)$tSNE1_pos<-e15.Fb.dat.filter.BCV.tsne[,1]
+pData(e15.Fb.dat.filter)$tSNE2_pos<-e15.Fb.dat.filter.BCV.tsne[,2]
+
+e15.Fb.dat.filter.BCV.tsne.plot<-myTSNEPlotAlpha(e15.Fb.dat.filter,color="region", shape="age") + scale_color_brewer(palette="Set1") + ggtitle("e15.5 - BCV tSNE Plot")
+
+e15.Fb.dat.filter.BCV.tsne.plot
+```
+
+```{r - attempting to cluster,tidy=TRUE}
+# Going to attempt to use the R program "ADPclust" to determine how many clusters our data has
+
+# Loading NbClust
+library(ADPclust)
+
+# Running ADPclust
+clust.res <- adpclust(x = e15.Fb.dat.filter.BCV.tsne, draw = T)
+
+# Extracting the "best partition" (aka the best cluster) for each cell
+clust.res.df <- as.data.frame(clust.res$cluster)
+
+# Adding the cluster assignment for each cell to the pData
+pData(e15.Fb.dat.filter)$kmeans_tSNE_cluster <- as.factor(clust.res.df$`clust.res$cluster`)
+
+# Plotting the same tSNE plot as above but coloring with the "clusters"
+myTSNEPlotAlpha(e15.Fb.dat.filter,color="kmeans_tSNE_cluster", shape="age") + scale_color_brewer(palette="Set1") + ggtitle("All Cells - BCV tSNE with Clusters Plot")
+```
+
+```{r check the clusters - qc on clusters}
+# Distribution of number of genes expressed in clusters
+q <- ggplot(pData(e15.Fb.dat.filter)) +
+  geom_density(aes(x=num_genes_expressed,fill=kmeans_tSNE_cluster),alpha=0.3) + scale_fill_brewer(palette="Set1") + facet_grid(.~age) + monocle:::monocle_theme_opts()
+
+q
+
+# Plotting the distribution of total mRNAs in clusters
+q<-ggplot(pData(e15.Fb.dat.filter)) +
+  geom_density(aes(x=Total_mRNAs,fill=kmeans_tSNE_cluster),alpha=0.3) + scale_fill_brewer(palette="Set1") + facet_grid(.~age) + monocle:::monocle_theme_opts()
+
+q
+```
+
+```{r saving this .Rdata so it can be loaded in various scripts }
+e15.Fb.dat.filter.final <- e15.Fb.dat.filter
+saveRDS(object = e15.Fb.dat.filter.final, file = file.path(Rdata_dir, "e15.Fb.dat.filter.final.Rds"))
+```
+
+```{r extacting pData information}
+e15.Fb.clusters.df <- pData(e15.Fb.dat.filter)[,c(1,39)]
+saveRDS(e15.Fb.clusters.df, file = file.path(Rdata_dir, "e15.Fb.clusters.df.rds"))
+```
+
