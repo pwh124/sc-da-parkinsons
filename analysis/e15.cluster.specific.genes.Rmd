@@ -1,0 +1,110 @@
+---
+title: "E15.5 Analysis"
+author: "Paul Hook"
+date: "6/21/2017"
+output: html_document
+---
+
+# Setting important directories. Also loading important libraries and custom functions for analysis.
+```{r init,echo=FALSE,message=FALSE, error=FALSE, warning=FALSE, tidy=TRUE}
+seq_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/Data"
+file_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/file.output"
+Rdata_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/rds"
+Script_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/Scripts"
+source(file.path(Script_dir,'init.R'))
+source(file.path(Script_dir,"tools_R.r"))
+```
+
+```{r Loading in all E15.5 cell data}
+
+e15.dat.filter <- readRDS(file = file.path(Rdata_dir, "e15.dat.filter.final.Rds"))
+nrow(pData(e15.dat.filter)) # 172
+
+colnames(pData(e15.dat.filter))
+```
+
+```{r Differential expression between subset clusters}
+
+e15.Diff.Test <- differentialGeneTest(e15.dat.filter, 
+                             fullModelFormulaStr = "~subset.cluster",
+                             reducedModelFormulaStr = "~1",
+                             relative_expr = FALSE,
+                             cores=8,
+                             verbose = F)
+
+
+nrow(e15.Diff.Test)
+# Only keeping differentially expressed genes with a FDF < 5%
+e15.tmp<-e15.Diff.Test[e15.Diff.Test$qval < 0.05,]
+# Ordering by q-value
+e15.tmp.2 <- e15.tmp[order(e15.tmp$qval),]
+e15.Diff.Genes <- as.character(e15.tmp.2$gene_short_name)
+length(e15.Diff.Genes) # 1196
+
+myTSNEPlotAlpha(e15.dat.filter,color="subset.cluster", shape="age",markers = e15.Diff.Genes[1:20],scaled = T) + scale_color_brewer(palette="Set1") + ggtitle("e15 Mb - BCV tSNE - Top 10 Differentially Expressed Genes")
+```
+
+```{r finding specific genes}
+e15.dat.diff.filter <- e15.dat.filter[row.names(e15.tmp.2),]
+nrow(e15.dat.diff.filter)
+
+subset.clusters <- levels(pData(e15.dat.diff.filter)$subset.cluster)
+mean.clusters <- data.frame(rownames(exprs(e15.dat.diff.filter)))
+percent.clusters <- data.frame(rownames(exprs(e15.dat.diff.filter)))
+
+for(i in 1:length(subset.clusters)){
+  tmp.dat <- e15.dat.diff.filter[,pData(e15.dat.diff.filter)$subset.cluster == subset.clusters[i]]
+
+  per.tmp<-as.data.frame(apply(exprs(tmp.dat),1, function(x) length(which(x > 1))/ncol(tmp.dat)))
+  colnames(per.tmp) <- paste0(subset.clusters[i],".perc") 
+
+  mean.tmp<- as.data.frame(apply(log2(exprs(tmp.dat)+1),1,mean))
+  mean.tmp <- as.data.frame(mean.tmp)
+  colnames(mean.tmp) <- paste0(subset.clusters[i],".mean")
+  
+  mean.clusters <- merge(x = mean.clusters, y = mean.tmp, by.x = "rownames.exprs.e15.dat.diff.filter..", by.y = 0)
+  percent.clusters <- merge(x = percent.clusters, y = per.tmp, by.x = "rownames.exprs.e15.dat.diff.filter..", by.y = 0)
+}
+
+rownames(mean.clusters) <- mean.clusters$rownames.exprs.e15.dat.diff.filter..
+mean.clusters <- mean.clusters[,-1]
+mean.clusters <- as.matrix(mean.clusters)
+
+dat.JSD <- .specificity(mat = mean.clusters,logMode = F, relative = F)
+dat.JSD <- as.data.frame(dat.JSD)
+
+rownames(percent.clusters) <- percent.clusters$rownames.exprs.e15.dat.diff.filter..
+percent.clusters <- percent.clusters[,-1]
+
+merged.df <- merge(x = dat.JSD, y = percent.clusters, by = 0)
+row.names(merged.df) <- merged.df$Row.names
+merged.df <- merged.df[,-1]
+```
+
+```{r Determining the specificity score to use as a cutoff}
+color <- c("#F6937A","#882F1C","#BF1F36","#C2B280")
+color.transparent <- adjustcolor(color, alpha.f = 0.3)
+bins <- seq(from = 0, to = 1, by= 0.005)
+
+hist(dat.JSD$E15.FB.1.mean, breaks = bins, col = color.transparent[1], main = "Specificity Distributions", ylab = "Genes", xlab = "Specificity score")
+hist(dat.JSD$E15.FB.2.mean, breaks = bins, add = T, col = color.transparent[2])
+hist(dat.JSD$E15.MB.1.mean, breaks = bins, add = T, col = color.transparent[3])
+hist(dat.JSD$E15.MB.2.mean, breaks = bins, add = T, col = color.transparent[4])
+abline(v = 0.4, lwd = 2)
+```
+
+```{r determining the specific genes}
+e15.specific.genes <- data.frame()
+
+for(i in 1:4){
+  gene.tmp.1 <- merged.df[merged.df[,i] >= 0.4 & merged.df[,i+4] >= 0.4,]
+  gene.ordered <- row.names(gene.tmp.1[order(-gene.tmp.1[,i]),])
+  cluster.genes <- data.frame(lookupGeneName(e15.dat.filter, gene.ordered))
+  e15.specific.genes <- cbindPad(e15.specific.genes, cluster.genes)
+}
+
+names(e15.specific.genes) <- c("E15.FB.1","E15.FB.2","E15.MB.1","E15.MB.2")
+
+write.table(e15.specific.genes, file = "/Volumes/PAULHOOK/Revision/E15.specific.genes.txt", sep = "\t", quote = F, row.names = F)
+```
+
