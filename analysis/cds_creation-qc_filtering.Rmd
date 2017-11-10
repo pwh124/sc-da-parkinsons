@@ -6,11 +6,11 @@ output: html_document
 ---
 
 # Setting important directories. Also loading important libraries and custom functions for analysis.
-```{r init, message=FALSE}
-seq_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/Data"
-file_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/file.output"
-Rdata_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/rds"
-Script_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/Scripts"
+```{r init, message=FALSE, warning=FALSE}
+seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
+Rdata_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
 source(file.path(Script_dir,'init.R'))
 ```
 
@@ -153,7 +153,7 @@ massThreshold<-1e+05 # Adjust this based on observation of mass distribution
 massThreshold.2 <-13e+05
 hist(pData(dat.filter)$total_mass,
      breaks=50,
-     col="darkgreen",
+     col="darkred",
      main="Distribution of Total mass by cell")
 abline(v=massThreshold,lty="dashed")
 abline(v=massThreshold.2,lty="dashed")
@@ -167,7 +167,7 @@ nrow(pData(dat.filter)) # 410
 # Replot to look at distribution
 hist(pData(dat.filter)$total_mass,
      breaks=50,
-     col="darkgreen",
+     col="darkred",
      main="Distribution of Total mass by cell")
 abline(v=massThreshold,lty="dashed")
 abline(v=massThreshold.2,lty="dashed")
@@ -270,4 +270,12 @@ nrow(pData(P7.Ob.dat.filter)) # 74
 saveRDS(object = P7.Ob.dat.filter, file = file.path(Rdata_dir, "P7.Ob.dat.filter.rds"))
 ```
 
+Removing uncompressed large files before commit
+```{r Removing gene and isoform tables}
+
+file.remove(file.path(seq_dir, "isoforms.fpkm_table"))
+file.remove(file.path(seq_dir, "genes.fpkm_table"))
+file.remove(file.path(seq_dir, "isoforms.count_table"))
+
+```
 
