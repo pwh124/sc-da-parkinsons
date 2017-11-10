@@ -9,9 +9,11 @@
 <meta name="generator" content="pandoc" />
 
 
+<meta name="author" content="Paul Hook" />
 
+<meta name="date" content="2017-10-10" />
 
-<title>Home</title>
+<title>E15.5 Recursive data analysis</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,6 +21,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-1.1/highlight.js"></script>
@@ -162,6 +167,101 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -202,17 +302,52 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Home</h1>
+<h1 class="title toc-ignore">E15.5 Recursive data analysis</h1>
+<h4 class="author"><em>Paul Hook</em></h4>
+<h4 class="date"><em>10/10/2017</em></h4>
 
 </div>
 
 
-<p>The goal of this new template is to simplify the setup and maintenance of a research website. Specifically,</p>
-<ul>
-<li>Easier to build and extend the website using the new tools in the <a href="http://rmarkdown.rstudio.com/rmarkdown_websites.htm">rmarkdown</a> package and <a href="https://www.rstudio.com/products/rstudio/download/preview/">latest RStudio release</a></li>
-<li>Easier to deploy the website with Git and GitHub by only using one branch</li>
-</ul>
-<p>Click on this <a href="cds_creation-qc_filtering.html">link</a> to see my results Click on this <a href="E15_Mb.recursive_analysis.html">link</a> to see my results Click on this <a href="E15_Fb.recursive_analysis.html">link</a> to see my results Click on this <a href="E15_all.recursive_analysis.html">link</a> to see my results</p>
+<div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level1">
+<h1>Setting important directories. Also loading important libraries and custom functions for analysis.</h1>
+<pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
+file_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/output&quot;
+Rdata_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
+Script_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/code&quot;
+source(file.path(Script_dir,&#39;init.R&#39;))
+source(file.path(Script_dir,&quot;tools_R.r&quot;))</code></pre>
+</div>
+<div id="loading-in-the-e15.5-data-that-was-subsetted-after-filtering-and-saved-as-an-.rds" class="section level1">
+<h1>Loading in the E15.5 data that was subsetted after filtering and saved as an .rds</h1>
+<pre class="r"><code>e15.dat.filter &lt;- readRDS(file = file.path(Rdata_dir, &quot;e15.dat.filter.rds&quot;))</code></pre>
+<p><img src="E15_all.recursive_analysis_files/figure-html/filter%20by%20cells%20expressing%20each%20gene-1.png" width="672" /><img src="E15_all.recursive_analysis_files/figure-html/filter%20by%20cells%20expressing%20each%20gene-2.png" width="672" /></p>
+<p><img src="E15_all.recursive_analysis_files/figure-html/high_dispersion_genes_monocle-1.png" width="672" /></p>
+<pre><code>## [1] 725</code></pre>
+<p><img src="E15_all.recursive_analysis_files/figure-html/Run%20PCA%20with%20high%20BCV%20genes-1.png" width="672" /><img src="E15_all.recursive_analysis_files/figure-html/Run%20PCA%20with%20high%20BCV%20genes-2.png" width="672" /><img src="E15_all.recursive_analysis_files/figure-html/Run%20PCA%20with%20high%20BCV%20genes-3.png" width="672" /></p>
+<p><img src="E15_all.recursive_analysis_files/figure-html/Screeplots%20of%20Data-1.png" width="672" /><img src="E15_all.recursive_analysis_files/figure-html/Screeplots%20of%20Data-2.png" width="672" /></p>
+<p><img src="E15_all.recursive_analysis_files/figure-html/tsne-1.png" width="672" /></p>
+<div id="adding-the-mbfb-subclusters-from-the-recursive-analyses" class="section level2">
+<h2>Adding the MB/FB subclusters from the recursive analyses</h2>
+<pre class="r"><code>e15.Fb.clusters.df &lt;- readRDS(file = file.path(Rdata_dir, &quot;e15.Fb.clusters.df.rds&quot;))
+e15.Mb.clusters.df &lt;- readRDS(file = file.path(Rdata_dir, &quot;e15.Mb.clusters.df.rds&quot;))
+
+e15.Mb.clusters.df$subset.cluster &lt;- paste0(&quot;E15.MB.&quot;,e15.Mb.clusters.df$kmeans_tSNE_cluster)
+e15.Fb.clusters.df$subset.cluster &lt;- paste0(&quot;E15.FB.&quot;,e15.Fb.clusters.df$kmeans_tSNE_cluster)
+
+Sub.clusters.df &lt;- rbind(e15.Mb.clusters.df,e15.Fb.clusters.df)
+
+names(Sub.clusters.df) &lt;- c(&quot;sample_id.x&quot;,&quot;remove&quot;,&quot;subset.cluster&quot;)
+final.data.frame &lt;- merge(x = pData(e15.dat.filter), y = Sub.clusters.df, by = &quot;sample_id.x&quot;)
+pData(e15.dat.filter)$subset.cluster &lt;- as.factor(final.data.frame$subset.cluster)
+
+myTSNEPlotAlpha(e15.dat.filter,color=&quot;subset.cluster&quot;, shape=&quot;region&quot;) + scale_color_brewer(palette=&quot;Set1&quot;) + ggtitle(&quot;E15.5 All - MB Specific Genes&quot;)</code></pre>
+<pre><code>## Scale for &#39;colour&#39; is already present. Adding another scale for
+## &#39;colour&#39;, which will replace the existing scale.</code></pre>
+<p><img src="E15_all.recursive_analysis_files/figure-html/Adding%20the%20MB/FB%20subclusters-1.png" width="672" /></p>
+<p><img src="E15_all.recursive_analysis_files/figure-html/check%20the%20clusters%20-%20qc%20on%20clusters-1.png" width="672" /><img src="E15_all.recursive_analysis_files/figure-html/check%20the%20clusters%20-%20qc%20on%20clusters-2.png" width="672" /></p>
+</div>
+</div>
 
 <hr>
 <p>
@@ -240,6 +375,8 @@ $(document).ready(function () {
 -->
 
 
+</div>
+</div>
 
 </div>
 
