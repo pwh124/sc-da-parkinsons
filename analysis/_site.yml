@@ -13,12 +13,12 @@ navbar:
       href: license.html
   right:
     - icon: fa-github
-      href: https://github.com/jdblischak/workflowr
+      href: https://github.com/pwh124/sc-da-parkinsons
 output:
   html_document:
     toc: true
     toc_float: true
-    theme: cosmo
+    theme: simplex
     highlight: textmate
     include:
       after_body: include/footer.html
