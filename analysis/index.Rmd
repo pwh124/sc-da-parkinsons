@@ -21,7 +21,7 @@ E15.5 All cells analysis [link](E15_all.recursive_analysis.html)
 
 The template for this was adapted from: https://github.com/jdblischak/singleCellSeq
 
-## Last update: `r Sys.Date()`
+##Last update: `r Sys.Date()`
 
-## Code version`r system("git log -1 --format='%H'", intern = TRUE)`
+##Code version:`r system("git log -1 --format='%H'", intern = TRUE)`
 
