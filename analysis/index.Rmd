@@ -4,6 +4,9 @@ output:
   html_document:
     toc: false
 ---
+`r Sys.Date()`
+
+`r system("git log -1 --format='%H'", intern = TRUE)`
 
 The goal of this new template is to simplify the setup and maintenance of a research website.
 Specifically,
@@ -18,4 +21,6 @@ QC and filtering [link](cds_creation-qc_filtering.html)
 E15.5 MB analysis [link](E15_Mb.recursive_analysis.html)  
 E15.5 FB analysis [link](E15_Fb.recursive_analysis.html)  
 E15.5 All cells analysis [link](E15_all.recursive_analysis.html)  
+
+The template for this was shamlessly copied from [singleCellSeq]: https://github.com/jdblischak/singleCellSeq
 
