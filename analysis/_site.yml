@@ -13,7 +13,6 @@ navbar:
       href: about.html
     - text: "License"
       href: license.html
-  right:
     - icon: fa-github
       href: https://github.com/pwh124/sc-da-parkinsons
 output:
