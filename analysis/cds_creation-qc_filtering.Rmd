@@ -1,11 +1,14 @@
 ---
 title: "cds_creation-qc_filtering"
 author: "Paul Hook"
-date: "6/7/2017"
 output: html_document
 ---
 
-# Setting important directories. Also loading important libraries and custom functions for analysis.
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
+
+**Setting important directories. Also loading important libraries and custom functions for analysis.**
 ```{r init, message=FALSE, warning=FALSE}
 seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
 file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
@@ -14,14 +17,14 @@ Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
 source(file.path(Script_dir,'init.R'))
 ```
 
-# Untarring big files
+**Untarring big files**
 ```{r untarring some stuff}
 untar(file.path(seq_dir,"genes.fpkm_table.tar.gz"), exdir = seq_dir)
 untar(file.path(seq_dir, "isoforms.fpkm_table.tar.gz"), exdir = seq_dir)
 untar(file.path(seq_dir, "isoforms.count_table.tar.gz"), exdir = seq_dir)
 ```
 
-# Loading FPKM datasets generated through cuffquant at the gene and isoform levels
+**Loading FPKM datasets generated through cuffquant at the gene and isoform levels**
 ```{r import}
 #Gene FPKMs
 fpkms<-read.delim(file.path(seq_dir,"genes.fpkm_table"),row.names=1) # reading in the fpkm table produced by cuffquant
@@ -34,7 +37,7 @@ row.names(isoform_fpkms) <- isoform_fpkms$tracking_id # renaming rows
 isoform_fpkms <- isoform_fpkms[,-1] # removing the first column
 ```
 
-# Annotating the single-cell samples and genes
+**Annotating the single-cell samples and genes**
 ```{r}
 #Sample Annotation
 sample_ann<-read.delim(file.path(seq_dir,"samples.table")) # reading in sample table
@@ -62,7 +65,7 @@ lncRNA_geneIds<-gene_info$gene_id[gene_info$gene_type == "lincRNA"] # pulling ou
 ```
 
 
-# Creating the CellDataSet (cds) and removing negative controls/empty wells
+**Creating the CellDataSet (cds) and removing negative controls/empty wells**
 ```{r}
 fd<-new("AnnotatedDataFrame",data=gene_ann) # officially making fData for genes
 pd<-new("AnnotatedDataFrame",data=sample_info) # officially making pData for cells
@@ -79,7 +82,7 @@ dat.relative <- dat.relative[,pData(dat.relative)$type=="sample"]
 nrow(pData(dat.relative)) # 473 cells
 ```
 
-# Using the Monocle Census algorithm to infer RNA copies per cell and creating a new cds
+**Using the Monocle Census algorithm to infer RNA copies per cell and creating a new cds**
 ```{r}
 # Infer RNA copies per cell using relative2abs on isoform-level estimated t with the Census algorithm
 fpkm_matrix_adj <- relative2abs(dat.relative, t_estimate=estimate_t(isoform_fpkms),cores=4)
@@ -96,9 +99,9 @@ dat <- newCellDataSet(as(as.matrix(fpkm_matrix_adj),"sparseMatrix"),
 
 ```
 
-# Filtering on all cells 
+**Filtering on all cells** 
 
-## Filtering based on number of genes detected in each cell and removing cells that fall outside of determined ranges
+**Filtering based on number of genes detected in each cell and removing cells that fall outside of determined ranges**
 ```{r filter_by_num_genes_expressed}
 # Loading the data
 dat.filter <- dat
@@ -140,7 +143,7 @@ abline(v=high.num.genes.threshold,lty="dashed")
 nrow(pData(dat.filter)) #431
 ```
 
-## Filtering based on the total mass of each cell and removing cells that fall outside of determined ranges
+**Filtering based on the total mass of each cell and removing cells that fall outside of determined ranges**
 ```{r Cell mass threshold filtering}
 # Plotting the distribution of total cell mass
 hist(pData(dat.filter)$total_mass,
@@ -174,7 +177,7 @@ abline(v=massThreshold.2,lty="dashed")
 
 ```
 
-## Filtering based on the total mRNAs in each cell and removing cells that fall outside of determined ranges
+**Filtering based on the total mRNAs in each cell and removing cells that fall outside of determined ranges**
 ```{r copies_per_cell_qc} 
 # Calculate total RNA mass per cell
 pData(dat.filter)$Total_mRNAs <- colSums(exprs(dat.filter))
@@ -203,13 +206,13 @@ dat.filter<-dat.filter[,pData(dat.filter)$Total_mRNAs <= high.numGeneThreshold]
 nrow(pData(dat.filter)) # 410
 ```
 
-# Now that only high quality cells are retained, the detectGenes function is used to recalculate the # of genes detected in each cell
+**Now that only high quality cells are retained, the detectGenes function is used to recalculate the # of genes detected in each cell**
 ```{r}
 # Recalculate # of genes
 dat.filter<-detectGenes(dat.filter,min_expr=0.1)
 ```
 
-# Before beginning Monocle analysis, the data needs to be checked to ensure that it follows a log-normal distribution. We find that our data follows a log-normal distribution. Script is pulled directly from Monocle manual.
+**Before beginning Monocle analysis, the data needs to be checked to ensure that it follows a log-normal distribution. We find that our data follows a log-normal distribution. Script is pulled directly from Monocle manual.**
 ```{r Checking to see if final expression matrix is log-normal}
 # Log-transform each value in the expression matrix.
 L <- log(exprs(dat.filter))
@@ -222,7 +225,7 @@ size = 0.5, color = "red") + xlab("Standardized log(Transcripts)") + ylab("Densi
 ## Warning: Removed 11850640 rows containing non-finite values (stat_density).
 ```
 
-# The data is subsetted according to age and region. These subsetted cds are saved as .rds objects to be used in subsequent analyses
+**The data is subsetted according to age and region. These subsetted cds are saved as .rds objects to be used in subsequent analyses**
 ```{r Saving the original dat.filter .rds }
 nrow(pData(dat.filter)) # 410 cells
 saveRDS(object = dat.filter, file = file.path(Rdata_dir,"dat.filter.rds"))
@@ -270,7 +273,7 @@ nrow(pData(P7.Ob.dat.filter)) # 74
 saveRDS(object = P7.Ob.dat.filter, file = file.path(Rdata_dir, "P7.Ob.dat.filter.rds"))
 ```
 
-Removing uncompressed large files before commit
+**Removing uncompressed large files before commit**
 ```{r Removing gene and isoform tables}
 
 file.remove(file.path(seq_dir, "isoforms.fpkm_table"))
