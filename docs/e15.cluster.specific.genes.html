@@ -315,7 +315,7 @@ div.tocify {
 
 
 <p><strong>Last update:</strong> 2017-11-15</p>
-<p><strong>Code version:</strong> c6153480f2f581d09a48dbd903a8fa6e610afd32</p>
+<p><strong>Code version:</strong> 17e7177e9b9908f0f9a5ab250167c3e3fbe30b83</p>
 <div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level3">
 <h3>Setting important directories. Also loading important libraries and custom functions for analysis.</h3>
 <pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
@@ -338,16 +338,10 @@ nrow(pData(e15.dat.filter)) # 172</code></pre>
                              reducedModelFormulaStr = &quot;~1&quot;,
                              relative_expr = FALSE,
                              cores=8,
-                             verbose = F)</code></pre>
-<pre><code>## Warning: closing unused connection 13 (&lt;-localhost:11458)</code></pre>
-<pre><code>## Warning: closing unused connection 12 (&lt;-localhost:11458)</code></pre>
-<pre><code>## Warning: closing unused connection 11 (&lt;-localhost:11458)</code></pre>
-<pre><code>## Warning: closing unused connection 10 (&lt;-localhost:11458)</code></pre>
-<pre><code>## Warning: closing unused connection 9 (&lt;-localhost:11458)</code></pre>
-<pre><code>## Warning: closing unused connection 8 (&lt;-localhost:11458)</code></pre>
-<pre><code>## Warning: closing unused connection 7 (&lt;-localhost:11458)</code></pre>
-<pre><code>## Warning: closing unused connection 6 (&lt;-localhost:11458)</code></pre>
-<pre class="r"><code>nrow(e15.Diff.Test)</code></pre>
+                             verbose = F)
+
+
+nrow(e15.Diff.Test)</code></pre>
 <pre><code>## [1] 14409</code></pre>
 <pre class="r"><code># Only keeping differentially expressed genes with a FDF &lt; 5%
 e15.tmp&lt;-e15.Diff.Test[e15.Diff.Test$qval &lt; 0.05,]
@@ -359,9 +353,10 @@ length(e15.Diff.Genes) # 1196</code></pre>
 </div>
 <div id="t-sne-plots-of-top-10-differentially-expressed-genes" class="section level3">
 <h3>t-SNE plots of top 10 differentially expressed genes</h3>
-<pre class="r"><code>myTSNEPlotAlpha(e15.dat.filter,color=&quot;subset.cluster&quot;, shape=&quot;age&quot;,markers = e15.Diff.Genes[1:10],scaled = T) + scale_color_brewer(palette=&quot;Set1&quot;) + ggtitle(&quot;e15 Mb - BCV tSNE - Top 10 Differentially Expressed Genes&quot;)</code></pre>
+<pre class="r"><code>q &lt;-myTSNEPlotAlpha(e15.dat.filter,color=&quot;subset.cluster&quot;, shape=&quot;age&quot;,markers = e15.Diff.Genes[1:10],scaled = T) + scale_color_brewer(palette=&quot;Set1&quot;) + ggtitle(&quot;e15 Mb - BCV tSNE - Top 10 Differentially Expressed Genes&quot;)</code></pre>
 <pre><code>## Scale for &#39;colour&#39; is already present. Adding another scale for
 ## &#39;colour&#39;, which will replace the existing scale.</code></pre>
+<pre class="r"><code>q</code></pre>
 <p><img src="e15.cluster.specific.genes_files/figure-html/Making%20t-SNE-1.png" width="672" /></p>
 </div>
 <div id="finding-specific-genes-for-each-cluster" class="section level3">
@@ -423,6 +418,61 @@ for(i in 1:4){
 names(e15.specific.genes) &lt;- c(&quot;E15.FB.1&quot;,&quot;E15.FB.2&quot;,&quot;E15.MB.1&quot;,&quot;E15.MB.2&quot;)
 
 write.table(e15.specific.genes, file = file.path(file_dir,&quot;E15.specific.genes.txt&quot;), sep = &quot;\t&quot;, quote = F, row.names = F)</code></pre>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.3.0 (2016-05-03)
+## Platform: x86_64-apple-darwin13.4.0 (64-bit)
+## Running under: OS X 10.11.6 (El Capitan)
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+##  [1] grid      splines   stats4    parallel  stats     graphics  grDevices
+##  [8] utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] ggbiplot_0.55       scales_0.5.0        SC3_1.1.4          
+##  [4] ROCR_1.0-7          jackstraw_1.1.1     lfa_1.2.2          
+##  [7] tsne_0.1-3          gridExtra_2.3       slackr_1.4.2       
+## [10] vegan_2.4-4         permute_0.9-4       MASS_7.3-47        
+## [13] gplots_3.0.1        RColorBrewer_1.1-2  Hmisc_4.0-3        
+## [16] Formula_1.2-2       survival_2.41-3     lattice_0.20-35    
+## [19] Heatplus_2.18.0     Rtsne_0.13          pheatmap_1.0.8     
+## [22] tidyr_0.7.1         dplyr_0.7.4         plyr_1.8.4         
+## [25] heatmap.plus_1.3    stringr_1.2.0       marray_1.50.0      
+## [28] limma_3.28.21       reshape2_1.4.2      monocle_2.2.0      
+## [31] DDRTree_0.1.5       irlba_2.2.1         VGAM_1.0-2         
+## [34] ggplot2_2.2.1       Biobase_2.32.0      BiocGenerics_0.18.0
+## [37] Matrix_1.2-11      
+## 
+## loaded via a namespace (and not attached):
+##  [1] RSelenium_1.7.1        colorspace_1.3-2       class_7.3-14          
+##  [4] rprojroot_1.2          htmlTable_1.9          corpcor_1.6.9         
+##  [7] base64enc_0.1-3        mvtnorm_1.0-6          codetools_0.2-15      
+## [10] doParallel_1.0.11      robustbase_0.92-7      knitr_1.17            
+## [13] jsonlite_1.5           cluster_2.0.6          semver_0.2.0          
+## [16] shiny_1.0.5            rrcov_1.4-3            httr_1.3.1            
+## [19] backports_1.1.1        assertthat_0.2.0       lazyeval_0.2.1        
+## [22] acepack_1.4.1          htmltools_0.3.6        tools_3.3.0           
+## [25] bindrcpp_0.2           igraph_1.1.2           gtable_0.2.0          
+## [28] glue_1.1.1             binman_0.1.0           doRNG_1.6.6           
+## [31] Rcpp_0.12.13           slam_0.1-37            gdata_2.18.0          
+## [34] nlme_3.1-131           iterators_1.0.8        mime_0.5              
+## [37] rngtools_1.2.4         gtools_3.5.0           WriteXLS_4.0.0        
+## [40] XML_3.98-1.9           DEoptimR_1.0-8         yaml_2.1.14           
+## [43] pkgmaker_0.22          rpart_4.1-11           fastICA_1.2-1         
+## [46] latticeExtra_0.6-28    stringi_1.1.5          pcaPP_1.9-72          
+## [49] foreach_1.4.3          e1071_1.6-8            checkmate_1.8.4       
+## [52] caTools_1.17.1         rlang_0.1.2            pkgconfig_2.0.1       
+## [55] matrixStats_0.52.2     bitops_1.0-6           qlcMatrix_0.9.5       
+## [58] evaluate_0.10.1        purrr_0.2.3            bindr_0.1             
+## [61] labeling_0.3           htmlwidgets_0.9        magrittr_1.5          
+## [64] R6_2.2.2               combinat_0.0-8         wdman_0.2.2           
+## [67] foreign_0.8-69         mgcv_1.8-22            nnet_7.3-12           
+## [70] tibble_1.3.4           KernSmooth_2.23-15     rmarkdown_1.6         
+## [73] data.table_1.10.4      HSMMSingleCell_0.106.2 digest_0.6.12         
+## [76] xtable_1.8-2           httpuv_1.3.5           openssl_0.9.7         
+## [79] munsell_0.4.3          registry_0.3</code></pre>
 </div>
 
 <hr>
