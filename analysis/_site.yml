@@ -7,6 +7,8 @@ navbar:
   left:
     - text: "Home"
       href: index.html
+    - text: "CDS creation and QC"
+      href: cds_creation-qc_filtering.Rmd
     - text: "About"
       href: about.html
     - text: "License"
