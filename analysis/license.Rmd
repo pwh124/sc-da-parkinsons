@@ -1,10 +1,9 @@
 ---
-title: "License"
+title: "LICENSE"
 output:
   html_document:
     toc: false
 ---
-# LICENSE  
 
 MIT License
 
