@@ -115,6 +115,12 @@ names(e15.specific.genes) <- c("E15.FB.1","E15.FB.2","E15.MB.1","E15.MB.2")
 write.table(e15.specific.genes, file = file.path(file_dir,"E15.specific.genes.txt"), sep = "\t", quote = F, row.names = F)
 ```
 
+###Making an interactive table for specific genes
+```{r}
+library(DT)
+datatable(e15.specific.genes)
+```
+
 ```{r session info}
 sessionInfo()
 ```
