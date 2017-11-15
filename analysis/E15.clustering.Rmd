@@ -1,0 +1,15 @@
+---
+title: E15 Results
+output: html_document
+---
+
+Below are links to the various portions of the E15.5 analysis
+
+* [E15.5 FB Recursive Analysis](E15_Fb.recursive_analysis.html)
+* [E15.5 MB Recursive Analysis](E15_Mb.recursive_analysis.html)
+* [E15.5 All Cells Recursive Analysis](E15_all.recursive_analysis.html)
+* [E15.5 Cluster Specific Genes Analysis](e15.cluster.specific.genes.html)
+
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
