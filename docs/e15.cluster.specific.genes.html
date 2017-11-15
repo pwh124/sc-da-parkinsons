@@ -14,7 +14,7 @@
 
 <title>E15.5 Analysis</title>
 
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -26,6 +26,11 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<script src="site_libs/htmlwidgets-0.9/htmlwidgets.js"></script>
+<script src="site_libs/datatables-binding-0.2/datatables.js"></script>
+<link href="site_libs/dt-core-1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.10.12/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.10.12/js/jquery.dataTables.min.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -315,7 +320,7 @@ div.tocify {
 
 
 <p><strong>Last update:</strong> 2017-11-15</p>
-<p><strong>Code version:</strong> 17e7177e9b9908f0f9a5ab250167c3e3fbe30b83</p>
+<p><strong>Code version:</strong> 136ea1d176050d68275e13dbc6356350c740e3e1</p>
 <div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level3">
 <h3>Setting important directories. Also loading important libraries and custom functions for analysis.</h3>
 <pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
@@ -418,6 +423,16 @@ for(i in 1:4){
 names(e15.specific.genes) &lt;- c(&quot;E15.FB.1&quot;,&quot;E15.FB.2&quot;,&quot;E15.MB.1&quot;,&quot;E15.MB.2&quot;)
 
 write.table(e15.specific.genes, file = file.path(file_dir,&quot;E15.specific.genes.txt&quot;), sep = &quot;\t&quot;, quote = F, row.names = F)</code></pre>
+</div>
+<div id="making-an-interactive-table-for-specific-genes" class="section level3">
+<h3>Making an interactive table for specific genes</h3>
+<pre class="r"><code>library(DT)
+datatable(e15.specific.genes)</code></pre>
+<pre><code>## Warning in instance$preRenderHook(instance): It seems your data is too
+## big for client-side DataTables. You may consider server-side processing:
+## http://rstudio.github.io/DT/server.html</code></pre>
+<div id="htmlwidget-e0c2e2742a5382bafd08" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e0c2e2742a5382bafd08">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60"],["Dlx2","Dlx1","Dlx5","Fam84a","Gria1","Gabra5","Igfbpl1","Rnd3","Fgf14","Pnoc","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],["Gm5532","Npy","Six3os1","Gas1","Six3","Eepd1","Map3k1","Esrrg","Rpp25","Prox1","Fign","Sp8","Gm29374","Isl1","Sst","A830082K12Rik","Ecel1","Zeb2","Nr2f1","Slc44a5","Nr2f2","Gpc3","2900055J20Rik","Kcnmb2","Tmem132b","Zbtb7c","Unc5c","Nefm","Lrrtm1","Pde2a","Tenm3","Zfp804a","Galnt13","Hs3st5","Anks1","1110015O18Rik","Ubash3b","Tle1","Sema3a","Tshz2","Klhl5","Kcnma1","Zdhhc2","Gad2","Meis2","Klf12","Gad1","AI593442","Lrrc4c","Gm14204","Islr2","Tmem2","Id4","Cygb","Lhfp","Grik2","Rnf220","Rftn1","Vcan",""],["Pax5","Lhx9","Ebf1","Npnt","Tspan9","Nrn1","Nrg1","Gabra1","Sorcs2","Slc17a6","Mab21l1","Pcdh18","Syn2","Car10","Ppp1r14c","Fam19a2","Tmem163","Meis1","Rasgrp2","Cacna2d1","Pde4b","Lrrtm3","Wscd1","Surf6","Adap1","Mir99ahg","Pcdh17","Tmem91","Garnl3","Ckmt1","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],["Foxa1","Lmx1a","C130021I20Rik","Slc6a3","Chrna6","Pitx3","Foxa2","Gch1","Ntn1","En1","Schip1","Nr4a2","eGFP","Ret","Ddc","Slc18a2","Necab1","Wnt5a","Ctnna1","Th","Cpne7","Cnpy1","Syt17","Ptpru","Kcnip4","Uncx","Dlk1","Ebf2","Slc10a4","Foxp2","Adarb2","Klhl1","Serpine2","Pdzrn4","Igfbp5","Bnc2","Wdr54","St6galnac4","Tox2","Snca","Gm2694","Calb2","Tcf12","Rasgef1b","2810025M15Rik","Slc1a2","Cdk14","Sdc2","Pbx1","Syt13","Mt3","Ifitm2","Rit2","Mpped2","Slit2","Epha5","Epdr1","Ptprg","Osbpl5","Stk19"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>E15.FB.1<\/th>\n      <th>E15.FB.2<\/th>\n      <th>E15.MB.1<\/th>\n      <th>E15.MB.2<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}]},"selection":{"mode":"multiple","selected":null,"target":"row"}},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>## R version 3.3.0 (2016-05-03)
 ## Platform: x86_64-apple-darwin13.4.0 (64-bit)
@@ -431,19 +446,19 @@ write.table(e15.specific.genes, file = file.path(file_dir,&quot;E15.specific.gen
 ##  [8] utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] ggbiplot_0.55       scales_0.5.0        SC3_1.1.4          
-##  [4] ROCR_1.0-7          jackstraw_1.1.1     lfa_1.2.2          
-##  [7] tsne_0.1-3          gridExtra_2.3       slackr_1.4.2       
-## [10] vegan_2.4-4         permute_0.9-4       MASS_7.3-47        
-## [13] gplots_3.0.1        RColorBrewer_1.1-2  Hmisc_4.0-3        
-## [16] Formula_1.2-2       survival_2.41-3     lattice_0.20-35    
-## [19] Heatplus_2.18.0     Rtsne_0.13          pheatmap_1.0.8     
-## [22] tidyr_0.7.1         dplyr_0.7.4         plyr_1.8.4         
-## [25] heatmap.plus_1.3    stringr_1.2.0       marray_1.50.0      
-## [28] limma_3.28.21       reshape2_1.4.2      monocle_2.2.0      
-## [31] DDRTree_0.1.5       irlba_2.2.1         VGAM_1.0-2         
-## [34] ggplot2_2.2.1       Biobase_2.32.0      BiocGenerics_0.18.0
-## [37] Matrix_1.2-11      
+##  [1] DT_0.2              ggbiplot_0.55       scales_0.5.0       
+##  [4] SC3_1.1.4           ROCR_1.0-7          jackstraw_1.1.1    
+##  [7] lfa_1.2.2           tsne_0.1-3          gridExtra_2.3      
+## [10] slackr_1.4.2        vegan_2.4-4         permute_0.9-4      
+## [13] MASS_7.3-47         gplots_3.0.1        RColorBrewer_1.1-2 
+## [16] Hmisc_4.0-3         Formula_1.2-2       survival_2.41-3    
+## [19] lattice_0.20-35     Heatplus_2.18.0     Rtsne_0.13         
+## [22] pheatmap_1.0.8      tidyr_0.7.1         dplyr_0.7.4        
+## [25] plyr_1.8.4          heatmap.plus_1.3    stringr_1.2.0      
+## [28] marray_1.50.0       limma_3.28.21       reshape2_1.4.2     
+## [31] monocle_2.2.0       DDRTree_0.1.5       irlba_2.2.1        
+## [34] VGAM_1.0-2          ggplot2_2.2.1       Biobase_2.32.0     
+## [37] BiocGenerics_0.18.0 Matrix_1.2-11      
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] RSelenium_1.7.1        colorspace_1.3-2       class_7.3-14          
