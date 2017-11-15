@@ -1,11 +1,14 @@
 ---
 title: "E15 MB Analysis"
 author: "Paul Hook"
-date: "6/13/2017"
 output: html_document
 ---
 
-# Setting important directories. Also loading important libraries and custom functions for analysis.
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
+
+**Setting important directories. Also loading important libraries and custom functions for analysis.**
 ```{r init, message=FALSE, warning=FALSE}
 seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
 file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
@@ -15,10 +18,12 @@ source(file.path(Script_dir,'init.R'))
 source(file.path(Script_dir,"tools_R.r"))
 ```
 
+**Loading the E15 cds**
 ```{r Loading .rds}
 e15.Mb.dat.filter <- readRDS(file = file.path(Rdata_dir, "e15.Mb.dat.filter.rds"))
 ```
 
+**Filter genes by percentage of cells expresssing each gene**
 ```{r filter by cells expressing each gene}
 # Plot number of cells expressing each gene as histogram
 hist(fData(e15.Mb.dat.filter)$num_cells_expressed,breaks=50,col="red",main="Cells expressed per gene")
@@ -32,6 +37,7 @@ hist(fData(e15.Mb.dat.filter)$num_cells_expressed,breaks=50,col="red",main="Cell
 abline(v=numCellThreshold,lty="dashed")
 ```
 
+**Prepping the Monocole model for analysis**
 ```{r model_prep - Preparing the data for monocle analysis}
 # Only keeping "expressed" genes
 e15.Mb.dat.filter <-e15.Mb.dat.filter[e15.Mb.dat.expressed_genes,]
@@ -46,6 +52,7 @@ e15.Mb.dat.filter <- estimateDispersions(e15.Mb.dat.filter,cores=8)
 # Deprecated, use tibble::rownames_to_column() instead. 
 ```
 
+**Calculating summary stats**
 ```{r summary_stats}
 # Calculating summary stats
 fData(e15.Mb.dat.filter)$mean_expr<-apply(round(exprs(e15.Mb.dat.filter)),1,mean) # mean expression
@@ -54,6 +61,7 @@ fData(e15.Mb.dat.filter)$bcv<-(fData(e15.Mb.dat.filter)$sd_expr/fData(e15.Mb.dat
 fData(e15.Mb.dat.filter)$percent_detection<-(fData(e15.Mb.dat.filter)$num_cells_expressed/dim(e15.Mb.dat.filter)[2])*100 # calculating % detection
 ```
 
+**Identifying high dispersion genes**
 ```{r high_dispersion_genes_monocle - Pulling out the high dispersion genes for PCA analysis}
 e15.Mb.dat.filter.genes <- e15.Mb.dat.filter # spoofing the CellDataSet
 disp_table <- dispersionTable(e15.Mb.dat.filter.genes) # pulling out the dispersion table
@@ -64,7 +72,7 @@ plot_ordering_genes(e15.Mb.dat.filter.order) # plotting the dispersion and genes
 length(e15.Mb.dat.high_bcv_genes) # 778
 ```
 
-
+**Running PCA with high dispersion genes**
 ```{r Run PCA with high BCV genes}
 # BCV Identified high dispersion genes. Running PC analysis
 e15.Mb.dat.filter.BCV.pca<-prcomp(t(log2(exprs(e15.Mb.dat.filter[e15.Mb.dat.high_bcv_genes,])+1)),center=T,scale. = TRUE)
@@ -85,6 +93,7 @@ hvPCA2
 hvPCA3
 ```
 
+**Viewing screeplots and determining the number of "significant" PCs**
 ```{r Screeplots of Data,tidy=TRUE}
 # Making a screeplot of the BCV PCA. This will help determine how 
 # many principal components we should use in our tSNE visualization
@@ -99,7 +108,8 @@ ggscreeplot(e15.Mb.dat.filter.BCV.pca)
 # first four PCs explain the most variation in our data
 ```
 
-```{r tsne}
+**Creating a t-SNE plot from the "significant" PCs**
+```{r tsne, message=FALSE, warning=FALSE}
 nComponents<-4 # estimated from the screeplots
 #seed <- runif(1,1,9999) # determined by testing random seeds
 seed <- 223.3888
@@ -115,6 +125,7 @@ e15.Mb.dat.filter.BCV.tsne.plot<-myTSNEPlotAlpha(e15.Mb.dat.filter,color="region
 e15.Mb.dat.filter.BCV.tsne.plot
 ```
 
+**Identifying clusters in the data in an unsupervised manner**
 ```{r - attempting to cluster,tidy=TRUE}
 # Going to attempt to use the R program "ADPclust" to determine how many clusters our data has
 
@@ -134,6 +145,7 @@ pData(e15.Mb.dat.filter)$kmeans_tSNE_cluster <- as.factor(clust.res.df$`clust.re
 myTSNEPlotAlpha(e15.Mb.dat.filter,color="kmeans_tSNE_cluster", shape="age") + scale_color_brewer(palette="Set1") + ggtitle("All Cells - BCV tSNE with Clusters Plot")
 ```
 
+**QC on the clusters**
 ```{r check the clusters - qc on clusters}
 # Distribution of number of genes expressed in clusters
 q <- ggplot(pData(e15.Mb.dat.filter)) +
@@ -148,13 +160,18 @@ q<-ggplot(pData(e15.Mb.dat.filter)) +
 q
 ```
 
+**Saving the E15.5 MB final cds**
 ```{r saving this .Rdata so it can be loaded in various scripts }
 e15.Mb.dat.filter.final <- e15.Mb.dat.filter
 saveRDS(object = e15.Mb.dat.filter.final, file = file.path(Rdata_dir, "e15.Mb.dat.filter.final.Rds"))
 ```
 
+**Extracting pData information and saving it**
 ```{r extacting pData information and subset cluster information}
 e15.Mb.clusters.df <- pData(e15.Mb.dat.filter)[,c(1,39)]
 saveRDS(e15.Mb.clusters.df, file = file.path(Rdata_dir, "e15.Mb.clusters.df.rds"))
 ```
 
+```{r session infomation}
+sessionInfo()
+```

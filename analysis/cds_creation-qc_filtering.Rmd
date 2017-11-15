@@ -275,10 +275,11 @@ saveRDS(object = P7.Ob.dat.filter, file = file.path(Rdata_dir, "P7.Ob.dat.filter
 
 **Removing uncompressed large files before commit**
 ```{r Removing gene and isoform tables}
-
 file.remove(file.path(seq_dir, "isoforms.fpkm_table"))
 file.remove(file.path(seq_dir, "genes.fpkm_table"))
 file.remove(file.path(seq_dir, "isoforms.count_table"))
-
 ```
 
+```{r session infomation}
+sessionInfo()
+```
