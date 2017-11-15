@@ -307,20 +307,27 @@ div.tocify {
 
 <h1 class="title toc-ignore">E15.5 FB Recursive Analysis</h1>
 <h4 class="author"><em>Paul Hook</em></h4>
-<h4 class="date"><em>6/13/2017</em></h4>
 
 </div>
 
 
-<div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level1">
-<h1>Setting important directories. Also loading important libraries and custom functions for analysis.</h1>
+<p><strong>Last update:</strong> 2017-11-15</p>
+<p><strong>Code version:</strong> a453f61a07b3534a4454b35957fe68099b0a9996</p>
+<div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level3">
+<h3>Setting important directories. Also loading important libraries and custom functions for analysis.**</h3>
 <pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
 file_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/output&quot;
 Rdata_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
 Script_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/code&quot;
 source(file.path(Script_dir,&#39;init.R&#39;))
 source(file.path(Script_dir,&quot;tools_R.r&quot;))</code></pre>
+</div>
+<div id="loading-fb-.rds" class="section level3">
+<h3>Loading FB .rds</h3>
 <pre class="r"><code>e15.Fb.dat.filter &lt;- readRDS(file = file.path(Rdata_dir, &quot;e15.Fb.dat.filter.rds&quot;))</code></pre>
+</div>
+<div id="filter-genes-by-percentage-of-cells-expresssing-each-gene" class="section level3">
+<h3>Filter genes by percentage of cells expresssing each gene</h3>
 <pre class="r"><code># Plot number of cells expressing each gene as histogram
 hist(fData(e15.Fb.dat.filter)$num_cells_expressed,breaks=50,col=&quot;red&quot;,main=&quot;Cells expressed per gene&quot;)</code></pre>
 <p><img src="E15_Fb.recursive_analysis_files/figure-html/filter%20by%20cells%20expressing%20each%20gene-1.png" width="672" /></p>
@@ -332,6 +339,9 @@ e15.Fb.dat.expressed_genes&lt;-row.names(subset(fData(e15.Fb.dat.filter),num_cel
 hist(fData(e15.Fb.dat.filter)$num_cells_expressed,breaks=50,col=&quot;red&quot;,main=&quot;Cells expressed per gene - threshold&quot;)
 abline(v=numCellThreshold,lty=&quot;dashed&quot;)</code></pre>
 <p><img src="E15_Fb.recursive_analysis_files/figure-html/filter%20by%20cells%20expressing%20each%20gene-2.png" width="672" /></p>
+</div>
+<div id="prepping-the-monocole-model-for-analysis" class="section level3">
+<h3>Prepping the Monocole model for analysis</h3>
 <pre class="r"><code># Only keeping &quot;expressed&quot; genes
 e15.Fb.dat.filter &lt;-e15.Fb.dat.filter[e15.Fb.dat.expressed_genes,]
 
@@ -345,11 +355,17 @@ e15.Fb.dat.filter &lt;- estimateDispersions(e15.Fb.dat.filter,cores=8)</code></p
 <pre class="r"><code># Removing 130 outliers
 # Warning message:
 # Deprecated, use tibble::rownames_to_column() instead. </code></pre>
+</div>
+<div id="calculating-summary-stats" class="section level3">
+<h3>Calculating summary stats</h3>
 <pre class="r"><code># Calculating summary stats
 fData(e15.Fb.dat.filter)$mean_expr&lt;-apply(round(exprs(e15.Fb.dat.filter)),1,mean) # mean expression
 fData(e15.Fb.dat.filter)$sd_expr&lt;-apply(round(exprs(e15.Fb.dat.filter)),1,sd) # sd expression
 fData(e15.Fb.dat.filter)$bcv&lt;-(fData(e15.Fb.dat.filter)$sd_expr/fData(e15.Fb.dat.filter)$mean_expr)**2 # calculating biological coefficient of variation
 fData(e15.Fb.dat.filter)$percent_detection&lt;-(fData(e15.Fb.dat.filter)$num_cells_expressed/dim(e15.Fb.dat.filter)[2])*100 # calculating % detection</code></pre>
+</div>
+<div id="identifying-high-dispersion-genes" class="section level3">
+<h3>Identifying high dispersion genes</h3>
 <pre class="r"><code>e15.Fb.dat.filter.genes &lt;- e15.Fb.dat.filter # spoofing the CellDataSet
 disp_table &lt;- dispersionTable(e15.Fb.dat.filter.genes) # pulling out the dispersion table
 unsup_clustering_genes &lt;-subset(disp_table, mean_expression &gt;= 0.5 &amp; dispersion_empirical &gt;= 2 * dispersion_fit) # subsetting the data to pull out genes with expression above 0.5 and dispersion empirical &gt; 2
@@ -360,6 +376,9 @@ plot_ordering_genes(e15.Fb.dat.filter.order) # plotting the dispersion and genes
 <p><img src="E15_Fb.recursive_analysis_files/figure-html/high_dispersion_genes_monocle%20-%20Pulling%20out%20the%20high%20dispersion%20genes%20for%20PCA%20analysis-1.png" width="672" /></p>
 <pre class="r"><code>length(e15.Fb.dat.high_bcv_genes) # 755</code></pre>
 <pre><code>## [1] 755</code></pre>
+</div>
+<div id="running-pca-with-high-dispersion-genes" class="section level3">
+<h3>Running PCA with high dispersion genes</h3>
 <pre class="r"><code># BCV Identified high dispersion genes. Running PC analysis
 e15.Fb.dat.filter.BCV.pca&lt;-prcomp(t(log2(exprs(e15.Fb.dat.filter[e15.Fb.dat.high_bcv_genes,])+1)),center=T,scale. = TRUE)
 
@@ -381,6 +400,9 @@ hvPCA1</code></pre>
 <pre class="r"><code>hvPCA3</code></pre>
 <p><img src="E15_Fb.recursive_analysis_files/figure-html/Run%20PCA%20with%20high%20BCV%20genes-3.png" width="672" /></p>
 <pre class="r"><code># No real outliers seen</code></pre>
+</div>
+<div id="viewing-screeplots-and-determining-the-number-of-significant-pcs" class="section level3">
+<h3>Viewing screeplots and determining the number of “significant” PCs</h3>
 <pre class="r"><code># Making a screeplot of the BCV PCA. This will help determine how many
 # principal components we should use in our tSNE visualization
 
@@ -392,71 +414,26 @@ abline(v = 6, lwd = 2, col = &quot;red&quot;)</code></pre>
 <p><img src="E15_Fb.recursive_analysis_files/figure-html/Screeplots%20of%20Data-2.png" width="672" /></p>
 <pre class="r"><code># Conclustion: Seems to be clear that just the first 5 PCs explain the most
 # variation in our data</code></pre>
+</div>
+<div id="creating-a-t-sne-plot-from-the-significant-pcs" class="section level3">
+<h3>Creating a t-SNE plot from the “significant” PCs</h3>
 <pre class="r"><code>nComponents&lt;-5 # estimated from the screeplots
 #seed &lt;- runif(1,1,9999) # determined by testing random seeds
 seed &lt;- 396.0516
 set.seed(seed) #setting seed
 
-e15.Fb.dat.filter.BCV.tsne&lt;-tsne(e15.Fb.dat.filter.BCV.pca$x[,1:nComponents],perplexity=15,max_iter=5000,whiten = FALSE)</code></pre>
-<pre><code>## sigma summary: Min. : 0.1719 |1st Qu. : 0.2294 |Median : 0.2551 |Mean : 0.2586 |3rd Qu. : 0.283 |Max. : 0.3464 |</code></pre>
-<pre><code>## Epoch: Iteration #100 error is: 18.1397869848991</code></pre>
-<pre><code>## Epoch: Iteration #200 error is: 2.26363852015291</code></pre>
-<pre><code>## Epoch: Iteration #300 error is: 1.71780760342573</code></pre>
-<pre><code>## Epoch: Iteration #400 error is: 1.35469852839227</code></pre>
-<pre><code>## Epoch: Iteration #500 error is: 1.23894462691817</code></pre>
-<pre><code>## Epoch: Iteration #600 error is: 1.11335758089131</code></pre>
-<pre><code>## Epoch: Iteration #700 error is: 0.834422266146989</code></pre>
-<pre><code>## Epoch: Iteration #800 error is: 0.632994093047439</code></pre>
-<pre><code>## Epoch: Iteration #900 error is: 0.556222246307257</code></pre>
-<pre><code>## Epoch: Iteration #1000 error is: 0.687680472062626</code></pre>
-<pre><code>## Epoch: Iteration #1100 error is: 0.58908960293317</code></pre>
-<pre><code>## Epoch: Iteration #1200 error is: 0.527386585246402</code></pre>
-<pre><code>## Epoch: Iteration #1300 error is: 0.388728589004375</code></pre>
-<pre><code>## Epoch: Iteration #1400 error is: 0.289434494795545</code></pre>
-<pre><code>## Epoch: Iteration #1500 error is: 0.279489456925096</code></pre>
-<pre><code>## Epoch: Iteration #1600 error is: 0.271091784988335</code></pre>
-<pre><code>## Epoch: Iteration #1700 error is: 0.26349005447087</code></pre>
-<pre><code>## Epoch: Iteration #1800 error is: 0.261135158027253</code></pre>
-<pre><code>## Epoch: Iteration #1900 error is: 0.260565265987623</code></pre>
-<pre><code>## Epoch: Iteration #2000 error is: 0.260314153730511</code></pre>
-<pre><code>## Epoch: Iteration #2100 error is: 0.260099966414736</code></pre>
-<pre><code>## Epoch: Iteration #2200 error is: 0.259911419738441</code></pre>
-<pre><code>## Epoch: Iteration #2300 error is: 0.259754903810336</code></pre>
-<pre><code>## Epoch: Iteration #2400 error is: 0.259631024618188</code></pre>
-<pre><code>## Epoch: Iteration #2500 error is: 0.259530825262516</code></pre>
-<pre><code>## Epoch: Iteration #2600 error is: 0.259447215439608</code></pre>
-<pre><code>## Epoch: Iteration #2700 error is: 0.259375400857623</code></pre>
-<pre><code>## Epoch: Iteration #2800 error is: 0.259263311480792</code></pre>
-<pre><code>## Epoch: Iteration #2900 error is: 0.259125035143872</code></pre>
-<pre><code>## Epoch: Iteration #3000 error is: 0.258990745705733</code></pre>
-<pre><code>## Epoch: Iteration #3100 error is: 0.258772754854413</code></pre>
-<pre><code>## Epoch: Iteration #3200 error is: 0.258042488779994</code></pre>
-<pre><code>## Epoch: Iteration #3300 error is: 0.252891227989952</code></pre>
-<pre><code>## Epoch: Iteration #3400 error is: 0.25215622963121</code></pre>
-<pre><code>## Epoch: Iteration #3500 error is: 0.251586426462035</code></pre>
-<pre><code>## Epoch: Iteration #3600 error is: 0.251239979996896</code></pre>
-<pre><code>## Epoch: Iteration #3700 error is: 0.251001796871308</code></pre>
-<pre><code>## Epoch: Iteration #3800 error is: 0.250576754459144</code></pre>
-<pre><code>## Epoch: Iteration #3900 error is: 0.246666015581175</code></pre>
-<pre><code>## Epoch: Iteration #4000 error is: 0.246399951974851</code></pre>
-<pre><code>## Epoch: Iteration #4100 error is: 0.246138009724096</code></pre>
-<pre><code>## Epoch: Iteration #4200 error is: 0.245830231188709</code></pre>
-<pre><code>## Epoch: Iteration #4300 error is: 0.245501720354578</code></pre>
-<pre><code>## Epoch: Iteration #4400 error is: 0.245179217268079</code></pre>
-<pre><code>## Epoch: Iteration #4500 error is: 0.244887908933362</code></pre>
-<pre><code>## Epoch: Iteration #4600 error is: 0.244644764629913</code></pre>
-<pre><code>## Epoch: Iteration #4700 error is: 0.244448000779458</code></pre>
-<pre><code>## Epoch: Iteration #4800 error is: 0.244291300642225</code></pre>
-<pre><code>## Epoch: Iteration #4900 error is: 0.244167504454836</code></pre>
-<pre><code>## Epoch: Iteration #5000 error is: 0.2440683314995</code></pre>
-<pre class="r"><code>pData(e15.Fb.dat.filter)$tSNE1_pos&lt;-e15.Fb.dat.filter.BCV.tsne[,1]
+e15.Fb.dat.filter.BCV.tsne&lt;-tsne(e15.Fb.dat.filter.BCV.pca$x[,1:nComponents],perplexity=15,max_iter=5000,whiten = FALSE)
+
+pData(e15.Fb.dat.filter)$tSNE1_pos&lt;-e15.Fb.dat.filter.BCV.tsne[,1]
 pData(e15.Fb.dat.filter)$tSNE2_pos&lt;-e15.Fb.dat.filter.BCV.tsne[,2]
 
-e15.Fb.dat.filter.BCV.tsne.plot&lt;-myTSNEPlotAlpha(e15.Fb.dat.filter,color=&quot;region&quot;, shape=&quot;age&quot;) + scale_color_brewer(palette=&quot;Set1&quot;) + ggtitle(&quot;e15.5 - BCV tSNE Plot&quot;)</code></pre>
-<pre><code>## Scale for &#39;colour&#39; is already present. Adding another scale for
-## &#39;colour&#39;, which will replace the existing scale.</code></pre>
-<pre class="r"><code>e15.Fb.dat.filter.BCV.tsne.plot</code></pre>
+e15.Fb.dat.filter.BCV.tsne.plot&lt;-myTSNEPlotAlpha(e15.Fb.dat.filter,color=&quot;region&quot;, shape=&quot;age&quot;) + scale_color_brewer(palette=&quot;Set1&quot;) + ggtitle(&quot;e15.5 - BCV tSNE Plot&quot;)
+
+e15.Fb.dat.filter.BCV.tsne.plot</code></pre>
 <p><img src="E15_Fb.recursive_analysis_files/figure-html/tsne-1.png" width="672" /></p>
+</div>
+<div id="identifying-clusters-in-the-data-in-an-unsupervised-manner" class="section level3">
+<h3>Identifying clusters in the data in an unsupervised manner</h3>
 <pre class="r"><code># Going to attempt to use the R program &#39;ADPclust&#39; to determine how many
 # clusters our data has
 
@@ -478,6 +455,9 @@ myTSNEPlotAlpha(e15.Fb.dat.filter, color = &quot;kmeans_tSNE_cluster&quot;, shap
 <pre><code>## Scale for &#39;colour&#39; is already present. Adding another scale for
 ## &#39;colour&#39;, which will replace the existing scale.</code></pre>
 <p><img src="E15_Fb.recursive_analysis_files/figure-html/-%20attempting%20to%20cluster-2.png" width="672" /></p>
+</div>
+<div id="qc-on-the-clusters" class="section level3">
+<h3>QC on the clusters</h3>
 <pre class="r"><code># Distribution of number of genes expressed in clusters
 q &lt;- ggplot(pData(e15.Fb.dat.filter)) +
   geom_density(aes(x=num_genes_expressed,fill=kmeans_tSNE_cluster),alpha=0.3) + scale_fill_brewer(palette=&quot;Set1&quot;) + facet_grid(.~age) + monocle:::monocle_theme_opts()
@@ -490,10 +470,74 @@ q&lt;-ggplot(pData(e15.Fb.dat.filter)) +
 
 q</code></pre>
 <p><img src="E15_Fb.recursive_analysis_files/figure-html/check%20the%20clusters%20-%20qc%20on%20clusters-2.png" width="672" /></p>
+</div>
+<div id="saving-the-e15.5-mb-final-cds" class="section level3">
+<h3>Saving the E15.5 MB final cds</h3>
 <pre class="r"><code>e15.Fb.dat.filter.final &lt;- e15.Fb.dat.filter
 saveRDS(object = e15.Fb.dat.filter.final, file = file.path(Rdata_dir, &quot;e15.Fb.dat.filter.final.Rds&quot;))</code></pre>
+</div>
+<div id="extracting-pdata-information-and-saving-it" class="section level3">
+<h3>Extracting pData information and saving it</h3>
 <pre class="r"><code>e15.Fb.clusters.df &lt;- pData(e15.Fb.dat.filter)[,c(1,39)]
 saveRDS(e15.Fb.clusters.df, file = file.path(Rdata_dir, &quot;e15.Fb.clusters.df.rds&quot;))</code></pre>
+</div>
+<div id="session-info" class="section level3">
+<h3>Session Info</h3>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.3.0 (2016-05-03)
+## Platform: x86_64-apple-darwin13.4.0 (64-bit)
+## Running under: OS X 10.11.6 (El Capitan)
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+##  [1] grid      splines   stats4    parallel  stats     graphics  grDevices
+##  [8] utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] ADPclust_0.7        ggbiplot_0.55       scales_0.5.0       
+##  [4] SC3_1.1.4           ROCR_1.0-7          jackstraw_1.1.1    
+##  [7] lfa_1.2.2           tsne_0.1-3          gridExtra_2.3      
+## [10] slackr_1.4.2        vegan_2.4-4         permute_0.9-4      
+## [13] MASS_7.3-47         gplots_3.0.1        RColorBrewer_1.1-2 
+## [16] Hmisc_4.0-3         Formula_1.2-2       survival_2.41-3    
+## [19] lattice_0.20-35     Heatplus_2.18.0     Rtsne_0.13         
+## [22] pheatmap_1.0.8      tidyr_0.7.1         dplyr_0.7.4        
+## [25] plyr_1.8.4          heatmap.plus_1.3    stringr_1.2.0      
+## [28] marray_1.50.0       limma_3.28.21       reshape2_1.4.2     
+## [31] monocle_2.2.0       DDRTree_0.1.5       irlba_2.2.1        
+## [34] VGAM_1.0-2          ggplot2_2.2.1       Biobase_2.32.0     
+## [37] BiocGenerics_0.18.0 Matrix_1.2-11      
+## 
+## loaded via a namespace (and not attached):
+##  [1] RSelenium_1.7.1        colorspace_1.3-2       class_7.3-14          
+##  [4] rprojroot_1.2          htmlTable_1.9          corpcor_1.6.9         
+##  [7] base64enc_0.1-3        mvtnorm_1.0-6          codetools_0.2-15      
+## [10] doParallel_1.0.11      robustbase_0.92-7      knitr_1.17            
+## [13] jsonlite_1.5           cluster_2.0.6          semver_0.2.0          
+## [16] shiny_1.0.5            rrcov_1.4-3            httr_1.3.1            
+## [19] backports_1.1.1        assertthat_0.2.0       lazyeval_0.2.1        
+## [22] formatR_1.5            acepack_1.4.1          htmltools_0.3.6       
+## [25] tools_3.3.0            bindrcpp_0.2           igraph_1.1.2          
+## [28] gtable_0.2.0           glue_1.1.1             binman_0.1.0          
+## [31] doRNG_1.6.6            Rcpp_0.12.13           slam_0.1-37           
+## [34] gdata_2.18.0           nlme_3.1-131           iterators_1.0.8       
+## [37] mime_0.5               rngtools_1.2.4         gtools_3.5.0          
+## [40] WriteXLS_4.0.0         XML_3.98-1.9           DEoptimR_1.0-8        
+## [43] yaml_2.1.14            pkgmaker_0.22          rpart_4.1-11          
+## [46] fastICA_1.2-1          latticeExtra_0.6-28    stringi_1.1.5         
+## [49] pcaPP_1.9-72           foreach_1.4.3          e1071_1.6-8           
+## [52] checkmate_1.8.4        caTools_1.17.1         rlang_0.1.2           
+## [55] pkgconfig_2.0.1        matrixStats_0.52.2     bitops_1.0-6          
+## [58] qlcMatrix_0.9.5        evaluate_0.10.1        purrr_0.2.3           
+## [61] bindr_0.1              labeling_0.3           htmlwidgets_0.9       
+## [64] magrittr_1.5           R6_2.2.2               combinat_0.0-8        
+## [67] wdman_0.2.2            foreign_0.8-69         mgcv_1.8-22           
+## [70] nnet_7.3-12            tibble_1.3.4           KernSmooth_2.23-15    
+## [73] rmarkdown_1.6          data.table_1.10.4      HSMMSingleCell_0.106.2
+## [76] digest_0.6.12          xtable_1.8-2           httpuv_1.3.5          
+## [79] openssl_0.9.7          munsell_0.4.3          registry_0.3</code></pre>
 </div>
 
 <hr>

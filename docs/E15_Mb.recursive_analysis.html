@@ -312,7 +312,7 @@ div.tocify {
 
 
 <p><strong>Last update:</strong> 2017-11-15</p>
-<p><strong>Code version:</strong> d25269e35abaa0e41cc4e3b00b26aafa6d025ab4</p>
+<p><strong>Code version:</strong> a453f61a07b3534a4454b35957fe68099b0a9996</p>
 <p><strong>Setting important directories. Also loading important libraries and custom functions for analysis.</strong></p>
 <pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
 file_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/output&quot;
@@ -455,6 +455,8 @@ saveRDS(object = e15.Mb.dat.filter.final, file = file.path(Rdata_dir, &quot;e15.
 <p><strong>Extracting pData information and saving it</strong></p>
 <pre class="r"><code>e15.Mb.clusters.df &lt;- pData(e15.Mb.dat.filter)[,c(1,39)]
 saveRDS(e15.Mb.clusters.df, file = file.path(Rdata_dir, &quot;e15.Mb.clusters.df.rds&quot;))</code></pre>
+<div id="session-info" class="section level3">
+<h3>Session Info</h3>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>## R version 3.3.0 (2016-05-03)
 ## Platform: x86_64-apple-darwin13.4.0 (64-bit)
@@ -510,6 +512,7 @@ saveRDS(e15.Mb.clusters.df, file = file.path(Rdata_dir, &quot;e15.Mb.clusters.df
 ## [73] rmarkdown_1.6          data.table_1.10.4      HSMMSingleCell_0.106.2
 ## [76] digest_0.6.12          xtable_1.8-2           httpuv_1.3.5          
 ## [79] openssl_0.9.7          munsell_0.4.3          registry_0.3</code></pre>
+</div>
 
 <hr>
 <p>
