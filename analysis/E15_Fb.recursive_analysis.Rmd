@@ -8,7 +8,7 @@ output: html_document
 
 **Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
 
-###Setting important directories. Also loading important libraries and custom functions for analysis.**
+###Setting important directories. Also loading important libraries and custom functions for analysis.
 ```{r init, message=FALSE, warning=FALSE}
 seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
 file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
@@ -160,7 +160,7 @@ q<-ggplot(pData(e15.Fb.dat.filter)) +
 q
 ```
 
-###Saving the E15.5 MB final cds
+###Saving the E15.5 FB final cds
 ```{r saving this .Rdata so it can be loaded in various scripts }
 e15.Fb.dat.filter.final <- e15.Fb.dat.filter
 saveRDS(object = e15.Fb.dat.filter.final, file = file.path(Rdata_dir, "e15.Fb.dat.filter.final.Rds"))

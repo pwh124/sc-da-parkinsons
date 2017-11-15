@@ -1,11 +1,13 @@
 ---
 title: "E15.5 Recursive data analysis"
 author: "Paul Hook"
-date: "10/10/2017"
 output: html_document
 ---
+**Last update:** `r Sys.Date()`
 
-# Setting important directories. Also loading important libraries and custom functions for analysis.
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
+
+###Setting important directories. Also loading important libraries and custom functions for analysis.
 ```{r init, message=FALSE, warning=FALSE}
 seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
 file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
@@ -15,11 +17,12 @@ source(file.path(Script_dir,'init.R'))
 source(file.path(Script_dir,"tools_R.r"))
 ```
 
-# Loading in the E15.5 data that was subsetted after filtering and saved as an .rds
+### Loading in the E15.5 data that was subsetted after filtering and saved as an .rds
 ```{r Loading .rds}
 e15.dat.filter <- readRDS(file = file.path(Rdata_dir, "e15.dat.filter.rds"))
 ```
 
+###Filter genes by percentage of cells expresssing each gene
 ```{r filter by cells expressing each gene,echo=FALSE,message=FALSE, error=FALSE, warning=FALSE, tidy=TRUE}
 # Plot number of cells expressing each gene as histogram
 hist(fData(e15.dat.filter)$num_cells_expressed,
@@ -36,6 +39,7 @@ hist(fData(e15.dat.filter)$num_cells_expressed,breaks=50,col="red",main="Cells e
 abline(v=numCellThreshold,lty="dashed")
 ```
 
+###Prepping the Monocole model for analysis
 ```{r model_prep,echo=FALSE,message=FALSE, error=FALSE, warning=FALSE, tidy=TRUE}
 # Preparing the model for monocle
 e15.dat.filter <-e15.dat.filter[e15.dat.expressed_genes,]
@@ -48,6 +52,7 @@ e15.dat.filter <- estimateDispersions(e15.dat.filter,cores=8)
 # Deprecated, use tibble::rownames_to_column() instead. 
 ```
 
+###Calculating summary stats
 ```{r summary_stats,echo=FALSE,message=FALSE, error=FALSE, warning=FALSE, tidy=TRUE}
 # Calculating summary stats
 fData(e15.dat.filter)$mean_expr<-apply(round(exprs(e15.dat.filter)),1,mean)
@@ -57,6 +62,7 @@ fData(e15.dat.filter)$percent_detection<-(fData(e15.dat.filter)$num_cells_expres
 fData(e15.dat.filter)$adj_mean_expr <- (fData(e15.dat.filter)$mean_expr*nrow(pData(e15.dat.filter)))/fData(e15.dat.filter)$num_cells_expressed
 ```
 
+###Identifying high dispersion genes
 ```{r high_dispersion_genes_monocle,echo=FALSE,message=FALSE, error=FALSE, warning=FALSE, tidy=TRUE}
 e15.dat.filter.genes <- e15.dat.filter
 disp_table <- dispersionTable(e15.dat.filter.genes)
@@ -67,6 +73,7 @@ plot_ordering_genes(e15.dat.filter.order)
 length(e15.dat.high_bcv_genes) #725
 ```
 
+###Running PCA with high dispersion genes
 ```{r Run PCA with high BCV genes,echo=FALSE,message=FALSE, error=FALSE, warning=FALSE, tidy=TRUE}
 # BCV Identified Marker genes
 e15.dat.filter.BCV.pca<-prcomp(t(log2(exprs(e15.dat.filter[e15.dat.high_bcv_genes,])+1)),center=T,scale. = TRUE)
@@ -83,6 +90,7 @@ hvPCA2
 hvPCA3
 ```
 
+###Viewing screeplots and determining the number of "significant" PCs
 ```{r Screeplots of Data,echo=FALSE,message=FALSE, error=FALSE, warning=FALSE, tidy=TRUE}
 # Making a screeplot of the BCV PCA. This will help determine how 
 # many principal components we should use in our tSNE visualization
@@ -96,6 +104,7 @@ ggscreeplot(e15.dat.filter.BCV.pca)
 # first 4 PCs explain the most variation in our data
 ```
 
+###Creating a t-SNE plot from the "significant" PCs
 ```{r tsne,echo=FALSE,message=FALSE, error=FALSE, warning=FALSE, tidy=TRUE}
 nComponents<-4 # estimated from the screeplots
 # seed<-runif(1,1,9999)
@@ -112,7 +121,7 @@ e15.dat.filter.BCV.tsne.plot<-myTSNEPlotAlpha(e15.dat.filter,color="region", sha
 e15.dat.filter.BCV.tsne.plot
 ```
 
-## Adding the MB/FB subclusters from the recursive analyses
+### Adding the MB/FB subclusters from the recursive analyses
 ```{r Adding the MB/FB subclusters}
 e15.Fb.clusters.df <- readRDS(file = file.path(Rdata_dir, "e15.Fb.clusters.df.rds"))
 e15.Mb.clusters.df <- readRDS(file = file.path(Rdata_dir, "e15.Mb.clusters.df.rds"))
@@ -129,6 +138,7 @@ pData(e15.dat.filter)$subset.cluster <- as.factor(final.data.frame$subset.cluste
 myTSNEPlotAlpha(e15.dat.filter,color="subset.cluster", shape="region") + scale_color_brewer(palette="Set1") + ggtitle("E15.5 All - MB Specific Genes")
 ```
 
+###QC on the clusters from the recursive analyses
 ```{r check the clusters - qc on clusters,echo=FALSE,message=FALSE, error=FALSE, warning=FALSE, tidy=TRUE}
 # Distribution of number of genes expressed in clusters
 q <- ggplot(pData(e15.dat.filter)) +
@@ -143,7 +153,13 @@ q<-ggplot(pData(e15.dat.filter)) +
 q
 ```
 
+###Saving the E15.5 all final cds
 ```{r Saving final .rds,echo=FALSE,message=FALSE, error=FALSE, warning=FALSE, tidy=TRUE}
 e15.dat.filter.final <- e15.dat.filter
 saveRDS(object = e15.dat.filter.final, file = file.path(Rdata_dir, "e15.dat.filter.final.rds"))
+```
+
+###Session Info
+```{r session infomation}
+sessionInfo()
 ```

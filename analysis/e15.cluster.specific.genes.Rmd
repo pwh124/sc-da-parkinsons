@@ -1,30 +1,31 @@
 ---
 title: "E15.5 Analysis"
 author: "Paul Hook"
-date: "6/21/2017"
 output: html_document
 ---
 
-# Setting important directories. Also loading important libraries and custom functions for analysis.
-```{r init,echo=FALSE,message=FALSE, error=FALSE, warning=FALSE, tidy=TRUE}
-seq_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/Data"
-file_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/file.output"
-Rdata_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/rds"
-Script_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/Scripts"
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
+
+###Setting important directories. Also loading important libraries and custom functions for analysis.
+```{r init, message=FALSE, warning=FALSE}
+seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
+Rdata_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
 source(file.path(Script_dir,'init.R'))
 source(file.path(Script_dir,"tools_R.r"))
 ```
 
+###Loading the E15.5 all cell .rds
 ```{r Loading in all E15.5 cell data}
-
 e15.dat.filter <- readRDS(file = file.path(Rdata_dir, "e15.dat.filter.final.Rds"))
 nrow(pData(e15.dat.filter)) # 172
-
-colnames(pData(e15.dat.filter))
 ```
 
+###Performing differentially expression
 ```{r Differential expression between subset clusters}
-
 e15.Diff.Test <- differentialGeneTest(e15.dat.filter, 
                              fullModelFormulaStr = "~subset.cluster",
                              reducedModelFormulaStr = "~1",
@@ -40,10 +41,14 @@ e15.tmp<-e15.Diff.Test[e15.Diff.Test$qval < 0.05,]
 e15.tmp.2 <- e15.tmp[order(e15.tmp$qval),]
 e15.Diff.Genes <- as.character(e15.tmp.2$gene_short_name)
 length(e15.Diff.Genes) # 1196
-
-myTSNEPlotAlpha(e15.dat.filter,color="subset.cluster", shape="age",markers = e15.Diff.Genes[1:20],scaled = T) + scale_color_brewer(palette="Set1") + ggtitle("e15 Mb - BCV tSNE - Top 10 Differentially Expressed Genes")
 ```
 
+### t-SNE plots of top 10 differentially expressed genes
+```{r Making t-SNE}
+myTSNEPlotAlpha(e15.dat.filter,color="subset.cluster", shape="age",markers = e15.Diff.Genes[1:10],scaled = T) + scale_color_brewer(palette="Set1") + ggtitle("e15 Mb - BCV tSNE - Top 10 Differentially Expressed Genes")
+```
+
+###Finding specific genes for each cluster
 ```{r finding specific genes}
 e15.dat.diff.filter <- e15.dat.filter[row.names(e15.tmp.2),]
 nrow(e15.dat.diff.filter)
@@ -105,6 +110,6 @@ for(i in 1:4){
 
 names(e15.specific.genes) <- c("E15.FB.1","E15.FB.2","E15.MB.1","E15.MB.2")
 
-write.table(e15.specific.genes, file = "/Volumes/PAULHOOK/Revision/E15.specific.genes.txt", sep = "\t", quote = F, row.names = F)
+write.table(e15.specific.genes, file = file.path(file_dir,"E15.specific.genes.txt"), sep = "\t", quote = F, row.names = F)
 ```
 
