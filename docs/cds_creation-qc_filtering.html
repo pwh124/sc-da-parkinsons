@@ -303,27 +303,23 @@ div.tocify {
 
 <h1 class="title toc-ignore">cds_creation-qc_filtering</h1>
 <h4 class="author"><em>Paul Hook</em></h4>
-<h4 class="date"><em>6/7/2017</em></h4>
 
 </div>
 
 
-<div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level1">
-<h1>Setting important directories. Also loading important libraries and custom functions for analysis.</h1>
+<p><strong>Last update:</strong> 2017-11-15</p>
+<p><strong>Code version:</strong> 9869107affb695386b1211747cb415f99bb66b1f</p>
+<p><strong>Setting important directories. Also loading important libraries and custom functions for analysis.</strong></p>
 <pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
 file_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/output&quot;
 Rdata_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
 Script_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/code&quot;
 source(file.path(Script_dir,&#39;init.R&#39;))</code></pre>
-</div>
-<div id="untarring-big-files" class="section level1">
-<h1>Untarring big files</h1>
+<p><strong>Untarring big files</strong></p>
 <pre class="r"><code>untar(file.path(seq_dir,&quot;genes.fpkm_table.tar.gz&quot;), exdir = seq_dir)
 untar(file.path(seq_dir, &quot;isoforms.fpkm_table.tar.gz&quot;), exdir = seq_dir)
 untar(file.path(seq_dir, &quot;isoforms.count_table.tar.gz&quot;), exdir = seq_dir)</code></pre>
-</div>
-<div id="loading-fpkm-datasets-generated-through-cuffquant-at-the-gene-and-isoform-levels" class="section level1">
-<h1>Loading FPKM datasets generated through cuffquant at the gene and isoform levels</h1>
+<p><strong>Loading FPKM datasets generated through cuffquant at the gene and isoform levels</strong></p>
 <pre class="r"><code>#Gene FPKMs
 fpkms&lt;-read.delim(file.path(seq_dir,&quot;genes.fpkm_table&quot;),row.names=1) # reading in the fpkm table produced by cuffquant
 gene_ann&lt;-read.delim(file.path(seq_dir,&quot;genes.attr_table&quot;)) # reading in the gene annotation table
@@ -333,9 +329,7 @@ rownames(gene_ann)&lt;-gene_ann$tracking_id #renaming row names
 isoform_fpkms&lt;-read.delim(file.path(seq_dir,&quot;isoforms.fpkm_table&quot;)) # reading in isoform fpkm table produced from cuffquant
 row.names(isoform_fpkms) &lt;- isoform_fpkms$tracking_id # renaming rows
 isoform_fpkms &lt;- isoform_fpkms[,-1] # removing the first column</code></pre>
-</div>
-<div id="annotating-the-single-cell-samples-and-genes" class="section level1">
-<h1>Annotating the single-cell samples and genes</h1>
+<p><strong>Annotating the single-cell samples and genes</strong></p>
 <pre class="r"><code>#Sample Annotation
 sample_ann&lt;-read.delim(file.path(seq_dir,&quot;samples.table&quot;)) # reading in sample table
 sample_ann$cell_id&lt;-str_extract(as.character(sample_ann$sample_id),&quot;TH_0[0-9]+_[A-H][0-9]+&quot;) #assigning cell IDs to the sample annotation table
@@ -359,9 +353,7 @@ tmp&lt;-tmp[,-1] # getting rid of &quot;Row.names&quot; column
 gene_ann&lt;-tmp # create final annotation table
 
 lncRNA_geneIds&lt;-gene_info$gene_id[gene_info$gene_type == &quot;lincRNA&quot;] # pulling out all long non-coding RNA genes</code></pre>
-</div>
-<div id="creating-the-celldataset-cds-and-removing-negative-controlsempty-wells" class="section level1">
-<h1>Creating the CellDataSet (cds) and removing negative controls/empty wells</h1>
+<p><strong>Creating the CellDataSet (cds) and removing negative controls/empty wells</strong></p>
 <pre class="r"><code>fd&lt;-new(&quot;AnnotatedDataFrame&quot;,data=gene_ann) # officially making fData for genes
 pd&lt;-new(&quot;AnnotatedDataFrame&quot;,data=sample_info) # officially making pData for cells
 
@@ -377,9 +369,7 @@ nrow(pData(dat.relative)) # 480 cells</code></pre>
 dat.relative &lt;- dat.relative[,pData(dat.relative)$type==&quot;sample&quot;]
 nrow(pData(dat.relative)) # 473 cells</code></pre>
 <pre><code>## [1] 473</code></pre>
-</div>
-<div id="using-the-monocle-census-algorithm-to-infer-rna-copies-per-cell-and-creating-a-new-cds" class="section level1">
-<h1>Using the Monocle Census algorithm to infer RNA copies per cell and creating a new cds</h1>
+<p><strong>Using the Monocle Census algorithm to infer RNA copies per cell and creating a new cds</strong></p>
 <pre class="r"><code># Infer RNA copies per cell using relative2abs on isoform-level estimated t with the Census algorithm
 fpkm_matrix_adj &lt;- relative2abs(dat.relative, t_estimate=estimate_t(isoform_fpkms),cores=4)
 
@@ -392,11 +382,8 @@ dat &lt;- newCellDataSet(as(as.matrix(fpkm_matrix_adj),&quot;sparseMatrix&quot;)
                       featureData = fd,
                       expressionFamily=negbinomial.size(),
                       lowerDetectionLimit=0.1)</code></pre>
-</div>
-<div id="filtering-on-all-cells" class="section level1">
-<h1>Filtering on all cells</h1>
-<div id="filtering-based-on-number-of-genes-detected-in-each-cell-and-removing-cells-that-fall-outside-of-determined-ranges" class="section level2">
-<h2>Filtering based on number of genes detected in each cell and removing cells that fall outside of determined ranges</h2>
+<p><strong>Filtering on all cells</strong></p>
+<p><strong>Filtering based on number of genes detected in each cell and removing cells that fall outside of determined ranges</strong></p>
 <pre class="r"><code># Loading the data
 dat.filter &lt;- dat
 
@@ -436,9 +423,7 @@ abline(v=high.num.genes.threshold,lty=&quot;dashed&quot;)</code></pre>
 <pre class="r"><code># Number of cells left
 nrow(pData(dat.filter)) #431</code></pre>
 <pre><code>## [1] 431</code></pre>
-</div>
-<div id="filtering-based-on-the-total-mass-of-each-cell-and-removing-cells-that-fall-outside-of-determined-ranges" class="section level2">
-<h2>Filtering based on the total mass of each cell and removing cells that fall outside of determined ranges</h2>
+<p><strong>Filtering based on the total mass of each cell and removing cells that fall outside of determined ranges</strong></p>
 <pre class="r"><code># Plotting the distribution of total cell mass
 hist(pData(dat.filter)$total_mass,
      breaks=50,
@@ -470,9 +455,7 @@ hist(pData(dat.filter)$total_mass,
 abline(v=massThreshold,lty=&quot;dashed&quot;)
 abline(v=massThreshold.2,lty=&quot;dashed&quot;)</code></pre>
 <p><img src="cds_creation-qc_filtering_files/figure-html/Cell%20mass%20threshold%20filtering-2.png" width="672" /></p>
-</div>
-<div id="filtering-based-on-the-total-mrnas-in-each-cell-and-removing-cells-that-fall-outside-of-determined-ranges" class="section level2">
-<h2>Filtering based on the total mRNAs in each cell and removing cells that fall outside of determined ranges</h2>
+<p><strong>Filtering based on the total mRNAs in each cell and removing cells that fall outside of determined ranges</strong></p>
 <pre class="r"><code># Calculate total RNA mass per cell
 pData(dat.filter)$Total_mRNAs &lt;- colSums(exprs(dat.filter))
 
@@ -500,15 +483,10 @@ nrow(pData(dat.filter)) # 410</code></pre>
 <pre class="r"><code>dat.filter&lt;-dat.filter[,pData(dat.filter)$Total_mRNAs &lt;= high.numGeneThreshold]
 nrow(pData(dat.filter)) # 410</code></pre>
 <pre><code>## [1] 410</code></pre>
-</div>
-</div>
-<div id="now-that-only-high-quality-cells-are-retained-the-detectgenes-function-is-used-to-recalculate-the-of-genes-detected-in-each-cell" class="section level1">
-<h1>Now that only high quality cells are retained, the detectGenes function is used to recalculate the # of genes detected in each cell</h1>
+<p><strong>Now that only high quality cells are retained, the detectGenes function is used to recalculate the # of genes detected in each cell</strong></p>
 <pre class="r"><code># Recalculate # of genes
 dat.filter&lt;-detectGenes(dat.filter,min_expr=0.1)</code></pre>
-</div>
-<div id="before-beginning-monocle-analysis-the-data-needs-to-be-checked-to-ensure-that-it-follows-a-log-normal-distribution.-we-find-that-our-data-follows-a-log-normal-distribution.-script-is-pulled-directly-from-monocle-manual." class="section level1">
-<h1>Before beginning Monocle analysis, the data needs to be checked to ensure that it follows a log-normal distribution. We find that our data follows a log-normal distribution. Script is pulled directly from Monocle manual.</h1>
+<p><strong>Before beginning Monocle analysis, the data needs to be checked to ensure that it follows a log-normal distribution. We find that our data follows a log-normal distribution. Script is pulled directly from Monocle manual.</strong></p>
 <pre class="r"><code># Log-transform each value in the expression matrix.
 L &lt;- log(exprs(dat.filter))
 # Standardize each gene, so that they are all on the same scale, Then melt
@@ -520,9 +498,7 @@ size = 0.5, color = &quot;red&quot;) + xlab(&quot;Standardized log(Transcripts)&
 <pre><code>## Warning: Removed 11850640 rows containing non-finite values (stat_density).</code></pre>
 <p><img src="cds_creation-qc_filtering_files/figure-html/Checking%20to%20see%20if%20final%20expression%20matrix%20is%20log-normal-1.png" width="672" /></p>
 <pre class="r"><code>## Warning: Removed 11850640 rows containing non-finite values (stat_density).</code></pre>
-</div>
-<div id="the-data-is-subsetted-according-to-age-and-region.-these-subsetted-cds-are-saved-as-.rds-objects-to-be-used-in-subsequent-analyses" class="section level1">
-<h1>The data is subsetted according to age and region. These subsetted cds are saved as .rds objects to be used in subsequent analyses</h1>
+<p><strong>The data is subsetted according to age and region. These subsetted cds are saved as .rds objects to be used in subsequent analyses</strong></p>
 <pre class="r"><code>nrow(pData(dat.filter)) # 410 cells</code></pre>
 <pre><code>## [1] 410</code></pre>
 <pre class="r"><code>saveRDS(object = dat.filter, file = file.path(Rdata_dir,&quot;dat.filter.rds&quot;))</code></pre>
@@ -554,14 +530,13 @@ nrow(pData(P7.Fb.dat.filter)) # 84</code></pre>
 nrow(pData(P7.Ob.dat.filter)) # 74</code></pre>
 <pre><code>## [1] 74</code></pre>
 <pre class="r"><code>saveRDS(object = P7.Ob.dat.filter, file = file.path(Rdata_dir, &quot;P7.Ob.dat.filter.rds&quot;))</code></pre>
-<p>Removing uncompressed large files before commit</p>
+<p><strong>Removing uncompressed large files before commit</strong></p>
 <pre class="r"><code>file.remove(file.path(seq_dir, &quot;isoforms.fpkm_table&quot;))</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code>file.remove(file.path(seq_dir, &quot;genes.fpkm_table&quot;))</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code>file.remove(file.path(seq_dir, &quot;isoforms.count_table&quot;))</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-</div>
 
 <hr>
 <p>
