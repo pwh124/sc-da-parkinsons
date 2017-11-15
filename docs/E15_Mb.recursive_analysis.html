@@ -303,20 +303,22 @@ div.tocify {
 
 <h1 class="title toc-ignore">E15 MB Analysis</h1>
 <h4 class="author"><em>Paul Hook</em></h4>
-<h4 class="date"><em>6/13/2017</em></h4>
 
 </div>
 
 
-<div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level1">
-<h1>Setting important directories. Also loading important libraries and custom functions for analysis.</h1>
+<p><strong>Last update:</strong> 2017-11-15</p>
+<p><strong>Code version:</strong> 6cb9b48afd8dd5f210742bb8008de954073b9016</p>
+<p><strong>Setting important directories. Also loading important libraries and custom functions for analysis.</strong></p>
 <pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
 file_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/output&quot;
 Rdata_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
 Script_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/code&quot;
 source(file.path(Script_dir,&#39;init.R&#39;))
 source(file.path(Script_dir,&quot;tools_R.r&quot;))</code></pre>
+<p><strong>Loading the E15 cds</strong></p>
 <pre class="r"><code>e15.Mb.dat.filter &lt;- readRDS(file = file.path(Rdata_dir, &quot;e15.Mb.dat.filter.rds&quot;))</code></pre>
+<p><strong>Filter genes by percentage of cells expresssing each gene</strong></p>
 <pre class="r"><code># Plot number of cells expressing each gene as histogram
 hist(fData(e15.Mb.dat.filter)$num_cells_expressed,breaks=50,col=&quot;red&quot;,main=&quot;Cells expressed per gene&quot;)</code></pre>
 <p><img src="E15_Mb.recursive_analysis_files/figure-html/filter%20by%20cells%20expressing%20each%20gene-1.png" width="672" /></p>
@@ -328,6 +330,7 @@ e15.Mb.dat.expressed_genes&lt;-row.names(subset(fData(e15.Mb.dat.filter),num_cel
 hist(fData(e15.Mb.dat.filter)$num_cells_expressed,breaks=50,col=&quot;red&quot;,main=&quot;Cells expressed per gene - threshold&quot;)
 abline(v=numCellThreshold,lty=&quot;dashed&quot;)</code></pre>
 <p><img src="E15_Mb.recursive_analysis_files/figure-html/filter%20by%20cells%20expressing%20each%20gene-2.png" width="672" /></p>
+<p><strong>Prepping the Monocole model for analysis</strong></p>
 <pre class="r"><code># Only keeping &quot;expressed&quot; genes
 e15.Mb.dat.filter &lt;-e15.Mb.dat.filter[e15.Mb.dat.expressed_genes,]
 
@@ -341,11 +344,13 @@ e15.Mb.dat.filter &lt;- estimateDispersions(e15.Mb.dat.filter,cores=8)</code></p
 <pre class="r"><code># Removing 134 outliers
 # Warning message:
 # Deprecated, use tibble::rownames_to_column() instead. </code></pre>
+<p><strong>Calculating summary stats</strong></p>
 <pre class="r"><code># Calculating summary stats
 fData(e15.Mb.dat.filter)$mean_expr&lt;-apply(round(exprs(e15.Mb.dat.filter)),1,mean) # mean expression
 fData(e15.Mb.dat.filter)$sd_expr&lt;-apply(round(exprs(e15.Mb.dat.filter)),1,sd) # sd expression
 fData(e15.Mb.dat.filter)$bcv&lt;-(fData(e15.Mb.dat.filter)$sd_expr/fData(e15.Mb.dat.filter)$mean_expr)**2 # calculating biological coefficient of variation
 fData(e15.Mb.dat.filter)$percent_detection&lt;-(fData(e15.Mb.dat.filter)$num_cells_expressed/dim(e15.Mb.dat.filter)[2])*100 # calculating % detection</code></pre>
+<p><strong>Identifying high dispersion genes</strong></p>
 <pre class="r"><code>e15.Mb.dat.filter.genes &lt;- e15.Mb.dat.filter # spoofing the CellDataSet
 disp_table &lt;- dispersionTable(e15.Mb.dat.filter.genes) # pulling out the dispersion table
 unsup_clustering_genes &lt;-subset(disp_table, mean_expression &gt;= 0.5 &amp; dispersion_empirical &gt;= 2 * dispersion_fit) # subsetting the data to pull out genes with expression above 0.5 and dispersion empirical &gt; 2
@@ -356,6 +361,7 @@ plot_ordering_genes(e15.Mb.dat.filter.order) # plotting the dispersion and genes
 <p><img src="E15_Mb.recursive_analysis_files/figure-html/high_dispersion_genes_monocle%20-%20Pulling%20out%20the%20high%20dispersion%20genes%20for%20PCA%20analysis-1.png" width="672" /></p>
 <pre class="r"><code>length(e15.Mb.dat.high_bcv_genes) # 778</code></pre>
 <pre><code>## [1] 778</code></pre>
+<p><strong>Running PCA with high dispersion genes</strong></p>
 <pre class="r"><code># BCV Identified high dispersion genes. Running PC analysis
 e15.Mb.dat.filter.BCV.pca&lt;-prcomp(t(log2(exprs(e15.Mb.dat.filter[e15.Mb.dat.high_bcv_genes,])+1)),center=T,scale. = TRUE)
 
@@ -376,6 +382,7 @@ hvPCA1</code></pre>
 <p><img src="E15_Mb.recursive_analysis_files/figure-html/Run%20PCA%20with%20high%20BCV%20genes-2.png" width="672" /></p>
 <pre class="r"><code>hvPCA3</code></pre>
 <p><img src="E15_Mb.recursive_analysis_files/figure-html/Run%20PCA%20with%20high%20BCV%20genes-3.png" width="672" /></p>
+<p><strong>Viewing screeplots and determining the number of “significant” PCs</strong></p>
 <pre class="r"><code># Making a screeplot of the BCV PCA. This will help determine how many
 # principal components we should use in our tSNE visualization
 
@@ -388,71 +395,22 @@ abline(v = 5, lwd = 2, col = &quot;red&quot;)</code></pre>
 <p><img src="E15_Mb.recursive_analysis_files/figure-html/Screeplots%20of%20Data-2.png" width="672" /></p>
 <pre class="r"><code># Conclustion: Seems to be clear that just the first four PCs explain the
 # most variation in our data</code></pre>
+<p><strong>Creating a t-SNE plot from the “significant” PCs</strong></p>
 <pre class="r"><code>nComponents&lt;-4 # estimated from the screeplots
 #seed &lt;- runif(1,1,9999) # determined by testing random seeds
 seed &lt;- 223.3888
 set.seed(seed) #setting seed
 
-e15.Mb.dat.filter.BCV.tsne&lt;-tsne(e15.Mb.dat.filter.BCV.pca$x[,1:nComponents],perplexity=20,max_iter=5000,whiten = FALSE)</code></pre>
-<pre><code>## sigma summary: Min. : 0.1833 |1st Qu. : 0.2325 |Median : 0.2534 |Mean : 0.2614 |3rd Qu. : 0.2744 |Max. : 0.3771 |</code></pre>
-<pre><code>## Epoch: Iteration #100 error is: 18.8981764314033</code></pre>
-<pre><code>## Epoch: Iteration #200 error is: 1.82057797318923</code></pre>
-<pre><code>## Epoch: Iteration #300 error is: 1.0627557705288</code></pre>
-<pre><code>## Epoch: Iteration #400 error is: 0.860541195144197</code></pre>
-<pre><code>## Epoch: Iteration #500 error is: 0.544428060789643</code></pre>
-<pre><code>## Epoch: Iteration #600 error is: 0.443751228087836</code></pre>
-<pre><code>## Epoch: Iteration #700 error is: 0.373414741948204</code></pre>
-<pre><code>## Epoch: Iteration #800 error is: 0.320114736894637</code></pre>
-<pre><code>## Epoch: Iteration #900 error is: 0.248152271338633</code></pre>
-<pre><code>## Epoch: Iteration #1000 error is: 0.239081447396684</code></pre>
-<pre><code>## Epoch: Iteration #1100 error is: 0.235807518957143</code></pre>
-<pre><code>## Epoch: Iteration #1200 error is: 0.234983880831103</code></pre>
-<pre><code>## Epoch: Iteration #1300 error is: 0.234358637962433</code></pre>
-<pre><code>## Epoch: Iteration #1400 error is: 0.223169964015939</code></pre>
-<pre><code>## Epoch: Iteration #1500 error is: 0.222533136121361</code></pre>
-<pre><code>## Epoch: Iteration #1600 error is: 0.222315069276989</code></pre>
-<pre><code>## Epoch: Iteration #1700 error is: 0.222249624064641</code></pre>
-<pre><code>## Epoch: Iteration #1800 error is: 0.222184542104963</code></pre>
-<pre><code>## Epoch: Iteration #1900 error is: 0.222123788530187</code></pre>
-<pre><code>## Epoch: Iteration #2000 error is: 0.2220765826162</code></pre>
-<pre><code>## Epoch: Iteration #2100 error is: 0.222044443647432</code></pre>
-<pre><code>## Epoch: Iteration #2200 error is: 0.222023439675139</code></pre>
-<pre><code>## Epoch: Iteration #2300 error is: 0.222010586927773</code></pre>
-<pre><code>## Epoch: Iteration #2400 error is: 0.222002994738201</code></pre>
-<pre><code>## Epoch: Iteration #2500 error is: 0.221998465692379</code></pre>
-<pre><code>## Epoch: Iteration #2600 error is: 0.221995823017942</code></pre>
-<pre><code>## Epoch: Iteration #2700 error is: 0.221994286078107</code></pre>
-<pre><code>## Epoch: Iteration #2800 error is: 0.221993365504916</code></pre>
-<pre><code>## Epoch: Iteration #2900 error is: 0.221992805677108</code></pre>
-<pre><code>## Epoch: Iteration #3000 error is: 0.22199246563781</code></pre>
-<pre><code>## Epoch: Iteration #3100 error is: 0.221992246315916</code></pre>
-<pre><code>## Epoch: Iteration #3200 error is: 0.221992093977855</code></pre>
-<pre><code>## Epoch: Iteration #3300 error is: 0.221991979865637</code></pre>
-<pre><code>## Epoch: Iteration #3400 error is: 0.221991887082323</code></pre>
-<pre><code>## Epoch: Iteration #3500 error is: 0.221991806249198</code></pre>
-<pre><code>## Epoch: Iteration #3600 error is: 0.221991730301334</code></pre>
-<pre><code>## Epoch: Iteration #3700 error is: 0.221991658345048</code></pre>
-<pre><code>## Epoch: Iteration #3800 error is: 0.221991584424782</code></pre>
-<pre><code>## Epoch: Iteration #3900 error is: 0.22199150853323</code></pre>
-<pre><code>## Epoch: Iteration #4000 error is: 0.221991434077698</code></pre>
-<pre><code>## Epoch: Iteration #4100 error is: 0.221991358164391</code></pre>
-<pre><code>## Epoch: Iteration #4200 error is: 0.221991280394692</code></pre>
-<pre><code>## Epoch: Iteration #4300 error is: 0.221991202514581</code></pre>
-<pre><code>## Epoch: Iteration #4400 error is: 0.221991124822939</code></pre>
-<pre><code>## Epoch: Iteration #4500 error is: 0.221991046638556</code></pre>
-<pre><code>## Epoch: Iteration #4600 error is: 0.221990968286366</code></pre>
-<pre><code>## Epoch: Iteration #4700 error is: 0.22199088921724</code></pre>
-<pre><code>## Epoch: Iteration #4800 error is: 0.221990810637386</code></pre>
-<pre><code>## Epoch: Iteration #4900 error is: 0.221990731216091</code></pre>
-<pre><code>## Epoch: Iteration #5000 error is: 0.221990651477086</code></pre>
-<pre class="r"><code>pData(e15.Mb.dat.filter)$tSNE1_pos&lt;-e15.Mb.dat.filter.BCV.tsne[,1]
+e15.Mb.dat.filter.BCV.tsne&lt;-tsne(e15.Mb.dat.filter.BCV.pca$x[,1:nComponents],perplexity=20,max_iter=5000,whiten = FALSE)
+
+pData(e15.Mb.dat.filter)$tSNE1_pos&lt;-e15.Mb.dat.filter.BCV.tsne[,1]
 pData(e15.Mb.dat.filter)$tSNE2_pos&lt;-e15.Mb.dat.filter.BCV.tsne[,2]
 
-e15.Mb.dat.filter.BCV.tsne.plot&lt;-myTSNEPlotAlpha(e15.Mb.dat.filter,color=&quot;region&quot;, shape=&quot;age&quot;) + scale_color_brewer(palette=&quot;Set1&quot;) + ggtitle(&quot;e15.5 - BCV tSNE Plot&quot;)</code></pre>
-<pre><code>## Scale for &#39;colour&#39; is already present. Adding another scale for
-## &#39;colour&#39;, which will replace the existing scale.</code></pre>
-<pre class="r"><code>e15.Mb.dat.filter.BCV.tsne.plot</code></pre>
+e15.Mb.dat.filter.BCV.tsne.plot&lt;-myTSNEPlotAlpha(e15.Mb.dat.filter,color=&quot;region&quot;, shape=&quot;age&quot;) + scale_color_brewer(palette=&quot;Set1&quot;) + ggtitle(&quot;e15.5 - BCV tSNE Plot&quot;)
+
+e15.Mb.dat.filter.BCV.tsne.plot</code></pre>
 <p><img src="E15_Mb.recursive_analysis_files/figure-html/tsne-1.png" width="672" /></p>
+<p><strong>Identifying clusters in the data in an unsupervised manner</strong></p>
 <pre class="r"><code># Going to attempt to use the R program &#39;ADPclust&#39; to determine how many
 # clusters our data has
 
@@ -474,6 +432,7 @@ myTSNEPlotAlpha(e15.Mb.dat.filter, color = &quot;kmeans_tSNE_cluster&quot;, shap
 <pre><code>## Scale for &#39;colour&#39; is already present. Adding another scale for
 ## &#39;colour&#39;, which will replace the existing scale.</code></pre>
 <p><img src="E15_Mb.recursive_analysis_files/figure-html/-%20attempting%20to%20cluster-2.png" width="672" /></p>
+<p><strong>QC on the clusters</strong></p>
 <pre class="r"><code># Distribution of number of genes expressed in clusters
 q &lt;- ggplot(pData(e15.Mb.dat.filter)) +
   geom_density(aes(x=num_genes_expressed,fill=kmeans_tSNE_cluster),alpha=0.3) + scale_fill_brewer(palette=&quot;Set1&quot;) + facet_grid(.~age) + monocle:::monocle_theme_opts()
@@ -486,11 +445,67 @@ q&lt;-ggplot(pData(e15.Mb.dat.filter)) +
 
 q</code></pre>
 <p><img src="E15_Mb.recursive_analysis_files/figure-html/check%20the%20clusters%20-%20qc%20on%20clusters-2.png" width="672" /></p>
+<p><strong>Saving the E15.5 MB final cds</strong></p>
 <pre class="r"><code>e15.Mb.dat.filter.final &lt;- e15.Mb.dat.filter
 saveRDS(object = e15.Mb.dat.filter.final, file = file.path(Rdata_dir, &quot;e15.Mb.dat.filter.final.Rds&quot;))</code></pre>
+<p><strong>Extracting pData information and saving it</strong></p>
 <pre class="r"><code>e15.Mb.clusters.df &lt;- pData(e15.Mb.dat.filter)[,c(1,39)]
 saveRDS(e15.Mb.clusters.df, file = file.path(Rdata_dir, &quot;e15.Mb.clusters.df.rds&quot;))</code></pre>
-</div>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.3.0 (2016-05-03)
+## Platform: x86_64-apple-darwin13.4.0 (64-bit)
+## Running under: OS X 10.11.6 (El Capitan)
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+##  [1] grid      splines   stats4    parallel  stats     graphics  grDevices
+##  [8] utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] ADPclust_0.7        ggbiplot_0.55       scales_0.5.0       
+##  [4] SC3_1.1.4           ROCR_1.0-7          jackstraw_1.1.1    
+##  [7] lfa_1.2.2           tsne_0.1-3          gridExtra_2.3      
+## [10] slackr_1.4.2        vegan_2.4-4         permute_0.9-4      
+## [13] MASS_7.3-47         gplots_3.0.1        RColorBrewer_1.1-2 
+## [16] Hmisc_4.0-3         Formula_1.2-2       survival_2.41-3    
+## [19] lattice_0.20-35     Heatplus_2.18.0     Rtsne_0.13         
+## [22] pheatmap_1.0.8      tidyr_0.7.1         dplyr_0.7.4        
+## [25] plyr_1.8.4          heatmap.plus_1.3    stringr_1.2.0      
+## [28] marray_1.50.0       limma_3.28.21       reshape2_1.4.2     
+## [31] monocle_2.2.0       DDRTree_0.1.5       irlba_2.2.1        
+## [34] VGAM_1.0-2          ggplot2_2.2.1       Biobase_2.32.0     
+## [37] BiocGenerics_0.18.0 Matrix_1.2-11      
+## 
+## loaded via a namespace (and not attached):
+##  [1] RSelenium_1.7.1        colorspace_1.3-2       class_7.3-14          
+##  [4] rprojroot_1.2          htmlTable_1.9          corpcor_1.6.9         
+##  [7] base64enc_0.1-3        mvtnorm_1.0-6          codetools_0.2-15      
+## [10] doParallel_1.0.11      robustbase_0.92-7      knitr_1.17            
+## [13] jsonlite_1.5           cluster_2.0.6          semver_0.2.0          
+## [16] shiny_1.0.5            rrcov_1.4-3            httr_1.3.1            
+## [19] backports_1.1.1        assertthat_0.2.0       lazyeval_0.2.1        
+## [22] formatR_1.5            acepack_1.4.1          htmltools_0.3.6       
+## [25] tools_3.3.0            bindrcpp_0.2           igraph_1.1.2          
+## [28] gtable_0.2.0           glue_1.1.1             binman_0.1.0          
+## [31] doRNG_1.6.6            Rcpp_0.12.13           slam_0.1-37           
+## [34] gdata_2.18.0           nlme_3.1-131           iterators_1.0.8       
+## [37] mime_0.5               rngtools_1.2.4         gtools_3.5.0          
+## [40] WriteXLS_4.0.0         XML_3.98-1.9           DEoptimR_1.0-8        
+## [43] yaml_2.1.14            pkgmaker_0.22          rpart_4.1-11          
+## [46] fastICA_1.2-1          latticeExtra_0.6-28    stringi_1.1.5         
+## [49] pcaPP_1.9-72           foreach_1.4.3          e1071_1.6-8           
+## [52] checkmate_1.8.4        caTools_1.17.1         rlang_0.1.2           
+## [55] pkgconfig_2.0.1        matrixStats_0.52.2     bitops_1.0-6          
+## [58] qlcMatrix_0.9.5        evaluate_0.10.1        purrr_0.2.3           
+## [61] bindr_0.1              labeling_0.3           htmlwidgets_0.9       
+## [64] magrittr_1.5           R6_2.2.2               combinat_0.0-8        
+## [67] wdman_0.2.2            foreign_0.8-69         mgcv_1.8-22           
+## [70] nnet_7.3-12            tibble_1.3.4           KernSmooth_2.23-15    
+## [73] rmarkdown_1.6          data.table_1.10.4      HSMMSingleCell_0.106.2
+## [76] digest_0.6.12          xtable_1.8-2           httpuv_1.3.5          
+## [79] openssl_0.9.7          munsell_0.4.3          registry_0.3</code></pre>
 
 <hr>
 <p>
