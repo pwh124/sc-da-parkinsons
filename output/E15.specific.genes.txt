@@ -1,0 +1,61 @@
+E15.FB.1	E15.FB.2	E15.MB.1	E15.MB.2
+Dlx2	Gm5532	Pax5	Foxa1
+Dlx1	Npy	Lhx9	Lmx1a
+Dlx5	Six3os1	Ebf1	C130021I20Rik
+Fam84a	Gas1	Npnt	Slc6a3
+Gria1	Six3	Tspan9	Chrna6
+Gabra5	Eepd1	Nrn1	Pitx3
+Igfbpl1	Map3k1	Nrg1	Foxa2
+Rnd3	Esrrg	Gabra1	Gch1
+Fgf14	Rpp25	Sorcs2	Ntn1
+Pnoc	Prox1	Slc17a6	En1
+	Fign	Mab21l1	Schip1
+	Sp8	Pcdh18	Nr4a2
+	Gm29374	Syn2	eGFP
+	Isl1	Car10	Ret
+	Sst	Ppp1r14c	Ddc
+	A830082K12Rik	Fam19a2	Slc18a2
+	Ecel1	Tmem163	Necab1
+	Zeb2	Meis1	Wnt5a
+	Nr2f1	Rasgrp2	Ctnna1
+	Slc44a5	Cacna2d1	Th
+	Nr2f2	Pde4b	Cpne7
+	Gpc3	Lrrtm3	Cnpy1
+	2900055J20Rik	Wscd1	Syt17
+	Kcnmb2	Surf6	Ptpru
+	Tmem132b	Adap1	Kcnip4
+	Zbtb7c	Mir99ahg	Uncx
+	Unc5c	Pcdh17	Dlk1
+	Nefm	Tmem91	Ebf2
+	Lrrtm1	Garnl3	Slc10a4
+	Pde2a	Ckmt1	Foxp2
+	Tenm3		Adarb2
+	Zfp804a		Klhl1
+	Galnt13		Serpine2
+	Hs3st5		Pdzrn4
+	Anks1		Igfbp5
+	1110015O18Rik		Bnc2
+	Ubash3b		Wdr54
+	Tle1		St6galnac4
+	Sema3a		Tox2
+	Tshz2		Snca
+	Klhl5		Gm2694
+	Kcnma1		Calb2
+	Zdhhc2		Tcf12
+	Gad2		Rasgef1b
+	Meis2		2810025M15Rik
+	Klf12		Slc1a2
+	Gad1		Cdk14
+	AI593442		Sdc2
+	Lrrc4c		Pbx1
+	Gm14204		Syt13
+	Islr2		Mt3
+	Tmem2		Ifitm2
+	Id4		Rit2
+	Cygb		Mpped2
+	Lhfp		Slit2
+	Grik2		Epha5
+	Rnf220		Epdr1
+	Rftn1		Ptprg
+	Vcan		Osbpl5
+			Stk19

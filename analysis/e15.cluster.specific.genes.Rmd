@@ -25,7 +25,7 @@ nrow(pData(e15.dat.filter)) # 172
 ```
 
 ###Performing differentially expression
-```{r Differential expression between subset clusters}
+```{r Differential expression between subset clusters, message=FALSE, warning=FALSE}
 e15.Diff.Test <- differentialGeneTest(e15.dat.filter, 
                              fullModelFormulaStr = "~subset.cluster",
                              reducedModelFormulaStr = "~1",
@@ -113,3 +113,6 @@ names(e15.specific.genes) <- c("E15.FB.1","E15.FB.2","E15.MB.1","E15.MB.2")
 write.table(e15.specific.genes, file = file.path(file_dir,"E15.specific.genes.txt"), sep = "\t", quote = F, row.names = F)
 ```
 
+```{r session info}
+sessionInfo()
+```
