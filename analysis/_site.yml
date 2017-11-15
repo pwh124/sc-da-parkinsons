@@ -9,6 +9,8 @@ navbar:
       href: index.html
     - text: "CDS creation and QC"
       href: cds_creation-qc_filtering.html
+    - text: "E15.5 Analyses"
+      href: E15.clustering.html
     - text: "About"
       href: about.html
     - text: "License"
@@ -23,3 +25,4 @@ output:
     highlight: textmate
     include:
       after_body: include/footer.html
+
