@@ -282,6 +282,9 @@ div.tocify {
   <a href="cds_creation-qc_filtering.html">CDS creation and QC</a>
 </li>
 <li>
+  <a href="E15.clustering.html">E15.5 Analyses</a>
+</li>
+<li>
   <a href="about.html">About</a>
 </li>
 <li>
@@ -312,9 +315,9 @@ div.tocify {
 
 
 <p><strong>Last update:</strong> 2017-11-15</p>
-<p><strong>Code version:</strong> a453f61a07b3534a4454b35957fe68099b0a9996</p>
+<p><strong>Code version:</strong> 680c5d99bd5fb9b73a8e27b58eae45fb4d179d8f</p>
 <div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level3">
-<h3>Setting important directories. Also loading important libraries and custom functions for analysis.**</h3>
+<h3>Setting important directories. Also loading important libraries and custom functions for analysis.</h3>
 <pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
 file_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/output&quot;
 Rdata_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
@@ -471,8 +474,8 @@ q&lt;-ggplot(pData(e15.Fb.dat.filter)) +
 q</code></pre>
 <p><img src="E15_Fb.recursive_analysis_files/figure-html/check%20the%20clusters%20-%20qc%20on%20clusters-2.png" width="672" /></p>
 </div>
-<div id="saving-the-e15.5-mb-final-cds" class="section level3">
-<h3>Saving the E15.5 MB final cds</h3>
+<div id="saving-the-e15.5-fb-final-cds" class="section level3">
+<h3>Saving the E15.5 FB final cds</h3>
 <pre class="r"><code>e15.Fb.dat.filter.final &lt;- e15.Fb.dat.filter
 saveRDS(object = e15.Fb.dat.filter.final, file = file.path(Rdata_dir, &quot;e15.Fb.dat.filter.final.Rds&quot;))</code></pre>
 </div>
