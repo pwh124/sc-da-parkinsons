@@ -45,7 +45,9 @@ length(e15.Diff.Genes) # 1196
 
 ### t-SNE plots of top 10 differentially expressed genes
 ```{r Making t-SNE}
-myTSNEPlotAlpha(e15.dat.filter,color="subset.cluster", shape="age",markers = e15.Diff.Genes[1:10],scaled = T) + scale_color_brewer(palette="Set1") + ggtitle("e15 Mb - BCV tSNE - Top 10 Differentially Expressed Genes")
+q <-myTSNEPlotAlpha(e15.dat.filter,color="subset.cluster", shape="age",markers = e15.Diff.Genes[1:10],scaled = T) + scale_color_brewer(palette="Set1") + ggtitle("e15 Mb - BCV tSNE - Top 10 Differentially Expressed Genes")
+
+q
 ```
 
 ###Finding specific genes for each cluster
