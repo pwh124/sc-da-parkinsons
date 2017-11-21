@@ -7,3 +7,6 @@ output: html_document
 
 * [Results](All.cells.analyses.links.html)
 
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
