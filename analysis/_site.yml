@@ -24,6 +24,9 @@ navbar:
           href: All.cells.analyses.links.html
         - text: "PD Gene Scoring"
           href: PD.GWAS.scoring.links.html
+    - text: "Paper Figures"
+      icon: fa-paperclip
+      href: paper-figures.html
     - icon: fa-github
       href: https://github.com/pwh124/sc-da-parkinsons
 output:
