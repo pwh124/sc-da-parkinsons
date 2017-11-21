@@ -7,12 +7,18 @@ navbar:
   left:
     - text: "Home"
       href: index.html
+    - text: "About"
+      href: about.html
     - text: "CDS creation and QC"
       href: cds_creation-qc_filtering.html
     - text: "E15.5 Analyses"
       href: E15.clustering.html
-    - text: "About"
-      href: about.html
+    - text: "P7 Analyses"
+      href: P7.analyses.links.html
+    - text: "All cell analyses"
+      href: All.cells.analyses.links.html
+    - text: "PD Gene Scoring"
+      href: PD.GWAS.scoring.links.html
     - text: "License"
       href: license.html
     - icon: fa-github
