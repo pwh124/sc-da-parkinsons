@@ -342,7 +342,7 @@ div.tocify {
 
 
 <p><strong>Last update:</strong> 2017-11-27</p>
-<p><strong>Code version:</strong> 7a165541e299ff6488734345ec7d38047e6a37e8</p>
+<p><strong>Code version:</strong> a8ffe843e7168d51b41e169b9f2836747eba5017</p>
 <div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level3">
 <h3>Setting important directories. Also loading important libraries and custom functions for analysis.</h3>
 <pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
@@ -487,12 +487,12 @@ names(Sub.clusters.df) &lt;- c(&quot;sample_id.x&quot;,&quot;remove&quot;,&quot;
 final.data.frame &lt;- merge(x = pData(dat.filter), y = Sub.clusters.df, by = &quot;sample_id.x&quot;)
 pData(dat.filter)$subset.cluster &lt;- as.factor(final.data.frame$subset.cluster)
 
-myTSNEPlotAlpha(dat.filter,color=&quot;subset.cluster&quot;, shape=&quot;age&quot;) + scale_color_brewer(palette=&quot;Set1&quot;) + ggtitle(&quot;All valid cells - tSNE Plot&quot;)</code></pre>
+# Colors chosen for displaying all subset clusters on 1 plot
+color &lt;- c(&quot;#F6937A&quot;,&quot;#882F1C&quot;,&quot;#BF1F36&quot;,&quot;#C2B280&quot;,&quot;#F2C318&quot;,&quot;#E790AC&quot;,&quot;#F18421&quot;,&quot;#0168A5&quot;,&quot;#848483&quot;,&quot;#A4CAEB&quot;,&quot;#885793&quot;,&quot;#008957&quot;,&quot;#222222&quot;)
+
+myTSNEPlotAlpha(dat.filter,color=&quot;subset.cluster&quot;, shape=&quot;age&quot;) + scale_color_manual(values = color, name = &quot;Subset Cluster&quot;) + ggtitle(&quot;All valid cells - tSNE Plot&quot;) + xlab(&quot;tSNE 1&quot;) + ylab(&quot;tSNE 2&quot;) + theme(legend.position = &quot;bottom&quot;,axis.line = element_line(colour = &quot;black&quot;)) + theme(plot.title = element_text(hjust = 0.5)) + coord_fixed(ratio = 1) + scale_shape(name = &quot;Age&quot;)</code></pre>
 <pre><code>## Scale for &#39;colour&#39; is already present. Adding another scale for
 ## &#39;colour&#39;, which will replace the existing scale.</code></pre>
-<pre><code>## Warning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette Set1 is 9
-## Returning the palette you asked for with that many colors</code></pre>
-<pre><code>## Warning: Removed 83 rows containing missing values (geom_point).</code></pre>
 <p><img src="All_cells.recursive_analysis_files/figure-html/adding%20subset%20clusters-1.png" width="672" /></p>
 </div>
 <div id="saving-final-all-cell-cds-for-future-analyses-and-figures" class="section level3">
