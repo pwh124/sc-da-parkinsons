@@ -3,9 +3,9 @@ title: Results
 output: html_document
 ---
 
-**Below are links to analyses for P7 data
+Below are links to analyses for P7 data
 
-* [cds_creation-qc_filtering](cds_creation-qc_filtering.html)
+* [P7 olfactory bulb analysis](P7_Ob.recursive_analysis.html)
 
 **Last update:** `r Sys.Date()`
 

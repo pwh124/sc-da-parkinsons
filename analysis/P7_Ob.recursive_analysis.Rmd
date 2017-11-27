@@ -1,0 +1,301 @@
+---
+title: "P7 Ob Recursive Analysis"
+author: "Paul Hook"
+output: html_document
+---
+
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
+
+###Setting important directories. Also loading important libraries and custom functions for analysis.
+```{r init, message=FALSE, warning=FALSE}
+seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
+Rdata_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
+source(file.path(Script_dir,'init.R'))
+source(file.path(Script_dir,"tools_R.r"))
+```
+
+###Loading OB .rds
+```{r loading .rds}
+P7.Ob.dat.filter <- readRDS(file = file.path(Rdata_dir, "P7.Ob.dat.filter.rds"))
+```
+
+###Filter genes by percentage of cells expresssing each gene
+```{r filter by cells expressing each gene}
+# Plot number of cells expressing each gene as histogram
+hist(fData(P7.Ob.dat.filter)$num_cells_expressed,
+     breaks=100,col="red",
+     main="Cells expressed per gene")
+
+# Keep only expressed genes with expression in >= 5% of cells
+numCellThreshold<-nrow(pData(P7.Ob.dat.filter))*0.05
+P7.Ob.dat.expressed_genes<-row.names(subset(fData(P7.Ob.dat.filter),num_cells_expressed >= numCellThreshold))
+
+# Same plot as above with threshold
+hist(fData(P7.Ob.dat.filter)$num_cells_expressed,
+     breaks=100,col="red",
+     main="Cells expressed per gene - threshold")
+abline(v=numCellThreshold,lty="dashed")
+```
+
+###Prepping the Monocole model for analysis
+```{r model_prep - Preparing the data for monocle analysis}
+# Only keeping "expressed" genes
+P7.Ob.dat.filter <-P7.Ob.dat.filter[P7.Ob.dat.expressed_genes,]
+
+# Estimating the size factors
+P7.Ob.dat.filter <-estimateSizeFactors(P7.Ob.dat.filter)
+
+# Estimating dispersions
+P7.Ob.dat.filter <- estimateDispersions(P7.Ob.dat.filter,cores=8)
+# Removing 290 outliers
+# Warning message:
+# Deprecated, use tibble::rownames_to_column() instead. 
+```
+
+###Calculating summary stats
+```{r summary_stats}
+# Calculating summary stats
+fData(P7.Ob.dat.filter)$mean_expr<-apply(round(exprs(P7.Ob.dat.filter)),1,mean) # mean expression
+fData(P7.Ob.dat.filter)$sd_expr<-apply(round(exprs(P7.Ob.dat.filter)),1,sd) # sd expression
+fData(P7.Ob.dat.filter)$bcv<-(fData(P7.Ob.dat.filter)$sd_expr/fData(P7.Ob.dat.filter)$mean_expr)**2 # calculating biological coefficient of variation
+fData(P7.Ob.dat.filter)$percent_detection<-(fData(P7.Ob.dat.filter)$num_cells_expressed/dim(P7.Ob.dat.filter)[2])*100 # calculating % detection
+```
+
+###Identifying high dispersion genes
+```{r high_dispersion_genes_monocle - Pulling out the high dispersion genes for PCA analysis}
+P7.Ob.dat.filter.genes <- P7.Ob.dat.filter # spoofing the CellDataSet
+disp_table <- dispersionTable(P7.Ob.dat.filter.genes) # pulling out the dispersion table
+unsup_clustering_genes <-subset(disp_table, mean_expression >= 0.5 & dispersion_empirical >= 1.5 * dispersion_fit) # subsetting the data to pull out genes with expression above 0.5 and dispersion empirical > 2
+P7.Ob.dat.high_bcv_genes<-unsup_clustering_genes$gene_id # pulling out list of genes
+P7.Ob.dat.filter.order <- setOrderingFilter(P7.Ob.dat.filter, unsup_clustering_genes$gene_id)
+plot_ordering_genes(P7.Ob.dat.filter.order) # plotting the dispersion and genes
+length(P7.Ob.dat.high_bcv_genes) # 934
+```
+
+###Running PCA with high dispersion genes
+```{r Run PCA with high BCV genes}
+# BCV Identified high dispersion genes. Running PC analysis
+P7.Ob.dat.filter.BCV.pca<-prcomp(t(log2(exprs(P7.Ob.dat.filter[P7.Ob.dat.high_bcv_genes,])+1)),center=T,scale. = TRUE)
+
+# Plotting the PCA graphs
+# Plotting the first 2 PCs and coloring by age
+hvPCA1<-ggbiplot(P7.Ob.dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(P7.Ob.dat.filter)$age,ellipse=T,ellipse.prob = 0.99,var.axes=F) + scale_color_manual(values=c("darkgreen","red")) + monocle:::monocle_theme_opts()
+
+# Plotting the first 2 PCs and coloring by region
+hvPCA2<-ggbiplot(P7.Ob.dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(P7.Ob.dat.filter)$region,ellipse=T,ellipse.prob = 0.90, var.axes=F) + scale_color_brewer(palette="Set1") + monocle:::monocle_theme_opts() + ggtitle("P7 OB PCA")
+
+# Plotting the first 2 PCs and coloring by plate the cell was sequenced from
+hvPCA3<-ggbiplot(P7.Ob.dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(P7.Ob.dat.filter)$split_plate,ellipse=T,ellipse.prob = 0.99,var.axes=F) + scale_color_brewer(palette="Set1") + monocle:::monocle_theme_opts()
+
+# Show the plots in the terminal
+hvPCA1
+hvPCA2
+hvPCA3
+```
+
+###The first pass analysis seems to show obvious outliers in the PCA. Below, the relevant data is saved to look at outliers in the future
+```{r Saving .rds for outlier plots}
+# Saving the outlier plot
+OB.outlier.plot <- ggbiplot(P7.Ob.dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(P7.Ob.dat.filter)$region,ellipse=F,var.axes=F)
+
+saveRDS(OB.outlier.plot, file = file.path(Rdata_dir,"P7.OB.PCA.outliers.rds"))
+
+
+saveRDS(hvPCA2, file = file.path(Rdata_dir,"P7.OB.PCA.outliers.rds"))
+```
+
+###In an attempt to identify what the outliers are, genes driving the outlier appearance are extracted and saved for GSEA analysis
+```{r what are these outliers}
+# PC1 seems to describe outliers in the data
+P7.OB.dat.pca.rotations.df <- as.data.frame(P7.Ob.dat.filter.BCV.pca$rotation[,1:6])
+genes.tmp <- P7.OB.dat.pca.rotations.df[order(-P7.OB.dat.pca.rotations.df$PC1),]
+PC1.genes <- as.character(row.names(genes.tmp))
+PC1.genes.names <- lookupGeneName(P7.Ob.dat.filter,PC1.genes)
+genes.tmp$gene_short_name <- PC1.genes.names
+
+
+PC1.genes.df <- genes.tmp[,c(7,1)]
+write.table(PC1.genes.df, file = file.path(file_dir, "P7.Ob.cells.PC1.rnk"),quote = F, sep = '\t', row.names = F, col.names = F)
+```
+
+###Removing outliers from the original OB dataset
+```{r removing outliers}
+pData(P7.Ob.dat.filter)$PC1 <- P7.Ob.dat.filter.BCV.pca$x[,1]
+pData(P7.Ob.dat.filter)$PC2 <- P7.Ob.dat.filter.BCV.pca$x[,2]
+P7.Ob.dat.outliers.1<-as.character(pData(P7.Ob.dat.filter[,pData(P7.Ob.dat.filter)$PC1 <= -10])$sample_id.x)
+length(P7.Ob.dat.outliers.1)
+
+# Remove outliers detected through downstream PCA
+P7.Ob.dat.filter <- readRDS(file = file.path(Rdata_dir, "P7.Ob.dat.filter.rds"))
+
+P7.Ob.dat.filter <- P7.Ob.dat.filter[,!(pData(P7.Ob.dat.filter)$sample_id.x %in% P7.Ob.dat.outliers.1)]
+
+nrow(pData(P7.Ob.dat.filter)) #68
+
+saveRDS(object = P7.Ob.dat.outliers.1, file = file.path(Rdata_dir,"P7.Ob.outliers.rds"))
+```
+
+##Rerunning analysis on P7 OB with outliers removed. 
+
+###Filter genes by percentage of cells expresssing each gene with outliers removed
+```{r filter by cells expressing each gene with outliers removed}
+par(mfrow=c(1,1))
+# Plot number of cells expressing each gene as histogram
+hist(fData(P7.Ob.dat.filter)$num_cells_expressed,
+     breaks=50,col="red",
+     main="Cells expressed per gene")
+
+# Keep only expressed genes with expression in >= 5% of cells
+numCellThreshold<-nrow(pData(P7.Ob.dat.filter))*0.05
+P7.Ob.dat.expressed_genes<-row.names(subset(fData(P7.Ob.dat.filter),num_cells_expressed >= numCellThreshold))
+
+# Same plot as above with threshold
+hist(fData(P7.Ob.dat.filter)$num_cells_expressed,breaks=50,col="red",main="Cells expressed per gene - threshold")
+abline(v=numCellThreshold,lty="dashed")
+```
+
+###Prepping the Monocole model for analysis with outliers removed
+```{r model_prep - Preparing the data for monocle analysis with outliers removed}
+# Only keeping "expressed" genes
+P7.Ob.dat.filter <-P7.Ob.dat.filter[P7.Ob.dat.expressed_genes,]
+
+# Estimating the size factors
+P7.Ob.dat.filter <-estimateSizeFactors(P7.Ob.dat.filter)
+
+# Estimating dispersions
+P7.Ob.dat.filter <- estimateDispersions(P7.Ob.dat.filter,cores=8)
+# Removing 313 outliers
+# Warning message:
+# Deprecated, use tibble::rownames_to_column() instead. 
+```
+
+###Calculating summary stats with outliers removed
+```{r summary_stats with outliers removed}
+# Calculating summary stats
+fData(P7.Ob.dat.filter)$mean_expr<-apply(round(exprs(P7.Ob.dat.filter)),1,mean) # mean expression
+fData(P7.Ob.dat.filter)$sd_expr<-apply(round(exprs(P7.Ob.dat.filter)),1,sd) # sd expression
+fData(P7.Ob.dat.filter)$bcv<-(fData(P7.Ob.dat.filter)$sd_expr/fData(P7.Ob.dat.filter)$mean_expr)**2 # calculating biological coefficient of variation
+fData(P7.Ob.dat.filter)$percent_detection<-(fData(P7.Ob.dat.filter)$num_cells_expressed/dim(P7.Ob.dat.filter)[2])*100 # calculating % detection
+```
+
+###Identifying high dispersion genes with outliers removed
+```{r high_dispersion_genes_monocle - Pulling out the high dispersion genes for PCA analysis with outliers removed}
+P7.Ob.dat.filter.genes <- P7.Ob.dat.filter # spoofing the CellDataSet
+disp_table <- dispersionTable(P7.Ob.dat.filter.genes) # pulling out the dispersion table
+unsup_clustering_genes <-subset(disp_table, mean_expression >= 0.5 & dispersion_empirical >= 1.5 * dispersion_fit) # subsetting the data to pull out genes with expression above 0.5 and dispersion empirical > 2
+P7.Ob.dat.high_bcv_genes<-unsup_clustering_genes$gene_id # pulling out list of genes
+P7.Ob.dat.filter.order <- setOrderingFilter(P7.Ob.dat.filter, unsup_clustering_genes$gene_id)
+plot_ordering_genes(P7.Ob.dat.filter.order) # plotting the dispersion and genes
+length(P7.Ob.dat.high_bcv_genes) # 1008
+```
+
+###Running PCA with high dispersion genes with outliers removed
+```{r Run PCA with high BCV genes with outliers removed}
+# BCV Identified high dispersion genes. Running PC analysis
+P7.Ob.dat.filter.BCV.pca<-prcomp(t(log2(exprs(P7.Ob.dat.filter[P7.Ob.dat.high_bcv_genes,])+1)),center=T,scale. = TRUE)
+
+# Plotting the PCA graphs
+# Plotting the first 2 PCs and coloring by age
+hvPCA1<-ggbiplot(P7.Ob.dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(P7.Ob.dat.filter)$age,ellipse=T,ellipse.prob = 0.99,var.axes=F) + scale_color_manual(values=c("darkgreen","red")) + monocle:::monocle_theme_opts()
+
+# Plotting the first 2 PCs and coloring by region
+hvPCA2<-ggbiplot(P7.Ob.dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(P7.Ob.dat.filter)$region,ellipse=T,ellipse.prob = 0.99,var.axes=F) + scale_color_brewer(palette="Set1") + monocle:::monocle_theme_opts()
+
+# Plotting the first 2 PCs and coloring by plate the cell was sequenced from
+hvPCA3<-ggbiplot(P7.Ob.dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(P7.Ob.dat.filter)$split_plate,ellipse=T,ellipse.prob = 0.99,var.axes=F) + scale_color_brewer(palette="Set1") + monocle:::monocle_theme_opts()
+
+# Show the plots in the terminal
+hvPCA1
+hvPCA2
+hvPCA3
+
+# No real outliers seen
+```
+
+###Viewing screeplots and determining the number of "significant" PCs. Since no outliers were identified above, we will continue with the analysis with outliers removed
+```{r Screeplots of Data with outliers removed,tidy=TRUE}
+# Making a screeplot of the BCV PCA. This will help determine how 
+# many principal components we should use in our tSNE visualization
+
+# Show this plot
+screeplot(P7.Ob.dat.filter.BCV.pca, npcs = 30, main = "P7 Ob - High BCV Genes Screeplot")
+abline(v=2.5, lwd=2, col="red")
+ggscreeplot(P7.Ob.dat.filter.BCV.pca)
+
+# Conclustion: Seems to be clear that just the 
+# first 2 PCs explain the most variation in our data
+```
+
+###Creating a t-SNE plot from the "significant" PCs with outliers removed
+```{r tsne with outliers removed, warning=FALSE, message=FALSE}
+nComponents<-2 # estimated from the screeplots
+#seed <- runif(1,1,9999) # determined by testing random seeds
+seed <- 9552.278
+set.seed(seed) #setting seed
+
+P7.Ob.dat.filter.BCV.tsne<-tsne(P7.Ob.dat.filter.BCV.pca$x[,1:nComponents],perplexity=20,max_iter=5000,whiten = FALSE)
+
+pData(P7.Ob.dat.filter)$tSNE1_pos<-P7.Ob.dat.filter.BCV.tsne[,1]
+pData(P7.Ob.dat.filter)$tSNE2_pos<-P7.Ob.dat.filter.BCV.tsne[,2]
+
+P7.Ob.dat.filter.BCV.tsne.plot<-myTSNEPlotAlpha(P7.Ob.dat.filter,color="region", shape="age") + scale_color_brewer(palette="Set1") + ggtitle("P7 Ob - BCV tSNE Plot")
+
+P7.Ob.dat.filter.BCV.tsne.plot
+```
+
+###Identifying clusters in the data in an unsupervised manner with outliers removed
+```{r - attempting to cluster with outliers removed,tidy=TRUE}
+# Going to attempt to use the R program "ADPclust" to determine how many clusters our data has
+
+# Loading NbClust
+library(ADPclust)
+
+# Running ADPclust
+clust.res <- adpclust(x = P7.Ob.dat.filter.BCV.tsne, draw = T)
+
+# Extracting the "best partition" (aka the best cluster) for each cell
+clust.res.df <- as.data.frame(clust.res$cluster)
+
+# Adding the cluster assignment for each cell to the pData
+pData(P7.Ob.dat.filter)$kmeans_tSNE_cluster <- as.factor(clust.res.df$`clust.res$cluster`)
+
+# Plotting the same tSNE plot as above but coloring with the "clusters"
+myTSNEPlotAlpha(P7.Ob.dat.filter,color="kmeans_tSNE_cluster", shape="age") + scale_color_brewer(palette="Set1") + ggtitle("All Cells - BCV tSNE with Clusters Plot")
+```
+
+###QC on the clusters with outliers removed
+```{r check the clusters - qc on clusters with outliers removed}
+# Distribution of number of genes expressed in clusters
+q <- ggplot(pData(P7.Ob.dat.filter)) +
+  geom_density(aes(x=num_genes_expressed,fill=kmeans_tSNE_cluster),alpha=0.3) + scale_fill_brewer(palette="Set1") + facet_grid(.~age) + monocle:::monocle_theme_opts()
+
+q
+
+# Plotting the distribution of total mRNAs in clusters
+q<-ggplot(pData(P7.Ob.dat.filter)) +
+  geom_density(aes(x=Total_mRNAs,fill=kmeans_tSNE_cluster),alpha=0.3) + scale_fill_brewer(palette="Set1") + facet_grid(.~age) + monocle:::monocle_theme_opts()
+
+q
+```
+
+###Saving the P7 OB final cds 
+```{r saving analyzed cds for P7 Ob with outliers removed}
+P7.Ob.dat.filter.final <- P7.Ob.dat.filter
+saveRDS(object = P7.Ob.dat.filter.final, file = file.path(Rdata_dir, "P7.Ob.dat.filter.final.Rds"))
+```
+
+###Extracting pData information and saving it 
+```{r extacting pData information with outliers removed}
+P7.Ob.clusters.df <- pData(P7.Ob.dat.filter)[,c(1,39)]
+saveRDS(P7.Ob.clusters.df, file = file.path(Rdata_dir, "P7.Ob.clusters.df.rds"))
+```
+
+###Session Info
+```{r session infomation with outliers removed}
+sessionInfo()
+```
+
