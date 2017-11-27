@@ -1,24 +1,29 @@
 ---
 title: "P7 MB Recursive Analysis"
 author: "Paul Hook"
-date: "6/14/2017"
 output: html_document
 ---
 
-# Setting important directories. Also loading important libraries and custom functions for analysis.
-```{r init,echo=FALSE,message=FALSE, error=FALSE, warning=FALSE, tidy=TRUE}
-seq_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/Data"
-file_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/file.output"
-Rdata_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/rds"
-Script_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/Scripts"
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
+
+###Setting important directories. Also loading important libraries and custom functions for analysis.
+```{r init, message=FALSE, warning=FALSE}
+seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
+Rdata_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
 source(file.path(Script_dir,'init.R'))
 source(file.path(Script_dir,"tools_R.r"))
 ```
 
+###Loading MB .rds
 ```{r loading .rds}
 P7.Mb.dat.filter <- readRDS(file = file.path(Rdata_dir, "P7.Mb.dat.filter.rds"))
 ```
 
+###Filter genes by percentage of cells expresssing each gene
 ```{r filter by cells expressing each gene}
 # Plot number of cells expressing each gene as histogram
 hist(fData(P7.Mb.dat.filter)$num_cells_expressed,breaks=100,col="red",main="Cells expressed per gene")
@@ -32,6 +37,7 @@ hist(fData(P7.Mb.dat.filter)$num_cells_expressed,breaks=100,col="red",main="Cell
 abline(v=numCellThreshold,lty="dashed")
 ```
 
+###Prepping the Monocole model for analysis
 ```{r model_prep - Preparing the data for monocle analysis}
 # Only keeping "expressed" genes
 P7.Mb.dat.filter <-P7.Mb.dat.filter[P7.Mb.dat.expressed_genes,]
@@ -46,6 +52,7 @@ P7.Mb.dat.filter <- estimateDispersions(P7.Mb.dat.filter,cores=8)
 # Deprecated, use tibble::rownames_to_column() instead. 
 ```
 
+###Calculating summary stats
 ```{r summary_stats}
 # Calculating summary stats
 fData(P7.Mb.dat.filter)$mean_expr<-apply(round(exprs(P7.Mb.dat.filter)),1,mean) # mean expression
@@ -54,6 +61,7 @@ fData(P7.Mb.dat.filter)$bcv<-(fData(P7.Mb.dat.filter)$sd_expr/fData(P7.Mb.dat.fi
 fData(P7.Mb.dat.filter)$percent_detection<-(fData(P7.Mb.dat.filter)$num_cells_expressed/dim(P7.Mb.dat.filter)[2])*100 # calculating % detection
 ```
 
+###Identifying high dispersion genes
 ```{r high_dispersion_genes_monocle - Pulling out the high dispersion genes for PCA analysis}
 P7.Mb.dat.filter.genes <- P7.Mb.dat.filter # spoofing the CellDataSet
 disp_table <- dispersionTable(P7.Mb.dat.filter.genes) # pulling out the dispersion table
@@ -64,6 +72,7 @@ plot_ordering_genes(P7.Mb.dat.filter.order) # plotting the dispersion and genes
 length(P7.Mb.dat.high_bcv_genes) # 923
 ```
 
+###Running PCA with high dispersion genes
 ```{r Run PCA with high BCV genes}
 # BCV Identified high dispersion genes. Running PC analysis
 P7.Mb.dat.filter.BCV.pca<-prcomp(t(log2(exprs(P7.Mb.dat.filter[P7.Mb.dat.high_bcv_genes,])+1)),center=T,scale. = TRUE)
@@ -82,7 +91,10 @@ hvPCA3<-ggbiplot(P7.Mb.dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(P7
 hvPCA1
 hvPCA2
 hvPCA3
+```
 
+###The first pass analysis seems to show obvious outliers in the PCA. Below, the relevant data is saved to look at outliers in the future
+```{r saving .rds of outliers}
 MB.outlier.plot <- ggbiplot(P7.Mb.dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(P7.Mb.dat.filter)$region,ellipse=F,var.axes=F)
 
 saveRDS(MB.outlier.plot, file = file.path(Rdata_dir,"P7.MB.PCA.outliers.rds"))
@@ -90,14 +102,14 @@ saveRDS(MB.outlier.plot, file = file.path(Rdata_dir,"P7.MB.PCA.outliers.rds"))
 saveRDS(hvPCA2, file = file.path(Rdata_dir,"P7.MB.PCA.outliers.rds"))
 ```
 
+###In an attempt to identify what the outliers are, genes driving the outlier appearance are extracted and saved for GSEA analysis
 ```{r what are these outliers}
 # PC1 seems to describe outliers in the data
 P7.MB.dat.pca.rotations.df <- as.data.frame(P7.Mb.dat.filter.BCV.pca$rotation[,1:6])
 genes.tmp <- P7.MB.dat.pca.rotations.df[order(-P7.MB.dat.pca.rotations.df$PC1),]
 PC1.genes <- as.character(row.names(genes.tmp))
-#PC1.genes <- PC1.genes[1:200]
-PC1.genes <- lookupGeneName(dat,PC1.genes)
-genes.tmp$gene_short_name <- PC1.genes
+PC1.genes.names <- lookupGeneName(P7.Mb.dat.filter,PC1.genes)
+genes.tmp$gene_short_name <- PC1.genes.names
 
 PC1.genes.df <- genes.tmp[,c(7,1)]
 write.table(PC1.genes.df, file = file.path(file_dir, "P7.Mb.cells.PC1.rnk"),quote = F, sep = '\t', row.names = F, col.names = F)
@@ -106,14 +118,14 @@ write.table(PC1.genes.df, file = file.path(file_dir, "P7.Mb.cells.PC1.rnk"),quot
 P7.MB.dat.pca.rotations.df <- as.data.frame(P7.Mb.dat.filter.BCV.pca$rotation[,1:6])
 genes.tmp <- P7.MB.dat.pca.rotations.df[order(-P7.MB.dat.pca.rotations.df$PC2),]
 PC2.genes <- as.character(row.names(genes.tmp))
-#PC1.genes <- PC1.genes[1:200]
-PC2.genes <- lookupGeneName(dat,PC2.genes)
-genes.tmp$gene_short_name <- PC2.genes
+PC2.genes.names <- lookupGeneName(P7.Mb.dat.filter,PC2.genes)
+genes.tmp$gene_short_name <- PC2.genes.names
 
 PC2.genes.df <- genes.tmp[,c(7,2)]
 write.table(PC2.genes.df, file = file.path(file_dir, "P7.Mb.cells.PC2.rnk"),quote = F, sep = '\t', row.names = F, col.names = F)
 ```
 
+###Removing outliers from the original MB dataset
 ```{r removing outliers}
 pData(P7.Mb.dat.filter)$PC1 <- P7.Mb.dat.filter.BCV.pca$x[,1]
 pData(P7.Mb.dat.filter)$PC2 <- P7.Mb.dat.filter.BCV.pca$x[,2]
@@ -122,9 +134,7 @@ P7.Mb.dat.outliers.2<-as.character(pData(P7.Mb.dat.filter[,pData(P7.Mb.dat.filte
 P7.Mb.outliers <- c(P7.Mb.dat.outliers.1, P7.Mb.dat.outliers.2)
 P7.Mb.outliers <- unique(P7.Mb.outliers)
 length(P7.Mb.outliers)
-```
 
-```{r Reloading dataset and removing outliers}
 P7.Mb.dat.filter <- readRDS(file = file.path(Rdata_dir, "P7.Mb.dat.filter.rds"))
 
 P7.Mb.dat.filter <- P7.Mb.dat.filter[,!(pData(P7.Mb.dat.filter)$sample_id.x %in% P7.Mb.outliers)]
@@ -134,7 +144,10 @@ nrow(pData(P7.Mb.dat.filter)) #75
 saveRDS(object = P7.Mb.outliers, file = file.path(Rdata_dir,"P7.Mb.outliers.rds"))
 ```
 
-```{r filter by cells expressing each gene}
+##Rerunning analysis on P7 MB with outliers removed. 
+
+###Filter genes by percentage of cells expresssing each gene with outliers removed
+```{r filter by cells expressing each gene with outliers removed}
 # Plot number of cells expressing each gene as histogram
 hist(fData(P7.Mb.dat.filter)$num_cells_expressed,breaks=100,col="red",main="Cells expressed per gene")
 
@@ -147,7 +160,8 @@ hist(fData(P7.Mb.dat.filter)$num_cells_expressed,breaks=100,col="red",main="Cell
 abline(v=numCellThreshold,lty="dashed")
 ```
 
-```{r model_prep - Preparing the data for monocle analysis}
+###Prepping the Monocole model for analysis with outliers removed
+```{r model_prep - Preparing the data for monocle analysis with outliers removed}
 # Only keeping "expressed" genes
 P7.Mb.dat.filter <-P7.Mb.dat.filter[P7.Mb.dat.expressed_genes,]
 
@@ -161,7 +175,8 @@ P7.Mb.dat.filter <- estimateDispersions(P7.Mb.dat.filter,cores=8)
 # Deprecated, use tibble::rownames_to_column() instead. 
 ```
 
-```{r summary_stats}
+###Calculating summary stats with outliers removed
+```{r summary_stats with outliers removed}
 # Calculating summary stats
 fData(P7.Mb.dat.filter)$mean_expr<-apply(round(exprs(P7.Mb.dat.filter)),1,mean) # mean expression
 fData(P7.Mb.dat.filter)$sd_expr<-apply(round(exprs(P7.Mb.dat.filter)),1,sd) # sd expression
@@ -169,7 +184,8 @@ fData(P7.Mb.dat.filter)$bcv<-(fData(P7.Mb.dat.filter)$sd_expr/fData(P7.Mb.dat.fi
 fData(P7.Mb.dat.filter)$percent_detection<-(fData(P7.Mb.dat.filter)$num_cells_expressed/dim(P7.Mb.dat.filter)[2])*100 # calculating % detection
 ```
 
-```{r high_dispersion_genes_monocle - Pulling out the high dispersion genes for PCA analysis}
+###Identifying high dispersion genes with outliers removed
+```{r high_dispersion_genes_monocle - Pulling out the high dispersion genes for PCA analysis with outliers removed}
 P7.Mb.dat.filter.genes <- P7.Mb.dat.filter # spoofing the CellDataSet
 disp_table <- dispersionTable(P7.Mb.dat.filter.genes) # pulling out the dispersion table
 unsup_clustering_genes <-subset(disp_table, mean_expression >= 0.5 & dispersion_empirical >= 1.5 * dispersion_fit) # subsetting the data to pull out genes with expression above 0.5 and dispersion empirical > 2
@@ -179,7 +195,8 @@ plot_ordering_genes(P7.Mb.dat.filter.order) # plotting the dispersion and genes
 length(P7.Mb.dat.high_bcv_genes) # 1185
 ```
 
-```{r Run PCA with high BCV genes}
+###Running PCA with high dispersion genes with outliers removed
+```{r Run PCA with high BCV genes with outliers removed}
 # BCV Identified high dispersion genes. Running PC analysis
 P7.Mb.dat.filter.BCV.pca<-prcomp(t(log2(exprs(P7.Mb.dat.filter[P7.Mb.dat.high_bcv_genes,])+1)),center=T,scale. = TRUE)
 
@@ -201,18 +218,21 @@ hvPCA3
 # No real outliers seen
 ```
 
+###Viewing screeplots and determining the number of "significant" PCs. Since no outliers were identified above, we will continue with the analysis with outliers removed
 ```{r Screeplots of Data,tidy=TRUE}
 # Making a screeplot of the BCV PCA. This will help determine how 
 # many principal components we should use in our tSNE visualization
 # Show this plot
 screeplot(P7.Mb.dat.filter.BCV.pca, npcs = 30, main = "P7 MB - High BCV Genes PCA Screeplot")
+abline(v=5.5,lwd=2,col="red")
 ggscreeplot(P7.Mb.dat.filter.BCV.pca, type = "pev")
 
 # Conclustion: Seems to be clear that just the 
 # first 5 PCs explain the most variation in our data
 ```
 
-```{r tsne}
+###Creating a t-SNE plot from the "significant" PCs with outliers removed
+```{r tsne with outliers removed, message=FALSE,warning=FALSE}
 nComponents<-5 # estimated from the screeplots
 #seed <- runif(1,1,9999) # determined by testing random seeds
 seed <- 7641.869
@@ -228,6 +248,7 @@ P7.Mb.dat.filter.BCV.tsne.plot<-myTSNEPlotAlpha(P7.Mb.dat.filter,color="region",
 P7.Mb.dat.filter.BCV.tsne.plot
 ```
 
+###Identifying clusters in the data in an unsupervised manner with outliers removed
 ```{r - attempting to cluster,tidy=TRUE}
 # Going to attempt to use the R program "ADPclust" to determine how many clusters our data has
 
@@ -247,189 +268,34 @@ pData(P7.Mb.dat.filter)$kmeans_tSNE_cluster <- as.factor(clust.res.df$`clust.res
 myTSNEPlotAlpha(P7.Mb.dat.filter,color="kmeans_tSNE_cluster", shape="age") + scale_color_brewer(palette="Set1") + ggtitle("P7 Mb - BCV tSNE with Clusters Plot")
 ```
 
-```{r differential gene test - Just with "clusters" as the formula}
-P7.Mb.Diff.Test <- differentialGeneTest(P7.Mb.dat.filter, 
-                             fullModelFormulaStr = "~kmeans_tSNE_cluster",
-                             reducedModelFormulaStr = "~1",
-                             relative_expr = FALSE,
-                             cores=8,
-                             verbose = F)
+###QC on the clusters with outliers removed
+```{r check the clusters - qc on clusters with outliers removed}
+# Distribution of number of genes expressed in clusters
+q <- ggplot(pData(P7.Mb.dat.filter)) +
+  geom_density(aes(x=num_genes_expressed,fill=kmeans_tSNE_cluster),alpha=0.3) + scale_fill_brewer(palette="Set1") + facet_grid(.~age) + monocle:::monocle_theme_opts()
 
-nrow(P7.Mb.Diff.Test)
-P7.Mb.tmp<-P7.Mb.Diff.Test[P7.Mb.Diff.Test$qval < 0.05,]
-P7.Mb.tmp.2 <- P7.Mb.tmp[order(P7.Mb.tmp$qval),]
-P7.Mb.Diff.Genes <- as.character(P7.Mb.tmp.2$gene_short_name)
-length(P7.Mb.Diff.Genes) # 620 @ 0.05
-saveRDS(P7.Mb.Diff.Genes, file = file.path(Rdata_dir,"P7.Mb.diff.genes.rds"))
+q
 
-myTSNEPlotAlpha(P7.Mb.dat.filter,color="kmeans_tSNE_cluster", shape="age",markers = P7.Mb.Diff.Genes[1:30],scaled = T) + scale_color_brewer(palette="Set1") + ggtitle("P7 Mb - Top 10 Differentially Expressed Genes")
+# Plotting the distribution of total mRNAs in clusters
+q<-ggplot(pData(P7.Mb.dat.filter)) +
+  geom_density(aes(x=Total_mRNAs,fill=kmeans_tSNE_cluster),alpha=0.3) + scale_fill_brewer(palette="Set1") + facet_grid(.~age) + monocle:::monocle_theme_opts()
+
+q
 ```
 
-```{r Defining Marker Genes for P7 MB clusters}
-# Creating a cell data set containing only cells in cluster 1
-P7.MB.cluster.1 <- P7.Mb.dat.filter[,pData(P7.Mb.dat.filter)$kmeans_tSNE_cluster == 1]
-P7.MB.cluster.1 <- P7.MB.cluster.1[row.names(P7.Mb.tmp.2),]
-
-# Calculating percent of cells in cluster 1 expressing each gene > 1 transcript
-P7.MB.clust.1.exprs.df<-as.data.frame(apply(exprs(P7.MB.cluster.1),1, function(x) length(which(x > 1))/ncol(exprs(P7.MB.cluster.1))))
-colnames(P7.MB.clust.1.exprs.df) <- "cluster.1_percent_exprs"
-
-# Calculating mean cluster 1 for expression for each gene
-P7.MB.cluster.1.df <- as.data.frame(apply(exprs(P7.MB.cluster.1),1,mean))
-P7.MB.cluster.1.df <- as.data.frame(P7.MB.cluster.1.df)
-colnames(P7.MB.cluster.1.df) <- "P7.MB.cluster.1"
-
-# Creating a cell data set containing only cells in cluster 2
-P7.MB.cluster.2 <- P7.Mb.dat.filter[,pData(P7.Mb.dat.filter)$kmeans_tSNE_cluster == 2]
-P7.MB.cluster.2 <- P7.MB.cluster.2[row.names(P7.Mb.tmp.2),]
-
-# Calculating percent of cells in cluster 2 expressing each gene > 1 transcript
-P7.MB.clust.2.exprs.df<-as.data.frame(apply(exprs(P7.MB.cluster.2),1, function(x) length(which(x > 1))/ncol(exprs(P7.MB.cluster.2))))
-colnames(P7.MB.clust.2.exprs.df) <- "cluster.2_percent_exprs"
-
-# Calculating mean cluster 2 for expression for each gene
-P7.MB.cluster.2.df <- as.data.frame(apply(exprs(P7.MB.cluster.2),1,mean))
-P7.MB.cluster.2.df <- as.data.frame(P7.MB.cluster.2.df)
-colnames(P7.MB.cluster.2.df) <- "P7.MB.cluster.2"
-
-# Creating a cell data set containing only cells in cluster 3
-P7.MB.cluster.3 <- P7.Mb.dat.filter[,pData(P7.Mb.dat.filter)$kmeans_tSNE_cluster == 3]
-P7.MB.cluster.3 <- P7.MB.cluster.3[row.names(P7.Mb.tmp.2),]
-
-# Calculating percent of cells in cluster 3 expressing each gene > 1 transcript
-P7.MB.clust.3.exprs.df<-as.data.frame(apply(exprs(P7.MB.cluster.3),1, function(x) length(which(x > 1))/ncol(exprs(P7.MB.cluster.3))))
-colnames(P7.MB.clust.3.exprs.df) <- "cluster.3_percent_exprs"
-
-# Calculating mean cluster 3 for expression for each gene
-P7.MB.cluster.3.df <- as.data.frame(apply(exprs(P7.MB.cluster.3),1,mean))
-P7.MB.cluster.3.df <- as.data.frame(P7.MB.cluster.3.df)
-colnames(P7.MB.cluster.3.df) <- "P7.MB.cluster.3"
-
-# Creating a cell data set containing only cells in cluster 4
-P7.MB.cluster.4 <- P7.Mb.dat.filter[,pData(P7.Mb.dat.filter)$kmeans_tSNE_cluster == 4]
-P7.MB.cluster.4 <- P7.MB.cluster.4[row.names(P7.Mb.tmp.2),]
-
-# Calculating percent of cells in cluster 4 expressing each gene > 1 transcript
-P7.MB.clust.4.exprs.df<-as.data.frame(apply(exprs(P7.MB.cluster.4),1, function(x) length(which(x > 1))/ncol(exprs(P7.MB.cluster.4))))
-colnames(P7.MB.clust.4.exprs.df) <- "cluster.4_percent_exprs"
-
-# Calculating mean cluster 4 for expression for each gene
-P7.MB.cluster.4.df <- as.data.frame(apply(exprs(P7.MB.cluster.4),1,mean))
-P7.MB.cluster.4.df <- as.data.frame(P7.MB.cluster.4.df)
-colnames(P7.MB.cluster.4.df) <- "P7.MB.cluster.4"
-
-
-
-# Iteratively merging mean expression data from each individual cluster
-P7.MB.df <- merge(P7.MB.cluster.1.df,P7.MB.cluster.2.df, by = 0)
-row.names(P7.MB.df) <- P7.MB.df$Row.names
-P7.MB.df <- P7.MB.df[,-1]
-P7.MB.df <- merge(P7.MB.df,P7.MB.cluster.3.df, by = 0)
-row.names(P7.MB.df) <- P7.MB.df$Row.names
-P7.MB.df <- P7.MB.df[,-1]
-P7.MB.df <- merge(P7.MB.df,P7.MB.cluster.4.df, by = 0)
-row.names(P7.MB.df) <- P7.MB.df$Row.names
-P7.MB.df <- P7.MB.df[,-1]
-
-
-# Making sure the mean expression data from each cluster is in df and matrix format
-P7.MB.df <- as.data.frame(P7.MB.df)
-P7.MB.mat <- as.matrix(P7.MB.df)
-
-# Running specificity function
-P7.MB.JSD <- .specificity(mat = P7.MB.mat,logMode = T, relative = F)
-
-# Merging specificity function (iteratively) with percent expression from each cluster
-P7.MB.JSD <- as.data.frame(P7.MB.JSD)
-P7.MB.JSD <- merge(P7.MB.JSD,P7.MB.clust.1.exprs.df, by = 0)
-row.names(P7.MB.JSD) <- P7.MB.JSD$Row.names
-P7.MB.JSD <- P7.MB.JSD[,-1]
-P7.MB.JSD <- merge(P7.MB.JSD,P7.MB.clust.2.exprs.df, by = 0)
-row.names(P7.MB.JSD) <- P7.MB.JSD$Row.names
-P7.MB.JSD <- P7.MB.JSD[,-1]
-P7.MB.JSD <- merge(P7.MB.JSD,P7.MB.clust.3.exprs.df, by = 0)
-row.names(P7.MB.JSD) <- P7.MB.JSD$Row.names
-P7.MB.JSD <- P7.MB.JSD[,-1]
-P7.MB.JSD <- merge(P7.MB.JSD,P7.MB.clust.4.exprs.df, by = 0)
-row.names(P7.MB.JSD) <- P7.MB.JSD$Row.names
-P7.MB.JSD <- P7.MB.JSD[,-1]
-
-
-# Graphing the distribution of specificity scores for each cluster
-hist(P7.MB.JSD$P7.MB.cluster.1,breaks=50,col = rgb(1,0,0,0.5),xlim = c(0,1))
-hist(P7.MB.JSD$P7.MB.cluster.2,breaks=50,add=T,col=rgb(0,0,1,0.5))
-hist(P7.MB.JSD$P7.MB.cluster.3,breaks=50,add=T, col = rgb(0,1,0,0.5))
-hist(P7.MB.JSD$P7.MB.cluster.4,breaks=50,add=T, col = rgb(1,1,0,0.5))
-
-# Cutoff arbitrarily chosen at 0.4 to limit genes to the obvious "right tail" of the distribution
-abline(v=0.4)
-
-# Filtering and graphing cluster 1 specific genes
-gene.tmp <- P7.MB.JSD[P7.MB.JSD$P7.MB.cluster.1 >= 0.4 & P7.MB.JSD$cluster.1_percent_exprs >= 0.4,]
-
-gene.ordered <- row.names(gene.tmp[order(-gene.tmp$P7.MB.cluster.1),])
-P7.MB.cluster.1.genes <- lookupGeneName(P7.Mb.dat.filter, gene.ordered)
-
-myTSNEPlotAlpha(P7.Mb.dat.filter,color="kmeans_tSNE_cluster", shape="age",markers = P7.MB.cluster.1.genes,scaled = T) + scale_color_brewer(palette="Set1") + ggtitle("P7 Mb - Cluster 1 Specific Genes")
-
-saveRDS(object = P7.MB.cluster.1.genes, file = file.path(Rdata_dir,"P7.Mb.Cluster.1.genes.rds"))
-
-# Filtering and graphing cluster 2 specific genes
-gene.tmp <- P7.MB.JSD[P7.MB.JSD$P7.MB.cluster.2 >= 0.4 & P7.MB.JSD$cluster.2_percent_exprs >= 0.4,]
-
-gene.ordered <- row.names(gene.tmp[order(-gene.tmp$P7.MB.cluster.2),])
-P7.MB.cluster.2.genes <- lookupGeneName(P7.Mb.dat.filter, gene.ordered)
-
-myTSNEPlotAlpha(P7.Mb.dat.filter,color="kmeans_tSNE_cluster", shape="age",markers = P7.MB.cluster.2.genes,scaled = T) + scale_color_brewer(palette="Set1") + ggtitle("P7 Mb - Cluster 2 Specific Genes")
-
-saveRDS(object = P7.MB.cluster.2.genes, file = file.path(Rdata_dir,"P7.Mb.Cluster.2.rds"))
-
-# Filtering and graphing cluster 3 specific genes
-gene.tmp <- P7.MB.JSD[P7.MB.JSD$P7.MB.cluster.3 >= 0.4 & P7.MB.JSD$cluster.3_percent_exprs >= 0.4,]
-
-gene.ordered <- row.names(gene.tmp[order(-gene.tmp$P7.MB.cluster.3),])
-P7.MB.cluster.3.genes <- lookupGeneName(P7.Mb.dat.filter, gene.ordered)
-
-myTSNEPlotAlpha(P7.Mb.dat.filter,color="kmeans_tSNE_cluster", shape="age",markers = P7.MB.cluster.3.genes,scaled = T) + scale_color_brewer(palette="Set1") + ggtitle("P7 Mb - Cluster 3 Specific Genes")
-
-saveRDS(object = P7.MB.cluster.3.genes, file = file.path(Rdata_dir,"P7.Mb.Cluster.3.rds"))
-
-# Filtering and graphing cluster 4 specific genes
-gene.tmp <- P7.MB.JSD[P7.MB.JSD$P7.MB.cluster.4 >= 0.4 & P7.MB.JSD$cluster.4_percent_exprs >= 0.4,]
-
-gene.ordered <- row.names(gene.tmp[order(-gene.tmp$P7.MB.cluster.4),])
-P7.MB.cluster.4.genes <- lookupGeneName(P7.Mb.dat.filter, gene.ordered)
-
-myTSNEPlotAlpha(P7.Mb.dat.filter,color="kmeans_tSNE_cluster", shape="age",markers = P7.MB.cluster.4.genes,scaled = T) + scale_color_brewer(palette="Set1") + ggtitle("P7 Mb - Cluster 4 Specific Genes")
-
-saveRDS(object = P7.MB.cluster.4.genes, file = file.path(Rdata_dir,"P7.Mb.Cluster.4.rds"))
+###Saving the P7 MB final cds 
+```{r saving analyzed cds for P7 Mb}
+P7.Mb.dat.filter.final <- P7.Mb.dat.filter
+saveRDS(object = P7.Mb.dat.filter.final, file = file.path(Rdata_dir, "P7.Mb.dat.filter.final.Rds"))
 ```
 
-```{r attempt at GoAnalysis}
-
-# Taken from http://guangchuangyu.github.io/2016/01/go-analysis-using-clusterprofiler/
-library(clusterProfiler)
-sample_test <- enrichGO(gene = P7.MB.cluster.4.genes,
-                        keytype = "SYMBOL",
-                        OrgDb = "org.Mm.eg.db",
-                        ont = "BP",
-                        pAdjustMethod = "fdr",
-                        pvalueCutoff = 1,
-                        qvalueCutoff = 0.05)
-head(summary(sample_test), 20)
-SN.GO.BP.table <- summary(sample_test)
-SN.GO.BP.table$GeneRatio <- paste0("'", SN.GO.BP.table$GeneRatio)
-write.table(SN.GO.BP.table, file = file.path(file_dir,"Table.S3_SN.GO.BP.table.txt"), sep = "\t", row.names = F, quote = F)
-
-```
-
+###Extracting pData information and saving it 
 ```{r extacting pData information}
-colnames(pData(P7.Mb.dat.filter))
 P7.Mb.clusters.df <- pData(P7.Mb.dat.filter)[,c(1,39)]
 saveRDS(P7.Mb.clusters.df, file = file.path(Rdata_dir, "P7.Mb.clusters.df.rds"))
 ```
 
-```{r saving analyzed cds for P7 Mb}
-P7.Mb.dat.filter.final <- P7.Mb.dat.filter
-saveRDS(object = P7.Mb.dat.filter.final, file = file.path(Rdata_dir, "P7.Mb.dat.filter.final.Rds"))
+###Session Info
+```{r session infomation with outliers removed}
+sessionInfo()
 ```

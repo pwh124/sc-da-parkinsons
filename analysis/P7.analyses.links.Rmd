@@ -7,6 +7,7 @@ Below are links to analyses for P7 data
 
 * [P7 olfactory bulb analysis](P7_Ob.recursive_analysis.html)
 * [P7 forebrain analysis](P7_Fb.recursive_analysis.html)
+* [P7 midbrain analysis](P7_Mb.recursive_analysis.html)
 
 **Last update:** `r Sys.Date()`
 
