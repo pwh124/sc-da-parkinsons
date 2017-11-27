@@ -1,28 +1,31 @@
 ---
 title: "P7 Analysis"
 author: "Paul Hook"
-date: "6/21/2017"
 output: html_document
 ---
 
-# Setting important directories. Also loading important libraries and custom functions for analysis.
-```{r init,echo=FALSE,message=FALSE, error=FALSE, warning=FALSE, tidy=TRUE}
-seq_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/Data"
-file_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/file.output"
-Rdata_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/rds"
-Script_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/Scripts"
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
+
+###Setting important directories. Also loading important libraries and custom functions for analysis.
+```{r init, message=FALSE, warning=FALSE}
+seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
+Rdata_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
 source(file.path(Script_dir,'init.R'))
 source(file.path(Script_dir,"tools_R.r"))
 ```
 
+###Loading the P7 all cell .rds
 ```{r Loading in all P7 cell data}
-
 P7.dat.filter <- readRDS(file = file.path(Rdata_dir, "P7.dat.filter.final.Rds"))
 nrow(pData(P7.dat.filter)) # 224
-
 ```
 
-```{r Differential expression}
+###Performing differentially expression
+```{r Differential expression, message=FALSE, warning=FALSE}
 
 P7.Diff.Test <- differentialGeneTest(P7.dat.filter, 
                              fullModelFormulaStr = "~subset.cluster",
@@ -40,10 +43,16 @@ P7.tmp.2 <- P7.tmp[order(P7.tmp$qval),]
 P7.Diff.Genes <- as.character(P7.tmp.2$gene_short_name)
 length(P7.Diff.Genes) # 3971
 saveRDS(P7.Diff.Genes, file = "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/rds/P7.diff.genes.rds")
-
-myTSNEPlotAlpha(P7.dat.filter,color="subset.cluster", shape="age",markers = P7.Diff.Genes[1:20],scaled = T) + scale_color_brewer(palette="Set1") + ggtitle("e15 Mb - BCV tSNE - Top 10 Differentially Expressed Genes")
 ```
 
+### t-SNE plots of top 10 differentially expressed genes
+```{r tsne plot of Top10 differentially expressed genes}
+q <- myTSNEPlotAlpha(P7.dat.filter,color="subset.cluster", shape="age",markers = P7.Diff.Genes[1:10],scaled = T) + scale_color_brewer(palette="Set1") + ggtitle("P7 - BCV tSNE - Top 10 Differentially Expressed Genes")
+
+q
+```
+
+###Finding specific genes for each cluster
 ```{r finding specific genes}
 P7.dat.diff.filter <- P7.dat.filter[row.names(P7.tmp.2),]
 nrow(P7.dat.diff.filter)
@@ -81,6 +90,7 @@ row.names(merged.df) <- merged.df$Row.names
 merged.df <- merged.df[,-1]
 ```
 
+###Determining the specificity score to use as a cutoff
 ```{r Determining the specificity score to use as a cutoff}
 color <- c("#F2C318","#E790AC","#F18421","#0168A5","#848483","#A4CAEB","#885793","#008957","#222222")
 color.transparent <- adjustcolor(color, alpha.f = 0.3)
@@ -98,6 +108,7 @@ hist(dat.JSD$P7.OB.3.mean, breaks = bins, add = T, col = color.transparent[9])
 abline(v = 0.3, lwd = 2)
 ```
 
+###Determining specific genes for each cluster and writing out a table
 ```{r determining the specific genes}
 P7.specific.genes <- data.frame()
 
@@ -113,62 +124,13 @@ names(P7.specific.genes) <- c("P7.FB.1","P7.FB.2","P7.MB.1","P7.MB.2","P7.MB.3",
 write.table(P7.specific.genes, file = "/Volumes/PAULHOOK/Revision/P7.specific.genes.txt", sep = "\t", quote = F, row.names = F)
 ```
 
+###Making an interactive table for specific genes
 ```{r}
-dat.filter <- readRDS(file = file.path(Rdata_dir, "dat.filter.final.Rds"))
-nrow(pData(dat.filter)) # 396
-dat.levels <- levels(pData(dat.filter)$subset.cluster)
-cluster.mean.df <- as.data.frame(rownames(exprs(dat.filter)))
-colnames(cluster.mean.df) <- "gene"
-
-for(i in 1:length(dat.levels)){
-  tmp <- dat.filter[,pData(dat.filter)$subset.cluster == dat.levels[i]]
-  tmp.exprs <- as.matrix(exprs(tmp))
-  tmp.mean <- as.data.frame(apply(tmp.exprs, 1, mean))
-  row.names(tmp.mean) <- row.names(tmp.exprs)
-  colnames(tmp.mean) <- paste0(dat.levels[i],".Mean")
-  cluster.mean.df <- merge(x = cluster.mean.df, y = tmp.mean, by.x = "gene", by.y = 0)
-}
-
-rownames(cluster.mean.df) <- cluster.mean.df$gene
-cluster.mean.df <- cluster.mean.df[,-1]
-
-gwas.genes <- read.delim(file = "/Volumes/PAULHOOK/Revision/PD.GWAS.Prioritization.Revise/PD.GWAS.Prioritization.RevisePD.GWAS.Score.Final.txt")
-
-gwas.gene.exprs <- gwas.genes[gwas.genes$lin.exprs == 2 & gwas.genes$expression == 2,]
-gwas.genes <- lookupGeneId(dat.filter, gene_names = gwas.gene.exprs$MouseSymbol)
-gwas.cluster.mean <- cluster.mean.df[rownames(cluster.mean.df) %in% gwas.genes,]
-gwas.cluster.mean.t <- t(gwas.cluster.mean)
-
-test <- kmeans(gwas.cluster.mean, centers = 10, iter.max = 1000)
-t.centers <- t(test$centers)
-apply(t.centers, 2, plot)
-
-tmp <- as.data.frame(cor(t(cluster.mean.df), t.centers[,1], method = "pearson"))
-for(i in 2:ncol(t.centers)){
-  test.1 <- as.data.frame(cor(t(cluster.mean.df), t.centers[,i], method = "pearson"))
-  tmp[,i] <- test.1[,1]
-}
-cor.df <- tmp
-names(cor.df) <- c("k.1","k.2","k.3","k.4","k.5")
-k.1.top100 <- rownames(cor.df[order(-cor.df$k.5),])[1:100]
-k.5.names <- lookupGeneName(dat.filter, k.5.top100)
-
-myBoxplot.subset(dat.filter, k.5.names[1:10])
-k.5.names[k.5.names %in% gwas.gene.exprs$MouseSymbol]
-plot(t.centers[,5])
+library(DT)
+datatable(P7.specific.genes)
 ```
 
-```{r Performing GO Analyses on SN markers}
-library(clusterProfiler)
-markers.df <- read.delim(file = "/Volumes/PAULHOOK/Revision/P7.specific.genes.txt")
-
-sn.genes <- as.character(markers.df$P7.MB.4)
-
-result <- enrichGO(sn.genes,
-                   ont = "BP",
-                   OrgDb = "org.Mm.eg.db", 
-                   keytype = "SYMBOL",
-                   qvalueCutoff = 0.01)
-
-result.df <- summary(result)
+###Session Info
+```{r session infomation with outliers removed}
+sessionInfo()
 ```
