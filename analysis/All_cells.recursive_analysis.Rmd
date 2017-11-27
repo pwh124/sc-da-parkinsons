@@ -154,7 +154,11 @@ myTSNEPlotAlpha(dat.filter,color="subset.cluster", shape="age") + scale_color_br
 ###Saving final all cell CDS for future analyses and figures
 ```{r saving analyzed cds for all}
 dat.filter.final <- dat.filter
+<<<<<<< HEAD
 saveRDS(object = dat.filter.final, file = file.path(Rdata_dir, "dat.filter.final.Rds"), compress = "bzip2")
+=======
+saveRDS(object = dat.filter.final, file = file.path(Rdata_dir, "dat.filter.final.Rds"))
+>>>>>>> 89c2d8fd5d2654e6a0382050ae9f801ae1bce1cf
 ```
 
 ###Session Info
