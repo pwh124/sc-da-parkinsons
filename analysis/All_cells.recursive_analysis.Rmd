@@ -1,0 +1,164 @@
+---
+title: "All Cells Recursive Analysis"
+author: "Paul Hook"
+output: html_document
+---
+
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
+
+###Setting important directories. Also loading important libraries and custom functions for analysis.
+```{r init, message=FALSE, warning=FALSE}
+seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
+Rdata_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
+source(file.path(Script_dir,'init.R'))
+source(file.path(Script_dir,"tools_R.r"))
+```
+
+###Removing outliers found in recursive analyses
+```{r Remove outliers}
+# Removing outliers from other analyses
+P7.outliers <- readRDS(file = file.path(Rdata_dir,"P7.outliers.rds"))
+
+dat.filter <- readRDS(file = file.path(Rdata_dir, "dat.filter.rds"))
+nrow(pData(dat.filter)) # 410
+
+dat.filter <- dat.filter[,!(pData(dat.filter)$sample_id.x %in% P7.outliers)]
+nrow(pData(dat.filter)) # 396
+```
+
+###Filter genes by percentage of cells expresssing each gene
+```{r filter by cells expressing each gene}
+# Plot number of cells expressing each gene as histogram
+hist(fData(dat.filter)$num_cells_expressed,
+     breaks=50,col="red",main="Cells expressed per gene")
+
+# Keep only expressed genes with expression in >= 5% of cells
+numCellThreshold<-nrow(pData(dat.filter))*0.05
+dat.expressed_genes<-row.names(subset(fData(dat.filter),num_cells_expressed >= 5))
+
+# Same plot as above with threshold
+hist(fData(dat.filter)$num_cells_expressed,breaks=50,col="red",main="Cells expressed per gene - threshold")
+abline(v=5,lty="dashed")
+```
+
+###Prepping the Monocole model for analysis
+```{r model_prep}
+# Preparing the model for monocle
+dat.filter <-dat.filter[dat.expressed_genes,]
+
+dat.filter <-estimateSizeFactors(dat.filter)
+
+dat.filter <- estimateDispersions(dat.filter,cores=8)
+# Removing 144 outliers
+# Warning message:
+# Deprecated, use tibble::rownames_to_column() instead. 
+```
+
+###Calculating summary stats
+```{r summary_stats}
+# Calculating summary stats
+fData(dat.filter)$mean_expr<-apply(round(exprs(dat.filter)),1,mean)
+fData(dat.filter)$sd_expr<-apply(round(exprs(dat.filter)),1,sd)
+fData(dat.filter)$bcv<-(fData(dat.filter)$sd_expr/fData(dat.filter)$mean_expr)**2
+fData(dat.filter)$percent_detection<-(fData(dat.filter)$num_cells_expressed/dim(dat.filter)[2])*100
+```
+
+###Identifying high dispersion genes
+```{r high_dispersion_genes_monocle}
+dat.filter.genes <- dat.filter
+disp_table <- dispersionTable(dat.filter.genes)
+unsup_clustering_genes <-subset(disp_table, mean_expression >= 0.5 & dispersion_empirical >= 1.5 * dispersion_fit)
+dat.high_bcv_genes<-unsup_clustering_genes$gene_id
+dat.filter.order <- setOrderingFilter(dat.filter, unsup_clustering_genes$gene_id)
+plot_ordering_genes(dat.filter.order)
+length(dat.high_bcv_genes) # 1071
+```
+
+###Running PCA with high dispersion genes
+```{r Run PCA with high BCV genes}
+# BCV Identified Marker genes
+dat.filter.BCV.pca<-prcomp(t(log2(exprs(dat.filter[dat.high_bcv_genes,])+1)),center=T,scale. = TRUE)
+saveRDS(object = dat.filter.BCV.pca, file.path(Rdata_dir, "dat.filter.BCV.pca"))
+
+# Plot the PCA plots
+hvPCA1<-ggbiplot(dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(dat.filter)$age,ellipse=T,var.axes=F) + scale_color_manual(values=c("darkgreen","red")) + monocle:::monocle_theme_opts() 
+
+hvPCA2<-ggbiplot(dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(dat.filter)$region,ellipse=T,var.axes=F) + scale_color_brewer(palette="Set1") + monocle:::monocle_theme_opts()
+
+hvPCA3<-ggbiplot(dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(dat.filter)$split_plate,ellipse=T,var.axes=F) + scale_color_brewer(palette="Set1") + monocle:::monocle_theme_opts()
+
+# Show the plots
+hvPCA1
+hvPCA2
+hvPCA3
+```
+
+###Viewing screeplots and determining the number of "significant" PCs.
+```{r Screeplots of Data,tidy=TRUE}
+# Making a screeplot of the BCV PCA. This will help determine how 
+# many principal components we should use in our tSNE visualization
+
+# Show this plot
+screeplot(dat.filter.BCV.pca, npcs = 30, main = "All Data - High BCV Genes Screeplot")
+abline(v=7,lwd=2,col="red")
+ggscreeplot(dat.filter.BCV.pca)
+# Conclustion: Seems to be clear that just the 
+# first 6 PCs explain the most variation in our data
+```
+
+###Creating a t-SNE plot from the "significant" PCs with outliers removed
+```{r tsne, warning=FALSE, message=FALSE}
+nComponents<-6 # estimated from the screeplots
+#seed<-runif(1,1,9999)
+seed<-5084.043
+set.seed(seed) #setting seed
+
+dat.filter.BCV.tsne<-tsne(dat.filter.BCV.pca$x[,1:nComponents],perplexity=30,max_iter=2000,whiten = FALSE)
+
+pData(dat.filter)$tSNE1_pos<-dat.filter.BCV.tsne[,1]
+pData(dat.filter)$tSNE2_pos<-dat.filter.BCV.tsne[,2]
+
+dat.filter.BCV.tsne.plot<-myTSNEPlotAlpha(dat.filter,color="region", shape="age") + scale_color_brewer(palette="Set1") + ggtitle("All valid cells - tSNE Plot")
+
+dat.filter.BCV.tsne.plot
+```
+
+###Adding subset cluster annotation from recursive analyses
+```{r adding subset clusters}
+P7.Ob.clusters.df <- readRDS(file = file.path(Rdata_dir, "P7.Ob.clusters.df.rds"))
+P7.Mb.clusters.df <- readRDS(file = file.path(Rdata_dir, "P7.Mb.clusters.df.rds"))
+P7.Fb.clusters.df <- readRDS(file = file.path(Rdata_dir, "P7.Fb.clusters.df.rds"))
+e15.Fb.clusters.df <- readRDS(file = file.path(Rdata_dir, "e15.Fb.clusters.df.rds"))
+e15.Mb.clusters.df <- readRDS(file = file.path(Rdata_dir, "e15.Mb.clusters.df.rds"))
+
+P7.Ob.clusters.df$subset.cluster <- paste0("P7.OB.",P7.Ob.clusters.df$kmeans_tSNE_cluster)
+P7.Mb.clusters.df$subset.cluster <- paste0("P7.MB.",P7.Mb.clusters.df$kmeans_tSNE_cluster)
+P7.Fb.clusters.df$subset.cluster <- paste0("P7.FB.",P7.Fb.clusters.df$kmeans_tSNE_cluster)
+
+e15.Mb.clusters.df$subset.cluster <- paste0("E15.MB.",e15.Mb.clusters.df$kmeans_tSNE_cluster)
+e15.Fb.clusters.df$subset.cluster <- paste0("E15.FB.",e15.Fb.clusters.df$kmeans_tSNE_cluster)
+
+Sub.clusters.df <- rbind(P7.Ob.clusters.df,P7.Mb.clusters.df,P7.Fb.clusters.df,e15.Mb.clusters.df,e15.Fb.clusters.df)
+
+names(Sub.clusters.df) <- c("sample_id.x","remove","subset.cluster")
+final.data.frame <- merge(x = pData(dat.filter), y = Sub.clusters.df, by = "sample_id.x")
+pData(dat.filter)$subset.cluster <- as.factor(final.data.frame$subset.cluster)
+
+myTSNEPlotAlpha(dat.filter,color="subset.cluster", shape="age") + scale_color_brewer(palette="Set1") + ggtitle("All valid cells - tSNE Plot")
+```
+
+###Saving final all cell CDS for future analyses and figures
+```{r saving analyzed cds for all}
+dat.filter.final <- dat.filter
+saveRDS(object = dat.filter.final, file = file.path(Rdata_dir, "dat.filter.final.Rds"))
+```
+
+###Session Info
+```{r session infomation with outliers removed}
+sessionInfo()
+```
+
