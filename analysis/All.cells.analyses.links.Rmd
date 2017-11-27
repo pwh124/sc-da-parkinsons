@@ -3,7 +3,7 @@ title: Results
 output: html_document
 ---
 
-**Below are links to analyses for the analysis of all cells as one dataset
+* Below are links to analyses for the analysis of all cells as one dataset
 
 * [cds_creation-qc_filtering](cds_creation-qc_filtering.html)
 

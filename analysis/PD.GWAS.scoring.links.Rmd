@@ -3,7 +3,7 @@ title: Results
 output: html_document
 ---
 
-**Below are links to analyses that allowed for the prioritization of candidate genes in Parkinson's GWAS loci
+* Below are links to analyses that allowed for the prioritization of candidate genes in Parkinson's GWAS loci
 
 * [Results](All.cells.analyses.links.html)
 

@@ -1,0 +1,353 @@
+---
+title: "P7 FB Recursive Analysis"
+author: "Paul Hook"
+date: "6/14/2017"
+output: html_document
+---
+
+# Setting important directories. Also loading important libraries and custom functions for analysis.
+```{r init,echo=FALSE,message=FALSE, error=FALSE, warning=FALSE, tidy=TRUE}
+seq_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/Data"
+file_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/file.output"
+Rdata_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/rds"
+Script_dir <- "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/Scripts"
+source(file.path(Script_dir,'init.R'))
+source(file.path(Script_dir,"tools_R.r"))
+```
+
+```{r loading .rds}
+P7.Fb.dat.filter <- readRDS(file = file.path(Rdata_dir, "P7.Fb.dat.filter.rds"))
+```
+
+```{r filter by cells expressing each gene}
+# Plot number of cells expressing each gene as histogram
+hist(fData(P7.Fb.dat.filter)$num_cells_expressed,breaks=100,col="red",main="Cells expressed per gene")
+
+# Keep only expressed genes with expression in >= 5% of cells
+numCellThreshold<-nrow(pData(P7.Fb.dat.filter))*0.05
+P7.Fb.dat.expressed_genes<-row.names(subset(fData(P7.Fb.dat.filter),num_cells_expressed >= numCellThreshold))
+
+# Same plot as above with threshold
+hist(fData(P7.Fb.dat.filter)$num_cells_expressed,breaks=100,col="red",main="Cells expressed per gene - threshold")
+abline(v=numCellThreshold,lty="dashed")
+```
+
+```{r model_prep - Preparing the data for monocle analysis}
+# Only keeping "expressed" genes
+P7.Fb.dat.filter <-P7.Fb.dat.filter[P7.Fb.dat.expressed_genes,]
+
+# Estimating the size factors
+P7.Fb.dat.filter <-estimateSizeFactors(P7.Fb.dat.filter)
+
+# Estimating dispersions
+P7.Fb.dat.filter <- estimateDispersions(P7.Fb.dat.filter,cores=8)
+# Removing 170 outliers
+# Warning message:
+# Deprecated, use tibble::rownames_to_column() instead. 
+```
+
+```{r summary_stats}
+# Calculating summary stats
+fData(P7.Fb.dat.filter)$mean_expr<-apply(round(exprs(P7.Fb.dat.filter)),1,mean) # mean expression
+fData(P7.Fb.dat.filter)$sd_expr<-apply(round(exprs(P7.Fb.dat.filter)),1,sd) # sd expression
+fData(P7.Fb.dat.filter)$bcv<-(fData(P7.Fb.dat.filter)$sd_expr/fData(P7.Fb.dat.filter)$mean_expr)**2 # calculating biological coefficient of variation
+fData(P7.Fb.dat.filter)$percent_detection<-(fData(P7.Fb.dat.filter)$num_cells_expressed/dim(P7.Fb.dat.filter)[2])*100 # calculating % detection
+```
+
+```{r high_dispersion_genes_monocle - Pulling out the high dispersion genes for PCA analysis}
+P7.Fb.dat.filter.genes <- P7.Fb.dat.filter # spoofing the CellDataSet
+disp_table <- dispersionTable(P7.Fb.dat.filter.genes) # pulling out the dispersion table
+unsup_clustering_genes <-subset(disp_table, mean_expression >= 0.5 & dispersion_empirical >= 1.5 * dispersion_fit) # subsetting the data to pull out genes with expression above 0.5 and dispersion empirical > 2
+P7.Fb.dat.high_bcv_genes<-unsup_clustering_genes$gene_id # pulling out list of genes
+P7.Fb.dat.filter.order <- setOrderingFilter(P7.Fb.dat.filter, unsup_clustering_genes$gene_id)
+plot_ordering_genes(P7.Fb.dat.filter.order) # plotting the dispersion and genes
+length(P7.Fb.dat.high_bcv_genes) # 1087
+```
+
+
+```{r Run PCA with high BCV genes}
+# BCV Identified high dispersion genes. Running PC analysis
+P7.Fb.dat.filter.BCV.pca<-prcomp(t(log2(exprs(P7.Fb.dat.filter[P7.Fb.dat.high_bcv_genes,])+1)),center=T,scale. = TRUE)
+
+# Plotting the PCA graphs
+# Plotting the first 2 PCs and coloring by age
+hvPCA1<-ggbiplot(P7.Fb.dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(P7.Fb.dat.filter)$age,ellipse=F,var.axes=F) + scale_color_manual(values=c("darkgreen","red")) + monocle:::monocle_theme_opts()
+
+# Plotting the first 2 PCs and coloring by region
+hvPCA2<-ggbiplot(P7.Fb.dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(P7.Fb.dat.filter)$region,ellipse=F,var.axes=F) + scale_color_brewer(palette="Set1") + monocle:::monocle_theme_opts() + ggtitle("P7 FB PCA")
+
+# Plotting the first 2 PCs and coloring by plate the cell was sequenced from
+hvPCA3<-ggbiplot(P7.Fb.dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(P7.Fb.dat.filter)$split_plate,ellipse=F,var.axes=F) + scale_color_brewer(palette="Set1") + monocle:::monocle_theme_opts()
+
+# Show the plots in the terminal
+hvPCA1
+hvPCA2
+hvPCA3
+
+FB.outlier.plot <- ggbiplot(P7.Fb.dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(P7.Fb.dat.filter)$region,ellipse=F,var.axes=F)
+
+saveRDS(P7.Fb.dat.filter.BCV.pca, file = file.path(Rdata_dir,"P7.FB.PCA.outlier.pca.rds"))
+saveRDS(FB.outlier.plot, file = file.path(Rdata_dir,"P7.FB.PCA.outliers.rds"))
+```
+
+```{r what are these outliers}
+# PC1 seems to describe outliers in the data
+P7.FB.dat.pca.rotations.df <- as.data.frame(P7.Fb.dat.filter.BCV.pca$rotation[,1:6])
+genes.tmp <- P7.FB.dat.pca.rotations.df[order(-P7.FB.dat.pca.rotations.df$PC2),]
+PC2.genes <- as.character(row.names(genes.tmp))
+#PC1.genes <- PC1.genes[1:200]
+PC2.genes <- lookupGeneName(dat,PC2.genes)
+genes.tmp$gene_short_name <- PC2.genes
+
+
+PC2.genes.df <- genes.tmp[,c(7,2)]
+write.table(PC2.genes.df, file = file.path(file_dir, "P7.Fb.cells.PC2.rnk"),quote = F, sep = '\t', row.names = F, col.names = F)
+
+myTSNEPlotAlpha(dat.filter,color="region", shape="age",markers = PC1.genes[1:20],scaled = TRUE) + scale_color_brewer(palette="Set1") + ggtitle("e15 Mb - BCV tSNE - 4vAll Genes Plot")
+```
+
+```{r Identifying outliers}
+pData(P7.Fb.dat.filter)$PC1 <- P7.Fb.dat.filter.BCV.pca$x[,1]
+pData(P7.Fb.dat.filter)$PC2 <- P7.Fb.dat.filter.BCV.pca$x[,2]
+P7.Fb.dat.outliers.1<-as.character(pData(P7.Fb.dat.filter[,pData(P7.Fb.dat.filter)$PC2 <= -20])$sample_id.x)
+length(P7.Fb.dat.outliers.1)
+```
+
+```{r Removing outliers}
+# Remove outliers detected through downstream PCA
+P7.Fb.dat.filter <- readRDS(file = file.path(Rdata_dir, "P7.Fb.dat.filter.rds"))
+nrow(pData(P7.Fb.dat.filter)) # 84
+
+P7.Fb.dat.filter <- P7.Fb.dat.filter[,!(pData(P7.Fb.dat.filter)$sample_id.x %in% P7.Fb.dat.outliers.1)]
+
+saveRDS(object = P7.Fb.dat.outliers.1, file = file.path(Rdata_dir,"P7.Fb.outliers.rds"))
+```
+
+```{r filter by cells expressing each gene}
+# Plot number of cells expressing each gene as histogram
+hist(fData(P7.Fb.dat.filter)$num_cells_expressed,breaks=100,col="red",main="Cells expressed per gene")
+
+# Keep only expressed genes with expression in >= 5% of cells
+numCellThreshold<-nrow(pData(P7.Fb.dat.filter))*0.05
+P7.Fb.dat.expressed_genes<-row.names(subset(fData(P7.Fb.dat.filter),num_cells_expressed >= numCellThreshold))
+
+# Same plot as above with threshold
+hist(fData(P7.Fb.dat.filter)$num_cells_expressed,breaks=100,col="red",main="Cells expressed per gene - threshold")
+abline(v=numCellThreshold,lty="dashed")
+```
+
+```{r model_prep - Preparing the data for monocle analysis}
+# Only keeping "expressed" genes
+P7.Fb.dat.filter <-P7.Fb.dat.filter[P7.Fb.dat.expressed_genes,]
+
+# Estimating the size factors
+P7.Fb.dat.filter <-estimateSizeFactors(P7.Fb.dat.filter)
+
+# Estimating dispersions
+P7.Fb.dat.filter <- estimateDispersions(P7.Fb.dat.filter,cores=8)
+# Removing 192 outliers
+# Warning message:
+# Deprecated, use tibble::rownames_to_column() instead. 
+```
+
+```{r summary_stats}
+# Calculating summary stats
+fData(P7.Fb.dat.filter)$mean_expr<-apply(round(exprs(P7.Fb.dat.filter)),1,mean) # mean expression
+fData(P7.Fb.dat.filter)$sd_expr<-apply(round(exprs(P7.Fb.dat.filter)),1,sd) # sd expression
+fData(P7.Fb.dat.filter)$bcv<-(fData(P7.Fb.dat.filter)$sd_expr/fData(P7.Fb.dat.filter)$mean_expr)**2 # calculating biological coefficient of variation
+fData(P7.Fb.dat.filter)$percent_detection<-(fData(P7.Fb.dat.filter)$num_cells_expressed/dim(P7.Fb.dat.filter)[2])*100 # calculating % detection
+```
+
+```{r high_dispersion_genes_monocle - Pulling out the high dispersion genes for PCA analysis}
+P7.Fb.dat.filter.genes <- P7.Fb.dat.filter # spoofing the CellDataSet
+disp_table <- dispersionTable(P7.Fb.dat.filter.genes) # pulling out the dispersion table
+unsup_clustering_genes <-subset(disp_table, mean_expression >= 0.5 & dispersion_empirical >= 1.5 * dispersion_fit) # subsetting the data to pull out genes with expression above 0.5 and dispersion empirical > 2
+P7.Fb.dat.high_bcv_genes<-unsup_clustering_genes$gene_id # pulling out list of genes
+P7.Fb.dat.filter.order <- setOrderingFilter(P7.Fb.dat.filter, unsup_clustering_genes$gene_id)
+plot_ordering_genes(P7.Fb.dat.filter.order) # plotting the dispersion and genes
+length(P7.Fb.dat.high_bcv_genes) # 1172
+```
+
+```{r Run PCA with high BCV genes}
+# BCV Identified high dispersion genes. Running PC analysis
+P7.Fb.dat.filter.BCV.pca<-prcomp(t(log2(exprs(P7.Fb.dat.filter[P7.Fb.dat.high_bcv_genes,])+1)),center=T,scale. = TRUE)
+
+# Plotting the PCA graphs
+# Plotting the first 2 PCs and coloring by age
+hvPCA1<-ggbiplot(P7.Fb.dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(P7.Fb.dat.filter)$age,ellipse=T,var.axes=F) + scale_color_manual(values=c("darkgreen","red")) + monocle:::monocle_theme_opts()
+
+# Plotting the first 2 PCs and coloring by region
+hvPCA2<-ggbiplot(P7.Fb.dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(P7.Fb.dat.filter)$region,ellipse=T,var.axes=F) + scale_color_brewer(palette="Set1") + monocle:::monocle_theme_opts()
+
+# Plotting the first 2 PCs and coloring by plate the cell was sequenced from
+hvPCA3<-ggbiplot(P7.Fb.dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(P7.Fb.dat.filter)$split_plate,ellipse=T,var.axes=F) + scale_color_brewer(palette="Set1") + monocle:::monocle_theme_opts()
+
+# Show the plots in the terminal
+hvPCA1
+hvPCA2
+hvPCA3
+
+```
+
+```{r Screeplots of Data,tidy=TRUE}
+# Making a screeplot of the BCV PCA. This will help determine how 
+# many principal components we should use in our tSNE visualization
+
+# Show this plot
+screeplot(P7.Fb.dat.filter.BCV.pca, npcs = 30, main = "e15.5 - High BCV Genes Screeplot")
+ggscreeplot(P7.Fb.dat.filter.BCV.pca, type = "pev")
+
+# Conclustion: Seems to be clear that just the 
+# first 4 PCs explain the most variation in our data
+```
+
+```{r tsne}
+nComponents<-4 # estimated from the screeplots
+#seed <- runif(1,1,9999) # determined by testing random seeds
+seed <- 5348.333
+set.seed(seed) #setting seed
+
+P7.Fb.dat.filter.BCV.tsne<-tsne(P7.Fb.dat.filter.BCV.pca$x[,1:nComponents],perplexity=5,max_iter=5000,whiten = FALSE)
+
+pData(P7.Fb.dat.filter)$tSNE1_pos<-P7.Fb.dat.filter.BCV.tsne[,1]
+pData(P7.Fb.dat.filter)$tSNE2_pos<-P7.Fb.dat.filter.BCV.tsne[,2]
+
+P7.Fb.dat.filter.BCV.tsne.plot<-myTSNEPlotAlpha(P7.Fb.dat.filter,color="region", shape="age") + scale_color_brewer(palette="Set1") + ggtitle("P7 Fb - BCV tSNE Plot")
+
+P7.Fb.dat.filter.BCV.tsne.plot
+```
+
+```{r - attempting to cluster,tidy=TRUE}
+# Going to attempt to use the R program "ADPclust" to determine how many clusters our data has
+
+library(ADPclust)
+
+# Running ADPclust
+clust.res <- adpclust(x = P7.Fb.dat.filter.BCV.tsne,draw = T)
+
+# Extracting the "best partition" (aka the best cluster) for each cell
+clust.res.df <- as.data.frame(clust.res$cluster)
+
+# Adding the cluster assignment for each cell to the pData
+pData(P7.Fb.dat.filter)$kmeans_tSNE_cluster <- as.factor(clust.res.df$`clust.res$cluster`)
+
+# Plotting the same tSNE plot as above but coloring with the "clusters"
+myTSNEPlotAlpha(P7.Fb.dat.filter,color="kmeans_tSNE_cluster", shape="age") + scale_color_brewer(palette="Set1") + ggtitle("All Cells - BCV tSNE with Clusters Plot")
+```
+
+```{r check the clusters - qc on clusters}
+# Distribution of number of genes expressed in clusters
+q <- ggplot(pData(P7.Fb.dat.filter)) +
+  geom_density(aes(x=num_genes_expressed,fill=kmeans_tSNE_cluster),alpha=0.3) + scale_fill_brewer(palette="Set1") + facet_grid(.~age) + monocle:::monocle_theme_opts()
+
+q
+
+# Plotting the distribution of total mRNAs in clusters
+q<-ggplot(pData(P7.Fb.dat.filter)) +
+  geom_density(aes(x=Total_mRNAs,fill=kmeans_tSNE_cluster),alpha=0.3) + scale_fill_brewer(palette="Set1") + facet_grid(.~age) + monocle:::monocle_theme_opts()
+
+q
+```
+
+```{r differential gene test - Just with "clusters" as the formula}
+P7.Fb.Diff.Test <- differentialGeneTest(P7.Fb.dat.filter, 
+                             fullModelFormulaStr = "~kmeans_tSNE_cluster",
+                             reducedModelFormulaStr = "~1",
+                             relative_expr = FALSE,
+                             cores=8,
+                             verbose = F)
+
+nrow(P7.Fb.Diff.Test)
+# Only keeping differentially expressed genes with a FDF < 1%
+P7.Fb.tmp<-P7.Fb.Diff.Test[P7.Fb.Diff.Test$qval < 0.05,]
+# Ordering by q-value
+P7.Fb.tmp.3 <- P7.Fb.tmp[order(P7.Fb.tmp$qval),]
+P7.Fb.Diff.Genes <- as.character(P7.Fb.tmp.3$gene_short_name)
+length(P7.Fb.Diff.Genes) # 697
+
+myTSNEPlotAlpha(P7.Fb.dat.filter,color="kmeans_tSNE_cluster", shape="age",markers = P7.Fb.Diff.Genes[1:20],scaled = T) + scale_color_brewer(palette="Set1") + ggtitle("e15 Mb - BCV tSNE - Top 10 Differentially Expressed Genes")
+```
+
+```{r - Defining marker genes by using specificity score from cummeRbund}
+# Creating a cell dataset that contains only cells identified as isolated from e15 MB cluster 1
+P7.Fb.cluster.1 <- P7.Fb.dat.filter[,pData(P7.Fb.dat.filter)$kmeans_tSNE_cluster == 1]
+P7.Fb.cluster.1 <- P7.Fb.cluster.1[row.names(P7.Fb.tmp.3),] # only keeps diff exprs genes
+
+# Calculating the percentage of cells within cluster 1 cells that express each gene > 1 transcript
+P7.Fb.clust.1.exprs.df<-as.data.frame(apply(exprs(P7.Fb.cluster.1),1, function(x) length(which(x > 1))/ncol(exprs(P7.Fb.cluster.1))))
+colnames(P7.Fb.clust.1.exprs.df) <- "cluster.1-percent-exprs" # fixing col names
+
+# Calculating the mean expression of every gene in cluster 1 cells
+P7.Fb.cluster.1.df <- as.data.frame(apply(exprs(P7.Fb.cluster.1),1,mean))
+P7.Fb.cluster.1.df <- as.data.frame(P7.Fb.cluster.1.df)
+colnames(P7.Fb.cluster.1.df) <- "P7.Fb.cluster.1" # renaming col
+
+# Creating a cell dataset that contains only cells identified as isolated from e15 MB cluster 2
+P7.Fb.cluster.2 <- P7.Fb.dat.filter[,pData(P7.Fb.dat.filter)$kmeans_tSNE_cluster == 2]
+P7.Fb.cluster.2 <- P7.Fb.cluster.2[row.names(P7.Fb.tmp.3),]
+
+# Calculating the percentage of cells within cluster 2 cells that express each gene > 1 transcript
+P7.Fb.clust.2.exprs.df<-as.data.frame(apply(exprs(P7.Fb.cluster.2),1, function(x) length(which(x > 1))/ncol(exprs(P7.Fb.cluster.2))))
+colnames(P7.Fb.clust.2.exprs.df) <- "cluster.2-percent-exprs"
+
+# Calculating the mean expression of every gene in cluster 1 cells
+P7.Fb.cluster.2.df <- as.data.frame(apply(exprs(P7.Fb.cluster.2),1,mean))
+P7.Fb.cluster.2.df <- as.data.frame(P7.Fb.cluster.2.df)
+colnames(P7.Fb.cluster.2.df) <- "P7.Fb.cluster.2"
+
+
+# Merging the mean expression data frames from cluster 1 and cluster 2
+P7.Fb.df <- merge(P7.Fb.cluster.1.df,P7.Fb.cluster.2.df, by = 0)
+row.names(P7.Fb.df) <- P7.Fb.df$Row.names # rename rows 
+P7.Fb.df <- P7.Fb.df[,-1]
+
+
+# Make sure expression df is in dataframe and matrix form
+P7.Fb.df <- as.data.frame(P7.Fb.df)
+P7.Fb.df.mat <- as.matrix(P7.Fb.df)
+
+# Run cummeRbund specificity test on expression matrix
+P7.Fb.JSD <- .specificity(mat = P7.Fb.df.mat,logMode = T, relative = F)
+P7.Fb.JSD <- as.data.frame(P7.Fb.JSD)
+
+# Merge all the columns, leaving the row names as the gene names
+P7.Fb.JSD <- merge(P7.Fb.JSD,P7.Fb.clust.1.exprs.df, by = 0)
+row.names(P7.Fb.JSD) <- P7.Fb.JSD$Row.names
+P7.Fb.JSD <- P7.Fb.JSD[,-1]
+P7.Fb.JSD <- merge(P7.Fb.JSD,P7.Fb.clust.2.exprs.df, by = 0)
+row.names(P7.Fb.JSD) <- P7.Fb.JSD$Row.names
+P7.Fb.JSD <- P7.Fb.JSD[,-1]
+
+
+# Plotting the distribution of specificity scores
+hist(P7.Fb.JSD$P7.Fb.cluster.1,breaks=50,col = rgb(1,0,0,0.5),xlim = c(0,1))
+hist(P7.Fb.JSD$P7.Fb.cluster.2,breaks=50,add=T,col=rgb(0,0,1,0.5))
+abline(v=0.6) # Chosen based on looking at the above distribution
+
+# Filtering and plotting cluster 1 e15 MB genes
+gene.tmp <- P7.Fb.JSD[P7.Fb.JSD$P7.Fb.cluster.1 >= 0.6 & P7.Fb.JSD$`cluster.1-percent-exprs` >= 0.4,]
+gene.ordered <- row.names(gene.tmp[order(-gene.tmp$P7.Fb.cluster.1),])
+
+P7.Fb.cluster.1.genes <- lookupGeneName(P7.Fb.dat.filter, gene.ordered)
+
+saveRDS(P7.Fb.cluster.1.genes, file = file.path(Rdata_dir, "P7.Fb.cluster.1.genes.rds"))
+
+# Filtering and plotting cluster 2 e15 MB genes
+gene.tmp <- P7.Fb.JSD[P7.Fb.JSD$P7.Fb.cluster.2 >= 0.6 & P7.Fb.JSD$`cluster.2-percent-exprs` >= 0.4,]
+gene.ordered <- row.names(gene.tmp[order(-gene.tmp$P7.Fb.cluster.2),])
+
+P7.Fb.cluster.2.genes <- lookupGeneName(P7.Fb.dat.filter, gene.ordered)
+
+saveRDS(P7.Fb.cluster.2.genes, file = file.path(Rdata_dir, "P7.Fb.cluster.2.genes.rds"))
+```
+
+```{r extacting pData information}
+colnames(pData(P7.Fb.dat.filter))
+P7.Fb.clusters.df <- pData(P7.Fb.dat.filter)[,c(1,39)]
+saveRDS(P7.Fb.clusters.df, file = file.path(Rdata_dir, "P7.Fb.clusters.df.rds"))
+```
+
+```{r Saving the final cds as an .rds}
+P7.Fb.dat.filter.final <- P7.Fb.dat.filter
+saveRDS(object = P7.Fb.dat.filter.final, file = file.path(Rdata_dir, "P7.Fb.dat.filter.final.Rds"))
+```
