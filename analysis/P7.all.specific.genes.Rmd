@@ -42,7 +42,7 @@ P7.tmp<-P7.Diff.Test[P7.Diff.Test$qval < 0.05,]
 P7.tmp.2 <- P7.tmp[order(P7.tmp$qval),]
 P7.Diff.Genes <- as.character(P7.tmp.2$gene_short_name)
 length(P7.Diff.Genes) # 3971
-saveRDS(P7.Diff.Genes, file = "/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/rds/P7.diff.genes.rds")
+saveRDS(P7.Diff.Genes, file = file.path(Rdata_dir, "P7.diff.genes.rds"))
 ```
 
 ### t-SNE plots of top 10 differentially expressed genes
@@ -121,7 +121,7 @@ for(i in 1:9){
 
 names(P7.specific.genes) <- c("P7.FB.1","P7.FB.2","P7.MB.1","P7.MB.2","P7.MB.3","P7.MB.4","P7.OB.1","P7.OB.2","P7.OB.3")
 
-write.table(P7.specific.genes, file = "/Volumes/PAULHOOK/Revision/P7.specific.genes.txt", sep = "\t", quote = F, row.names = F)
+write.table(P7.specific.genes, file = file.path(file_dir, "P7.specific.genes.txt"), sep = "\t", quote = F, row.names = F)
 ```
 
 ###Making an interactive table for specific genes
