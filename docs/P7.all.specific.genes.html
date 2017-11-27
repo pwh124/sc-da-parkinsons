@@ -347,7 +347,7 @@ div.tocify {
 
 
 <p><strong>Last update:</strong> 2017-11-27</p>
-<p><strong>Code version:</strong> 7681c98bc8f473e7b2cc49ad76733557264c0450</p>
+<p><strong>Code version:</strong> 65a0bc7123d30e4c1eada7b68a33e372a518b29d</p>
 <div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level3">
 <h3>Setting important directories. Also loading important libraries and custom functions for analysis.</h3>
 <pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
@@ -382,7 +382,7 @@ P7.tmp.2 &lt;- P7.tmp[order(P7.tmp$qval),]
 P7.Diff.Genes &lt;- as.character(P7.tmp.2$gene_short_name)
 length(P7.Diff.Genes) # 3971</code></pre>
 <pre><code>## [1] 3971</code></pre>
-<pre class="r"><code>saveRDS(P7.Diff.Genes, file = &quot;/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/rds/P7.diff.genes.rds&quot;)</code></pre>
+<pre class="r"><code>saveRDS(P7.Diff.Genes, file = file.path(Rdata_dir, &quot;P7.diff.genes.rds&quot;))</code></pre>
 </div>
 <div id="t-sne-plots-of-top-10-differentially-expressed-genes" class="section level3">
 <h3>t-SNE plots of top 10 differentially expressed genes</h3>
@@ -461,7 +461,7 @@ for(i in 1:9){
 
 names(P7.specific.genes) &lt;- c(&quot;P7.FB.1&quot;,&quot;P7.FB.2&quot;,&quot;P7.MB.1&quot;,&quot;P7.MB.2&quot;,&quot;P7.MB.3&quot;,&quot;P7.MB.4&quot;,&quot;P7.OB.1&quot;,&quot;P7.OB.2&quot;,&quot;P7.OB.3&quot;)
 
-write.table(P7.specific.genes, file = &quot;/Volumes/PAULHOOK/Revision/P7.specific.genes.txt&quot;, sep = &quot;\t&quot;, quote = F, row.names = F)</code></pre>
+write.table(P7.specific.genes, file = file.path(file_dir, &quot;P7.specific.genes.txt&quot;), sep = &quot;\t&quot;, quote = F, row.names = F)</code></pre>
 </div>
 <div id="making-an-interactive-table-for-specific-genes" class="section level3">
 <h3>Making an interactive table for specific genes</h3>
