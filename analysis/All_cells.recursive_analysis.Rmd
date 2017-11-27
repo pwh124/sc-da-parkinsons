@@ -148,7 +148,10 @@ names(Sub.clusters.df) <- c("sample_id.x","remove","subset.cluster")
 final.data.frame <- merge(x = pData(dat.filter), y = Sub.clusters.df, by = "sample_id.x")
 pData(dat.filter)$subset.cluster <- as.factor(final.data.frame$subset.cluster)
 
-myTSNEPlotAlpha(dat.filter,color="subset.cluster", shape="age") + scale_color_brewer(palette="Set1") + ggtitle("All valid cells - tSNE Plot")
+# Colors chosen for displaying all subset clusters on 1 plot
+color <- c("#F6937A","#882F1C","#BF1F36","#C2B280","#F2C318","#E790AC","#F18421","#0168A5","#848483","#A4CAEB","#885793","#008957","#222222")
+
+myTSNEPlotAlpha(dat.filter,color="subset.cluster", shape="age") + scale_color_manual(values = color, name = "Subset Cluster") + ggtitle("All valid cells - tSNE Plot") + xlab("tSNE 1") + ylab("tSNE 2") + theme(legend.position = "bottom",axis.line = element_line(colour = "black")) + theme(plot.title = element_text(hjust = 0.5)) + coord_fixed(ratio = 1) + scale_shape(name = "Age")
 ```
 
 ###Saving final all cell CDS for future analyses and figures
