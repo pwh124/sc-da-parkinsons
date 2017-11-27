@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Paul Hook" />
+
+
+<title>P7 Analysis</title>
+
+<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<script src="site_libs/htmlwidgets-0.9/htmlwidgets.js"></script>
+<script src="site_libs/datatables-binding-0.2/datatables.js"></script>
+<link href="site_libs/dt-core-1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.10.12/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.10.12/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 41px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+
+.section h2 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h3 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h4 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h5 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h6 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">sc-da-parkinsons</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-line-chart"></span>
+     
+    Analyses
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="cds_creation-qc_filtering.html">CDS creation and QC</a>
+    </li>
+    <li>
+      <a href="E15.clustering.html">E15.5 Analyses</a>
+    </li>
+    <li>
+      <a href="P7.analyses.links.html">P7 Analyses</a>
+    </li>
+    <li>
+      <a href="All.cells.analyses.links.html">All cell analyses</a>
+    </li>
+    <li>
+      <a href="PD.GWAS.scoring.links.html">PD Gene Scoring</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="paper-figures.html">
+    <span class="fa fa-paperclip"></span>
+     
+    Paper Figures
+  </a>
+</li>
+<li>
+  <a href="https://github.com/pwh124/sc-da-parkinsons">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">P7 Analysis</h1>
+<h4 class="author"><em>Paul Hook</em></h4>
+
+</div>
+
+
+<p><strong>Last update:</strong> 2017-11-27</p>
+<p><strong>Code version:</strong> 7681c98bc8f473e7b2cc49ad76733557264c0450</p>
+<div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level3">
+<h3>Setting important directories. Also loading important libraries and custom functions for analysis.</h3>
+<pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
+file_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/output&quot;
+Rdata_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
+Script_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/code&quot;
+source(file.path(Script_dir,&#39;init.R&#39;))
+source(file.path(Script_dir,&quot;tools_R.r&quot;))</code></pre>
+</div>
+<div id="loading-the-p7-all-cell-.rds" class="section level3">
+<h3>Loading the P7 all cell .rds</h3>
+<pre class="r"><code>P7.dat.filter &lt;- readRDS(file = file.path(Rdata_dir, &quot;P7.dat.filter.final.Rds&quot;))
+nrow(pData(P7.dat.filter)) # 224</code></pre>
+<pre><code>## [1] 224</code></pre>
+</div>
+<div id="performing-differentially-expression" class="section level3">
+<h3>Performing differentially expression</h3>
+<pre class="r"><code>P7.Diff.Test &lt;- differentialGeneTest(P7.dat.filter, 
+                             fullModelFormulaStr = &quot;~subset.cluster&quot;,
+                             reducedModelFormulaStr = &quot;~1&quot;,
+                             relative_expr = FALSE,
+                             cores=8,
+                             verbose = F)
+
+
+nrow(P7.Diff.Test)</code></pre>
+<pre><code>## [1] 13746</code></pre>
+<pre class="r"><code># Only keeping differentially expressed genes with a FDF &lt; 5%
+P7.tmp&lt;-P7.Diff.Test[P7.Diff.Test$qval &lt; 0.05,]
+# Ordering by q-value
+P7.tmp.2 &lt;- P7.tmp[order(P7.tmp$qval),]
+P7.Diff.Genes &lt;- as.character(P7.tmp.2$gene_short_name)
+length(P7.Diff.Genes) # 3971</code></pre>
+<pre><code>## [1] 3971</code></pre>
+<pre class="r"><code>saveRDS(P7.Diff.Genes, file = &quot;/Volumes/PAULHOOK/GitHub/DA_scRNA-seq/rds/P7.diff.genes.rds&quot;)</code></pre>
+</div>
+<div id="t-sne-plots-of-top-10-differentially-expressed-genes" class="section level3">
+<h3>t-SNE plots of top 10 differentially expressed genes</h3>
+<pre class="r"><code>q &lt;- myTSNEPlotAlpha(P7.dat.filter,color=&quot;subset.cluster&quot;, shape=&quot;age&quot;,markers = P7.Diff.Genes[1:10],scaled = T) + scale_color_brewer(palette=&quot;Set1&quot;) + ggtitle(&quot;P7 - BCV tSNE - Top 10 Differentially Expressed Genes&quot;)</code></pre>
+<pre><code>## Scale for &#39;colour&#39; is already present. Adding another scale for
+## &#39;colour&#39;, which will replace the existing scale.</code></pre>
+<pre class="r"><code>q</code></pre>
+<p><img src="P7.all.specific.genes_files/figure-html/tsne%20plot%20of%20Top10%20differentially%20expressed%20genes-1.png" width="672" /></p>
+</div>
+<div id="finding-specific-genes-for-each-cluster" class="section level3">
+<h3>Finding specific genes for each cluster</h3>
+<pre class="r"><code>P7.dat.diff.filter &lt;- P7.dat.filter[row.names(P7.tmp.2),]
+nrow(P7.dat.diff.filter)</code></pre>
+<pre><code>## Features 
+##     3971</code></pre>
+<pre class="r"><code>subset.clusters &lt;- levels(pData(P7.dat.diff.filter)$subset.cluster)
+mean.clusters &lt;- data.frame(rownames(exprs(P7.dat.diff.filter)))
+percent.clusters &lt;- data.frame(rownames(exprs(P7.dat.diff.filter)))
+
+for(i in 1:length(subset.clusters)){
+  tmp.dat &lt;- P7.dat.diff.filter[,pData(P7.dat.diff.filter)$subset.cluster == subset.clusters[i]]
+
+  per.tmp&lt;-as.data.frame(apply(exprs(tmp.dat),1, function(x) length(which(x &gt; 1))/ncol(tmp.dat)))
+  colnames(per.tmp) &lt;- paste0(subset.clusters[i],&quot;.perc&quot;) 
+
+  mean.tmp&lt;- as.data.frame(apply(log2(exprs(tmp.dat)+1),1,mean))
+  mean.tmp &lt;- as.data.frame(mean.tmp)
+  colnames(mean.tmp) &lt;- paste0(subset.clusters[i],&quot;.mean&quot;)
+  
+  mean.clusters &lt;- merge(x = mean.clusters, y = mean.tmp, by.x = &quot;rownames.exprs.P7.dat.diff.filter..&quot;, by.y = 0)
+  percent.clusters &lt;- merge(x = percent.clusters, y = per.tmp, by.x = &quot;rownames.exprs.P7.dat.diff.filter..&quot;, by.y = 0)
+}
+
+rownames(mean.clusters) &lt;- mean.clusters$rownames.exprs.P7.dat.diff.filter..
+mean.clusters &lt;- mean.clusters[,-1]
+mean.clusters &lt;- as.matrix(mean.clusters)
+
+dat.JSD &lt;- .specificity(mat = mean.clusters,logMode = F, relative = F)
+dat.JSD &lt;- as.data.frame(dat.JSD)
+
+rownames(percent.clusters) &lt;- percent.clusters$rownames.exprs.P7.dat.diff.filter..
+percent.clusters &lt;- percent.clusters[,-1]
+
+merged.df &lt;- merge(x = dat.JSD, y = percent.clusters, by = 0)
+row.names(merged.df) &lt;- merged.df$Row.names
+merged.df &lt;- merged.df[,-1]</code></pre>
+</div>
+<div id="determining-the-specificity-score-to-use-as-a-cutoff" class="section level3">
+<h3>Determining the specificity score to use as a cutoff</h3>
+<pre class="r"><code>color &lt;- c(&quot;#F2C318&quot;,&quot;#E790AC&quot;,&quot;#F18421&quot;,&quot;#0168A5&quot;,&quot;#848483&quot;,&quot;#A4CAEB&quot;,&quot;#885793&quot;,&quot;#008957&quot;,&quot;#222222&quot;)
+color.transparent &lt;- adjustcolor(color, alpha.f = 0.3)
+bins &lt;- seq(from = 0, to = 1, by= 0.005)
+
+hist(dat.JSD$P7.FB.1.mean, breaks = bins, col = color.transparent[1], main = &quot;P7 Subset Cluster Specificity Distributions&quot;, ylab = &quot;Genes&quot;, xlab = &quot;Specificity score&quot;)
+hist(dat.JSD$P7.FB.2.mean, breaks = bins, add = T, col = color.transparent[2])
+hist(dat.JSD$P7.MB.1.mean, breaks = bins, add = T, col = color.transparent[3])
+hist(dat.JSD$P7.MB.2.mean, breaks = bins, add = T, col = color.transparent[4])
+hist(dat.JSD$P7.MB.3.mean, breaks = bins, add = T, col = color.transparent[5])
+hist(dat.JSD$P7.MB.4.mean, breaks = bins, add = T, col = color.transparent[6])
+hist(dat.JSD$P7.OB.1.mean, breaks = bins, add = T, col = color.transparent[7])
+hist(dat.JSD$P7.OB.2.mean, breaks = bins, add = T, col = color.transparent[8])
+hist(dat.JSD$P7.OB.3.mean, breaks = bins, add = T, col = color.transparent[9])
+abline(v = 0.3, lwd = 2)</code></pre>
+<p><img src="P7.all.specific.genes_files/figure-html/Determining%20the%20specificity%20score%20to%20use%20as%20a%20cutoff-1.png" width="672" /></p>
+</div>
+<div id="determining-specific-genes-for-each-cluster-and-writing-out-a-table" class="section level3">
+<h3>Determining specific genes for each cluster and writing out a table</h3>
+<pre class="r"><code>P7.specific.genes &lt;- data.frame()
+
+for(i in 1:9){
+  gene.tmp.1 &lt;- merged.df[merged.df[,i] &gt;= 0.3 &amp; merged.df[,i+9] &gt;= 0.4,]
+  gene.ordered &lt;- row.names(gene.tmp.1[order(-gene.tmp.1[,i]),])
+  cluster.genes &lt;- data.frame(lookupGeneName(P7.dat.filter, gene.ordered))
+  P7.specific.genes &lt;- cbindPad(P7.specific.genes, cluster.genes)
+}
+
+names(P7.specific.genes) &lt;- c(&quot;P7.FB.1&quot;,&quot;P7.FB.2&quot;,&quot;P7.MB.1&quot;,&quot;P7.MB.2&quot;,&quot;P7.MB.3&quot;,&quot;P7.MB.4&quot;,&quot;P7.OB.1&quot;,&quot;P7.OB.2&quot;,&quot;P7.OB.3&quot;)
+
+write.table(P7.specific.genes, file = &quot;/Volumes/PAULHOOK/Revision/P7.specific.genes.txt&quot;, sep = &quot;\t&quot;, quote = F, row.names = F)</code></pre>
+</div>
+<div id="making-an-interactive-table-for-specific-genes" class="section level3">
+<h3>Making an interactive table for specific genes</h3>
+<pre class="r"><code>library(DT)
+datatable(P7.specific.genes)</code></pre>
+<pre><code>## Warning in instance$preRenderHook(instance): It seems your data is too
+## big for client-side DataTables. You may consider server-side processing:
+## http://rstudio.github.io/DT/server.html</code></pre>
+<div id="htmlwidget-e0c2e2742a5382bafd08" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e0c2e2742a5382bafd08">{"x":{"filter":"none","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110"],["Slc18a3","Gsx1","Ghrh","Esr1","Arhgap36","Gpc4","Prox1","Npy1r","Mbnl3","Pbxip1","Nr3c1","Calcr","Ecel1","Pld5","Isl1","Gabre","Gal","Mamld1","Rrad","Ghr","Tmem176a","Rasgrp1","Pgr15l","Ccdc28a","Asb4","2010204K13Rik","Wfs1","Gabrq","Igsf1","Ppp1r17","Sdf2l1","Scgn","Cd59a","Magel2","Rftn1","Ak5","Scn9a","Fstl4","Dph1","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],["Isl1","Aldoc","Kctd16","Ecel1","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],["Casr","Neurod6","Otx2","Lpl","Mc3r","Tacr3","Ntsr2","Gpr83","Dhrs3","Cidea","Oprk1","Gch1","Glra2","Mcc","Ntn1","Chrna6","Ppapdc1a","Adra1b","Amotl1","Kcnab1","Cck","Slc39a4","Gm10421","Ntsr1","Ntf3","Fgfr2","Cbln4","Zar1","Chrnb3","En1","Prr16","Epha6","C130021I20Rik","Lhfpl2","Necab1","Slc1a2","Gfra1","Klhl1","Mia","Il13ra1","Pdzrn4","Slc18a2","Flrt3","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],["Crnde","Lhx9","Nxph4","Gm2694","Slc17a6","Ldb2","Mab21l1","Grm8","Gng13","Fam19a2","Wnt7b","1110015O18Rik","Rmst","Sstr2","Tspan18","Cbln2","Chst8","Hcrtr1","Meis1","Ephb1","Tmem163","Acbd4","Lrrn1","Arhgap24","Fam65b","Ndst3","Ak5","Adcyap1","Pip5kl1","Grin3a","Htr4","Spon1","Kcnk2","Ifi30","Eya3","Cryl1","Btbd3","Rgs10","Vamp1","Dkkl1","Mgat4c","Ptprg","Lsg1","Nek6","Rbfox1","Slc7a14","Irs4","Nova1","Adck5","Gm13205","Tle3","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],["Vip","Kcnk16","Rasd1","Prkcd","Spx","Gipr","Ebf1","Foxa2","Tekt2","Dcdc2a","Ldoc1","Crhbp","Fam159a","Gpr149","Kitl","Kcns3","Sh3bgr","Racgap1","Meig1","Fhad1","Cfap126","Fam19a1","Gm28498","Lgals3bp","Gm11837","Lmo1","Spsb2","Fbxl17","Kcnip3","2810468N07Rik","Anxa5","Pnoc","Cfap61","Bnc2","En1","Sstr1","Amz1","Ctnna1","Arhgef3","Dlk1","Tlk1","Prdx4","Adam11","Cpeb1","Gpld1","1700040L02Rik","Nubpl","Kcnk9","Unc13b","Ptpru","Calb1","Car4","Bdnf","Sulf2","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],["Chil1","Aldh1a7","Fam19a4","Fgf20","Anxa1","Sox6","Aldh1a1","Rgs6","Ndnf","Rbp4","Ntf3","Col25a1","Cldn1","Epha4","Chrna6","Chrnb3","Trpc6","Fam101a","Slc16a3","Cdh8","Chrm5","Eif4ebp1","Gucy2c","Cdh11","Sncg","Gsn","Pitx3","Dmrtb1","Ntn1","Prr16","Epha7","Ntng1","Nwd2","Ifitm10","Caln1","Fam167a","Dubr","Vwc2l","Adamtsl2","Ankrd34b","Chrna4","Slitrk4","Foxa1","Dkk3","Cadps2","Galntl6","Cd55","March1","Klhl1","Bnc2","Tmem117","Cox6b2","Nos1ap","Olfm3","Chrna3","Nars2","Clybl","Lhfp","Slc6a3","Drd2","Fam184a","Lmo3","Ntsr1","Epha6","Schip1","Rerg","Kcnn3","Lmo4","Nkain4","H2-DMa","Bdnf","Gm10421","Tacr3","Slc39a4","Gch1","Igfbp3","Penk","BC030500","F2r","Il1rap","Il13ra1","Slit2","Zfp40","Cryl1","Lgi1","C130021I20Rik","Snhg4","Gatm","Slc18a2","Gm38112","Sv2b","Plxna1","Pvt1","Pcdh17","Wscd1","Dock9","Tmem196","Epha5","Fez2","Sv2c","Serpine2","Ano10","Selo","Narf","Spr","Tm4sf5","Hibch","Tenm2","Mad2l1bp","C230034O21Rik"],["Gm11549","Nfib","Crabp1","Nhsl1","Bmp7","Dlx6os1","Gm3764","Dusp5","Chd7","Rasl11b","Gm17750","Sp8","Tspan9","Tcf4","RP23-15K8.1","Pde1c","Cdh4","Zeb2","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],["Chrm2","Scrg1","RP23-15K8.1","Frmd7","Gabrd","Lgr5","Sema3e","Cckbr","Prss12","Map3k1","Pcdhgc5","Pax6","Wls","Bcl6","Fibcd1","Sall3","Gprc5b","Trh","Mlip","Sparcl1","9330158H04Rik","Mt1","Sec14l1","Eya2","Cnih3","Zeb2","Stac","Pcp4l1","Tubb6","Syndig1l","Syt10","Pde1c","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",""],["Ppp1r1c","Jam2","Gcsam","Fgf16","Hgf","Clec18a","Lpar1","Fhdc1","Mt2","Angpt1","D16Ertd472e","Sall1","Asic4","Gabrd","Akr1c18","Hs3st2","Car2","Eya2","Fzd9","Npy","Shisa8","Svep1","Stac2","Tyw3","Trh","Sall3","Dusp14","Sap30","Mt1","Gpr101","Kank3","Lgr5","Bcl6","Gm9747","Crhr1","Slc35d3","Tspan15","Gprc5b","Pax6","Sema3e","Wls","Nppa","Ptprm","Syt10","Ano4","Kcnc2","Tiam2","Mlip","Enox2","Etv1","Nr4a1","Fibcd1","Tmem159","Pygm","Psph","St8sia5","Rasa3","Slc32a1","March4","Lmo2","Prkcdbp","Ctbp2","Frmd7","E530001K10Rik","Adcy8","Homer2","Prss12","Dlx6","Wnt5a","Tubb6","Rpp25","Tm6sf1","Sbsn","Cnr1","Iqsec3","Ccser1","Tgfb2","Lppr5","Pcp4l1","March11","Gm13889","Htr7","Cpne8","Syndig1l","Avpi1","Slc16a14","Cttnbp2","Tmem178","Cckbr","Actl6a","Kctd8","Pmm2","Scgn","Sec14l1","Whrn","Cd24a","","","","","","","","","","","","","",""]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>P7.FB.1<\/th>\n      <th>P7.FB.2<\/th>\n      <th>P7.MB.1<\/th>\n      <th>P7.MB.2<\/th>\n      <th>P7.MB.3<\/th>\n      <th>P7.MB.4<\/th>\n      <th>P7.OB.1<\/th>\n      <th>P7.OB.2<\/th>\n      <th>P7.OB.3<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}]},"selection":{"mode":"multiple","selected":null,"target":"row"}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="session-info" class="section level3">
+<h3>Session Info</h3>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.3.0 (2016-05-03)
+## Platform: x86_64-apple-darwin13.4.0 (64-bit)
+## Running under: OS X 10.11.6 (El Capitan)
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+##  [1] grid      splines   stats4    parallel  stats     graphics  grDevices
+##  [8] utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] DT_0.2              ggbiplot_0.55       scales_0.5.0       
+##  [4] SC3_1.1.4           ROCR_1.0-7          jackstraw_1.1.1    
+##  [7] lfa_1.2.2           tsne_0.1-3          gridExtra_2.3      
+## [10] slackr_1.4.2        vegan_2.4-4         permute_0.9-4      
+## [13] MASS_7.3-47         gplots_3.0.1        RColorBrewer_1.1-2 
+## [16] Hmisc_4.0-3         Formula_1.2-2       survival_2.41-3    
+## [19] lattice_0.20-35     Heatplus_2.18.0     Rtsne_0.13         
+## [22] pheatmap_1.0.8      tidyr_0.7.1         dplyr_0.7.4        
+## [25] plyr_1.8.4          heatmap.plus_1.3    stringr_1.2.0      
+## [28] marray_1.50.0       limma_3.28.21       reshape2_1.4.2     
+## [31] monocle_2.2.0       DDRTree_0.1.5       irlba_2.2.1        
+## [34] VGAM_1.0-2          ggplot2_2.2.1       Biobase_2.32.0     
+## [37] BiocGenerics_0.18.0 Matrix_1.2-11      
+## 
+## loaded via a namespace (and not attached):
+##  [1] RSelenium_1.7.1        colorspace_1.3-2       class_7.3-14          
+##  [4] rprojroot_1.2          htmlTable_1.9          corpcor_1.6.9         
+##  [7] base64enc_0.1-3        mvtnorm_1.0-6          codetools_0.2-15      
+## [10] doParallel_1.0.11      robustbase_0.92-7      knitr_1.17            
+## [13] jsonlite_1.5           cluster_2.0.6          semver_0.2.0          
+## [16] shiny_1.0.5            rrcov_1.4-3            httr_1.3.1            
+## [19] backports_1.1.1        assertthat_0.2.0       lazyeval_0.2.1        
+## [22] acepack_1.4.1          htmltools_0.3.6        tools_3.3.0           
+## [25] bindrcpp_0.2           igraph_1.1.2           gtable_0.2.0          
+## [28] glue_1.1.1             binman_0.1.0           doRNG_1.6.6           
+## [31] Rcpp_0.12.13           slam_0.1-37            gdata_2.18.0          
+## [34] nlme_3.1-131           iterators_1.0.8        mime_0.5              
+## [37] rngtools_1.2.4         gtools_3.5.0           WriteXLS_4.0.0        
+## [40] XML_3.98-1.9           DEoptimR_1.0-8         yaml_2.1.14           
+## [43] pkgmaker_0.22          rpart_4.1-11           fastICA_1.2-1         
+## [46] latticeExtra_0.6-28    stringi_1.1.5          pcaPP_1.9-72          
+## [49] foreach_1.4.3          e1071_1.6-8            checkmate_1.8.4       
+## [52] caTools_1.17.1         rlang_0.1.2            pkgconfig_2.0.1       
+## [55] matrixStats_0.52.2     bitops_1.0-6           qlcMatrix_0.9.5       
+## [58] evaluate_0.10.1        purrr_0.2.3            bindr_0.1             
+## [61] labeling_0.3           htmlwidgets_0.9        magrittr_1.5          
+## [64] R6_2.2.2               combinat_0.0-8         wdman_0.2.2           
+## [67] foreign_0.8-69         mgcv_1.8-22            nnet_7.3-12           
+## [70] tibble_1.3.4           KernSmooth_2.23-15     rmarkdown_1.6         
+## [73] data.table_1.10.4      HSMMSingleCell_0.106.2 digest_0.6.12         
+## [76] xtable_1.8-2           httpuv_1.3.5           openssl_0.9.7         
+## [79] munsell_0.4.3          registry_0.3</code></pre>
+</div>
+
+<hr>
+<p>
+    This <a href="http://rmarkdown.rstudio.com">R Markdown</a> site was created with <a href="https://github.com/jdblischak/workflowr">workflowr</a>
+</p>
+<hr>
+
+<!-- To enable disqus, uncomment the section below and provide your disqus_shortname -->
+
+<!-- disqus
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'rmarkdown'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+-->
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
