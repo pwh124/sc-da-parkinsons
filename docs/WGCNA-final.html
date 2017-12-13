@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Paul Hook" />
+
+
+<title>P7 WGCNA Analysis</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 41px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+
+.section h2 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h3 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h4 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h5 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h6 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">sc-da-parkinsons</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-line-chart"></span>
+     
+    Analyses
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="cds_creation-qc_filtering.html">CDS creation and QC</a>
+    </li>
+    <li>
+      <a href="E15.clustering.html">E15.5 Analyses</a>
+    </li>
+    <li>
+      <a href="P7.analyses.links.html">P7 Analyses</a>
+    </li>
+    <li>
+      <a href="All.cells.analyses.links.html">All cell analyses</a>
+    </li>
+    <li>
+      <a href="PD.GWAS.scoring.links.html">PD Gene Scoring</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="paper-figures.html">
+    <span class="fa fa-paperclip"></span>
+     
+    Paper Figures
+  </a>
+</li>
+<li>
+  <a href="https://github.com/pwh124/sc-da-parkinsons">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">P7 WGCNA Analysis</h1>
+<h4 class="author"><em>Paul Hook</em></h4>
+
+</div>
+
+
+<p><strong>Last update:</strong> 2017-12-13</p>
+<p><strong>Code version:</strong> 8750be2cf8755401b006d9cff78aa5aafaf1b1cc</p>
+<div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level3">
+<h3>Setting important directories. Also loading important libraries and custom functions for analysis.</h3>
+<pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
+file_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/output&quot;
+Rdata_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
+Script_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/code&quot;
+source(file.path(Script_dir,&#39;init.R&#39;))
+source(file.path(Script_dir,&quot;tools_R.r&quot;))</code></pre>
+</div>
+<div id="loading-r-libraries-necessary-for-wgcna-analysis" class="section level3">
+<h3>Loading R libraries necessary for WGCNA analysis</h3>
+<pre class="r"><code>library(AnnotationDbi)</code></pre>
+<pre><code>## Warning: package &#39;AnnotationDbi&#39; was built under R version 3.3.1</code></pre>
+<pre><code>## Loading required package: IRanges</code></pre>
+<pre><code>## Loading required package: S4Vectors</code></pre>
+<pre><code>## Warning: package &#39;S4Vectors&#39; was built under R version 3.3.1</code></pre>
+<pre><code>## 
+## Attaching package: &#39;S4Vectors&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:gplots&#39;:
+## 
+##     space</code></pre>
+<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
+## 
+##     expand</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     first, rename</code></pre>
+<pre><code>## The following object is masked from &#39;package:plyr&#39;:
+## 
+##     rename</code></pre>
+<pre><code>## The following objects are masked from &#39;package:Matrix&#39;:
+## 
+##     colMeans, colSums, expand, rowMeans, rowSums</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     colMeans, colSums, expand.grid, rowMeans, rowSums</code></pre>
+<pre><code>## 
+## Attaching package: &#39;IRanges&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
+## 
+##     collapse, desc, slice</code></pre>
+<pre><code>## The following object is masked from &#39;package:plyr&#39;:
+## 
+##     desc</code></pre>
+<pre><code>## 
+## Attaching package: &#39;AnnotationDbi&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:MASS&#39;:
+## 
+##     select</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     select</code></pre>
+<pre class="r"><code>library(impute)
+library(GO.db)</code></pre>
+<pre><code>## </code></pre>
+<pre class="r"><code>library(preprocessCore)
+library(knitr)</code></pre>
+<pre><code>## Warning: package &#39;knitr&#39; was built under R version 3.3.2</code></pre>
+<pre class="r"><code>library(rgl)</code></pre>
+<pre><code>## Warning: package &#39;rgl&#39; was built under R version 3.3.2</code></pre>
+<pre class="r"><code>library(WGCNA)</code></pre>
+<pre><code>## Warning: package &#39;WGCNA&#39; was built under R version 3.3.2</code></pre>
+<pre><code>## Loading required package: dynamicTreeCut</code></pre>
+<pre><code>## Loading required package: fastcluster</code></pre>
+<pre><code>## Warning: package &#39;fastcluster&#39; was built under R version 3.3.2</code></pre>
+<pre><code>## 
+## Attaching package: &#39;fastcluster&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:stats&#39;:
+## 
+##     hclust</code></pre>
+<pre><code>## ==========================================================================
+## *
+## *  Package WGCNA 1.61 loaded.
+## *
+## *    Important note: It appears that your system supports multi-threading,
+## *    but it is not enabled within WGCNA in R. 
+## *    To allow multi-threading within WGCNA with all available cores, use 
+## *
+## *          allowWGCNAThreads()
+## *
+## *    within R. Use disableWGCNAThreads() to disable threading if necessary.
+## *    Alternatively, set the following environment variable on your system:
+## *
+## *          ALLOW_WGCNA_THREADS=&lt;number_of_processors&gt;
+## *
+## *    for example 
+## *
+## *          ALLOW_WGCNA_THREADS=4
+## *
+## *    To set the environment variable in linux bash shell, type 
+## *
+## *           export ALLOW_WGCNA_THREADS=4
+## *
+## *     before running R. Other operating systems or shells will
+## *     have a similar command to achieve the same aim.
+## *
+## ==========================================================================</code></pre>
+<pre><code>## 
+## Attaching package: &#39;WGCNA&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:IRanges&#39;:
+## 
+##     cor</code></pre>
+<pre><code>## The following object is masked from &#39;package:S4Vectors&#39;:
+## 
+##     cor</code></pre>
+<pre><code>## The following object is masked from &#39;package:stats&#39;:
+## 
+##     cor</code></pre>
+<pre class="r"><code>library(SC3)
+library(clusterProfiler)</code></pre>
+<pre><code>## Warning: package &#39;clusterProfiler&#39; was built under R version 3.3.1</code></pre>
+<pre><code>## Loading required package: DOSE</code></pre>
+<pre><code>## Warning: package &#39;DOSE&#39; was built under R version 3.3.1</code></pre>
+<pre><code>## 
+## Attaching package: &#39;DOSE&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:lattice&#39;:
+## 
+##     dotplot</code></pre>
+<pre class="r"><code>library(org.Mm.eg.db)</code></pre>
+<pre><code>## </code></pre>
+<pre class="r"><code>library(ReactomePA)
+library(cummeRbund)</code></pre>
+<pre><code>## Loading required package: RSQLite</code></pre>
+<pre><code>## Warning: package &#39;RSQLite&#39; was built under R version 3.3.2</code></pre>
+<pre><code>## Loading required package: rtracklayer</code></pre>
+<pre><code>## Warning: package &#39;rtracklayer&#39; was built under R version 3.3.1</code></pre>
+<pre><code>## Loading required package: GenomicRanges</code></pre>
+<pre><code>## Warning: package &#39;GenomicRanges&#39; was built under R version 3.3.1</code></pre>
+<pre><code>## Loading required package: GenomeInfoDb</code></pre>
+<pre><code>## Warning: package &#39;GenomeInfoDb&#39; was built under R version 3.3.1</code></pre>
+<pre><code>## Loading required package: Gviz</code></pre>
+<pre><code>## Warning: package &#39;Gviz&#39; was built under R version 3.3.1</code></pre>
+<pre><code>## 
+## Attaching package: &#39;cummeRbund&#39;</code></pre>
+<pre><code>## The following objects are masked _by_ &#39;.GlobalEnv&#39;:
+## 
+##     JSdist, JSdistFromP, JSdistVec, makeprobs, makeprobsvec,
+##     shannon.entropy</code></pre>
+<pre><code>## The following object is masked from &#39;package:GenomicRanges&#39;:
+## 
+##     promoters</code></pre>
+<pre><code>## The following object is masked from &#39;package:IRanges&#39;:
+## 
+##     promoters</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     count</code></pre>
+<pre><code>## The following object is masked from &#39;package:plyr&#39;:
+## 
+##     count</code></pre>
+<pre><code>## The following object is masked from &#39;package:Biobase&#39;:
+## 
+##     samples</code></pre>
+<pre><code>## The following object is masked from &#39;package:BiocGenerics&#39;:
+## 
+##     conditions</code></pre>
+<pre class="r"><code>library(foreach)
+library(doParallel)</code></pre>
+<pre><code>## Warning: package &#39;doParallel&#39; was built under R version 3.3.2</code></pre>
+<pre><code>## Loading required package: iterators</code></pre>
+<pre class="r"><code>library(splines)
+library(flashClust)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;flashClust&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:fastcluster&#39;:
+## 
+##     hclust</code></pre>
+<pre><code>## The following object is masked from &#39;package:stats&#39;:
+## 
+##     hclust</code></pre>
+</div>
+<div id="loading-in-needed-p7-data" class="section level3">
+<h3>Loading in needed P7 data</h3>
+<pre class="r"><code>P7.dat.filter &lt;- readRDS(file.path(Rdata_dir,&quot;P7.dat.filter.final.Rds&quot;))
+dim(P7.dat.filter)</code></pre>
+<pre><code>## Features  Samples 
+##    13746      224</code></pre>
+</div>
+<div id="preparing-the-data-for-wgcna-analysis.-the-genes-used-in-the-analysis-were-filtered-to-only-include-genes-that-were-determined-to-be-expressed-in-at-least-20-cells-9-of-the-total-cells-in-the-data-set." class="section level3">
+<h3>Preparing the data for WGCNA analysis. The genes used in the analysis were filtered to only include genes that were determined to be expressed in at least 20 cells (9% of the total cells in the data set).</h3>
+<pre class="r"><code># Identifying genes only expressed in at least 20 cells
+P7.expressed_genes.WGCNA&lt;-row.names(subset(fData(P7.dat.filter),num_cells_expressed &gt;= 20))
+length(P7.expressed_genes.WGCNA)</code></pre>
+<pre><code>## [1] 12628</code></pre>
+<pre class="r"><code># Keeping only those genes for analysis. Ended up being 12,628 cells.
+P7.dat.WGCNA &lt;-P7.dat.filter[P7.expressed_genes.WGCNA,]
+
+# Converting data to log2 + 1 expression
+mydata &lt;- log2(exprs(P7.dat.WGCNA)+1)
+
+# Converting data to a matrix which is needed for WGCNA analysis.
+mydata &lt;- as.matrix(mydata)
+
+# Checking the dimensions of the data
+dim(mydata)</code></pre>
+<pre><code>## [1] 12628   224</code></pre>
+<pre class="r"><code># Transposing the matrix so it is in the orientation needed for WGCNA analysis and saving the matrix under a better variable name.
+mydata.trans=t(mydata)
+datExpr &lt;- mydata.trans</code></pre>
+</div>
+<div id="next-heirarchial-clutering-was-used-to-cluster-the-data-and-look-for-any-outliers.-there-seems-to-be-only-one-glaring-outlier." class="section level3">
+<h3>Next, heirarchial clutering was used to cluster the data and look for any outliers. There seems to be only one glaring outlier.</h3>
+<pre class="r"><code># Clustering the data by using heirarchial clustering
+sampleTree &lt;- flashClust(dist(datExpr), method = &quot;average&quot;)
+
+# Plotting the heirarchial clustering in order to manually identify and removce outliers
+par(cex = 0.6, mar = c(0,4,2,0))
+plot(sampleTree, main = &quot;Sample clustering to detect outliers&quot;,
+     sub=&quot;&quot;, xlab=&quot;&quot;, cex.lab = 1.5, cex.axis = 1.5, cex.main = 2)
+cutHeight=120 # choosing a cut height of 120 in order to remove the one high level outlier
+abline(h = cutHeight, col = &quot;red&quot;)</code></pre>
+<p><img src="WGCNA-final_files/figure-html/Clustering%20cells%20and%20plotting-1.png" width="672" /></p>
+<pre class="r"><code># Cutting the tree at the cut height and seeing how many outliers are removed with the cut
+clust = cutreeStatic(sampleTree, cutHeight = cutHeight, minSize = 10)
+table(clust)</code></pre>
+<pre><code>## clust
+##   0   1 
+##   1 223</code></pre>
+<pre class="r"><code># Keeping only the samples that are not removed by the cut height used
+keepSamples &lt;- (clust==1)
+datExpr &lt;- datExpr[keepSamples,]
+
+# Saving the number of genes and the number of samples that will move in to WGCNA
+nGenes &lt;- ncol(datExpr)
+nSamples &lt;- nrow(datExpr)</code></pre>
+</div>
+<div id="making-a-data-frame-that-can-be-filled-with-meta-data-about-the-cells-and-can-be-used-to-annotate-the-heirarchial-clustering" class="section level3">
+<h3>Making a data frame that can be filled with meta-data about the cells and can be used to annotate the heirarchial clustering</h3>
+<pre class="r"><code># subsetting out trait data from the initial cds
+datTraits &lt;- pData(P7.dat.WGCNA[,keepSamples])
+datTraits&lt;-datTraits[,c(&quot;region&quot;,&quot;subset.cluster&quot;,&quot;num_genes_expressed&quot;)]
+
+# Setting the colors to match the regional colors
+region_labels &lt;- RColorBrewer::brewer.pal(6, &quot;Set1&quot;)[1:3]
+
+# Making sure the regional colors match what has been used througout and making a column with the hex codes.
+datTraits &lt;- datTraits %&gt;%
+  mutate(cell.names = row.names(datTraits)) %&gt;%
+  mutate(x = ifelse(datTraits$region == &quot;FB&quot;, region_labels[1],
+                    ifelse(datTraits$region == &quot;MB&quot;, region_labels[2],
+                           ifelse(datTraits$region == &quot;OB&quot;, region_labels[3], NA))))</code></pre>
+<pre><code>## Warning: package &#39;bindrcpp&#39; was built under R version 3.3.2</code></pre>
+<pre class="r"><code># Re-performing heirarchial clustering
+sampleTree2 &lt;- hclust(dist(datExpr), method = &quot;average&quot;)
+
+# Plotting the dendrogram with regional identity colored beneath each cell
+plotDendroAndColors(sampleTree2, datTraits$x,
+                groupLabels = names(datTraits),
+                main = &quot;Sample dendrogram and regional identity&quot;)</code></pre>
+<p><img src="WGCNA-final_files/figure-html/-%20Making%20trait%20dataframe-1.png" width="672" /></p>
+<pre class="r"><code># Writing out that dendrogram to a PDF
+pdf(file = file.path(file_dir, &quot;sample.dendrogram_region.heatmap.pdf&quot;), height = 8, width = 12)
+plotDendroAndColors(sampleTree2, datTraits$x,
+                groupLabels = names(datTraits),
+                main = &quot;Sample dendrogram and regional identity&quot;)
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+</div>
+<div id="in-order-to-now-perform-wgcna-on-our-data-a-soft-threshold-needs-to-be-calculated" class="section level3">
+<h3>In order to now perform WGCNA on our data, a “soft threshold” needs to be calculated</h3>
+<pre class="r"><code># Setting what soft thresholds (powers) should be tested for potential use as a soft threshold
+powers &lt;- c(c(1:10), seq(from = 12, to=20, by=2))
+
+# Calculating soft thresholds for a signed network
+sft &lt;- pickSoftThreshold(datExpr, powerVector = powers,
+                        verbose = 5,
+                        networkType =&quot;signed&quot;,
+                        moreNetworkConcepts = F)</code></pre>
+<pre><code>## pickSoftThreshold: will use block size 3542.
+##  pickSoftThreshold: calculating connectivity for given powers...
+##    ..working on genes 1 through 3542 of 12628</code></pre>
+<pre><code>## Warning: executing %dopar% sequentially: no parallel backend registered</code></pre>
+<pre><code>## Warning: Some correlations are NA in block 1 : 3542 .</code></pre>
+<pre><code>##    ..working on genes 3543 through 7084 of 12628</code></pre>
+<pre><code>## Warning: Some correlations are NA in block 3543 : 7084 .</code></pre>
+<pre><code>##    ..working on genes 7085 through 10626 of 12628</code></pre>
+<pre><code>## Warning: Some correlations are NA in block 7085 : 10626 .</code></pre>
+<pre><code>##    ..working on genes 10627 through 12628 of 12628</code></pre>
+<pre><code>## Warning: Some correlations are NA in block 10627 : 12628 .</code></pre>
+<pre><code>## Warning in as.vector(log10(dk)): NaNs produced
+
+## Warning in as.vector(log10(dk)): NaNs produced
+
+## Warning in as.vector(log10(dk)): NaNs produced
+
+## Warning in as.vector(log10(dk)): NaNs produced
+
+## Warning in as.vector(log10(dk)): NaNs produced
+
+## Warning in as.vector(log10(dk)): NaNs produced
+
+## Warning in as.vector(log10(dk)): NaNs produced
+
+## Warning in as.vector(log10(dk)): NaNs produced</code></pre>
+<pre><code>##    Power SFT.R.sq slope truncated.R.sq  mean.k. median.k. max.k.
+## 1      1  0.50600 10.80          0.842 6580.000  6.56e+03 7440.0
+## 2      2  0.74000 13.30          0.776 3460.000  3.43e+03 4490.0
+## 3      3  0.74700 12.90          0.667 1830.000  1.80e+03 2770.0
+## 4      4  0.65000 10.70          0.775  981.000  9.49e+02 1750.0
+## 5      5  0.39700  6.56          0.965  529.000  5.03e+02 1130.0
+## 6      6  0.00729 -0.43          0.744  288.000  2.68e+02  745.0
+## 7      7  0.62400 -3.07          0.891  158.000  1.44e+02  502.0
+## 8      8  0.92100 -3.91          0.988   87.900  7.74e+01  345.0
+## 9      9  0.41500 -1.93          0.797   49.300  4.19e+01  242.0
+## 10    10  0.85700 -2.81          0.952   28.000  2.28e+01  173.0
+## 11    12  0.96100 -2.91          0.992    9.370  6.87e+00   93.2
+## 12    14  0.97800 -2.60          0.994    3.320  2.12e+00   53.5
+## 13    16  0.97500 -2.30          0.988    1.250  6.69e-01   32.5
+## 14    18  0.97700 -2.04          0.991    0.508  2.17e-01   20.9
+## 15    20  0.97300 -1.81          0.988    0.223  7.21e-02   14.3</code></pre>
+<pre class="r"><code># Plotting the soft threshold diagnostics in order to choose an optimal soft threshold.
+# Setting display margins
+par(mfrow = c(1,1))
+cex1 = 0.9
+
+# Scale-free topology fit index as a function of the soft-thresholding power. We are looking to choose a soft threshold where the plot plateus out
+plot(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
+     xlab=&quot;Soft Threshold (power)&quot;,ylab=&quot;Scale Free Topology Model Fit,signed R^2&quot;,type=&quot;n&quot;,
+     main = paste(&quot;Scale independence&quot;))
+text(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
+labels=powers,cex=cex1,col=&quot;red&quot;)
+abline(h=0.8,col=&quot;red&quot;) # this line corresponds to using an R^2 cut-off of h that could be used as a guide to picking a soft threshold</code></pre>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code># Mean connectivity as a function of the soft-thresholding power. Again, we are looking at when the plot begins leveling out.
+plot(sft$fitIndices[,1], sft$fitIndices[,5],
+xlab=&quot;Soft Threshold (power)&quot;,ylab=&quot;Mean Connectivity&quot;, type=&quot;n&quot;,
+main = paste(&quot;Mean connectivity&quot;))
+text(sft$fitIndices[,1], sft$fitIndices[,5], labels=powers, cex=cex1,col=&quot;red&quot;)</code></pre>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
+<pre class="r"><code># Writing out these plots
+pdf(file = file.path(file_dir, &quot;WGCNA.softpower.pdf&quot;), width = 6, height = 6)
+plot(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
+     xlab=&quot;Soft Threshold (power)&quot;,ylab=&quot;Scale Free Topology Model Fit,signed R^2&quot;,type=&quot;n&quot;,
+     main = paste(&quot;Scale independence&quot;))
+text(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
+labels=powers,cex=cex1,col=&quot;red&quot;)
+abline(h=0.8,col=&quot;red&quot;)
+
+plot(sft$fitIndices[,1], sft$fitIndices[,5],
+xlab=&quot;Soft Threshold (power)&quot;,ylab=&quot;Mean Connectivity&quot;, type=&quot;n&quot;,
+main = paste(&quot;Mean connectivity&quot;))
+text(sft$fitIndices[,1], sft$fitIndices[,5], labels=powers, cex=cex1,col=&quot;red&quot;)
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+</div>
+<div id="a-soft-threshold-of-10-was-chosen-based-on-the-scale-independence-plot-beginning-to-finally-level-out-at-that-point-for-good.-the-dip-from-8-to-9-prevented-me-from-choosing-8.-we-choose-a-topology-cut-off-of-0.80-which-is-arbitary-but-similar-to-the-number-suggested-in-wgcna-tutorials-see-a-general-framework-for-weighted-gene-coexpression-network-analysis-2005." class="section level3">
+<h3>A soft threshold of 10 was chosen based on the scale independence plot beginning to finally level out at that point for good. The dip from 8 to 9 prevented me from choosing 8. We choose a topology cut-off of 0.80, which is arbitary but similar to the number suggested in WGCNA tutorials (see “A General Framework for Weighted Gene CoExpression Network Analysis”, 2005).</h3>
+<pre class="r"><code># Choosing a power of 10 based on Scale independence plot and 0.8 threshold
+softPower &lt;- 10
+adjacency &lt;- adjacency(datExpr, power = softPower, type = &quot;signed&quot;)
+
+# Turn adjacency into topological overlap
+TOM &lt;- TOMsimilarity(adjacency, TOMType = &quot;signed&quot;)</code></pre>
+<pre><code>## ..connectivity..
+## ..matrix multiplication..
+## ..normalization..
+## ..done.</code></pre>
+<pre class="r"><code>dissTOM &lt;- 1-TOM
+
+# Call the hierarchical clustering function
+geneTree &lt;- flashClust(as.dist(dissTOM), method = &quot;average&quot;)
+
+# Plot the resulting clustering tree (dendrogram)
+par(mfrow=c(1,1))
+plot(geneTree, xlab=&quot;&quot;, sub=&quot;&quot;, main = &quot;Gene clustering on TOM-based dissimilarity&quot;,
+     labels = FALSE, hang = 0.01)</code></pre>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code># We like large modules, so we set the minimum module size relatively high:
+minModuleSize &lt;- 20
+
+# Module identification using dynamic tree cut:
+dynamicMods = cutreeDynamic(dendro = geneTree, distM = dissTOM, 
+                            deepSplit = T, pamRespectsDendro = FALSE, 
+                            minClusterSize = minModuleSize)</code></pre>
+<pre><code>##  ..cutHeight not given, setting it to 1  ===&gt;  99% of the (truncated) height range in dendro.
+##  ..done.</code></pre>
+<pre class="r"><code>table(dynamicMods)</code></pre>
+<pre><code>## dynamicMods
+##     0     1     2     3     4     5     6     7     8     9    10    11 
+##     4 11567   438   158    70    57    41    35    35    31    29    29 
+##    12    13    14    15    16    17 
+##    24    24    23    22    21    20</code></pre>
+<pre class="r"><code># Convert numeric lables into colors
+dynamicColors &lt;- labels2colors(dynamicMods)
+table(dynamicColors)</code></pre>
+<pre><code>## dynamicColors
+##        black         blue        brown         cyan        green 
+##           35          438          158           23           57 
+##  greenyellow         grey       grey60    lightcyan      magenta 
+##           29            4           20           21           31 
+## midnightblue         pink       purple          red       salmon 
+##           22           35           29           41           24 
+##          tan    turquoise       yellow 
+##           24        11567           70</code></pre>
+<pre class="r"><code># And plot the gene dendrogram with module colors annotated underneath
+plotDendroAndColors(geneTree, dynamicColors, &quot;Dynamic Tree Cut&quot;, 
+                    dendroLabels = FALSE, hang = 0.03, addGuide = TRUE, 
+                    guideHang = 0.04, main = &quot;Gene dendrogram and module colors&quot;)</code></pre>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+</div>
+<div id="now-that-we-have-identified-modules-in-our-data-we-want-to-explore-the-relationships-between-those-modules-a-little-more.-note-that-grey-and-turquoise-modules-were-removed-in-these-analyses-because-turquoise-contained-all-genes-that-did-not-get-slotted-in-to-a-specific-module-and-grey-had-only-4-genes-below-our-set-module-size" class="section level3">
+<h3>Now that we have identified modules in our data, we want to explore the relationships between those modules a little more. Note that grey and turquoise modules were removed in these analyses because turquoise contained all genes that did not get slotted in to a specific module and grey had only 4 genes (below our set module size)</h3>
+<pre class="r"><code># Calculate eigengenes for each module
+MEList &lt;- moduleEigengenes(datExpr, colors = dynamicColors)
+MEs &lt;- MEList$eigengenes
+
+# Remove grey and turquoise for ahead of attempting to look at dissimilarity between eigengenes
+MEs &lt;- MEs[,c(1:6,8:16,18)] 
+
+# Calculate dissimilarity of module eigengenes
+MEDiss &lt;- 1-cor(MEs)
+
+# Cluster module eigengenes
+METree &lt;- flashClust(as.dist(MEDiss), method = &quot;average&quot;)
+
+# Plot the result
+par(mfrow=c(1,1))
+plot(METree, main = &quot;Clustering of module eigengenes&quot;,xlab = &quot;&quot;, sub = &quot;&quot;)
+MEDissThres = 0.2
+abline(h=MEDissThres, col = &quot;red&quot;) # Plot the cut line into the dendrogram. Branches falling below this line will be merged. It does not look like any will get merged, but we run it anyways.</code></pre>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<pre class="r"><code># Call an automatic merging function
+merge &lt;- mergeCloseModules(datExpr, dynamicColors, cutHeight = MEDissThres, verbose = 3)</code></pre>
+<pre><code>##  mergeCloseModules: Merging modules whose distance is less than 0.2
+##    multiSetMEs: Calculating module MEs.
+##      Working on set 1 ...
+##      moduleEigengenes: Calculating 18 module eigengenes in given set.
+##    Calculating new MEs...
+##    multiSetMEs: Calculating module MEs.
+##      Working on set 1 ...
+##      moduleEigengenes: Calculating 18 module eigengenes in given set.
+##       ..principal component calculation for module grey failed with the following error:
+##            Error in svd(datModule, nu = min(n, p, nPC), nv = min(n, p, nPC)) : 
+##   infinite or missing values in &#39;x&#39;
+##        ..hub genes will be used instead of principal components.</code></pre>
+<pre class="r"><code># Extracting the merged module colors
+moduleColors &lt;- merge$colors
+
+# Extracting eigengenes of the new merged modules:
+mergedMEs &lt;- merge$newMEs
+
+# Constructing numerical labels corresponding to the colors
+colorOrder = c(&quot;grey&quot;, standardColors(50));
+moduleLabels = match(moduleColors, colorOrder)-1;
+MEs &lt;- mergedMEs
+MEs &lt;- MEs[,c(1:6,8:17)] #remove turquoise and grey again, since they for some reason are not gone
+
+# Calculate dissimilarity of module eigengenes
+MEDiss &lt;- 1-cor(MEs)
+
+# Cluster module eigengenes
+METree &lt;- flashClust(as.dist(MEDiss), method = &quot;average&quot;)
+
+# Plot the result
+par(mfrow=c(1,1))
+plot(METree, main = &quot;Clustering of module eigengenes&quot;,xlab = &quot;&quot;, sub = &quot;&quot;)</code></pre>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<pre class="r"><code># write out the final plot to a pdf
+pdf(file = file.path(file_dir,&quot;Module_Eigengene_Tree.pdf&quot;), height = 6, width = 8)
+plot(METree, main = &quot;Clustering of module eigengenes&quot;,xlab = &quot;&quot;, sub = &quot;&quot;)
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+</div>
+<div id="now-that-we-had-explored-the-modules-relationship-to-each-other-we-wanted-to-see-if-the-genes-within-each-module-were-enriched-for-gene-ontology-kegg-and-reactome-terms" class="section level3">
+<h3>Now that we had explored the modules relationship to each other, we wanted to see if the genes within each module were enriched for gene ontology, KEGG, and Reactome terms</h3>
+<pre class="r"><code># Making a list of module names
+modNames &lt;- substring(names(MEs), 3)
+
+# Correlating each genes expression profile with the module eigengenes in order to create module gene sets
+geneModuleMembership &lt;- as.data.frame(cor(datExpr, MEs, use = &quot;p&quot;))
+# &quot;For each module, we also define a quantitative measure of module membership MM as the correlation of the module eigengene and the gene expression profile.&quot; - WGCNA tutorial
+
+# Iteratively creating a list of module genesets to test. These are in ensembl ids
+moduleGeneSets&lt;-lapply(modNames,function(module){
+  column = match(module, modNames)
+  moduleGenes = moduleColors==module
+  rownames(geneModuleMembership[moduleGenes,])
+})
+names(moduleGeneSets)&lt;-modNames
+
+# Trimming the module gene sets so that the final two digits after the &quot;.&quot; are removed
+moduleGeneSets.trimmed&lt;-lapply(moduleGeneSets,function(x){
+  str_split_fixed(x,&quot;\\.&quot;,2)[,1]
+})
+
+# Looking up the ENTREZ id for each gene
+moduleGeneSets.Entrez&lt;-lapply(moduleGeneSets.trimmed,function(x){
+  bitr(x,fromType=&quot;ENSEMBL&quot;,toType=&quot;ENTREZID&quot;,OrgDb=&quot;org.Mm.eg.db&quot;)$ENTREZID
+})</code></pre>
+<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
+<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
+## &quot;org.Mm.eg.db&quot;): 5.71% of input gene IDs are fail to map...</code></pre>
+<pre><code>## &#39;select()&#39; returned 1:many mapping between keys and columns</code></pre>
+<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
+## &quot;org.Mm.eg.db&quot;): 20.83% of input gene IDs are fail to map...</code></pre>
+<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
+<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
+## &quot;org.Mm.eg.db&quot;): 13.04% of input gene IDs are fail to map...</code></pre>
+<pre><code>## &#39;select()&#39; returned 1:many mapping between keys and columns</code></pre>
+<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
+## &quot;org.Mm.eg.db&quot;): 3.51% of input gene IDs are fail to map...</code></pre>
+<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
+<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
+## &quot;org.Mm.eg.db&quot;): 29.17% of input gene IDs are fail to map...</code></pre>
+<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
+<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
+## &quot;org.Mm.eg.db&quot;): 4.43% of input gene IDs are fail to map...</code></pre>
+<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
+<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
+## &quot;org.Mm.eg.db&quot;): 14.29% of input gene IDs are fail to map...</code></pre>
+<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
+<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
+## &quot;org.Mm.eg.db&quot;): 19.51% of input gene IDs are fail to map...</code></pre>
+<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
+<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
+## &quot;org.Mm.eg.db&quot;): 9.52% of input gene IDs are fail to map...</code></pre>
+<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
+<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
+## &quot;org.Mm.eg.db&quot;): 17.24% of input gene IDs are fail to map...</code></pre>
+<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
+<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
+## &quot;org.Mm.eg.db&quot;): 17.14% of input gene IDs are fail to map...</code></pre>
+<pre><code>## &#39;select()&#39; returned 1:many mapping between keys and columns</code></pre>
+<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
+## &quot;org.Mm.eg.db&quot;): 15% of input gene IDs are fail to map...</code></pre>
+<pre><code>## &#39;select()&#39; returned 1:many mapping between keys and columns</code></pre>
+<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
+## &quot;org.Mm.eg.db&quot;): 22.58% of input gene IDs are fail to map...</code></pre>
+<pre><code>## &#39;select()&#39; returned 1:many mapping between keys and columns</code></pre>
+<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
+## &quot;org.Mm.eg.db&quot;): 5.25% of input gene IDs are fail to map...</code></pre>
+<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
+<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
+## &quot;org.Mm.eg.db&quot;): 3.45% of input gene IDs are fail to map...</code></pre>
+<pre class="r"><code># Looking at KEGG Geneset Enrichment
+ck&lt;-compareCluster(geneCluster=moduleGeneSets.Entrez,
+                   fun=&quot;enrichKEGG&quot;,organism=&quot;mmu&quot;,pvalueCutoff = 0.1)
+plot(ck,showCategory=10)+ggtitle(&quot;KEGG geneset enrichment by module&quot;) #width = 0.5</code></pre>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<pre class="r"><code># Looking at molecular function geneset enrichment
+cg.mf&lt;-compareCluster(geneCluster=moduleGeneSets.Entrez,fun=&quot;enrichGO&quot;,
+                      OrgDb = &quot;org.Mm.eg.db&quot;,pvalueCutoff = 0.01,ont=&quot;MF&quot;, readable = T)
+plot(cg.mf,showCategory=20)+ggtitle(&quot;GO MF geneset enrichment by module&quot;)</code></pre>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
+<pre class="r"><code># Looking at biological process geneset enrichment 
+cg.bp&lt;-compareCluster(geneCluster=moduleGeneSets.Entrez,fun=&quot;enrichGO&quot;,
+                      OrgDb = &quot;org.Mm.eg.db&quot;, pvalueCutoff = 0.01,ont=&quot;BP&quot;, readable = T)
+plot(cg.bp,showCategory=15)+ggtitle(&quot;GO BP geneset enrichment by module&quot;)</code></pre>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-5-3.png" width="672" /></p>
+<pre class="r"><code>cg.cc&lt;-compareCluster(geneCluster=moduleGeneSets.Entrez,fun=&quot;enrichGO&quot;,
+                      OrgDb = &quot;org.Mm.eg.db&quot;, pvalueCutoff = 0.01,ont=&quot;CC&quot;, readable = T)
+plot(cg.cc,showCategory=15)+ggtitle(&quot;GO CC geneset enrichment by module&quot;)</code></pre>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-5-4.png" width="672" /></p>
+<pre class="r"><code># Looking at reactome enrichment
+cr&lt;-compareCluster(geneCluster=moduleGeneSets.Entrez,fun=&quot;enrichPathway&quot;,
+                   organism=&quot;mouse&quot;,pvalueCutoff = 0.1, readable = T)
+plot(cr,showCategory=10)+ggtitle(&quot;Reactome geneset enrichment by module&quot;)</code></pre>
+<pre><code>## Warning in `levels&lt;-`(`*tmp*`, value = if (nl == nL) as.character(labels)
+## else paste0(labels, : duplicated levels in factors are deprecated</code></pre>
+<pre><code>## Warning in `levels&lt;-`(`*tmp*`, value = if (nl == nL) as.character(labels)
+## else paste0(labels, : duplicated levels in factors are deprecated
+
+## Warning in `levels&lt;-`(`*tmp*`, value = if (nl == nL) as.character(labels)
+## else paste0(labels, : duplicated levels in factors are deprecated</code></pre>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-5-5.png" width="672" /></p>
+<pre class="r"><code># Printing out the cluster enrichment diagrams. These will be useful for annotating the 
+pdf(file.path(file_dir,&quot;P7-all-module_geneset_enrichments.pdf&quot;),width=18,height=10, useDingbats = F)
+plot(ck,showCategory=10)+ggtitle(&quot;KEGG geneset enrichment by module&quot;)
+plot(cr,showCategory=10)+ggtitle(&quot;Reactome geneset enrichment by module&quot;)</code></pre>
+<pre><code>## Warning in `levels&lt;-`(`*tmp*`, value = if (nl == nL) as.character(labels)
+## else paste0(labels, : duplicated levels in factors are deprecated
+
+## Warning in `levels&lt;-`(`*tmp*`, value = if (nl == nL) as.character(labels)
+## else paste0(labels, : duplicated levels in factors are deprecated
+
+## Warning in `levels&lt;-`(`*tmp*`, value = if (nl == nL) as.character(labels)
+## else paste0(labels, : duplicated levels in factors are deprecated</code></pre>
+<pre class="r"><code>plot(cg.bp,showCategory=10)+ggtitle(&quot;GO BP geneset enrichment by module&quot;)
+plot(cg.mf,showCategory=10)+ggtitle(&quot;GO MF geneset enrichment by module&quot;)
+plot(cg.cc,showCategory = 10) + ggtitle(&quot;GO CC geneset enrichment by module&quot;)
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+<pre class="r"><code># Gene enrichment tables are found in &#39;ck&#39;,&#39;cg.mf&#39;,&#39;cg.bp&#39;,&#39;cg.cc&#39;, &#39;cr&#39;
+# summary() allows for the S4 objects created by clusterProfiler to be converted in to dataframes
+kegg.table &lt;- summary(ck)
+
+# Had to make my own KEGG conversion function
+kegg.table.clone &lt;- kegg.table
+for(i in 1:nrow(kegg.table.clone)){
+  gene.str &lt;- kegg.table.clone[i,9]
+  gene.split &lt;- unlist(strsplit(gene.str,split = &quot;/&quot;))
+  genes.symbol &lt;- bitr(gene.split, fromType = &quot;ENTREZID&quot;, toType = &quot;SYMBOL&quot;, OrgDb = &#39;org.Mm.eg.db&#39;)
+  converted.gene.string &lt;- paste0(genes.symbol$SYMBOL,collapse = &quot;/&quot;)
+  kegg.table.clone[i,9] &lt;- converted.gene.string
+}</code></pre>
+<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns
+## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
+<pre class="r"><code># Easy enough to do for the others when you can set it at &#39;readable&#39; in the functions above
+go.molecular.function.table &lt;- summary(cg.mf)
+go.bio.process.table &lt;- summary(cg.bp)
+go.cell.comp.table &lt;- summary(cg.cc)
+reactome.table &lt;- summary(cr)
+
+# writing out tables
+file.loc &lt;- &quot;/Volumes/PAULHOOK/Th_Experiments/Single-Cell-RNA-seq/TH-E15-P7-Remap-Alt-Filter/File.Output&quot;
+
+write.table(x = kegg.table.clone, file = file.path(file.loc,&quot;WGCNA.KEGG.table.txt&quot;), quote = F, sep = &quot;\t&quot;, row.names = F)
+
+write.table(x = go.molecular.function.table, file = file.path(file.loc,&quot;GO.MF.table.txt&quot;), quote = F, sep = &quot;\t&quot;, row.names = F)
+
+write.table(x = go.bio.process.table, file = file.path(file.loc,&quot;GO.BP.table.txt&quot;), quote = F, sep = &quot;\t&quot;, row.names = F)
+
+write.table(x = go.cell.comp.table, file = file.path(file.loc,&quot;GO.CC.table.txt&quot;), quote = F, sep = &quot;\t&quot;, row.names = F)
+
+write.table(x = reactome.table, file = file.path(file.loc,&quot;Reactome.table.txt&quot;), quote = F, sep = &quot;\t&quot;, row.names = F)</code></pre>
+</div>
+<div id="in-order-to-use-them-in-downstream-analyses-a-table-was-written-out-in-order-to-show-all-the-genes-in-each-module-identified-in-our-analysis-table-s6" class="section level3">
+<h3>In order to use them in downstream analyses, a table was written out in order to show all the genes in each module identified in our analysis (Table S6)</h3>
+<pre class="r"><code>library(reshape2)
+# Turn the &#39;moduleGeneSets&#39; list in to a data.frame, copy the columns and rename them &#39;module&#39; and &#39;gene&#39;, select only the &#39;module&#39; and &#39;gene&#39; columns
+module.df &lt;- ldply(moduleGeneSets, data.frame) %&gt;%
+  mutate(module = .id, gene = X..i..) %&gt;%
+  dplyr::select(module, gene)
+
+# Add id numbers in in order to unmelt the data and make sure the row lengths are the same for all columns
+module.df$id = numeric(nrow(module.df))
+for (i in 1:nrow(module.df)){
+ dat_temp &lt;- module.df[1:i,]
+ module.df[i,]$id &lt;- nrow(dat_temp[dat_temp$module == module.df[i,]$module,])
+}
+
+# Unmelt the data using &quot;dcast&quot; and then remove the &#39;id&#39; column that helped you unmelt the data
+module.genes.df &lt;- dcast(module.df, id~module, value.var = &quot;gene&quot;) %&gt;%
+  dplyr::select(-id)
+
+# Replace all gene IDs with the mouse gene symbols
+for(i in 1:ncol(module.genes.df)){
+   geneIDs &lt;- module.genes.df[,i][!is.na(module.genes.df[,i])]
+   geneSymbols &lt;- as.character(paste0(&quot;&quot;,lookupGeneName(eset = P7.dat.filter, geneIDs)))
+   n &lt;- 438 - length(geneSymbols)
+   toAdd &lt;- rep(&quot;&quot;,n)
+   coltoAdd &lt;- c(geneSymbols,toAdd)
+   module.genes.df[,i] &lt;- coltoAdd # adding a &#39; to gene names so they are not changed in Excel
+}
+
+# Write out the table
+write.table(module.genes.df, file = file.path(file_dir,&quot;WGCNA.module.gene.lists.txt&quot;), quote = F, row.names = F, sep = &quot;\t&quot;)</code></pre>
+</div>
+<div id="now-that-we-have-looked-at-enrichment-for-go-terms-in-our-modules-we-want-to-correlate-the-modules-with-cellular-traitis-specifically-subset-cluster-in-order-to-find-modules-that-differentiation-between-da-populations-at-p7" class="section level3">
+<h3>Now that we have looked at enrichment for GO terms in our modules, we want to correlate the modules with cellular traitis, specifically subset cluster in order to find modules that differentiation between DA populations at P7</h3>
+<pre class="r"><code># The first step to find these correlations is to make a trait table
+# Copying over the datTraits dataframe
+datTraits.new &lt;- datTraits
+
+datTraits.new$region &lt;- as.factor(datTraits.new$region)
+datTraits.new$subset.cluster &lt;- as.factor(datTraits.new$subset.cluster)
+
+# Using these for loops to create additional columns for each level of a trait, which will read &quot;True&quot; or &quot;False&quot; for each trait in each cell
+for (l in levels(datTraits.new$subset.cluster)) {
+  datTraits.new[[l]]&lt;-datTraits.new$subset.cluster == l
+}
+
+for (l in levels(datTraits.new$region)){
+  datTraits.new[[l]] &lt;- datTraits.new$region == l
+}
+
+# Factoring the T/F columns in to a binary 0/1 classification system
+datTraitsFactor&lt;-datTraits.new
+datTraitsFactor$region&lt;-as.numeric(as.factor(datTraits.new$region))
+datTraitsFactor$subset.cluster&lt;-as.numeric(as.factor(datTraits.new$subset.cluster))
+
+for (l in levels(datTraits.new$subset.cluster)){
+  datTraitsFactor[[l]]&lt;-as.numeric(datTraits.new[[l]])
+}
+
+for (l in levels(datTraits.new$region)){
+  datTraitsFactor[[l]]&lt;-as.numeric(datTraits.new[[l]])
+}
+
+# Keeping only the columns for subset clusters
+datTraitsFactorCor &lt;- datTraitsFactor[,c(6:14)]
+
+# Correlating the module eigengenes with subset cluster identity
+moduleTraitCor &lt;- cor(MEs, datTraitsFactorCor)
+
+# Getting a p-value for each correlation
+moduleTraitPvalue &lt;- corPvalueStudent(moduleTraitCor, nSamples)
+
+# Plotting the relationship between learned gene co-expression modules and parameterizations
+pdf(file = file.path(file_dir,&quot;P7_module-trait_relationships-all.pdf&quot;), width = 10, height = 8)
+par(mfrow=c(1,1))
+textMatrix = paste(signif(moduleTraitCor, 2), &quot;\n(&quot;,
+signif(moduleTraitPvalue, 1), &quot;)&quot;, sep = &quot;&quot;)
+dim(textMatrix) = dim(moduleTraitCor)
+par(mar = c(6, 8.5, 3, 3))
+
+labeledHeatmap(Matrix = t(moduleTraitCor),
+               xLabels = names(MEs), yLabels = names(datTraitsFactorCor),
+               ySymbols = names(datTraitsFactorCor),
+               colorLabels = FALSE,
+               colors = blueWhiteRed(50),
+               textMatrix = t(textMatrix),
+               setStdMargins = T, cex.text = 0.5, zlim = c(-1,1),
+               main = paste(&quot;Module-trait relationships&quot;))
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+</div>
+<div id="we-then-wanted-to-correlate-the-modules-eigengenes-with-tsne-position-and-plot-7-that-were-found-to-be-significantly-correlated-with-a-p7-subset-cluster" class="section level3">
+<h3>We then wanted to correlate the modules eigengenes with tSNE position and plot 7 that were found to be significantly correlated with a P7 subset cluster</h3>
+<pre class="r"><code># Correlating tSNE position with eigenvectors
+eigentSNE&lt;-cbind(pData(P7.dat.WGCNA[,keepSamples])$tSNE1_pos,pData(P7.dat.WGCNA[,keepSamples,])$tSNE2_pos,MEs)
+colnames(eigentSNE)&lt;-c(&quot;tSNE1_pos&quot;,&quot;tSNE2_pos&quot;,modNames)
+
+eigentSNE.melt&lt;-melt(eigentSNE,id.vars=c(&quot;tSNE1_pos&quot;,&quot;tSNE2_pos&quot;))
+
+# Melting the data and selecting only the modules we want to plot 
+eigentSNE.melt.subset &lt;- eigentSNE.melt %&gt;%
+  filter(variable == &quot;yellow&quot; | variable == &quot;green&quot; | variable == &quot;salmon&quot; | variable == &quot;brown&quot; | variable == 
+           &quot;midnightblue&quot; | variable == &quot;blue&quot; | variable == &quot;lightcyan&quot;)
+  
+p2.subset&lt;-ggplot(eigentSNE.melt.subset) + geom_point(aes(x=tSNE1_pos,y=tSNE2_pos,color=value),size=1) + monocle:::monocle_theme_opts() + scale_color_gradient2(low=&quot;blue&quot;,mid=&quot;white&quot;,high=&quot;red&quot;,limits=c(-0.1,0.1),oob=squish)
+
+p2.subset.all &lt;- p2.subset + facet_wrap(&quot;variable&quot;, nrow = 2) + ggtitle(&quot;WGCNA module eigengene expression across single P7 DA neurons&quot;) + coord_fixed(ratio = 1) + xlab(&quot;t-SNE 1&quot;) + ylab(&quot;t-SNE 2&quot;) + theme(plot.title = element_text(hjust = 0.5))
+
+pdf(file = file.path(file_dir,&quot;Eigen-tSNEplots-subset.pdf&quot;), width = 10, height = 4)
+p2.subset.all
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+<pre class="r"><code>p2.subset.all</code></pre>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+</div>
+<div id="save-modules-that-were-enriched-for-pd-genesets" class="section level3">
+<h3>Save modules that were enriched for PD genesets</h3>
+<pre class="r"><code>saveRDS(moduleGeneSets$green, file = file.path(file_dir,&quot;WGCNA.ParkGeneSet.Green.rds&quot;))
+saveRDS(moduleGeneSets$brown, file = file.path(file_dir,&quot;WGCNA.ParkGeneSet.Brown.rds&quot;))</code></pre>
+</div>
+<div id="session-info" class="section level3">
+<h3>Session Info</h3>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.3.0 (2016-05-03)
+## Platform: x86_64-apple-darwin13.4.0 (64-bit)
+## Running under: OS X 10.11.6 (El Capitan)
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+##  [1] grid      splines   stats4    parallel  stats     graphics  grDevices
+##  [8] utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] bindrcpp_0.2          flashClust_1.01-2     doParallel_1.0.11    
+##  [4] iterators_1.0.8       foreach_1.4.3         cummeRbund_2.14.0    
+##  [7] Gviz_1.16.5           rtracklayer_1.32.2    GenomicRanges_1.24.3 
+## [10] GenomeInfoDb_1.8.7    RSQLite_2.0           ReactomePA_1.16.2    
+## [13] org.Mm.eg.db_3.3.0    clusterProfiler_3.0.5 DOSE_2.10.7          
+## [16] WGCNA_1.61            fastcluster_1.1.24    dynamicTreeCut_1.63-1
+## [19] rgl_0.98.1            knitr_1.17            preprocessCore_1.34.0
+## [22] GO.db_3.3.0           impute_1.46.0         AnnotationDbi_1.34.4 
+## [25] IRanges_2.6.1         S4Vectors_0.10.3      ggbiplot_0.55        
+## [28] scales_0.5.0          SC3_1.1.4             ROCR_1.0-7           
+## [31] jackstraw_1.1.1       lfa_1.2.2             tsne_0.1-3           
+## [34] gridExtra_2.3         slackr_1.4.2          vegan_2.4-4          
+## [37] permute_0.9-4         MASS_7.3-47           gplots_3.0.1         
+## [40] RColorBrewer_1.1-2    Hmisc_4.0-3           Formula_1.2-2        
+## [43] survival_2.41-3       lattice_0.20-35       Heatplus_2.18.0      
+## [46] Rtsne_0.13            pheatmap_1.0.8        tidyr_0.7.1          
+## [49] dplyr_0.7.4           plyr_1.8.4            heatmap.plus_1.3     
+## [52] stringr_1.2.0         marray_1.50.0         limma_3.28.21        
+## [55] reshape2_1.4.2        monocle_2.2.0         DDRTree_0.1.5        
+## [58] irlba_2.2.1           VGAM_1.0-2            ggplot2_2.2.1        
+## [61] Biobase_2.32.0        BiocGenerics_0.18.0   Matrix_1.2-11        
+## 
+## loaded via a namespace (and not attached):
+##   [1] robust_0.4-18                 htmlwidgets_0.9              
+##   [3] combinat_0.0-8                BiocParallel_1.6.6           
+##   [5] munsell_0.4.3                 codetools_0.2-15             
+##   [7] colorspace_1.3-2              GOSemSim_1.30.3              
+##   [9] fastICA_1.2-1                 BiocInstaller_1.22.3         
+##  [11] robustbase_0.92-7             labeling_0.3                 
+##  [13] slam_0.1-37                   topGO_2.24.0                 
+##  [15] bit64_0.9-7                   rprojroot_1.2                
+##  [17] RSelenium_1.7.1               wdman_0.2.2                  
+##  [19] biovizBase_1.20.0             R6_2.2.2                     
+##  [21] bitops_1.0-6                  assertthat_0.2.0             
+##  [23] nnet_7.3-12                   gtable_0.2.0                 
+##  [25] ensembldb_1.4.7               rlang_0.1.2                  
+##  [27] lazyeval_0.2.1                acepack_1.4.1                
+##  [29] dichromat_2.0-0               checkmate_1.8.4              
+##  [31] yaml_2.1.15                   semver_0.2.0                 
+##  [33] GenomicFeatures_1.24.5        backports_1.1.1              
+##  [35] httpuv_1.3.5                  qvalue_2.4.2                 
+##  [37] tools_3.3.0                   Rcpp_0.12.13                 
+##  [39] base64enc_0.1-3               zlibbioc_1.18.0              
+##  [41] purrr_0.2.3                   RCurl_1.95-4.8               
+##  [43] rpart_4.1-11                  openssl_0.9.7                
+##  [45] SummarizedExperiment_1.2.3    cluster_2.0.6                
+##  [47] magrittr_1.5                  data.table_1.10.4            
+##  [49] DO.db_2.9                     SparseM_1.77                 
+##  [51] reactome.db_1.55.0            mvtnorm_1.0-6                
+##  [53] matrixStats_0.52.2            mime_0.5                     
+##  [55] evaluate_0.10.1               xtable_1.8-2                 
+##  [57] XML_3.98-1.9                  compiler_3.3.0               
+##  [59] HSMMSingleCell_0.106.2        biomaRt_2.28.0               
+##  [61] tibble_1.3.4                  KernSmooth_2.23-15           
+##  [63] htmltools_0.3.6               mgcv_1.8-22                  
+##  [65] corpcor_1.6.9                 pcaPP_1.9-72                 
+##  [67] rrcov_1.4-3                   binman_0.1.0                 
+##  [69] DBI_0.7                       WriteXLS_4.0.0               
+##  [71] rappdirs_0.3.1                gdata_2.18.0                 
+##  [73] bindr_0.1                     igraph_1.1.2                 
+##  [75] pkgconfig_2.0.1               fit.models_0.5-14            
+##  [77] GenomicAlignments_1.8.4       registry_0.3                 
+##  [79] foreign_0.8-69                annotate_1.50.1              
+##  [81] rngtools_1.2.4                pkgmaker_0.22                
+##  [83] XVector_0.12.1                doRNG_1.6.6                  
+##  [85] VariantAnnotation_1.18.7      digest_0.6.12                
+##  [87] graph_1.50.0                  Biostrings_2.40.2            
+##  [89] rmarkdown_1.8                 htmlTable_1.9                
+##  [91] GSEABase_1.34.1               shiny_1.0.5                  
+##  [93] Rsamtools_1.24.0              gtools_3.5.0                 
+##  [95] graphite_1.18.1               nlme_3.1-131                 
+##  [97] jsonlite_1.5                  BSgenome_1.40.1              
+##  [99] httr_1.3.1                    DEoptimR_1.0-8               
+## [101] interactiveDisplayBase_1.10.3 glue_1.1.1                   
+## [103] qlcMatrix_0.9.5               bit_1.1-12                   
+## [105] class_7.3-14                  stringi_1.1.5                
+## [107] blob_1.1.0                    AnnotationHub_2.4.2          
+## [109] latticeExtra_0.6-28           caTools_1.17.1               
+## [111] memoise_1.1.0                 e1071_1.6-8</code></pre>
+</div>
+
+<hr>
+<p>
+    This <a href="http://rmarkdown.rstudio.com">R Markdown</a> site was created with <a href="https://github.com/jdblischak/workflowr">workflowr</a>
+</p>
+<hr>
+
+<!-- To enable disqus, uncomment the section below and provide your disqus_shortname -->
+
+<!-- disqus
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'rmarkdown'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+-->
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
