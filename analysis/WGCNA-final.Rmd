@@ -264,7 +264,7 @@ dev.off()
 ```
 
 ### Now that we had explored the modules relationship to each other, we wanted to see if the genes within each module were enriched for gene ontology, KEGG, and Reactome terms
-```{r}
+```{r, eval=FALSE}
 # Making a list of module names
 modNames <- substring(names(MEs), 3)
 
@@ -325,7 +325,7 @@ dev.off()
 
 ```
 
-```{r Getting outputs of cluster tables}
+```{r Getting outputs of cluster tables, eval=FALSE}
 
 # Gene enrichment tables are found in 'ck','cg.mf','cg.bp','cg.cc', 'cr'
 # summary() allows for the S4 objects created by clusterProfiler to be converted in to dataframes
@@ -363,7 +363,7 @@ write.table(x = reactome.table, file = file.path(file.loc,"Reactome.table.txt"),
 ```
 
 ### In order to use them in downstream analyses, a table was written out in order to show all the genes in each module identified in our analysis (Table S6)
-```{r writing a table out of genes in modules}
+```{r writing a table out of genes in modules, eval=FALSE}
 library(reshape2)
 # Turn the 'moduleGeneSets' list in to a data.frame, copy the columns and rename them 'module' and 'gene', select only the 'module' and 'gene' columns
 module.df <- ldply(moduleGeneSets, data.frame) %>%
