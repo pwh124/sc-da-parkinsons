@@ -19,7 +19,7 @@ source(file.path(Script_dir,"tools_R.r"))
 ```
 
 ### Loading R libraries necessary for WGCNA analysis
-```{r Load necessary libraries}
+```{r Load necessary libraries, message=FALSE, warning=FALSE}
 library(AnnotationDbi)
 library(impute)
 library(GO.db)
@@ -40,7 +40,6 @@ library(flashClust)
 
 ### Loading in needed P7 data
 ```{r Loading data}
-
 P7.dat.filter <- readRDS(file.path(Rdata_dir,"P7.dat.filter.final.Rds"))
 dim(P7.dat.filter)
 ```
