@@ -1,0 +1,490 @@
+---
+title: "WGCNA-analysis-for-GITHUB"
+author: "Paul Hook"
+output: html_document
+---
+
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
+
+###Setting important directories. Also loading important libraries and custom functions for analysis.
+```{r init, message=FALSE, warning=FALSE}
+seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
+Rdata_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
+source(file.path(Script_dir,'init.R'))
+source(file.path(Script_dir,"tools_R.r"))
+```
+
+### Loading R libraries necessary for WGCNA analysis
+```{r Load necessary libraries}
+library(AnnotationDbi)
+library(impute)
+library(GO.db)
+library(preprocessCore)
+library(knitr)
+library(rgl)
+library(WGCNA)
+library(SC3)
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(ReactomePA)
+library(cummeRbund)
+library(foreach)
+library(doParallel)
+library(splines)
+library(flashClust)
+```
+
+### Loading in needed P7 data
+```{r Loading data}
+
+P7.dat.filter <- readRDS(file.path(Rdata_dir,"P7.dat.filter.final.Rds"))
+dim(P7.dat.filter)
+```
+
+### Preparing the data for WGCNA analysis. The genes used in the analysis were filtered to only include genes that were determined to be expressed in at least 20 cells (9% of the total cells in the data set).
+```{r}
+# Identifying genes only expressed in at least 20 cells
+P7.expressed_genes.WGCNA<-row.names(subset(fData(P7.dat.filter),num_cells_expressed >= 20))
+length(P7.expressed_genes.WGCNA)
+
+# Keeping only those genes for analysis. Ended up being 12,628 cells.
+P7.dat.WGCNA <-P7.dat.filter[P7.expressed_genes.WGCNA,]
+
+# Converting data to log2 + 1 expression
+mydata <- log2(exprs(P7.dat.WGCNA)+1)
+
+# Converting data to a matrix which is needed for WGCNA analysis.
+mydata <- as.matrix(mydata)
+
+# Checking the dimensions of the data
+dim(mydata)
+
+# Transposing the matrix so it is in the orientation needed for WGCNA analysis and saving the matrix under a better variable name.
+mydata.trans=t(mydata)
+datExpr <- mydata.trans
+```
+
+### Next, heirarchial clutering was used to cluster the data and look for any outliers. There seems to be only one glaring outlier.
+```{r Clustering cells and plotting}
+# Clustering the data by using heirarchial clustering
+sampleTree <- flashClust(dist(datExpr), method = "average")
+
+# Plotting the heirarchial clustering in order to manually identify and removce outliers
+par(cex = 0.6, mar = c(0,4,2,0))
+plot(sampleTree, main = "Sample clustering to detect outliers",
+     sub="", xlab="", cex.lab = 1.5, cex.axis = 1.5, cex.main = 2)
+cutHeight=120 # choosing a cut height of 120 in order to remove the one high level outlier
+abline(h = cutHeight, col = "red")
+
+# Cutting the tree at the cut height and seeing how many outliers are removed with the cut
+clust = cutreeStatic(sampleTree, cutHeight = cutHeight, minSize = 10)
+table(clust)
+
+# Keeping only the samples that are not removed by the cut height used
+keepSamples <- (clust==1)
+datExpr <- datExpr[keepSamples,]
+
+# Saving the number of genes and the number of samples that will move in to WGCNA
+nGenes <- ncol(datExpr)
+nSamples <- nrow(datExpr)
+```
+
+### Making a data frame that can be filled with meta-data about the cells and can be used to annotate the heirarchial clustering
+```{r - Making trait dataframe}
+# subsetting out trait data from the initial cds
+datTraits <- pData(P7.dat.WGCNA[,keepSamples])
+datTraits<-datTraits[,c("region","subset.cluster","num_genes_expressed")]
+
+# Setting the colors to match the regional colors
+region_labels <- RColorBrewer::brewer.pal(6, "Set1")[1:3]
+
+# Making sure the regional colors match what has been used througout and making a column with the hex codes.
+datTraits <- datTraits %>%
+  mutate(cell.names = row.names(datTraits)) %>%
+  mutate(x = ifelse(datTraits$region == "FB", region_labels[1],
+                    ifelse(datTraits$region == "MB", region_labels[2],
+                           ifelse(datTraits$region == "OB", region_labels[3], NA))))
+  
+# Re-performing heirarchial clustering
+sampleTree2 <- hclust(dist(datExpr), method = "average")
+
+# Plotting the dendrogram with regional identity colored beneath each cell
+plotDendroAndColors(sampleTree2, datTraits$x,
+                groupLabels = names(datTraits),
+                main = "Sample dendrogram and regional identity")
+
+# Writing out that dendrogram to a PDF
+pdf(file = file.path(file_dir, "sample.dendrogram_region.heatmap.pdf"), height = 8, width = 12)
+plotDendroAndColors(sampleTree2, datTraits$x,
+                groupLabels = names(datTraits),
+                main = "Sample dendrogram and regional identity")
+dev.off()
+```
+
+### In order to now perform WGCNA on our data, a "soft threshold" needs to be calculated
+```{r}
+# Setting what soft thresholds (powers) should be tested for potential use as a soft threshold
+powers <- c(c(1:10), seq(from = 12, to=20, by=2))
+
+# Calculating soft thresholds for a signed network
+sft <- pickSoftThreshold(datExpr, powerVector = powers,
+                        verbose = 5,
+                        networkType ="signed",
+                        moreNetworkConcepts = F)
+
+# Plotting the soft threshold diagnostics in order to choose an optimal soft threshold.
+# Setting display margins
+par(mfrow = c(1,1))
+cex1 = 0.9
+
+# Scale-free topology fit index as a function of the soft-thresholding power. We are looking to choose a soft threshold where the plot plateus out
+plot(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
+     xlab="Soft Threshold (power)",ylab="Scale Free Topology Model Fit,signed R^2",type="n",
+     main = paste("Scale independence"))
+text(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
+labels=powers,cex=cex1,col="red")
+abline(h=0.8,col="red") # this line corresponds to using an R^2 cut-off of h that could be used as a guide to picking a soft threshold
+
+# Mean connectivity as a function of the soft-thresholding power. Again, we are looking at when the plot begins leveling out.
+plot(sft$fitIndices[,1], sft$fitIndices[,5],
+xlab="Soft Threshold (power)",ylab="Mean Connectivity", type="n",
+main = paste("Mean connectivity"))
+text(sft$fitIndices[,1], sft$fitIndices[,5], labels=powers, cex=cex1,col="red")
+
+# Writing out these plots
+pdf(file = file.path(file_dir, "WGCNA.softpower.pdf"), width = 6, height = 6)
+plot(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
+     xlab="Soft Threshold (power)",ylab="Scale Free Topology Model Fit,signed R^2",type="n",
+     main = paste("Scale independence"))
+text(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
+labels=powers,cex=cex1,col="red")
+abline(h=0.8,col="red")
+
+plot(sft$fitIndices[,1], sft$fitIndices[,5],
+xlab="Soft Threshold (power)",ylab="Mean Connectivity", type="n",
+main = paste("Mean connectivity"))
+text(sft$fitIndices[,1], sft$fitIndices[,5], labels=powers, cex=cex1,col="red")
+dev.off()
+```
+
+
+### A soft threshold of 10 was chosen based on the scale independence plot beginning to finally level out at that point for good. The dip from 8 to 9 prevented me from choosing 8. We choose a topology cut-off of 0.80, which is arbitary but similar to the number suggested in WGCNA tutorials (see "A General Framework for Weighted Gene CoExpression
+Network Analysis", 2005).
+```{r}
+# Choosing a power of 10 based on Scale independence plot and 0.8 threshold
+softPower <- 10
+adjacency <- adjacency(datExpr, power = softPower, type = "signed")
+
+# Turn adjacency into topological overlap
+TOM <- TOMsimilarity(adjacency, TOMType = "signed")
+dissTOM <- 1-TOM
+
+# Call the hierarchical clustering function
+geneTree <- flashClust(as.dist(dissTOM), method = "average")
+
+# Plot the resulting clustering tree (dendrogram)
+par(mfrow=c(1,1))
+plot(geneTree, xlab="", sub="", main = "Gene clustering on TOM-based dissimilarity",
+     labels = FALSE, hang = 0.01)
+
+# We like large modules, so we set the minimum module size relatively high:
+minModuleSize <- 20
+
+# Module identification using dynamic tree cut:
+dynamicMods = cutreeDynamic(dendro = geneTree, distM = dissTOM, 
+                            deepSplit = T, pamRespectsDendro = FALSE, 
+                            minClusterSize = minModuleSize)
+table(dynamicMods)
+
+# Convert numeric lables into colors
+dynamicColors <- labels2colors(dynamicMods)
+table(dynamicColors)
+
+# And plot the gene dendrogram with module colors annotated underneath
+plotDendroAndColors(geneTree, dynamicColors, "Dynamic Tree Cut", 
+                    dendroLabels = FALSE, hang = 0.03, addGuide = TRUE, 
+                    guideHang = 0.04, main = "Gene dendrogram and module colors")
+
+```
+
+### Now that we have identified modules in our data, we want to explore the relationships between those modules a little more. Note that grey and turquoise modules were removed in these analyses because turquoise contained all genes that did not get slotted in to a specific module and grey had only 4 genes (below our set module size)
+```{r}
+# Calculate eigengenes for each module
+MEList <- moduleEigengenes(datExpr, colors = dynamicColors)
+MEs <- MEList$eigengenes
+
+# Remove grey and turquoise for ahead of attempting to look at dissimilarity between eigengenes
+MEs <- MEs[,c(1:6,8:16,18)] 
+
+# Calculate dissimilarity of module eigengenes
+MEDiss <- 1-cor(MEs)
+
+# Cluster module eigengenes
+METree <- flashClust(as.dist(MEDiss), method = "average")
+
+# Plot the result
+par(mfrow=c(1,1))
+plot(METree, main = "Clustering of module eigengenes",xlab = "", sub = "")
+MEDissThres = 0.2
+abline(h=MEDissThres, col = "red") # Plot the cut line into the dendrogram. Branches falling below this line will be merged. It does not look like any will get merged, but we run it anyways.
+
+# Call an automatic merging function
+merge <- mergeCloseModules(datExpr, dynamicColors, cutHeight = MEDissThres, verbose = 3)
+
+# Extracting the merged module colors
+moduleColors <- merge$colors
+
+# Extracting eigengenes of the new merged modules:
+mergedMEs <- merge$newMEs
+
+# Constructing numerical labels corresponding to the colors
+colorOrder = c("grey", standardColors(50));
+moduleLabels = match(moduleColors, colorOrder)-1;
+MEs <- mergedMEs
+MEs <- MEs[,c(1:6,8:17)] #remove turquoise and grey again, since they for some reason are not gone
+
+# Calculate dissimilarity of module eigengenes
+MEDiss <- 1-cor(MEs)
+
+# Cluster module eigengenes
+METree <- flashClust(as.dist(MEDiss), method = "average")
+
+# Plot the result
+par(mfrow=c(1,1))
+plot(METree, main = "Clustering of module eigengenes",xlab = "", sub = "")
+
+# write out the final plot to a pdf
+pdf(file = file.path(file_dir,"Module_Eigengene_Tree.pdf"), height = 6, width = 8)
+plot(METree, main = "Clustering of module eigengenes",xlab = "", sub = "")
+dev.off()
+```
+
+### Now that we had explored the modules relationship to each other, we wanted to see if the genes within each module were enriched for gene ontology, KEGG, and Reactome terms
+```{r}
+# Making a list of module names
+modNames <- substring(names(MEs), 3)
+
+# Correlating each genes expression profile with the module eigengenes in order to create module gene sets
+geneModuleMembership <- as.data.frame(cor(datExpr, MEs, use = "p"))
+# "For each module, we also define a quantitative measure of module membership MM as the correlation of the module eigengene and the gene expression profile." - WGCNA tutorial
+
+# Iteratively creating a list of module genesets to test. These are in ensembl ids
+moduleGeneSets<-lapply(modNames,function(module){
+  column = match(module, modNames)
+  moduleGenes = moduleColors==module
+  rownames(geneModuleMembership[moduleGenes,])
+})
+names(moduleGeneSets)<-modNames
+
+# Trimming the module gene sets so that the final two digits after the "." are removed
+moduleGeneSets.trimmed<-lapply(moduleGeneSets,function(x){
+  str_split_fixed(x,"\\.",2)[,1]
+})
+
+# Looking up the ENTREZ id for each gene
+moduleGeneSets.Entrez<-lapply(moduleGeneSets.trimmed,function(x){
+  bitr(x,fromType="ENSEMBL",toType="ENTREZID",OrgDb="org.Mm.eg.db")$ENTREZID
+})
+
+# Looking at KEGG Geneset Enrichment
+ck<-compareCluster(geneCluster=moduleGeneSets.Entrez,
+                   fun="enrichKEGG",organism="mmu",pvalueCutoff = 0.1)
+plot(ck,showCategory=10)+ggtitle("KEGG geneset enrichment by module") #width = 0.5
+
+# Looking at molecular function geneset enrichment
+cg.mf<-compareCluster(geneCluster=moduleGeneSets.Entrez,fun="enrichGO",
+                      OrgDb = "org.Mm.eg.db",pvalueCutoff = 0.01,ont="MF", readable = T)
+plot(cg.mf,showCategory=20)+ggtitle("GO MF geneset enrichment by module")
+
+# Looking at biological process geneset enrichment 
+cg.bp<-compareCluster(geneCluster=moduleGeneSets.Entrez,fun="enrichGO",
+                      OrgDb = "org.Mm.eg.db", pvalueCutoff = 0.01,ont="BP", readable = T)
+plot(cg.bp,showCategory=15)+ggtitle("GO BP geneset enrichment by module")
+
+cg.cc<-compareCluster(geneCluster=moduleGeneSets.Entrez,fun="enrichGO",
+                      OrgDb = "org.Mm.eg.db", pvalueCutoff = 0.01,ont="CC", readable = T)
+plot(cg.cc,showCategory=15)+ggtitle("GO CC geneset enrichment by module")
+
+# Looking at reactome enrichment
+cr<-compareCluster(geneCluster=moduleGeneSets.Entrez,fun="enrichPathway",
+                   organism="mouse",pvalueCutoff = 0.1, readable = T)
+plot(cr,showCategory=10)+ggtitle("Reactome geneset enrichment by module")
+
+# Printing out the cluster enrichment diagrams. These will be useful for annotating the 
+pdf(file.path(pdf_dir,"P7-all-module_geneset_enrichments.pdf"),width=18,height=10, useDingbats = F)
+plot(ck,showCategory=10)+ggtitle("KEGG geneset enrichment by module")
+plot(cr,showCategory=10)+ggtitle("Reactome geneset enrichment by module")
+plot(cg.bp,showCategory=10)+ggtitle("GO BP geneset enrichment by module")
+plot(cg.mf,showCategory=10)+ggtitle("GO MF geneset enrichment by module")
+plot(cg.cc,showCategory = 10) + ggtitle("GO CC geneset enrichment by module")
+dev.off()
+
+```
+
+```{r Getting outputs of cluster tables}
+
+# Gene enrichment tables are found in 'ck','cg.mf','cg.bp','cg.cc', 'cr'
+# summary() allows for the S4 objects created by clusterProfiler to be converted in to dataframes
+kegg.table <- summary(ck)
+
+# Had to make my own KEGG conversion function
+kegg.table.clone <- kegg.table
+for(i in 1:nrow(kegg.table.clone)){
+  gene.str <- kegg.table.clone[i,9]
+  gene.split <- unlist(strsplit(gene.str,split = "/"))
+  genes.symbol <- bitr(gene.split, fromType = "ENTREZID", toType = "SYMBOL", OrgDb = 'org.Mm.eg.db')
+  converted.gene.string <- paste0(genes.symbol$SYMBOL,collapse = "/")
+  kegg.table.clone[i,9] <- converted.gene.string
+}
+
+# Easy enough to do for the others when you can set it at 'readable' in the functions above
+go.molecular.function.table <- summary(cg.mf)
+go.bio.process.table <- summary(cg.bp)
+go.cell.comp.table <- summary(cg.cc)
+reactome.table <- summary(cr)
+
+# writing out tables
+file.loc <- "/Volumes/PAULHOOK/Th_Experiments/Single-Cell-RNA-seq/TH-E15-P7-Remap-Alt-Filter/File.Output"
+
+write.table(x = kegg.table.clone, file = file.path(file.loc,"WGCNA.KEGG.table.txt"), quote = F, sep = "\t", row.names = F)
+
+write.table(x = go.molecular.function.table, file = file.path(file.loc,"GO.MF.table.txt"), quote = F, sep = "\t", row.names = F)
+
+write.table(x = go.bio.process.table, file = file.path(file.loc,"GO.BP.table.txt"), quote = F, sep = "\t", row.names = F)
+
+write.table(x = go.cell.comp.table, file = file.path(file.loc,"GO.CC.table.txt"), quote = F, sep = "\t", row.names = F)
+
+write.table(x = reactome.table, file = file.path(file.loc,"Reactome.table.txt"), quote = F, sep = "\t", row.names = F)
+
+```
+
+### In order to use them in downstream analyses, a table was written out in order to show all the genes in each module identified in our analysis (Table S6)
+```{r writing a table out of genes in modules}
+library(reshape2)
+# Turn the 'moduleGeneSets' list in to a data.frame, copy the columns and rename them 'module' and 'gene', select only the 'module' and 'gene' columns
+module.df <- ldply(moduleGeneSets, data.frame) %>%
+  mutate(module = .id, gene = X..i..) %>%
+  dplyr::select(module, gene)
+
+# Add id numbers in in order to unmelt the data and make sure the row lengths are the same for all columns
+module.df$id = numeric(nrow(module.df))
+for (i in 1:nrow(module.df)){
+ dat_temp <- module.df[1:i,]
+ module.df[i,]$id <- nrow(dat_temp[dat_temp$module == module.df[i,]$module,])
+}
+
+# Unmelt the data using "dcast" and then remove the 'id' column that helped you unmelt the data
+module.genes.df <- dcast(module.df, id~module, value.var = "gene") %>%
+  dplyr::select(-id)
+
+# Replace all gene IDs with the mouse gene symbols
+for(i in 1:ncol(module.genes.df)){
+   geneIDs <- module.genes.df[,i][!is.na(module.genes.df[,i])]
+   geneSymbols <- as.character(paste0("",lookupGeneName(eset = P7.dat.filter, geneIDs)))
+   n <- 438 - length(geneSymbols)
+   toAdd <- rep("",n)
+   coltoAdd <- c(geneSymbols,toAdd)
+   module.genes.df[,i] <- coltoAdd # adding a ' to gene names so they are not changed in Excel
+}
+
+# Write out the table
+write.table(module.genes.df, file = file.path(file_dir,"WGCNA.module.gene.lists.txt"), quote = F, row.names = F, sep = "\t")
+```
+
+### Now that we have looked at enrichment for GO terms in our modules, we want to correlate the modules with cellular traitis, specifically subset cluster in order to find modules that differentiation between DA populations at P7
+```{r Making a correlation table with all clusters called in P7 data}
+# The first step to find these correlations is to make a trait table
+# Copying over the datTraits dataframe
+datTraits.new <- datTraits
+
+datTraits.new$region <- as.factor(datTraits.new$region)
+datTraits.new$subset.cluster <- as.factor(datTraits.new$subset.cluster)
+
+# Using these for loops to create additional columns for each level of a trait, which will read "True" or "False" for each trait in each cell
+for (l in levels(datTraits.new$subset.cluster)) {
+  datTraits.new[[l]]<-datTraits.new$subset.cluster == l
+}
+
+for (l in levels(datTraits.new$region)){
+  datTraits.new[[l]] <- datTraits.new$region == l
+}
+
+# Factoring the T/F columns in to a binary 0/1 classification system
+datTraitsFactor<-datTraits.new
+datTraitsFactor$region<-as.numeric(as.factor(datTraits.new$region))
+datTraitsFactor$subset.cluster<-as.numeric(as.factor(datTraits.new$subset.cluster))
+
+for (l in levels(datTraits.new$subset.cluster)){
+  datTraitsFactor[[l]]<-as.numeric(datTraits.new[[l]])
+}
+
+for (l in levels(datTraits.new$region)){
+  datTraitsFactor[[l]]<-as.numeric(datTraits.new[[l]])
+}
+
+# Keeping only the columns for subset clusters
+datTraitsFactorCor <- datTraitsFactor[,c(6:14)]
+
+# Correlating the module eigengenes with subset cluster identity
+moduleTraitCor <- cor(MEs, datTraitsFactorCor)
+
+# Getting a p-value for each correlation
+moduleTraitPvalue <- corPvalueStudent(moduleTraitCor, nSamples)
+
+# Plotting the relationship between learned gene co-expression modules and parameterizations
+pdf(file = file.path(file_dir,"P7_module-trait_relationships-all.pdf"), width = 10, height = 8)
+par(mfrow=c(1,1))
+textMatrix = paste(signif(moduleTraitCor, 2), "\n(",
+signif(moduleTraitPvalue, 1), ")", sep = "")
+dim(textMatrix) = dim(moduleTraitCor)
+par(mar = c(6, 8.5, 3, 3))
+
+labeledHeatmap(Matrix = t(moduleTraitCor),
+               xLabels = names(MEs), yLabels = names(datTraitsFactorCor),
+               ySymbols = names(datTraitsFactorCor),
+               colorLabels = FALSE,
+               colors = blueWhiteRed(50),
+               textMatrix = t(textMatrix),
+               setStdMargins = T, cex.text = 0.5, zlim = c(-1,1),
+               main = paste("Module-trait relationships"))
+dev.off()
+```
+
+### We then wanted to correlate the modules eigengenes with tSNE position and plot 7 that were found to be significantly correlated with a P7 subset cluster
+```{r}
+# Correlating tSNE position with eigenvectors
+eigentSNE<-cbind(pData(P7.dat.WGCNA[,keepSamples])$tSNE1_pos,pData(P7.dat.WGCNA[,keepSamples,])$tSNE2_pos,MEs)
+colnames(eigentSNE)<-c("tSNE1_pos","tSNE2_pos",modNames)
+
+eigentSNE.melt<-melt(eigentSNE,id.vars=c("tSNE1_pos","tSNE2_pos"))
+
+# Melting the data and selecting only the modules we want to plot 
+eigentSNE.melt.subset <- eigentSNE.melt %>%
+  filter(variable == "yellow" | variable == "green" | variable == "salmon" | variable == "brown" | variable == 
+           "midnightblue" | variable == "blue" | variable == "lightcyan")
+  
+p2.subset<-ggplot(eigentSNE.melt.subset) + geom_point(aes(x=tSNE1_pos,y=tSNE2_pos,color=value),size=1) + monocle:::monocle_theme_opts() + scale_color_gradient2(low="blue",mid="white",high="red",limits=c(-0.1,0.1),oob=squish)
+
+p2.subset.all <- p2.subset + facet_wrap("variable", nrow = 2) + ggtitle("WGCNA module eigengene expression across single P7 DA neurons") + coord_fixed(ratio = 1) + xlab("t-SNE 1") + ylab("t-SNE 2") + theme(plot.title = element_text(hjust = 0.5))
+
+pdf(file = file.path(file_dir,"Eigen-tSNEplots-subset.pdf"), width = 10, height = 4)
+p2.subset.all
+dev.off()
+
+p2.subset.all
+```
+
+###Save modules that were enriched for PD genesets
+```{r save park geneset}
+saveRDS(moduleGeneSets$green, file = file.path(file_dir,"WGCNA.ParkGeneSet.Green.rds"))
+saveRDS(moduleGeneSets$brown, file = file.path(file_dir,"WGCNA.ParkGeneSet.Brown.rds"))
+```
+
+###Session Info
+```{r session infomation}
+sessionInfo()
+```
