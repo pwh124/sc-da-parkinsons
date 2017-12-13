@@ -1,5 +1,5 @@
 ---
-title: "WGCNA-analysis-for-GITHUB"
+title: "P7 WGCNA Analysis"
 author: "Paul Hook"
 output: html_document
 ---
@@ -315,7 +315,7 @@ cr<-compareCluster(geneCluster=moduleGeneSets.Entrez,fun="enrichPathway",
 plot(cr,showCategory=10)+ggtitle("Reactome geneset enrichment by module")
 
 # Printing out the cluster enrichment diagrams. These will be useful for annotating the 
-pdf(file.path(pdf_dir,"P7-all-module_geneset_enrichments.pdf"),width=18,height=10, useDingbats = F)
+pdf(file.path(file_dir,"P7-all-module_geneset_enrichments.pdf"),width=18,height=10, useDingbats = F)
 plot(ck,showCategory=10)+ggtitle("KEGG geneset enrichment by module")
 plot(cr,showCategory=10)+ggtitle("Reactome geneset enrichment by module")
 plot(cg.bp,showCategory=10)+ggtitle("GO BP geneset enrichment by module")
