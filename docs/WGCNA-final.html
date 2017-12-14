@@ -344,7 +344,7 @@ div.tocify {
 
 
 <p><strong>Last update:</strong> 2017-12-13</p>
-<p><strong>Code version:</strong> 8750be2cf8755401b006d9cff78aa5aafaf1b1cc</p>
+<p><strong>Code version:</strong> 7905f82c3b8f4342bb84db99e420a130389082b8</p>
 <div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level3">
 <h3>Setting important directories. Also loading important libraries and custom functions for analysis.</h3>
 <pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
@@ -356,65 +356,13 @@ source(file.path(Script_dir,&quot;tools_R.r&quot;))</code></pre>
 </div>
 <div id="loading-r-libraries-necessary-for-wgcna-analysis" class="section level3">
 <h3>Loading R libraries necessary for WGCNA analysis</h3>
-<pre class="r"><code>library(AnnotationDbi)</code></pre>
-<pre><code>## Warning: package &#39;AnnotationDbi&#39; was built under R version 3.3.1</code></pre>
-<pre><code>## Loading required package: IRanges</code></pre>
-<pre><code>## Loading required package: S4Vectors</code></pre>
-<pre><code>## Warning: package &#39;S4Vectors&#39; was built under R version 3.3.1</code></pre>
-<pre><code>## 
-## Attaching package: &#39;S4Vectors&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:gplots&#39;:
-## 
-##     space</code></pre>
-<pre><code>## The following object is masked from &#39;package:tidyr&#39;:
-## 
-##     expand</code></pre>
-<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
-## 
-##     first, rename</code></pre>
-<pre><code>## The following object is masked from &#39;package:plyr&#39;:
-## 
-##     rename</code></pre>
-<pre><code>## The following objects are masked from &#39;package:Matrix&#39;:
-## 
-##     colMeans, colSums, expand, rowMeans, rowSums</code></pre>
-<pre><code>## The following objects are masked from &#39;package:base&#39;:
-## 
-##     colMeans, colSums, expand.grid, rowMeans, rowSums</code></pre>
-<pre><code>## 
-## Attaching package: &#39;IRanges&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:dplyr&#39;:
-## 
-##     collapse, desc, slice</code></pre>
-<pre><code>## The following object is masked from &#39;package:plyr&#39;:
-## 
-##     desc</code></pre>
-<pre><code>## 
-## Attaching package: &#39;AnnotationDbi&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:MASS&#39;:
-## 
-##     select</code></pre>
-<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
-## 
-##     select</code></pre>
-<pre class="r"><code>library(impute)
-library(GO.db)</code></pre>
-<pre><code>## </code></pre>
-<pre class="r"><code>library(preprocessCore)
-library(knitr)</code></pre>
-<pre><code>## Warning: package &#39;knitr&#39; was built under R version 3.3.2</code></pre>
-<pre class="r"><code>library(rgl)</code></pre>
-<pre><code>## Warning: package &#39;rgl&#39; was built under R version 3.3.2</code></pre>
-<pre class="r"><code>library(WGCNA)</code></pre>
-<pre><code>## Warning: package &#39;WGCNA&#39; was built under R version 3.3.2</code></pre>
-<pre><code>## Loading required package: dynamicTreeCut</code></pre>
-<pre><code>## Loading required package: fastcluster</code></pre>
-<pre><code>## Warning: package &#39;fastcluster&#39; was built under R version 3.3.2</code></pre>
-<pre><code>## 
-## Attaching package: &#39;fastcluster&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:stats&#39;:
-## 
-##     hclust</code></pre>
+<pre class="r"><code>library(AnnotationDbi)
+library(impute)
+library(GO.db)
+library(preprocessCore)
+library(knitr)
+library(rgl)
+library(WGCNA)</code></pre>
 <pre><code>## ==========================================================================
 ## *
 ## *  Package WGCNA 1.61 loaded.
@@ -442,79 +390,15 @@ library(knitr)</code></pre>
 ## *     have a similar command to achieve the same aim.
 ## *
 ## ==========================================================================</code></pre>
-<pre><code>## 
-## Attaching package: &#39;WGCNA&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:IRanges&#39;:
-## 
-##     cor</code></pre>
-<pre><code>## The following object is masked from &#39;package:S4Vectors&#39;:
-## 
-##     cor</code></pre>
-<pre><code>## The following object is masked from &#39;package:stats&#39;:
-## 
-##     cor</code></pre>
 <pre class="r"><code>library(SC3)
-library(clusterProfiler)</code></pre>
-<pre><code>## Warning: package &#39;clusterProfiler&#39; was built under R version 3.3.1</code></pre>
-<pre><code>## Loading required package: DOSE</code></pre>
-<pre><code>## Warning: package &#39;DOSE&#39; was built under R version 3.3.1</code></pre>
-<pre><code>## 
-## Attaching package: &#39;DOSE&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:lattice&#39;:
-## 
-##     dotplot</code></pre>
-<pre class="r"><code>library(org.Mm.eg.db)</code></pre>
-<pre><code>## </code></pre>
-<pre class="r"><code>library(ReactomePA)
-library(cummeRbund)</code></pre>
-<pre><code>## Loading required package: RSQLite</code></pre>
-<pre><code>## Warning: package &#39;RSQLite&#39; was built under R version 3.3.2</code></pre>
-<pre><code>## Loading required package: rtracklayer</code></pre>
-<pre><code>## Warning: package &#39;rtracklayer&#39; was built under R version 3.3.1</code></pre>
-<pre><code>## Loading required package: GenomicRanges</code></pre>
-<pre><code>## Warning: package &#39;GenomicRanges&#39; was built under R version 3.3.1</code></pre>
-<pre><code>## Loading required package: GenomeInfoDb</code></pre>
-<pre><code>## Warning: package &#39;GenomeInfoDb&#39; was built under R version 3.3.1</code></pre>
-<pre><code>## Loading required package: Gviz</code></pre>
-<pre><code>## Warning: package &#39;Gviz&#39; was built under R version 3.3.1</code></pre>
-<pre><code>## 
-## Attaching package: &#39;cummeRbund&#39;</code></pre>
-<pre><code>## The following objects are masked _by_ &#39;.GlobalEnv&#39;:
-## 
-##     JSdist, JSdistFromP, JSdistVec, makeprobs, makeprobsvec,
-##     shannon.entropy</code></pre>
-<pre><code>## The following object is masked from &#39;package:GenomicRanges&#39;:
-## 
-##     promoters</code></pre>
-<pre><code>## The following object is masked from &#39;package:IRanges&#39;:
-## 
-##     promoters</code></pre>
-<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
-## 
-##     count</code></pre>
-<pre><code>## The following object is masked from &#39;package:plyr&#39;:
-## 
-##     count</code></pre>
-<pre><code>## The following object is masked from &#39;package:Biobase&#39;:
-## 
-##     samples</code></pre>
-<pre><code>## The following object is masked from &#39;package:BiocGenerics&#39;:
-## 
-##     conditions</code></pre>
-<pre class="r"><code>library(foreach)
-library(doParallel)</code></pre>
-<pre><code>## Warning: package &#39;doParallel&#39; was built under R version 3.3.2</code></pre>
-<pre><code>## Loading required package: iterators</code></pre>
-<pre class="r"><code>library(splines)
+library(clusterProfiler)
+library(org.Mm.eg.db)
+library(ReactomePA)
+library(cummeRbund)
+library(foreach)
+library(doParallel)
+library(splines)
 library(flashClust)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;flashClust&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:fastcluster&#39;:
-## 
-##     hclust</code></pre>
-<pre><code>## The following object is masked from &#39;package:stats&#39;:
-## 
-##     hclust</code></pre>
 </div>
 <div id="loading-in-needed-p7-data" class="section level3">
 <h3>Loading in needed P7 data</h3>
@@ -585,17 +469,12 @@ datTraits &lt;- datTraits %&gt;%
   mutate(cell.names = row.names(datTraits)) %&gt;%
   mutate(x = ifelse(datTraits$region == &quot;FB&quot;, region_labels[1],
                     ifelse(datTraits$region == &quot;MB&quot;, region_labels[2],
-                           ifelse(datTraits$region == &quot;OB&quot;, region_labels[3], NA))))</code></pre>
-<pre><code>## Warning: package &#39;bindrcpp&#39; was built under R version 3.3.2</code></pre>
-<pre class="r"><code># Re-performing heirarchial clustering
+                           ifelse(datTraits$region == &quot;OB&quot;, region_labels[3], NA))))
+  
+# Re-performing heirarchial clustering
 sampleTree2 &lt;- hclust(dist(datExpr), method = &quot;average&quot;)
 
-# Plotting the dendrogram with regional identity colored beneath each cell
-plotDendroAndColors(sampleTree2, datTraits$x,
-                groupLabels = names(datTraits),
-                main = &quot;Sample dendrogram and regional identity&quot;)</code></pre>
-<p><img src="WGCNA-final_files/figure-html/-%20Making%20trait%20dataframe-1.png" width="672" /></p>
-<pre class="r"><code># Writing out that dendrogram to a PDF
+# Writing out that dendrogram to a PDF
 pdf(file = file.path(file_dir, &quot;sample.dendrogram_region.heatmap.pdf&quot;), height = 8, width = 12)
 plotDendroAndColors(sampleTree2, datTraits$x,
                 groupLabels = names(datTraits),
@@ -603,6 +482,11 @@ plotDendroAndColors(sampleTree2, datTraits$x,
 dev.off()</code></pre>
 <pre><code>## quartz_off_screen 
 ##                 2</code></pre>
+<pre class="r"><code># Plotting the dendrogram with regional identity colored beneath each cell
+plotDendroAndColors(sampleTree2, datTraits$x,
+                groupLabels = names(datTraits),
+                main = &quot;Sample dendrogram and regional identity&quot;)</code></pre>
+<p><img src="WGCNA-final_files/figure-html/-%20Making%20trait%20dataframe-1.png" width="672" /></p>
 </div>
 <div id="in-order-to-now-perform-wgcna-on-our-data-a-soft-threshold-needs-to-be-calculated" class="section level3">
 <h3>In order to now perform WGCNA on our data, a “soft threshold” needs to be calculated</h3>
@@ -811,8 +695,8 @@ dev.off()</code></pre>
 <pre><code>## quartz_off_screen 
 ##                 2</code></pre>
 </div>
-<div id="now-that-we-had-explored-the-modules-relationship-to-each-other-we-wanted-to-see-if-the-genes-within-each-module-were-enriched-for-gene-ontology-kegg-and-reactome-terms" class="section level3">
-<h3>Now that we had explored the modules relationship to each other, we wanted to see if the genes within each module were enriched for gene ontology, KEGG, and Reactome terms</h3>
+<div id="now-that-we-had-explored-the-modules-relationship-to-each-other-we-wanted-to-see-if-the-genes-within-each-module-were-enriched-for-gene-ontology-kegg-and-reactome-terms.-not-all-genes-map-through-bitr-so-warnings-were-supressed" class="section level3">
+<h3>Now that we had explored the modules relationship to each other, we wanted to see if the genes within each module were enriched for gene ontology, KEGG, and Reactome terms. Not all genes map through ‘bitr’ so warnings were supressed</h3>
 <pre class="r"><code># Making a list of module names
 modNames &lt;- substring(names(MEs), 3)
 
@@ -837,96 +721,38 @@ moduleGeneSets.trimmed&lt;-lapply(moduleGeneSets,function(x){
 moduleGeneSets.Entrez&lt;-lapply(moduleGeneSets.trimmed,function(x){
   bitr(x,fromType=&quot;ENSEMBL&quot;,toType=&quot;ENTREZID&quot;,OrgDb=&quot;org.Mm.eg.db&quot;)$ENTREZID
 })</code></pre>
-<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
-<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
-## &quot;org.Mm.eg.db&quot;): 5.71% of input gene IDs are fail to map...</code></pre>
-<pre><code>## &#39;select()&#39; returned 1:many mapping between keys and columns</code></pre>
-<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
-## &quot;org.Mm.eg.db&quot;): 20.83% of input gene IDs are fail to map...</code></pre>
-<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
-<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
-## &quot;org.Mm.eg.db&quot;): 13.04% of input gene IDs are fail to map...</code></pre>
-<pre><code>## &#39;select()&#39; returned 1:many mapping between keys and columns</code></pre>
-<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
-## &quot;org.Mm.eg.db&quot;): 3.51% of input gene IDs are fail to map...</code></pre>
-<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
-<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
-## &quot;org.Mm.eg.db&quot;): 29.17% of input gene IDs are fail to map...</code></pre>
-<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
-<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
-## &quot;org.Mm.eg.db&quot;): 4.43% of input gene IDs are fail to map...</code></pre>
-<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
-<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
-## &quot;org.Mm.eg.db&quot;): 14.29% of input gene IDs are fail to map...</code></pre>
-<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
-<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
-## &quot;org.Mm.eg.db&quot;): 19.51% of input gene IDs are fail to map...</code></pre>
-<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
-<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
-## &quot;org.Mm.eg.db&quot;): 9.52% of input gene IDs are fail to map...</code></pre>
-<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
-<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
-## &quot;org.Mm.eg.db&quot;): 17.24% of input gene IDs are fail to map...</code></pre>
-<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
-<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
-## &quot;org.Mm.eg.db&quot;): 17.14% of input gene IDs are fail to map...</code></pre>
-<pre><code>## &#39;select()&#39; returned 1:many mapping between keys and columns</code></pre>
-<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
-## &quot;org.Mm.eg.db&quot;): 15% of input gene IDs are fail to map...</code></pre>
-<pre><code>## &#39;select()&#39; returned 1:many mapping between keys and columns</code></pre>
-<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
-## &quot;org.Mm.eg.db&quot;): 22.58% of input gene IDs are fail to map...</code></pre>
-<pre><code>## &#39;select()&#39; returned 1:many mapping between keys and columns</code></pre>
-<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
-## &quot;org.Mm.eg.db&quot;): 5.25% of input gene IDs are fail to map...</code></pre>
-<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
-<pre><code>## Warning in bitr(x, fromType = &quot;ENSEMBL&quot;, toType = &quot;ENTREZID&quot;, OrgDb =
-## &quot;org.Mm.eg.db&quot;): 3.45% of input gene IDs are fail to map...</code></pre>
+</div>
+<div id="running-geneset-enrichment-analyses" class="section level3">
+<h3>Running geneset enrichment analyses</h3>
 <pre class="r"><code># Looking at KEGG Geneset Enrichment
 ck&lt;-compareCluster(geneCluster=moduleGeneSets.Entrez,
                    fun=&quot;enrichKEGG&quot;,organism=&quot;mmu&quot;,pvalueCutoff = 0.1)
 plot(ck,showCategory=10)+ggtitle(&quot;KEGG geneset enrichment by module&quot;) #width = 0.5</code></pre>
-<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <pre class="r"><code># Looking at molecular function geneset enrichment
 cg.mf&lt;-compareCluster(geneCluster=moduleGeneSets.Entrez,fun=&quot;enrichGO&quot;,
                       OrgDb = &quot;org.Mm.eg.db&quot;,pvalueCutoff = 0.01,ont=&quot;MF&quot;, readable = T)
 plot(cg.mf,showCategory=20)+ggtitle(&quot;GO MF geneset enrichment by module&quot;)</code></pre>
-<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
 <pre class="r"><code># Looking at biological process geneset enrichment 
 cg.bp&lt;-compareCluster(geneCluster=moduleGeneSets.Entrez,fun=&quot;enrichGO&quot;,
                       OrgDb = &quot;org.Mm.eg.db&quot;, pvalueCutoff = 0.01,ont=&quot;BP&quot;, readable = T)
 plot(cg.bp,showCategory=15)+ggtitle(&quot;GO BP geneset enrichment by module&quot;)</code></pre>
-<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-5-3.png" width="672" /></p>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-6-3.png" width="672" /></p>
 <pre class="r"><code>cg.cc&lt;-compareCluster(geneCluster=moduleGeneSets.Entrez,fun=&quot;enrichGO&quot;,
                       OrgDb = &quot;org.Mm.eg.db&quot;, pvalueCutoff = 0.01,ont=&quot;CC&quot;, readable = T)
 plot(cg.cc,showCategory=15)+ggtitle(&quot;GO CC geneset enrichment by module&quot;)</code></pre>
-<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-5-4.png" width="672" /></p>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-6-4.png" width="672" /></p>
 <pre class="r"><code># Looking at reactome enrichment
 cr&lt;-compareCluster(geneCluster=moduleGeneSets.Entrez,fun=&quot;enrichPathway&quot;,
                    organism=&quot;mouse&quot;,pvalueCutoff = 0.1, readable = T)
 plot(cr,showCategory=10)+ggtitle(&quot;Reactome geneset enrichment by module&quot;)</code></pre>
-<pre><code>## Warning in `levels&lt;-`(`*tmp*`, value = if (nl == nL) as.character(labels)
-## else paste0(labels, : duplicated levels in factors are deprecated</code></pre>
-<pre><code>## Warning in `levels&lt;-`(`*tmp*`, value = if (nl == nL) as.character(labels)
-## else paste0(labels, : duplicated levels in factors are deprecated
-
-## Warning in `levels&lt;-`(`*tmp*`, value = if (nl == nL) as.character(labels)
-## else paste0(labels, : duplicated levels in factors are deprecated</code></pre>
-<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-5-5.png" width="672" /></p>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-6-5.png" width="672" /></p>
 <pre class="r"><code># Printing out the cluster enrichment diagrams. These will be useful for annotating the 
 pdf(file.path(file_dir,&quot;P7-all-module_geneset_enrichments.pdf&quot;),width=18,height=10, useDingbats = F)
 plot(ck,showCategory=10)+ggtitle(&quot;KEGG geneset enrichment by module&quot;)
-plot(cr,showCategory=10)+ggtitle(&quot;Reactome geneset enrichment by module&quot;)</code></pre>
-<pre><code>## Warning in `levels&lt;-`(`*tmp*`, value = if (nl == nL) as.character(labels)
-## else paste0(labels, : duplicated levels in factors are deprecated
-
-## Warning in `levels&lt;-`(`*tmp*`, value = if (nl == nL) as.character(labels)
-## else paste0(labels, : duplicated levels in factors are deprecated
-
-## Warning in `levels&lt;-`(`*tmp*`, value = if (nl == nL) as.character(labels)
-## else paste0(labels, : duplicated levels in factors are deprecated</code></pre>
-<pre class="r"><code>plot(cg.bp,showCategory=10)+ggtitle(&quot;GO BP geneset enrichment by module&quot;)
+plot(cr,showCategory=10)+ggtitle(&quot;Reactome geneset enrichment by module&quot;)
+plot(cg.bp,showCategory=10)+ggtitle(&quot;GO BP geneset enrichment by module&quot;)
 plot(cg.mf,showCategory=10)+ggtitle(&quot;GO MF geneset enrichment by module&quot;)
 plot(cg.cc,showCategory = 10) + ggtitle(&quot;GO CC geneset enrichment by module&quot;)
 dev.off()</code></pre>
@@ -1107,17 +933,15 @@ go.cell.comp.table &lt;- summary(cg.cc)
 reactome.table &lt;- summary(cr)
 
 # writing out tables
-file.loc &lt;- &quot;/Volumes/PAULHOOK/Th_Experiments/Single-Cell-RNA-seq/TH-E15-P7-Remap-Alt-Filter/File.Output&quot;
+write.table(x = kegg.table.clone, file = file.path(file_dir,&quot;WGCNA.KEGG.table.txt&quot;), quote = F, sep = &quot;\t&quot;, row.names = F)
 
-write.table(x = kegg.table.clone, file = file.path(file.loc,&quot;WGCNA.KEGG.table.txt&quot;), quote = F, sep = &quot;\t&quot;, row.names = F)
+write.table(x = go.molecular.function.table, file = file.path(file_dir,&quot;GO.MF.table.txt&quot;), quote = F, sep = &quot;\t&quot;, row.names = F)
 
-write.table(x = go.molecular.function.table, file = file.path(file.loc,&quot;GO.MF.table.txt&quot;), quote = F, sep = &quot;\t&quot;, row.names = F)
+write.table(x = go.bio.process.table, file = file.path(file_dir,&quot;GO.BP.table.txt&quot;), quote = F, sep = &quot;\t&quot;, row.names = F)
 
-write.table(x = go.bio.process.table, file = file.path(file.loc,&quot;GO.BP.table.txt&quot;), quote = F, sep = &quot;\t&quot;, row.names = F)
+write.table(x = go.cell.comp.table, file = file.path(file_dir,&quot;GO.CC.table.txt&quot;), quote = F, sep = &quot;\t&quot;, row.names = F)
 
-write.table(x = go.cell.comp.table, file = file.path(file.loc,&quot;GO.CC.table.txt&quot;), quote = F, sep = &quot;\t&quot;, row.names = F)
-
-write.table(x = reactome.table, file = file.path(file.loc,&quot;Reactome.table.txt&quot;), quote = F, sep = &quot;\t&quot;, row.names = F)</code></pre>
+write.table(x = reactome.table, file = file.path(file_dir,&quot;Reactome.table.txt&quot;), quote = F, sep = &quot;\t&quot;, row.names = F)</code></pre>
 </div>
 <div id="in-order-to-use-them-in-downstream-analyses-a-table-was-written-out-in-order-to-show-all-the-genes-in-each-module-identified-in-our-analysis-table-s6" class="section level3">
 <h3>In order to use them in downstream analyses, a table was written out in order to show all the genes in each module identified in our analysis (Table S6)</h3>
@@ -1210,6 +1034,21 @@ labeledHeatmap(Matrix = t(moduleTraitCor),
 dev.off()</code></pre>
 <pre><code>## quartz_off_screen 
 ##                 2</code></pre>
+<pre class="r"><code>par(mfrow=c(1,1))
+textMatrix = paste(signif(moduleTraitCor, 2), &quot;\n(&quot;,
+signif(moduleTraitPvalue, 1), &quot;)&quot;, sep = &quot;&quot;)
+dim(textMatrix) = dim(moduleTraitCor)
+par(mar = c(6, 8.5, 3, 3))
+
+labeledHeatmap(Matrix = t(moduleTraitCor),
+               xLabels = names(MEs), yLabels = names(datTraitsFactorCor),
+               ySymbols = names(datTraitsFactorCor),
+               colorLabels = FALSE,
+               colors = blueWhiteRed(50),
+               textMatrix = t(textMatrix),
+               setStdMargins = T, cex.text = 0.5, zlim = c(-1,1),
+               main = paste(&quot;Module-trait relationships&quot;))</code></pre>
+<p><img src="WGCNA-final_files/figure-html/Making%20a%20correlation%20table%20with%20all%20clusters%20called%20in%20P7%20data-1.png" width="672" /></p>
 </div>
 <div id="we-then-wanted-to-correlate-the-modules-eigengenes-with-tsne-position-and-plot-7-that-were-found-to-be-significantly-correlated-with-a-p7-subset-cluster" class="section level3">
 <h3>We then wanted to correlate the modules eigengenes with tSNE position and plot 7 that were found to be significantly correlated with a P7 subset cluster</h3>
@@ -1234,7 +1073,7 @@ dev.off()</code></pre>
 <pre><code>## quartz_off_screen 
 ##                 2</code></pre>
 <pre class="r"><code>p2.subset.all</code></pre>
-<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
 <div id="save-modules-that-were-enriched-for-pd-genesets" class="section level3">
 <h3>Save modules that were enriched for PD genesets</h3>
