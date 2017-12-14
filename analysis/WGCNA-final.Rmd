@@ -93,7 +93,7 @@ nSamples <- nrow(datExpr)
 ```
 
 ### Making a data frame that can be filled with meta-data about the cells and can be used to annotate the heirarchial clustering
-```{r - Making trait dataframe}
+```{r - Making trait dataframe, message=FALSE, warning=FALSE}
 # subsetting out trait data from the initial cds
 datTraits <- pData(P7.dat.WGCNA[,keepSamples])
 datTraits<-datTraits[,c("region","subset.cluster","num_genes_expressed")]
@@ -111,17 +111,18 @@ datTraits <- datTraits %>%
 # Re-performing heirarchial clustering
 sampleTree2 <- hclust(dist(datExpr), method = "average")
 
-# Plotting the dendrogram with regional identity colored beneath each cell
-plotDendroAndColors(sampleTree2, datTraits$x,
-                groupLabels = names(datTraits),
-                main = "Sample dendrogram and regional identity")
-
 # Writing out that dendrogram to a PDF
 pdf(file = file.path(file_dir, "sample.dendrogram_region.heatmap.pdf"), height = 8, width = 12)
 plotDendroAndColors(sampleTree2, datTraits$x,
                 groupLabels = names(datTraits),
                 main = "Sample dendrogram and regional identity")
 dev.off()
+
+# Plotting the dendrogram with regional identity colored beneath each cell
+plotDendroAndColors(sampleTree2, datTraits$x,
+                groupLabels = names(datTraits),
+                main = "Sample dendrogram and regional identity")
+
 ```
 
 ### In order to now perform WGCNA on our data, a "soft threshold" needs to be calculated
@@ -262,8 +263,8 @@ plot(METree, main = "Clustering of module eigengenes",xlab = "", sub = "")
 dev.off()
 ```
 
-### Now that we had explored the modules relationship to each other, we wanted to see if the genes within each module were enriched for gene ontology, KEGG, and Reactome terms
-```{r, eval=FALSE}
+### Now that we had explored the modules relationship to each other, we wanted to see if the genes within each module were enriched for gene ontology, KEGG, and Reactome terms. Not all genes map through 'bitr' so warnings were supressed
+```{r, eval=T, message=F, warning=FALSE}
 # Making a list of module names
 modNames <- substring(names(MEs), 3)
 
@@ -289,6 +290,10 @@ moduleGeneSets.Entrez<-lapply(moduleGeneSets.trimmed,function(x){
   bitr(x,fromType="ENSEMBL",toType="ENTREZID",OrgDb="org.Mm.eg.db")$ENTREZID
 })
 
+```
+
+### Running geneset enrichment analyses
+```{r, eval=T, message=F, warning=FALSE}
 # Looking at KEGG Geneset Enrichment
 ck<-compareCluster(geneCluster=moduleGeneSets.Entrez,
                    fun="enrichKEGG",organism="mmu",pvalueCutoff = 0.1)
@@ -324,7 +329,7 @@ dev.off()
 
 ```
 
-```{r Getting outputs of cluster tables, eval=FALSE}
+```{r Getting outputs of cluster tables, eval=T}
 
 # Gene enrichment tables are found in 'ck','cg.mf','cg.bp','cg.cc', 'cr'
 # summary() allows for the S4 objects created by clusterProfiler to be converted in to dataframes
@@ -347,22 +352,20 @@ go.cell.comp.table <- summary(cg.cc)
 reactome.table <- summary(cr)
 
 # writing out tables
-file.loc <- "/Volumes/PAULHOOK/Th_Experiments/Single-Cell-RNA-seq/TH-E15-P7-Remap-Alt-Filter/File.Output"
+write.table(x = kegg.table.clone, file = file.path(file_dir,"WGCNA.KEGG.table.txt"), quote = F, sep = "\t", row.names = F)
 
-write.table(x = kegg.table.clone, file = file.path(file.loc,"WGCNA.KEGG.table.txt"), quote = F, sep = "\t", row.names = F)
+write.table(x = go.molecular.function.table, file = file.path(file_dir,"GO.MF.table.txt"), quote = F, sep = "\t", row.names = F)
 
-write.table(x = go.molecular.function.table, file = file.path(file.loc,"GO.MF.table.txt"), quote = F, sep = "\t", row.names = F)
+write.table(x = go.bio.process.table, file = file.path(file_dir,"GO.BP.table.txt"), quote = F, sep = "\t", row.names = F)
 
-write.table(x = go.bio.process.table, file = file.path(file.loc,"GO.BP.table.txt"), quote = F, sep = "\t", row.names = F)
+write.table(x = go.cell.comp.table, file = file.path(file_dir,"GO.CC.table.txt"), quote = F, sep = "\t", row.names = F)
 
-write.table(x = go.cell.comp.table, file = file.path(file.loc,"GO.CC.table.txt"), quote = F, sep = "\t", row.names = F)
-
-write.table(x = reactome.table, file = file.path(file.loc,"Reactome.table.txt"), quote = F, sep = "\t", row.names = F)
+write.table(x = reactome.table, file = file.path(file_dir,"Reactome.table.txt"), quote = F, sep = "\t", row.names = F)
 
 ```
 
 ### In order to use them in downstream analyses, a table was written out in order to show all the genes in each module identified in our analysis (Table S6)
-```{r writing a table out of genes in modules, eval=FALSE}
+```{r writing a table out of genes in modules, eval=T,warning=F,message=FALSE}
 library(reshape2)
 # Turn the 'moduleGeneSets' list in to a data.frame, copy the columns and rename them 'module' and 'gene', select only the 'module' and 'gene' columns
 module.df <- ldply(moduleGeneSets, data.frame) %>%
@@ -451,6 +454,21 @@ labeledHeatmap(Matrix = t(moduleTraitCor),
                setStdMargins = T, cex.text = 0.5, zlim = c(-1,1),
                main = paste("Module-trait relationships"))
 dev.off()
+
+par(mfrow=c(1,1))
+textMatrix = paste(signif(moduleTraitCor, 2), "\n(",
+signif(moduleTraitPvalue, 1), ")", sep = "")
+dim(textMatrix) = dim(moduleTraitCor)
+par(mar = c(6, 8.5, 3, 3))
+
+labeledHeatmap(Matrix = t(moduleTraitCor),
+               xLabels = names(MEs), yLabels = names(datTraitsFactorCor),
+               ySymbols = names(datTraitsFactorCor),
+               colorLabels = FALSE,
+               colors = blueWhiteRed(50),
+               textMatrix = t(textMatrix),
+               setStdMargins = T, cex.text = 0.5, zlim = c(-1,1),
+               main = paste("Module-trait relationships"))
 ```
 
 ### We then wanted to correlate the modules eigengenes with tSNE position and plot 7 that were found to be significantly correlated with a P7 subset cluster
