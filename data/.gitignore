@@ -1,1 +1,7 @@
 dat.filter.final.Rds
+._genes.fpkm_table
+._isoforms.count_table
+._isoforms.fpkm_table
+genes.fpkm_table
+isoforms.count_table
+isoforms.fpkm_table

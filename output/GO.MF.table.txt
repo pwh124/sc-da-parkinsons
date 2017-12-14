@@ -1,0 +1,109 @@
+Cluster	ID	Description	GeneRatio	BgRatio	pvalue	p.adjust	qvalue	geneID	Count
+yellow	GO:0042562	hormone binding	6/65	76/22849	7.82922164205483e-08	1.55018588512686e-05	9.3950659704658e-06	Esr1/Calcr/Nr3c1/Pgr/Ghsr/Ghr	6
+yellow	GO:0000982	transcription factor activity, RNA polymerase II core promoter proximal region sequence-specific binding	8/65	365/22849	8.96477572482476e-06	0.000887512796757651	0.000537886543489486	Prox1/Esr1/Nr3c1/Bhlhe40/Pgr/Isl1/Foxo1/Gsx1	8
+yellow	GO:0051117	ATPase binding	4/65	82/22849	8.83055070830655e-05	0.00582816346748233	0.00353222028332262	Esr1/Sdf2l1/Pgr/Wfs1	4
+green	GO:0015078	hydrogen ion transmembrane transporter activity	20/51	89/22849	4.58482468474331e-36	4.49312819104845e-34	2.65437218590402e-34	Cox5a/Atp5d/Atp5g1/Cox6c/Atp5g3/Atp6v1e1/Uqcr11/Atp5o/Atp6v1g2/Atp5b/Atp5a1/Ndufa4/Cox4i1/Atp5h/Cox8a/Cox6b1/Uqcrfs1/Uqcrq/Atp5k/Uqcrh	20
+green	GO:0015077	monovalent inorganic cation transmembrane transporter activity	20/51	336/22849	6.50702814311858e-24	3.1884437901281e-22	1.88361340985011e-22	Cox5a/Atp5d/Atp5g1/Cox6c/Atp5g3/Atp6v1e1/Uqcr11/Atp5o/Atp6v1g2/Atp5b/Atp5a1/Ndufa4/Cox4i1/Atp5h/Cox8a/Cox6b1/Uqcrfs1/Uqcrq/Atp5k/Uqcrh	20
+green	GO:0022890	inorganic cation transmembrane transporter activity	20/51	486/22849	1.0282448989597e-20	3.35893333660169e-19	1.9843322611503e-19	Cox5a/Atp5d/Atp5g1/Cox6c/Atp5g3/Atp6v1e1/Uqcr11/Atp5o/Atp6v1g2/Atp5b/Atp5a1/Ndufa4/Cox4i1/Atp5h/Cox8a/Cox6b1/Uqcrfs1/Uqcrq/Atp5k/Uqcrh	20
+green	GO:0009055	electron carrier activity	9/51	71/22849	4.37743271916199e-14	1.07247101619469e-12	6.33575788299761e-13	Cox5a/Cox6c/Uqcr11/Cyc1/Ndufa4/Cox4i1/Cox8a/Cox6b1/Cycs	9
+green	GO:0004129	cytochrome-c oxidase activity	6/51	24/22849	1.19051790498262e-11	1.66672506697567e-10	9.84638868782617e-11	Cox5a/Cox6c/Ndufa4/Cox4i1/Cox8a/Cox6b1	6
+green	GO:0015002	heme-copper terminal oxidase activity	6/51	24/22849	1.19051790498262e-11	1.66672506697567e-10	9.84638868782617e-11	Cox5a/Cox6c/Ndufa4/Cox4i1/Cox8a/Cox6b1	6
+green	GO:0016676	oxidoreductase activity, acting on a heme group of donors, oxygen as acceptor	6/51	24/22849	1.19051790498262e-11	1.66672506697567e-10	9.84638868782617e-11	Cox5a/Cox6c/Ndufa4/Cox4i1/Cox8a/Cox6b1	6
+green	GO:0016675	oxidoreductase activity, acting on a heme group of donors	6/51	25/22849	1.56382573187453e-11	1.91568652154629e-10	1.13171599017235e-10	Cox5a/Cox6c/Ndufa4/Cox4i1/Cox8a/Cox6b1	6
+green	GO:0044769	ATPase activity, coupled to transmembrane movement of ions, rotational mechanism	5/51	21/22849	8.97022602347206e-10	9.76757944778069e-09	5.77032083381244e-09	Atp5d/Atp6v1e1/Atp5o/Atp5b/Atp5a1	5
+green	GO:0019829	cation-transporting ATPase activity	6/51	56/22849	2.72067517972291e-09	2.4790892370896e-08	1.46455325499386e-08	Atp5d/Atp6v1e1/Atp5o/Atp6v1g2/Atp5b/Atp5a1	6
+green	GO:0036442	hydrogen-exporting ATPase activity	5/51	26/22849	2.87546437263667e-09	2.4790892370896e-08	1.46455325499386e-08	Atp5d/Atp6v1e1/Atp6v1g2/Atp5b/Atp5a1	5
+green	GO:0042625	ATPase coupled ion transmembrane transporter activity	6/51	57/22849	3.03561947398727e-09	2.4790892370896e-08	1.46455325499386e-08	Atp5d/Atp6v1e1/Atp5o/Atp6v1g2/Atp5b/Atp5a1	6
+green	GO:0046961	proton-transporting ATPase activity, rotational mechanism	4/51	19/22849	8.32296776757932e-08	6.27423724017518e-07	3.70658483576407e-07	Atp5d/Atp6v1e1/Atp5b/Atp5a1	4
+green	GO:0042626	ATPase activity, coupled to transmembrane movement of substances	6/51	105/22849	1.24135021153507e-07	8.58224467635166e-07	5.07006935767284e-07	Atp5d/Atp6v1e1/Atp5o/Atp6v1g2/Atp5b/Atp5a1	6
+green	GO:0016820	hydrolase activity, acting on acid anhydrides, catalyzing transmembrane movement of substances	6/51	106/22849	1.31360887903342e-07	8.58224467635166e-07	5.07006935767284e-07	Atp5d/Atp6v1e1/Atp5o/Atp6v1g2/Atp5b/Atp5a1	6
+green	GO:0015405	P-P-bond-hydrolysis-driven transmembrane transporter activity	6/51	110/22849	1.63818981272675e-07	9.96646020409828e-07	5.88781215064882e-07	Atp5d/Atp6v1e1/Atp5o/Atp6v1g2/Atp5b/Atp5a1	6
+green	GO:0015399	primary active transmembrane transporter activity	6/51	111/22849	1.72887574969052e-07	9.96646020409828e-07	5.88781215064882e-07	Atp5d/Atp6v1e1/Atp5o/Atp6v1g2/Atp5b/Atp5a1	6
+green	GO:0043492	ATPase activity, coupled to movement of substances	6/51	119/22849	2.61403111880637e-07	1.42319472023902e-06	8.40770242890937e-07	Atp5d/Atp6v1e1/Atp5o/Atp6v1g2/Atp5b/Atp5a1	6
+green	GO:0022804	active transmembrane transporter activity	7/51	350/22849	1.20905054473372e-05	6.23615544125811e-05	3.6840875324296e-05	Atp5d/Atp6v1e1/Atp5o/Atp6v1g2/Atp5b/Atp5a1/Slc25a3	7
+green	GO:0016887	ATPase activity	7/51	403/22849	2.98949340934668e-05	0.000146485177057987	8.6537967112667e-05	Atp5d/Atp6v1e1/Atp5o/Atp6v1g2/Atp5b/Atp5a1/Atp5h	7
+green	GO:0042623	ATPase activity, coupled	6/51	306/22849	5.96020504538396e-05	0.000278142902117918	0.000164316429822615	Atp5d/Atp6v1e1/Atp5o/Atp6v1g2/Atp5b/Atp5a1	6
+green	GO:0008553	hydrogen-exporting ATPase activity, phosphorylative mechanism	2/51	13/22849	0.000375049864331455	0.00161911893225516	0.000956514943867171	Atp6v1e1/Atp6v1g2	2
+green	GO:0051536	iron-sulfur cluster binding	3/51	64/22849	0.000396518922184936	0.00161911893225516	0.000956514943867171	Aco2/Cisd1/Uqcrfs1	3
+green	GO:0051540	metal cluster binding	3/51	64/22849	0.000396518922184936	0.00161911893225516	0.000956514943867171	Aco2/Cisd1/Uqcrfs1	3
+green	GO:0042288	MHC class I protein binding	2/51	16/22849	0.000574532685068397	0.00225216812546812	0.00133049674436892	Atp5b/Atp5a1	2
+green	GO:0016866	intramolecular transferase activity	2/51	25/22849	0.00141800234960105	0.00534477808695781	0.00315749511044769	Pgam1/Pgam2	2
+green	GO:0051537	2 iron, 2 sulfur cluster binding	2/51	26/22849	0.0015339802228198	0.00556778006801262	0.00328923634522765	Cisd1/Uqcrfs1	2
+green	GO:0042287	MHC protein binding	2/51	30/22849	0.00204150003450195	0.00714525012075682	0.00422114668787997	Atp5b/Atp5a1	2
+green	GO:0043531	ADP binding	2/51	36/22849	0.00293149429643587	0.00990642900174881	0.00585234796021681	Atp5a1/Pgk1	2
+brown	GO:0070405	ammonium ion binding	7/143	68/22849	2.28693083579421e-07	8.55312132587033e-05	7.10152206904517e-05	Th/Slc6a3/Maoa/Chrna4/Chrna6/Chrnb3/Drd2	7
+brown	GO:0004714	transmembrane receptor protein tyrosine kinase activity	6/143	60/22849	2.05036738842644e-06	0.000314798444477425	0.000261372195668	Epha10/Epha5/Ret/Fgfr2/Epha6/Erbb4	6
+brown	GO:1901338	catecholamine binding	4/143	16/22849	2.52512121238576e-06	0.000314798444477425	0.000261372195668	Th/Slc6a3/Adrb3/Drd2	4
+brown	GO:0030594	neurotransmitter receptor activity	5/143	41/22849	5.5949766548861e-06	0.000523130317231851	0.000434346871892474	Chrna4/Chrna6/Chrnb3/Drd2/Chrm5	5
+brown	GO:0019199	transmembrane receptor protein kinase activity	6/143	82/22849	1.28105155126246e-05	0.000883878485367103	0.000733870400178147	Epha10/Epha5/Ret/Fgfr2/Epha6/Erbb4	6
+brown	GO:0015464	acetylcholine receptor activity	4/143	24/22849	1.41798687492049e-05	0.000883878485367103	0.000733870400178147	Chrna4/Chrna6/Chrnb3/Chrm5	4
+brown	GO:0008144	drug binding	7/143	133/22849	2.09296864338845e-05	0.0011182432466104	0.000928459774134726	Fkbp11/Slc6a3/Slc18a2/Chrna4/Chrna6/Chrnb3/Drd2	7
+brown	GO:0035240	dopamine binding	3/143	12/22849	5.0668241947084e-05	0.00236874031102618	0.00196672781241971	Th/Slc6a3/Drd2	3
+brown	GO:0005230	extracellular ligand-gated ion channel activity	5/143	69/22849	7.29059407747917e-05	0.0030296468721969	0.00251546813199574	Chrna4/Gabra4/Chrna6/Chrnb3/Chrm5	5
+brown	GO:0004889	acetylcholine-activated cation-selective channel activity	3/143	16/22849	0.000126625698049848	0.00430527373369482	0.00357460104542632	Chrna4/Chrna6/Chrnb3	3
+brown	GO:0005003	ephrin receptor activity	3/143	16/22849	0.000126625698049848	0.00430527373369482	0.00357460104542632	Epha10/Epha5/Epha6	3
+brown	GO:0008188	neuropeptide receptor activity	4/143	43/22849	0.000150172185248016	0.00468036644022983	0.00388603461826006	Ntsr2/Ntsr1/Tacr3/Mchr1	4
+brown	GO:0008528	G-protein coupled peptide receptor activity	6/143	129/22849	0.000163628907055106	0.00470747778758535	0.00390854474342155	Ntsr2/Oprk1/Ntsr1/Tacr3/F2r/Mchr1	6
+brown	GO:0004713	protein tyrosine kinase activity	6/143	131/22849	0.000177954556566916	0.00475392886828762	0.00394711234490529	Epha10/Epha5/Ret/Fgfr2/Epha6/Erbb4	6
+brown	GO:0001653	peptide receptor activity	6/143	133/22849	0.000193253478695743	0.00481845340214719	0.00400068605019257	Ntsr2/Oprk1/Ntsr1/Tacr3/F2r/Mchr1	6
+brown	GO:0042166	acetylcholine binding	3/143	19/22849	0.000216112028822084	0.00505161867371621	0.00419427950674439	Chrna4/Chrna6/Chrnb3	3
+brown	GO:0005231	excitatory extracellular ligand-gated ion channel activity	4/143	51/22849	0.000292534474250047	0.00628546281371139	0.00521872088388646	Chrna4/Chrna6/Chrnb3/Chrm5	4
+brown	GO:0046982	protein heterodimerization activity	11/143	497/22849	0.000302508905472741	0.00628546281371139	0.00521872088388646	Kcnn3/Ntsr2/Rbp4/Nr4a2/Ntsr1/Chrna4/Drd2/Nrn1/Sox6/Pbx1/Suclg2	11
+midnightblue	GO:0000978	RNA polymerase II core promoter proximal region sequence-specific DNA binding	4/22	344/22849	0.000298014632803687	0.00650327113309924	0.00426606649463413	Nfib/Nfia/Zic1/Chd7	4
+midnightblue	GO:0001228	transcriptional activator activity, RNA polymerase II transcription regulatory region sequence-specific binding	4/22	348/22849	0.00031139359247731	0.00650327113309924	0.00426606649463413	Nfix/Nfib/Nfia/Zic1	4
+midnightblue	GO:0000987	core promoter proximal region sequence-specific DNA binding	4/22	364/22849	0.000369261524924689	0.00650327113309924	0.00426606649463413	Nfib/Nfia/Zic1/Chd7	4
+midnightblue	GO:0001159	core promoter proximal region DNA binding	4/22	366/22849	0.000377001225107202	0.00650327113309924	0.00426606649463413	Nfib/Nfia/Zic1/Chd7	4
+blue	GO:0003682	chromatin binding	32/403	487/22849	2.07171631564718e-10	1.46677515147821e-07	1.18196867692713e-07	Mef2c/Hdac5/H3f3b/Phf21b/Kdm6b/Egfr/Meis1/Per1/Fos/Bcl6/Smarcd1/Dlx2/Pax6/Creb3l1/Crtc2/Svep1/Fosl2/Ppargc1a/Mef2a/Ctbp2/Rbmx/Sall1/Lmo2/Nfatc1/Arx/Egr1/Jarid2/Cited2/Dlx1/Foxo3/Tcf4/Hmgn3	32
+blue	GO:0001228	transcriptional activator activity, RNA polymerase II transcription regulatory region sequence-specific binding	24/403	348/22849	1.5981121537022e-08	5.65731702410578e-06	4.55882519635048e-06	Fosb/Etv1/Mef2c/Hdac5/Meis1/Fos/Nr4a1/Dlx2/Esrra/Zeb2/Pax6/Meis2/Creb3l1/Nr4a3/Dlx5/Mef2a/Csrnp1/Lmo2/Nfatc1/Klf9/Egr1/Foxo3/Junb/Tcf4	24
+blue	GO:0001077	transcriptional activator activity, RNA polymerase II core promoter proximal region sequence-specific binding	18/403	253/22849	6.46722129203031e-07	0.000152626422491915	0.000122990664571243	Fosb/Etv1/Mef2c/Hdac5/Meis1/Fos/Nr4a1/Esrra/Pax6/Meis2/Creb3l1/Nr4a3/Dlx5/Mef2a/Nfatc1/Egr1/Junb/Tcf4	18
+blue	GO:0046982	protein heterodimerization activity	26/403	497/22849	9.43750007533443e-07	0.000167043751333419	0.000134608553706086	Mef2c/Arnt/Egfr/Meis1/Fos/Nr4a1/Mapk4/Homer2/Gad2/Itgav/Bmp2/Syt6/Hgf/Mef2a/Adra2a/Gucy1a3/H2-Q4/Whrn/Kcnk3/Fzd9/Jam2/Tcf4/H2-K1/Syt10/Gad1/H2-D1	26
+blue	GO:0000982	transcription factor activity, RNA polymerase II core promoter proximal region sequence-specific binding	21/403	365/22849	2.44201974335496e-06	0.000345789995659062	0.000278647305452292	Fosb/Etv1/Mef2c/Hdac5/Meis1/Fos/Nr4a1/Esrra/Pax6/Meis2/Creb3l1/Nr4a3/Fosl2/Dlx5/Mef2a/Sall1/Nfatc1/Egr1/Junb/Tcf4/Ddn	21
+blue	GO:0030551	cyclic nucleotide binding	7/403	37/22849	3.28715615325698e-06	0.000387884426084324	0.000312568181590401	Pde1c/Hcn1/Pde10a/Pde4b/Prkg2/Pde4a/Pde5a	7
+blue	GO:0022836	gated channel activity	18/403	294/22849	5.46281285646562e-06	0.000552524500339665	0.000445239784692386	Kcnab3/Gria1/Grin2c/Ryr2/Hcn1/Cacna1i/Kcnj3/Itgav/Gabrd/Rasa3/Kcnc2/Kcnk3/Cacng8/Ryr3/Cacnb2/Kcnh7/Kcnc3/Kcnma1	18
+blue	GO:0042578	phosphoric ester hydrolase activity	21/403	388/22849	6.3060228876092e-06	0.000558083025553414	0.000449719000668972	Pde1c/Ppp1cc/Eya2/Dusp14/Dusp6/Sgpp1/Pde1b/Pde10a/Gpcpd1/Ptpn1/Pde4b/Dusp16/Ptpro/Pde4a/Ptprm/Plppr5/Inpp5j/Ppm1h/Dusp5/Ppm1e/Pde5a	21
+blue	GO:0035259	glucocorticoid receptor binding	5/403	18/22849	1.18049568275381e-05	0.000851932920720128	0.000686511512087882	Nr4a1/Nr4a3/Ipo13/Grip1/Nrip1	5
+blue	GO:0004114	3',5'-cyclic-nucleotide phosphodiesterase activity	6/403	30/22849	1.20329508576289e-05	0.000851932920720128	0.000686511512087882	Pde1c/Pde1b/Pde10a/Pde4b/Pde4a/Pde5a	6
+blue	GO:0005261	cation channel activity	17/403	286/22849	1.45906922383411e-05	0.000867018830710274	0.000698668162719251	Kcnab3/Grin2c/Ryr2/Hcn1/Cacna1i/Kcnj3/Itgav/Rasa3/Asic4/Kcnc2/Kcnk3/Cacng8/Ryr3/Cacnb2/Kcnh7/Kcnc3/Kcnma1	17
+blue	GO:0004112	cyclic-nucleotide phosphodiesterase activity	6/403	31/22849	1.47001229794311e-05	0.000867018830710274	0.000698668162719251	Pde1c/Pde1b/Pde10a/Pde4b/Pde4a/Pde5a	6
+blue	GO:0022843	voltage-gated cation channel activity	12/403	151/22849	1.5919837287053e-05	0.000867018830710274	0.000698668162719251	Kcnab3/Hcn1/Cacna1i/Kcnj3/Itgav/Kcnc2/Kcnk3/Cacng8/Cacnb2/Kcnh7/Kcnc3/Kcnma1	12
+blue	GO:0005216	ion channel activity	20/403	385/22849	1.89480495319183e-05	0.000958229933471299	0.000772168635060131	Kcnab3/Gria1/Grin2c/Ryr2/Hcn1/Cacna1i/Kcnj3/Itgav/Gabrd/Rasa3/Asic4/Ttyh2/Kcnc2/Kcnk3/Cacng8/Ryr3/Cacnb2/Kcnh7/Kcnc3/Kcnma1	20
+blue	GO:0046873	metal ion transmembrane transporter activity	20/403	392/22849	2.45029435889342e-05	0.00115653893739769	0.000931971608786127	Kcnab3/Ryr2/Hcn1/Cacna1i/Kcnj3/Itgav/Slc6a17/Slc6a1/Rasa3/Asic4/Kcnc2/Slc32a1/Atp1b2/Kcnk3/Cacng8/Ryr3/Cacnb2/Kcnh7/Kcnc3/Kcnma1	20
+blue	GO:0022838	substrate-specific channel activity	20/403	396/22849	2.82950497839491e-05	0.00125205595293975	0.00100894190676976	Kcnab3/Gria1/Grin2c/Ryr2/Hcn1/Cacna1i/Kcnj3/Itgav/Gabrd/Rasa3/Asic4/Ttyh2/Kcnc2/Kcnk3/Cacng8/Ryr3/Cacnb2/Kcnh7/Kcnc3/Kcnma1	20
+blue	GO:0030552	cAMP binding	5/403	23/22849	4.31109358546174e-05	0.00149696024428674	0.00120629267380822	Pde1c/Hcn1/Pde10a/Pde4b/Pde4a	5
+blue	GO:0035258	steroid hormone receptor binding	8/403	73/22849	4.31709881322596e-05	0.00149696024428674	0.00120629267380822	Grm1/Nr4a1/Nr4a3/Ppargc1a/Ipo13/Grip1/Wipi1/Nrip1	8
+blue	GO:0000978	RNA polymerase II core promoter proximal region sequence-specific DNA binding	18/403	344/22849	4.48198234710912e-05	0.00149696024428674	0.00120629267380822	Fosb/Etv1/Mef2c/Meis1/Per1/Fos/Esrra/Pax6/Meis2/Nr4a3/Fosl2/Dlx5/Mef2a/Sall1/Nfatc1/Junb/Tcf4/Ddn	18
+blue	GO:0051427	hormone receptor binding	11/403	142/22849	4.53136592645576e-05	0.00149696024428674	0.00120629267380822	Grm1/Nr4a1/Nr4a3/Ppargc1a/Ctbp2/Ipo13/Grip1/Nppa/Wipi1/Nrip1/Tob2	11
+blue	GO:0046332	SMAD binding	8/403	74/22849	4.76681701433888e-05	0.00149696024428674	0.00120629267380822	Fos/Zeb2/Pax6/Bmp2/Mef2a/Tob1/Cited2/Purb	8
+blue	GO:0001047	core promoter binding	12/403	169/22849	4.86300644330437e-05	0.00149696024428674	0.00120629267380822	Mef2c/Hdac5/H3f3b/Fos/Pax6/Nr4a3/Rbmx/Nfatc1/Gadd45a/Egr1/Nrip1/Foxo3	12
+blue	GO:0005516	calmodulin binding	12/403	169/22849	4.86300644330437e-05	0.00149696024428674	0.00120629267380822	Pde1c/Map2/Egfr/Adcy3/Ryr2/Adcy8/Pde1b/Mknk1/Dcx/Camkv/Myo6/Ryr3	12
+blue	GO:0035257	nuclear hormone receptor binding	10/403	120/22849	5.39738647833292e-05	0.00159222901110821	0.00128306292598967	Grm1/Nr4a1/Nr4a3/Ppargc1a/Ctbp2/Ipo13/Grip1/Wipi1/Nrip1/Tob2	10
+blue	GO:0047555	3',5'-cyclic-GMP phosphodiesterase activity	4/403	13/22849	6.00913624376251e-05	0.00166201870395313	0.00133930142364347	Pde1c/Pde1b/Pde10a/Pde5a	4
+blue	GO:0004721	phosphoprotein phosphatase activity	12/403	173/22849	6.10345851734202e-05	0.00166201870395313	0.00133930142364347	Ppp1cc/Eya2/Dusp14/Dusp6/Sgpp1/Ptpn1/Ptpro/Ptprm/Plppr5/Ppm1h/Dusp5/Ppm1e	12
+blue	GO:0000989	transcription factor activity, transcription factor binding	21/403	457/22849	7.04065719995722e-05	0.00178580958881579	0.00143905560085958	Hdac5/Arnt/Phf21b/Per1/Meis2/Rbm39/Ppargc1a/Mef2a/Ctbp2/Sap30/Sall1/Mlip/Lmo2/Tob1/Cited2/Nrip1/Actn2/Junb/Tcf4/Myt1l/Mysm1	21
+blue	GO:0015267	channel activity	20/403	424/22849	7.31475679034715e-05	0.00178580958881579	0.00143905560085958	Kcnab3/Gria1/Grin2c/Ryr2/Hcn1/Cacna1i/Kcnj3/Itgav/Gabrd/Rasa3/Asic4/Ttyh2/Kcnc2/Kcnk3/Cacng8/Ryr3/Cacnb2/Kcnh7/Kcnc3/Kcnma1	20
+blue	GO:0022803	passive transmembrane transporter activity	20/403	424/22849	7.31475679034715e-05	0.00178580958881579	0.00143905560085958	Kcnab3/Gria1/Grin2c/Ryr2/Hcn1/Cacna1i/Kcnj3/Itgav/Gabrd/Rasa3/Asic4/Ttyh2/Kcnc2/Kcnk3/Cacng8/Ryr3/Cacnb2/Kcnh7/Kcnc3/Kcnma1	20
+blue	GO:0000988	transcription factor activity, protein binding	21/403	461/22849	7.96126659297335e-05	0.00187885891594171	0.0015140373661023	Hdac5/Arnt/Phf21b/Per1/Meis2/Rbm39/Ppargc1a/Mef2a/Ctbp2/Sap30/Sall1/Mlip/Lmo2/Tob1/Cited2/Nrip1/Actn2/Junb/Tcf4/Myt1l/Mysm1	21
+blue	GO:0000987	core promoter proximal region sequence-specific DNA binding	18/403	364/22849	9.23123039311589e-05	0.00208468865794979	0.00167990076213022	Fosb/Etv1/Mef2c/Meis1/Per1/Fos/Esrra/Pax6/Meis2/Nr4a3/Fosl2/Dlx5/Mef2a/Sall1/Nfatc1/Junb/Tcf4/Ddn	18
+blue	GO:0005085	guanyl-nucleotide exchange factor activity	12/403	181/22849	9.42232161785215e-05	0.00208468865794979	0.00167990076213022	Net1/Tiam2/Arhgef2/Rasgrf1/Rapgefl1/Dock10/Ric1/Dock3/Iqsec3/Arhgef1/Iqsec2/Kalrn	12
+blue	GO:0001159	core promoter proximal region DNA binding	18/403	366/22849	9.89088403901261e-05	0.00212204421200634	0.00171000291838751	Fosb/Etv1/Mef2c/Meis1/Per1/Fos/Esrra/Pax6/Meis2/Nr4a3/Fosl2/Dlx5/Mef2a/Sall1/Nfatc1/Junb/Tcf4/Ddn	18
+blue	GO:0005244	voltage-gated ion channel activity	12/403	185/22849	0.000115967035052501	0.00234584745191917	0.00189034986461521	Kcnab3/Hcn1/Cacna1i/Kcnj3/Itgav/Kcnc2/Kcnk3/Cacng8/Cacnb2/Kcnh7/Kcnc3/Kcnma1	12
+blue	GO:0022832	voltage-gated channel activity	12/403	185/22849	0.000115967035052501	0.00234584745191917	0.00189034986461521	Kcnab3/Hcn1/Cacna1i/Kcnj3/Itgav/Kcnc2/Kcnk3/Cacng8/Cacnb2/Kcnh7/Kcnc3/Kcnma1	12
+blue	GO:0005249	voltage-gated potassium channel activity	8/403	87/22849	0.000151491755931318	0.00297933786664925	0.00240083426066591	Kcnab3/Hcn1/Kcnj3/Kcnc2/Kcnk3/Kcnh7/Kcnc3/Kcnma1	8
+blue	GO:0035035	histone acetyltransferase binding	5/403	30/22849	0.000164953052986784	0.00315639895985521	0.00254351507023718	Pax6/Nr4a3/Mef2a/Egr1/Cited2	5
+blue	GO:0001046	core promoter sequence-specific DNA binding	9/403	113/22849	0.000179361518369085	0.00334178828961348	0.00269290700709263	Mef2c/Hdac5/H3f3b/Fos/Pax6/Nr4a3/Nfatc1/Egr1/Nrip1	9
+blue	GO:0016791	phosphatase activity	14/403	255/22849	0.000189457349963924	0.00342729236839249	0.00276180859897224	Ppp1cc/Eya2/Dusp14/Dusp6/Sgpp1/Ptpn1/Dusp16/Ptpro/Ptprm/Plppr5/Inpp5j/Ppm1h/Dusp5/Ppm1e	14
+blue	GO:0005089	Rho guanyl-nucleotide exchange factor activity	7/403	68/22849	0.000193632337197316	0.00342729236839249	0.00276180859897224	Net1/Tiam2/Arhgef2/Rasgrf1/Dock10/Arhgef1/Kalrn	7
+blue	GO:0008047	enzyme activator activity	18/403	393/22849	0.000238298106181088	0.00411500144332221	0.00331598391656354	Sipa1l2/Gprc5b/Spry2/Asap1/Cdkn1a/Tiam2/Bmp2/Ngf/Sfrp2/Rasa3/Ogt/Arhgef1/Atp1b2/Sipa1l1/Cd24a/Acap2/Arhgap20/Sipa1	18
+blue	GO:0001965	G-protein alpha-subunit binding	5/403	33/22849	0.000263048411035602	0.00443424464317157	0.0035732390672004	Crhr1/Gria1/Igf2r/Gpsm1/Lpar1	5
+blue	GO:0004115	3',5'-cyclic-AMP phosphodiesterase activity	4/403	19/22849	0.00029954616711347	0.00493206247247294	0.00397439467749083	Pde1c/Pde1b/Pde4b/Pde4a	4
+blue	GO:0015276	ligand-gated ion channel activity	9/403	124/22849	0.000359868828697576	0.0056619362381752	0.00456254748898448	Gria1/Grin2c/Ryr2/Hcn1/Kcnj3/Gabrd/Rasa3/Ryr3/Kcnh7	9
+blue	GO:0022834	ligand-gated channel activity	9/403	124/22849	0.000359868828697576	0.0056619362381752	0.00456254748898448	Gria1/Grin2c/Ryr2/Hcn1/Kcnj3/Gabrd/Rasa3/Ryr3/Kcnh7	9
+blue	GO:0003712	transcription cofactor activity	18/403	408/22849	0.000373539281971223	0.00574925677468752	0.0046329128336019	Hdac5/Arnt/Phf21b/Meis2/Rbm39/Ppargc1a/Mef2a/Ctbp2/Sap30/Sall1/Tob1/Cited2/Nrip1/Actn2/Junb/Tcf4/Myt1l/Mysm1	18
+blue	GO:0017017	MAP kinase tyrosine/serine/threonine phosphatase activity	5/403	36/22849	0.000400104330287514	0.00602710352858639	0.00485680956362447	Dusp14/Dusp6/Sgpp1/Plppr5/Dusp5	5
+blue	GO:0022890	inorganic cation transmembrane transporter activity	20/403	486/22849	0.000440259232548581	0.00649382368009156	0.00523290579038006	Kcnab3/Ryr2/Hcn1/Cacna1i/Kcnj3/Itgav/Slc6a17/Slc6a1/Rasa3/Asic4/Kcnc2/Slc32a1/Atp1b2/Kcnk3/Cacng8/Ryr3/Cacnb2/Kcnh7/Kcnc3/Kcnma1	20
+blue	GO:0033549	MAP kinase phosphatase activity	5/403	37/22849	0.000455988021703521	0.00658856161971618	0.00530924828707429	Dusp14/Dusp6/Sgpp1/Plppr5/Dusp5	5
+blue	GO:0005057	receptor signaling protein activity	9/403	129/22849	0.000481260942554016	0.00670468063433788	0.00540282025544325	Kit/Egfr/Ryr2/Map3k1/Tiam2/Mapk4/Ngf/Rasa3/Ryr3	9
+blue	GO:0035326	enhancer binding	8/403	103/22849	0.000482964282981966	0.00670468063433788	0.00540282025544325	Mef2c/Arnt/H3f3b/Sall1/Nfatc1/Tiparp/Arx/Hmgb2	8
+blue	GO:0008081	phosphoric diester hydrolase activity	7/403	82/22849	0.000615115545104255	0.0083750347294964	0.00674883857179163	Pde1c/Pde1b/Pde10a/Gpcpd1/Pde4b/Pde4a/Pde5a	7
+blue	GO:0003713	transcription coactivator activity	12/403	226/22849	0.000720229069715404	0.00962117323317936	0.00775301203149452	Arnt/Rbm39/Ppargc1a/Mef2a/Ctbp2/Sall1/Cited2/Nrip1/Actn2/Junb/Myt1l/Mysm1	12
+purple	GO:0000400	four-way junction DNA binding	2/25	14/22849	0.000103747930817309	0.0082998344653847	0.00633408419726727	Hmg20b/Rad51	2

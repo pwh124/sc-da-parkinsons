@@ -1,0 +1,549 @@
+Cluster	ID	Description	GeneRatio	BgRatio	pvalue	p.adjust	qvalue	geneID	Count
+yellow	GO:1903532	positive regulation of secretion by cell	10/64	389/23276	1.0277535849391e-07	0.000151303444877403	0.000105406019553291	Cartpt/Nr3c1/Gal/Rasgrp1/Ghrh/P2ry1/Sdcbp/Rab27a/Gck/Isl1	10
+yellow	GO:0051047	positive regulation of secretion	10/64	416/23276	1.91281219819725e-07	0.000151303444877403	0.000105406019553291	Cartpt/Nr3c1/Gal/Rasgrp1/Ghrh/P2ry1/Sdcbp/Rab27a/Gck/Isl1	10
+yellow	GO:0010817	regulation of hormone levels	10/64	466/23276	5.41307445398156e-07	0.000242538973901065	0.000168965537077926	Esr1/Cartpt/Nr3c1/Gal/Ghrh/P2ry1/Npy1r/Gck/Isl1/Ghsr	10
+yellow	GO:0046883	regulation of hormone secretion	8/64	264/23276	6.29764425606155e-07	0.000242538973901065	0.000168965537077926	Cartpt/Gal/Ghrh/P2ry1/Npy1r/Gck/Isl1/Ghsr	8
+yellow	GO:0055074	calcium ion homeostasis	9/64	371/23276	7.66558071747994e-07	0.000242538973901065	0.000168965537077926	Esr1/Calcr/Ghrh/P2ry1/Npy1r/Trhr/Wfs1/Gck/Kl	9
+yellow	GO:0072507	divalent inorganic cation homeostasis	9/64	400/23276	1.42836098125526e-06	0.000376611178724303	0.000262367359188465	Esr1/Calcr/Ghrh/P2ry1/Npy1r/Trhr/Wfs1/Gck/Kl	9
+yellow	GO:0046887	positive regulation of hormone secretion	6/64	142/23276	2.59861300724241e-06	0.00057482602693961	0.00040045435505075	Cartpt/Gal/Ghrh/P2ry1/Gck/Isl1	6
+yellow	GO:0046879	hormone secretion	8/64	324/23276	2.90683199463773e-06	0.00057482602693961	0.00040045435505075	Cartpt/Gal/Ghrh/P2ry1/Npy1r/Gck/Isl1/Ghsr	8
+yellow	GO:0009914	hormone transport	8/64	333/23276	3.55833266206688e-06	0.0006254758079322	0.000435739683881172	Cartpt/Gal/Ghrh/P2ry1/Npy1r/Gck/Isl1/Ghsr	8
+yellow	GO:0048638	regulation of developmental growth	8/64	338/23276	3.97108586312424e-06	0.000628225783546255	0.000437655463020114	Prox1/Nr3c1/Gal/Ghrh/Fstl4/Npy1r/Ghsr/Ghr	8
+yellow	GO:0032870	cellular response to hormone stimulus	9/64	468/23276	5.13989133283714e-06	0.000739209826231669	0.000514972844543587	Esr1/Nr3c1/Pgr/Gck/Isl1/Foxo1/Ghsr/Ghr/Kl	9
+yellow	GO:0006874	cellular calcium ion homeostasis	8/64	358/23276	6.05362988630436e-06	0.000798070206677791	0.000555978113242163	Esr1/Calcr/Ghrh/P2ry1/Npy1r/Trhr/Wfs1/Gck	8
+yellow	GO:0045927	positive regulation of growth	7/64	262/23276	7.595869183168e-06	0.000924358849828598	0.000643957492694485	Prox1/Nr3c1/Ghrh/Sdcbp/Wfs1/Ghsr/Ghr	7
+yellow	GO:0051480	regulation of cytosolic calcium ion concentration	7/64	268/23276	8.80258913572023e-06	0.000967139744064959	0.000673760936879375	Esr1/Calcr/Ghrh/P2ry1/Npy1r/Trhr/Gck	7
+yellow	GO:0072503	cellular divalent inorganic cation homeostasis	8/64	379/23276	9.17009871110897e-06	0.000967139744064959	0.000673760936879375	Esr1/Calcr/Ghrh/P2ry1/Npy1r/Trhr/Wfs1/Gck	8
+yellow	GO:0009755	hormone-mediated signaling pathway	6/64	184/23276	1.15260382737155e-05	0.00113963703431362	0.000793931715301323	Esr1/Nr3c1/Pgr/Isl1/Ghsr/Ghr	6
+yellow	GO:0048511	rhythmic process	7/64	286/23276	1.34160153891862e-05	0.00124847860857015	0.00086975653947232	Prox1/Esr1/Cartpt/Ghrh/Bhlhe40/Pgr/Magel2	7
+yellow	GO:0023061	signal release	8/64	417/23276	1.82741536156893e-05	0.0016060950566678	0.00111889115997817	Cartpt/Gal/Ghrh/P2ry1/Npy1r/Gck/Isl1/Ghsr	8
+yellow	GO:0007631	feeding behavior	5/64	124/23276	2.34620135787146e-05	0.00195352134113297	0.00136092677102018	Cartpt/Gal/P2ry1/Npy1r/Ghsr	5
+yellow	GO:0006875	cellular metal ion homeostasis	8/64	445/23276	2.90631113440297e-05	0.00229889210731275	0.00160153039879995	Esr1/Calcr/Ghrh/P2ry1/Npy1r/Trhr/Wfs1/Gck	8
+yellow	GO:0007204	positive regulation of cytosolic calcium ion concentration	6/64	240/23276	5.13497279420621e-05	0.00386834617163534	0.00269489549650822	Esr1/Calcr/Ghrh/P2ry1/Trhr/Gck	6
+yellow	GO:0030003	cellular cation homeostasis	8/64	495/23276	6.15741876527044e-05	0.00442774385757175	0.00308460164939625	Esr1/Calcr/Ghrh/P2ry1/Npy1r/Trhr/Wfs1/Gck	8
+yellow	GO:0032094	response to food	3/64	29/23276	6.88366714209184e-05	0.00473476583425621	0.00329848947266369	Cartpt/Ghrh/Ghsr	3
+yellow	GO:0051952	regulation of amine transport	4/64	83/23276	8.11485995779313e-05	0.0053490451888453	0.00372642911219711	Cartpt/Nr3c1/P2ry1/Gck	4
+yellow	GO:0040014	regulation of multicellular organism growth	4/64	86/23276	9.31987445260475e-05	0.00567078514770027	0.00395057026391788	Ghrh/Npy1r/Ghsr/Ghr	4
+yellow	GO:0046888	negative regulation of hormone secretion	4/64	86/23276	9.31987445260475e-05	0.00567078514770027	0.00395057026391788	Cartpt/Npy1r/Gck/Ghsr	4
+yellow	GO:0007623	circadian rhythm	5/64	167/23276	9.69838617910563e-05	0.00568253590197967	0.00395875646375189	Prox1/Cartpt/Ghrh/Bhlhe40/Magel2	5
+yellow	GO:0015837	amine transport	4/64	88/23276	0.000101922250629542	0.0057586071605691	0.00401175174470414	Cartpt/Nr3c1/P2ry1/Gck	4
+yellow	GO:0043255	regulation of carbohydrate biosynthetic process	4/64	89/23276	0.000106499448300176	0.00580972852451306	0.00404736560327712	Nr3c1/P2ry1/Gck/Foxo1	4
+yellow	GO:0048639	positive regulation of developmental growth	5/64	175/23276	0.000120837442748121	0.00637216114758423	0.00443918605464149	Prox1/Nr3c1/Ghrh/Ghsr/Ghr	5
+yellow	GO:0048732	gland development	7/64	408/23276	0.000126944713838826	0.00647827539654913	0.00451311087909171	Prox1/Esr1/Nr3c1/Ghrh/Pgr/Isl1/Gsx1	7
+yellow	GO:0060135	maternal process involved in female pregnancy	3/64	37/23276	0.000144097197767683	0.00712380521463982	0.0049628212520646	Esr1/Pgr/Ghsr	3
+yellow	GO:0021983	pituitary gland development	3/64	38/23276	0.000156141867599627	0.00748534650129122	0.00521469012366219	Ghrh/Isl1/Gsx1	3
+yellow	GO:0030518	intracellular steroid hormone receptor signaling pathway	4/64	100/23276	0.000167214226453635	0.00753322518763387	0.00524804496071107	Esr1/Nr3c1/Pgr/Isl1	4
+yellow	GO:0071375	cellular response to peptide hormone stimulus	5/64	188/23276	0.000168912134726937	0.00753322518763387	0.00524804496071107	Gck/Foxo1/Ghsr/Ghr/Kl	5
+yellow	GO:1901214	regulation of neuron death	6/64	299/23276	0.000171426110464488	0.00753322518763387	0.00524804496071107	Esr1/Nr3c1/Wfs1/Isl1/Ghr/Grid2	6
+yellow	GO:0006111	regulation of gluconeogenesis	3/64	40/23276	0.000182153098439299	0.00755705779748687	0.00526464802313444	Nr3c1/Gck/Foxo1	3
+yellow	GO:0060603	mammary gland duct morphogenesis	3/64	40/23276	0.000182153098439299	0.00755705779748687	0.00526464802313444	Esr1/Nr3c1/Pgr	3
+yellow	GO:1903531	negative regulation of secretion by cell	5/64	192/23276	0.000186299149242723	0.00755705779748687	0.00526464802313444	Cartpt/P2ry1/Npy1r/Gck/Ghsr	5
+yellow	GO:1901653	cellular response to peptide	5/64	194/23276	0.000195489072466356	0.00756846807750748	0.0052725970305079	Gck/Foxo1/Ghsr/Ghr/Kl	5
+yellow	GO:0040018	positive regulation of multicellular organism growth	3/64	41/23276	0.000196148666989764	0.00756846807750748	0.0052725970305079	Ghrh/Ghsr/Ghr	3
+yellow	GO:0042752	regulation of circadian rhythm	4/64	105/23276	0.000201762325480952	0.00759971425978253	0.00529436478141746	Prox1/Ghrh/Bhlhe40/Magel2	4
+yellow	GO:0090276	regulation of peptide hormone secretion	5/64	202/23276	0.000235755036962552	0.00867359229011063	0.00604248528028866	Cartpt/Ghrh/Gck/Isl1/Ghsr	5
+yellow	GO:0002791	regulation of peptide secretion	5/64	207/23276	0.000263946020792772	0.00944144749300594	0.00657741401635319	Cartpt/Ghrh/Gck/Isl1/Ghsr	5
+yellow	GO:0048545	response to steroid hormone	6/64	325/23276	0.000268562033619006	0.00944144749300594	0.00657741401635319	Esr1/Calcr/Nr3c1/Pgr/Isl1/Ghr	6
+yellow	GO:0045981	positive regulation of nucleotide metabolic process	4/64	116/23276	0.000295468487184583	0.00994534354736192	0.00692845478347723	Calcr/Ghrh/Wfs1/Gck	4
+yellow	GO:1900544	positive regulation of purine nucleotide metabolic process	4/64	116/23276	0.000295468487184583	0.00994534354736192	0.00692845478347723	Calcr/Ghrh/Wfs1/Gck	4
+green	GO:0009167	purine ribonucleoside monophosphate metabolic process	21/52	201/23276	2.39530472970055e-30	6.22478843969933e-28	4.60062751422347e-28	Cox5a/Atp5d/Eno2/Atp5g1/Adssl1/Pgam1/Atp5g3/Pgam2/Uqcrb/Atp5o/Tpi1/Atp5b/Atp5a1/Cox4i1/Atp5h/Cox8a/Chchd10/Atp5k/Pgk1/Cycs/Uqcrh	21
+green	GO:0009126	purine nucleoside monophosphate metabolic process	21/52	202/23276	2.66978776779678e-30	6.22478843969933e-28	4.60062751422347e-28	Cox5a/Atp5d/Eno2/Atp5g1/Adssl1/Pgam1/Atp5g3/Pgam2/Uqcrb/Atp5o/Tpi1/Atp5b/Atp5a1/Cox4i1/Atp5h/Cox8a/Chchd10/Atp5k/Pgk1/Cycs/Uqcrh	21
+green	GO:0009161	ribonucleoside monophosphate metabolic process	21/52	204/23276	3.31105768069114e-30	6.22478843969933e-28	4.60062751422347e-28	Cox5a/Atp5d/Eno2/Atp5g1/Adssl1/Pgam1/Atp5g3/Pgam2/Uqcrb/Atp5o/Tpi1/Atp5b/Atp5a1/Cox4i1/Atp5h/Cox8a/Chchd10/Atp5k/Pgk1/Cycs/Uqcrh	21
+green	GO:0009123	nucleoside monophosphate metabolic process	21/52	215/23276	1.0406369663024e-29	1.46729812248639e-27	1.0844532596204e-27	Cox5a/Atp5d/Eno2/Atp5g1/Adssl1/Pgam1/Atp5g3/Pgam2/Uqcrb/Atp5o/Tpi1/Atp5b/Atp5a1/Cox4i1/Atp5h/Cox8a/Chchd10/Atp5k/Pgk1/Cycs/Uqcrh	21
+green	GO:0046034	ATP metabolic process	20/52	179/23276	1.79171851302581e-29	2.02105848269311e-27	1.4937274340173e-27	Cox5a/Atp5d/Eno2/Atp5g1/Pgam1/Atp5g3/Pgam2/Uqcrb/Atp5o/Tpi1/Atp5b/Atp5a1/Cox4i1/Atp5h/Cox8a/Chchd10/Atp5k/Pgk1/Cycs/Uqcrh	20
+green	GO:0009205	purine ribonucleoside triphosphate metabolic process	20/52	192/23276	7.73347557804561e-29	7.26946704336287e-27	5.37273040158958e-27	Cox5a/Atp5d/Eno2/Atp5g1/Pgam1/Atp5g3/Pgam2/Uqcrb/Atp5o/Tpi1/Atp5b/Atp5a1/Cox4i1/Atp5h/Cox8a/Chchd10/Atp5k/Pgk1/Cycs/Uqcrh	20
+green	GO:0009199	ribonucleoside triphosphate metabolic process	20/52	195/23276	1.06761618121751e-28	8.60193608866677e-27	6.35753395131026e-27	Cox5a/Atp5d/Eno2/Atp5g1/Pgam1/Atp5g3/Pgam2/Uqcrb/Atp5o/Tpi1/Atp5b/Atp5a1/Cox4i1/Atp5h/Cox8a/Chchd10/Atp5k/Pgk1/Cycs/Uqcrh	20
+green	GO:0009144	purine nucleoside triphosphate metabolic process	20/52	200/23276	1.80628979300123e-28	1.27343430406587e-26	9.41172050037483e-27	Cox5a/Atp5d/Eno2/Atp5g1/Pgam1/Atp5g3/Pgam2/Uqcrb/Atp5o/Tpi1/Atp5b/Atp5a1/Cox4i1/Atp5h/Cox8a/Chchd10/Atp5k/Pgk1/Cycs/Uqcrh	20
+green	GO:0046128	purine ribonucleoside metabolic process	21/52	255/23276	4.18647607278022e-28	2.62352500560894e-26	1.93899944423505e-26	Cox5a/Atp5d/Eno2/Atp5g1/Adssl1/Pgam1/Atp5g3/Pgam2/Uqcrb/Atp5o/Tpi1/Atp5b/Atp5a1/Cox4i1/Atp5h/Cox8a/Chchd10/Atp5k/Pgk1/Cycs/Uqcrh	21
+green	GO:0042278	purine nucleoside metabolic process	21/52	259/23276	5.85334200973201e-28	3.30128489348885e-26	2.43991940616197e-26	Cox5a/Atp5d/Eno2/Atp5g1/Adssl1/Pgam1/Atp5g3/Pgam2/Uqcrb/Atp5o/Tpi1/Atp5b/Atp5a1/Cox4i1/Atp5h/Cox8a/Chchd10/Atp5k/Pgk1/Cycs/Uqcrh	21
+green	GO:0009141	nucleoside triphosphate metabolic process	20/52	218/23276	1.07483634902368e-27	5.51097909863049e-26	4.07306405945814e-26	Cox5a/Atp5d/Eno2/Atp5g1/Pgam1/Atp5g3/Pgam2/Uqcrb/Atp5o/Tpi1/Atp5b/Atp5a1/Cox4i1/Atp5h/Cox8a/Chchd10/Atp5k/Pgk1/Cycs/Uqcrh	20
+green	GO:0009119	ribonucleoside metabolic process	21/52	274/23276	1.96256772204883e-27	9.22406829362952e-26	6.81734050816964e-26	Cox5a/Atp5d/Eno2/Atp5g1/Adssl1/Pgam1/Atp5g3/Pgam2/Uqcrb/Atp5o/Tpi1/Atp5b/Atp5a1/Cox4i1/Atp5h/Cox8a/Chchd10/Atp5k/Pgk1/Cycs/Uqcrh	21
+green	GO:0009116	nucleoside metabolic process	21/52	288/23276	5.70819795721804e-27	2.47647972913152e-25	1.83032096441971e-25	Cox5a/Atp5d/Eno2/Atp5g1/Adssl1/Pgam1/Atp5g3/Pgam2/Uqcrb/Atp5o/Tpi1/Atp5b/Atp5a1/Cox4i1/Atp5h/Cox8a/Chchd10/Atp5k/Pgk1/Cycs/Uqcrh	21
+green	GO:1901657	glycosyl compound metabolic process	21/52	301/23276	1.46634217965176e-26	5.90726420945424e-25	4.36595115144435e-25	Cox5a/Atp5d/Eno2/Atp5g1/Adssl1/Pgam1/Atp5g3/Pgam2/Uqcrb/Atp5o/Tpi1/Atp5b/Atp5a1/Cox4i1/Atp5h/Cox8a/Chchd10/Atp5k/Pgk1/Cycs/Uqcrh	21
+green	GO:0009150	purine ribonucleotide metabolic process	21/52	406/23276	8.28280982062627e-24	3.11433649255548e-22	2.30174925541614e-22	Cox5a/Atp5d/Eno2/Atp5g1/Adssl1/Pgam1/Atp5g3/Pgam2/Uqcrb/Atp5o/Tpi1/Atp5b/Atp5a1/Cox4i1/Atp5h/Cox8a/Chchd10/Atp5k/Pgk1/Cycs/Uqcrh	21
+green	GO:0009259	ribonucleotide metabolic process	21/52	414/23276	1.24778129553652e-23	4.39842906676624e-22	3.25079863837147e-22	Cox5a/Atp5d/Eno2/Atp5g1/Adssl1/Pgam1/Atp5g3/Pgam2/Uqcrb/Atp5o/Tpi1/Atp5b/Atp5a1/Cox4i1/Atp5h/Cox8a/Chchd10/Atp5k/Pgk1/Cycs/Uqcrh	21
+green	GO:0006163	purine nucleotide metabolic process	21/52	419/23276	1.60522794319752e-23	5.32557976449061e-22	3.93603879570414e-22	Cox5a/Atp5d/Eno2/Atp5g1/Adssl1/Pgam1/Atp5g3/Pgam2/Uqcrb/Atp5o/Tpi1/Atp5b/Atp5a1/Cox4i1/Atp5h/Cox8a/Chchd10/Atp5k/Pgk1/Cycs/Uqcrh	21
+green	GO:0019693	ribose phosphate metabolic process	21/52	426/23276	2.27200449152606e-23	7.11894740678164e-22	5.26148408563929e-22	Cox5a/Atp5d/Eno2/Atp5g1/Adssl1/Pgam1/Atp5g3/Pgam2/Uqcrb/Atp5o/Tpi1/Atp5b/Atp5a1/Cox4i1/Atp5h/Cox8a/Chchd10/Atp5k/Pgk1/Cycs/Uqcrh	21
+green	GO:0072521	purine-containing compound metabolic process	21/52	471/23276	1.85374277544005e-22	5.50268908077995e-21	4.06693705858317e-21	Cox5a/Atp5d/Eno2/Atp5g1/Adssl1/Pgam1/Atp5g3/Pgam2/Uqcrb/Atp5o/Tpi1/Atp5b/Atp5a1/Cox4i1/Atp5h/Cox8a/Chchd10/Atp5k/Pgk1/Cycs/Uqcrh	21
+green	GO:0006091	generation of precursor metabolites and energy	18/52	291/23276	9.56129438481655e-22	2.69628501651827e-20	1.99277504020387e-20	Cox5a/Eno2/Cs/Pgam1/Mdh2/Pgam2/Uqcrb/Aco2/Tpi1/Mt3/Cox4i1/Idh3a/Cox8a/Cisd1/Chchd10/Pgk1/Cycs/Uqcrh	18
+green	GO:1902600	hydrogen ion transmembrane transport	12/52	57/23276	2.58146580020319e-21	6.93307957768858e-20	5.12411256581687e-20	Cox5a/Atp5d/Atp5g1/Atp5g3/Atp6v1e1/Atp5o/Atp5b/Atp5a1/Ndufa4/Atp5h/Cox8a/Atp5k	12
+green	GO:0015992	proton transport	13/52	89/23276	8.41809646846335e-21	2.15809382191515e-19	1.59500775191937e-19	Cox5a/Atp5d/Atp5g1/Atp5g3/Atp6v1e1/Atp5o/Atp6v1g2/Atp5b/Atp5a1/Ndufa4/Atp5h/Cox8a/Atp5k	13
+green	GO:0006818	hydrogen transport	13/52	90/23276	9.8239789247198e-21	2.40901048414868e-19	1.78045567697439e-19	Cox5a/Atp5d/Atp5g1/Atp5g3/Atp6v1e1/Atp5o/Atp6v1g2/Atp5b/Atp5a1/Ndufa4/Atp5h/Cox8a/Atp5k	13
+green	GO:0015985	energy coupled proton transport, down electrochemical gradient	8/52	20/23276	4.35314975326859e-17	9.82070584337393e-16	7.2583044307131e-16	Atp5d/Atp5g1/Atp5g3/Atp5o/Atp5b/Atp5a1/Atp5h/Atp5k	8
+green	GO:0015986	ATP synthesis coupled proton transport	8/52	20/23276	4.35314975326859e-17	9.82070584337393e-16	7.2583044307131e-16	Atp5d/Atp5g1/Atp5g3/Atp5o/Atp5b/Atp5a1/Atp5h/Atp5k	8
+green	GO:0009127	purine nucleoside monophosphate biosynthetic process	10/52	63/23276	1.44359585521854e-16	3.01551134201206e-15	2.22870939051283e-15	Atp5d/Atp5g1/Adssl1/Atp5g3/Atp5o/Atp5b/Atp5a1/Atp5h/Chchd10/Atp5k	10
+green	GO:0009168	purine ribonucleoside monophosphate biosynthetic process	10/52	63/23276	1.44359585521854e-16	3.01551134201206e-15	2.22870939051283e-15	Atp5d/Atp5g1/Adssl1/Atp5g3/Atp5o/Atp5b/Atp5a1/Atp5h/Chchd10/Atp5k	10
+green	GO:0009156	ribonucleoside monophosphate biosynthetic process	10/52	66/23276	2.37134933206813e-16	4.77657508316581e-15	3.53027945676308e-15	Atp5d/Atp5g1/Adssl1/Atp5g3/Atp5o/Atp5b/Atp5a1/Atp5h/Chchd10/Atp5k	10
+green	GO:0006754	ATP biosynthetic process	9/52	43/23276	3.55326536788323e-16	6.91048850857291e-15	5.10741591899006e-15	Atp5d/Atp5g1/Atp5g3/Atp5o/Atp5b/Atp5a1/Atp5h/Chchd10/Atp5k	9
+green	GO:0009124	nucleoside monophosphate biosynthetic process	10/52	73/23276	6.90352991331529e-16	1.29786362370327e-14	9.59227314271177e-15	Atp5d/Atp5g1/Adssl1/Atp5g3/Atp5o/Atp5b/Atp5a1/Atp5h/Chchd10/Atp5k	10
+green	GO:0009206	purine ribonucleoside triphosphate biosynthetic process	9/52	52/23276	2.28367945985034e-15	4.15482327534063e-14	3.07075404448467e-14	Atp5d/Atp5g1/Atp5g3/Atp5o/Atp5b/Atp5a1/Atp5h/Chchd10/Atp5k	9
+green	GO:0009145	purine nucleoside triphosphate biosynthetic process	9/52	53/23276	2.74621595914337e-15	4.8402056279902e-14	3.5773076309894e-14	Atp5d/Atp5g1/Atp5g3/Atp5o/Atp5b/Atp5a1/Atp5h/Chchd10/Atp5k	9
+green	GO:0009201	ribonucleoside triphosphate biosynthetic process	9/52	54/23276	3.2899724752806e-15	5.49309282084068e-14	4.05984463802335e-14	Atp5d/Atp5g1/Atp5g3/Atp5o/Atp5b/Atp5a1/Atp5h/Chchd10/Atp5k	9
+green	GO:0042451	purine nucleoside biosynthetic process	10/52	85/23276	3.40883419733021e-15	5.49309282084068e-14	4.05984463802335e-14	Atp5d/Atp5g1/Adssl1/Atp5g3/Atp5o/Atp5b/Atp5a1/Atp5h/Chchd10/Atp5k	10
+green	GO:0046129	purine ribonucleoside biosynthetic process	10/52	85/23276	3.40883419733021e-15	5.49309282084068e-14	4.05984463802335e-14	Atp5d/Atp5g1/Adssl1/Atp5g3/Atp5o/Atp5b/Atp5a1/Atp5h/Chchd10/Atp5k	10
+green	GO:0045333	cellular respiration	11/52	129/23276	4.88868401400645e-15	7.65893828861011e-14	5.66058148990221e-14	Cox5a/Cs/Mdh2/Uqcrb/Aco2/Cox4i1/Idh3a/Cox8a/Cisd1/Cycs/Uqcrh	11
+green	GO:0042455	ribonucleoside biosynthetic process	10/52	98/23276	1.49343969078797e-14	2.2764864475795e-13	1.68250958051788e-13	Atp5d/Atp5g1/Adssl1/Atp5g3/Atp5o/Atp5b/Atp5a1/Atp5h/Chchd10/Atp5k	10
+green	GO:0009163	nucleoside biosynthetic process	10/52	100/23276	1.83975726245984e-14	2.73058709480881e-13	2.01812708014985e-13	Atp5d/Atp5g1/Adssl1/Atp5g3/Atp5o/Atp5b/Atp5a1/Atp5h/Chchd10/Atp5k	10
+green	GO:0009142	nucleoside triphosphate biosynthetic process	9/52	66/23276	2.2445611407469e-14	3.18157415526907e-13	2.35144338463336e-13	Atp5d/Atp5g1/Atp5g3/Atp5o/Atp5b/Atp5a1/Atp5h/Chchd10/Atp5k	9
+green	GO:1901659	glycosyl compound biosynthetic process	10/52	102/23276	2.25643557111282e-14	3.18157415526907e-13	2.35144338463336e-13	Atp5d/Atp5g1/Adssl1/Atp5g3/Atp5o/Atp5b/Atp5a1/Atp5h/Chchd10/Atp5k	10
+green	GO:0015980	energy derivation by oxidation of organic compounds	12/52	213/23276	3.77933929567176e-14	5.19889600672896e-13	3.84240914271121e-13	Cox5a/Cs/Mdh2/Uqcrb/Aco2/Mt3/Cox4i1/Idh3a/Cox8a/Cisd1/Cycs/Uqcrh	12
+green	GO:0009152	purine ribonucleotide biosynthetic process	10/52	218/23276	4.74012569813426e-11	6.36531165178029e-10	4.70448565529115e-10	Atp5d/Atp5g1/Adssl1/Atp5g3/Atp5o/Atp5b/Atp5a1/Atp5h/Chchd10/Atp5k	10
+green	GO:0009260	ribonucleotide biosynthetic process	10/52	224/23276	6.1926253104671e-11	8.10901813527868e-10	5.99322728923172e-10	Atp5d/Atp5g1/Adssl1/Atp5g3/Atp5o/Atp5b/Atp5a1/Atp5h/Chchd10/Atp5k	10
+green	GO:0006119	oxidative phosphorylation	7/52	60/23276	6.43718726511627e-11	8.10901813527868e-10	5.99322728923172e-10	Cox5a/Uqcrb/Cox4i1/Cox8a/Chchd10/Cycs/Uqcrh	7
+green	GO:0006164	purine nucleotide biosynthetic process	10/52	225/23276	6.46996127814788e-11	8.10901813527868e-10	5.99322728923172e-10	Atp5d/Atp5g1/Adssl1/Atp5g3/Atp5o/Atp5b/Atp5a1/Atp5h/Chchd10/Atp5k	10
+green	GO:0046390	ribose phosphate biosynthetic process	10/52	227/23276	7.05810441533478e-11	8.65384976141047e-10	6.39590239925074e-10	Atp5d/Atp5g1/Adssl1/Atp5g3/Atp5o/Atp5b/Atp5a1/Atp5h/Chchd10/Atp5k	10
+green	GO:0072522	purine-containing compound biosynthetic process	10/52	233/23276	9.11937468142833e-11	1.0943249617714e-09	8.08795604444707e-10	Atp5d/Atp5g1/Adssl1/Atp5g3/Atp5o/Atp5b/Atp5a1/Atp5h/Chchd10/Atp5k	10
+green	GO:0042775	mitochondrial ATP synthesis coupled electron transport	6/52	35/23276	1.42531543093604e-10	1.67474563134985e-09	1.23777392686551e-09	Cox5a/Uqcrb/Cox4i1/Cox8a/Cycs/Uqcrh	6
+green	GO:0042773	ATP synthesis coupled electron transport	6/52	39/23276	2.84557742162641e-10	3.2753176853006e-09	2.42072751657155e-09	Cox5a/Uqcrb/Cox4i1/Cox8a/Cycs/Uqcrh	6
+green	GO:0009165	nucleotide biosynthetic process	10/52	270/23276	3.84843185195054e-10	4.3410311290002e-09	3.20837687025771e-09	Atp5d/Atp5g1/Adssl1/Atp5g3/Atp5o/Atp5b/Atp5a1/Atp5h/Chchd10/Atp5k	10
+green	GO:1901293	nucleoside phosphate biosynthetic process	10/52	279/23276	5.29195087658092e-10	5.85227508704243e-09	4.3253096947906e-09	Atp5d/Atp5g1/Adssl1/Atp5g3/Atp5o/Atp5b/Atp5a1/Atp5h/Chchd10/Atp5k	10
+green	GO:0022904	respiratory electron transport chain	6/52	57/23276	3.06981128010986e-09	3.329564542273e-08	2.46082037838766e-08	Cox5a/Uqcrb/Cox4i1/Cox8a/Cycs/Uqcrh	6
+green	GO:0090407	organophosphate biosynthetic process	11/52	451/23276	3.78278556704597e-09	4.02545482983759e-08	2.9751401877859e-08	Atp5d/Atp5g1/Adssl1/Atp5g3/Atp5o/Tpi1/Atp5b/Atp5a1/Atp5h/Chchd10/Atp5k	11
+green	GO:0015988	energy coupled proton transmembrane transport, against electrochemical gradient	5/52	29/23276	5.2086169439199e-09	5.34119992067422e-08	3.9475833680235e-08	Atp5g1/Atp5g3/Atp6v1e1/Atp5b/Atp5a1	5
+green	GO:0015991	ATP hydrolysis coupled proton transport	5/52	29/23276	5.2086169439199e-09	5.34119992067422e-08	3.9475833680235e-08	Atp5g1/Atp5g3/Atp6v1e1/Atp5b/Atp5a1	5
+green	GO:0022900	electron transport chain	6/52	63/23276	5.68967011150782e-09	5.73031061230431e-08	4.23516797773891e-08	Cox5a/Uqcrb/Cox4i1/Cox8a/Cycs/Uqcrh	6
+green	GO:0090662	ATP hydrolysis coupled transmembrane transport	5/52	32/23276	8.78788116023347e-09	8.69537714802049e-08	6.42659453269152e-08	Atp5g1/Atp5g3/Atp6v1e1/Atp5b/Atp5a1	5
+green	GO:0046496	nicotinamide nucleotide metabolic process	7/52	127/23276	1.32946246786765e-08	1.29278764116785e-07	9.5547574823156e-08	Eno2/Pgam1/Mdh2/Pgam2/Tpi1/Idh3a/Pgk1	7
+green	GO:0019362	pyridine nucleotide metabolic process	7/52	129/23276	1.48203216510432e-08	1.41672227308277e-07	1.04707357249119e-07	Eno2/Pgam1/Mdh2/Pgam2/Tpi1/Idh3a/Pgk1	7
+green	GO:0072524	pyridine-containing compound metabolic process	7/52	133/23276	1.83208046976198e-08	1.72215564157626e-07	1.27281380004516e-07	Eno2/Pgam1/Mdh2/Pgam2/Tpi1/Idh3a/Pgk1	7
+green	GO:0006733	oxidoreduction coenzyme metabolic process	7/52	142/23276	2.88310835717712e-08	2.6656936286031e-07	1.97016550378281e-07	Eno2/Pgam1/Mdh2/Pgam2/Tpi1/Idh3a/Pgk1	7
+green	GO:0006732	coenzyme metabolic process	8/52	273/23276	1.55625420495488e-07	1.41568930902347e-06	1.04631012760973e-06	Eno2/Cs/Pgam1/Mdh2/Pgam2/Tpi1/Idh3a/Pgk1	8
+green	GO:0009060	aerobic respiration	5/52	57/23276	1.75190185744693e-07	1.56836928190487e-06	1.15915310868669e-06	Cs/Mdh2/Aco2/Cox4i1/Idh3a	5
+green	GO:0006096	glycolytic process	5/52	66/23276	3.68302301271568e-07	3.2456640299557e-06	2.39881104117666e-06	Eno2/Pgam1/Pgam2/Tpi1/Pgk1	5
+green	GO:0006757	ATP generation from ADP	5/52	67/23276	3.97334723803846e-07	3.44764283423644e-06	2.54808988868539e-06	Eno2/Pgam1/Pgam2/Tpi1/Pgk1	5
+green	GO:0006099	tricarboxylic acid cycle	4/52	28/23276	4.35748473911463e-07	3.72366877706159e-06	2.75209562470398e-06	Cs/Mdh2/Aco2/Idh3a	4
+green	GO:0051186	cofactor metabolic process	8/52	322/23276	5.45192569457952e-07	4.58938222648186e-06	3.39192863323408e-06	Eno2/Cs/Pgam1/Mdh2/Pgam2/Tpi1/Idh3a/Pgk1	8
+green	GO:0046031	ADP metabolic process	5/52	74/23276	6.54983641521975e-07	5.43251137968226e-06	4.01507000066102e-06	Eno2/Pgam1/Pgam2/Tpi1/Pgk1	5
+green	GO:0006101	citrate metabolic process	4/52	32/23276	7.60265527920721e-07	6.21434431517807e-06	4.59290845242724e-06	Cs/Mdh2/Aco2/Idh3a	4
+green	GO:0009135	purine nucleoside diphosphate metabolic process	5/52	79/23276	9.08698075718831e-07	7.21839034796367e-06	5.33498054832702e-06	Eno2/Pgam1/Pgam2/Tpi1/Pgk1	5
+green	GO:0009179	purine ribonucleoside diphosphate metabolic process	5/52	79/23276	9.08698075718831e-07	7.21839034796367e-06	5.33498054832702e-06	Eno2/Pgam1/Pgam2/Tpi1/Pgk1	5
+green	GO:0006165	nucleoside diphosphate phosphorylation	5/52	82/23276	1.09458680194764e-06	8.57426328192318e-06	6.33708148496002e-06	Eno2/Pgam1/Pgam2/Tpi1/Pgk1	5
+green	GO:0009185	ribonucleoside diphosphate metabolic process	5/52	84/23276	1.23430973440138e-06	9.42929456037581e-06	6.96901949591045e-06	Eno2/Pgam1/Pgam2/Tpi1/Pgk1	5
+green	GO:0072350	tricarboxylic acid metabolic process	4/52	36/23276	1.23717694586491e-06	9.42929456037581e-06	6.96901949591045e-06	Cs/Mdh2/Aco2/Idh3a	4
+green	GO:0046939	nucleotide phosphorylation	5/52	88/23276	1.55579777322193e-06	1.16995992546289e-05	8.64696025538085e-06	Eno2/Pgam1/Pgam2/Tpi1/Pgk1	5
+green	GO:0006122	mitochondrial electron transport, ubiquinol to cytochrome c	3/52	11/23276	1.71344092830482e-06	1.27155353100516e-05	9.39782004998213e-06	Uqcrb/Cycs/Uqcrh	3
+green	GO:0006090	pyruvate metabolic process	5/52	92/23276	1.93988400132117e-06	1.42090204772096e-05	1.05016276763252e-05	Eno2/Pgam1/Pgam2/Tpi1/Pgk1	5
+green	GO:0044724	single-organism carbohydrate catabolic process	5/52	100/23276	2.93014864594794e-06	2.11872286707005e-05	1.56590939783453e-05	Eno2/Pgam1/Pgam2/Tpi1/Pgk1	5
+green	GO:0009132	nucleoside diphosphate metabolic process	5/52	103/23276	3.38990334911254e-06	2.4201335302525e-05	1.78867651731987e-05	Eno2/Pgam1/Pgam2/Tpi1/Pgk1	5
+green	GO:0016052	carbohydrate catabolic process	5/52	107/23276	4.08902951240173e-06	2.88276580624322e-05	2.1305995880409e-05	Eno2/Pgam1/Pgam2/Tpi1/Pgk1	5
+green	GO:0006098	pentose-phosphate shunt	3/52	15/23276	4.69518959252756e-06	3.26924312368586e-05	2.41623791896155e-05	Pgam1/Pgam2/Tpi1	3
+green	GO:0019682	glyceraldehyde-3-phosphate metabolic process	3/52	18/23276	8.38059437903283e-06	5.76421369484697e-05	4.26022512721053e-05	Pgam1/Pgam2/Tpi1	3
+green	GO:0006094	gluconeogenesis	4/52	63/23276	1.19659411719938e-05	8.13107327831866e-05	6.00952784287829e-05	Pgam1/Pgam2/Tpi1/Pgk1	4
+green	GO:0051156	glucose 6-phosphate metabolic process	3/52	21/23276	1.35950144289424e-05	9.12808111657564e-05	6.74639813767068e-05	Pgam1/Pgam2/Tpi1	3
+green	GO:0019319	hexose biosynthetic process	4/52	66/23276	1.44066882799e-05	9.55926139983953e-05	7.06507561466303e-05	Pgam1/Pgam2/Tpi1/Pgk1	4
+green	GO:0046364	monosaccharide biosynthetic process	4/52	72/23276	2.03624772396662e-05	0.000133539967013625	9.86969521041348e-05	Pgam1/Pgam2/Tpi1/Pgk1	4
+green	GO:0043648	dicarboxylic acid metabolic process	4/52	84/23276	3.74424467433376e-05	0.000242730344405085	0.000179397566973523	Cs/Adssl1/Mdh2/Idh3a	4
+green	GO:0006739	NADP metabolic process	3/52	34/23276	5.99256433103272e-05	0.000384068895761643	0.00028385831041734	Pgam1/Pgam2/Tpi1	3
+green	GO:0006081	cellular aldehyde metabolic process	3/52	57/23276	0.000282590640704467	0.00179079911637437	0.00132354693931365	Pgam1/Pgam2/Tpi1	3
+green	GO:0044275	cellular carbohydrate catabolic process	3/52	58/23276	0.000297535943405054	0.00186455857867167	0.00137806121156025	Pgam1/Pgam2/Tpi1	3
+green	GO:0043455	regulation of secondary metabolic process	2/52	12/23276	0.00031849239273284	0.00197395285166288	0.00145891252194569	Pgam1/Pgam2	2
+green	GO:0006107	oxaloacetate metabolic process	2/52	13/23276	0.000375861810008863	0.0023041963135326	0.00170298943665343	Cs/Mdh2	2
+green	GO:0016051	carbohydrate biosynthetic process	4/52	164/23276	0.000494249258664453	0.00299738260093281	0.00221531076888651	Pgam1/Pgam2/Tpi1/Pgk1	4
+green	GO:0006006	glucose metabolic process	4/52	178/23276	0.000672259708792469	0.00403355825275481	0.0029811292797516	Pgam1/Pgam2/Tpi1/Pgk1	4
+green	GO:0006734	NADH metabolic process	2/52	21/23276	0.00100042370355944	0.00593935756639499	0.00438967076575666	Mdh2/Idh3a	2
+green	GO:0019318	hexose metabolic process	4/52	206/23276	0.00115716649900765	0.00679835318166994	0.00502453874569111	Pgam1/Pgam2/Tpi1/Pgk1	4
+brown	GO:0007626	locomotory behavior	18/146	234/23276	8.68703708842711e-15	1.81613416988765e-11	1.2613659810754e-11	Th/Etv5/Slc6a3/Klhl1/Slc18a2/Pitx3/Snca/Oprk1/Nr4a2/Ntsr1/Chrna4/Calb1/Drd2/Foxa2/Lmx1b/Zfhx3/Penk/En1	18
+brown	GO:0042417	dopamine metabolic process	10/146	36/23276	1.52552219226178e-14	1.81613416988765e-11	1.2613659810754e-11	Th/Ddc/Slc6a3/Sncaip/Maoa/Snca/Nr4a2/Tacr3/Drd2/Gch1	10
+brown	GO:0006584	catecholamine metabolic process	10/146	52/23276	8.71877831770913e-13	5.18985279361636e-10	3.6045265097687e-10	Th/Ddc/Slc6a3/Sncaip/Maoa/Snca/Nr4a2/Tacr3/Drd2/Gch1	10
+brown	GO:0009712	catechol-containing compound metabolic process	10/146	52/23276	8.71877831770913e-13	5.18985279361636e-10	3.6045265097687e-10	Th/Ddc/Slc6a3/Sncaip/Maoa/Snca/Nr4a2/Tacr3/Drd2/Gch1	10
+brown	GO:0018958	phenol-containing compound metabolic process	11/146	95/23276	2.01014242224035e-11	9.57229821470854e-09	6.64828156913597e-09	Th/Ddc/Slc6a3/Sncaip/Maoa/Snca/Nr4a2/Tacr3/Drd2/Gch1/Slco4a1	11
+brown	GO:0042416	dopamine biosynthetic process	6/146	13/23276	9.08990949885255e-11	3.60717908612799e-08	2.50530663556094e-08	Th/Ddc/Slc6a3/Snca/Nr4a2/Gch1	6
+brown	GO:0044708	single-organism behavior	19/146	472/23276	1.42524184869384e-10	4.84785834534291e-08	3.36699991623763e-08	Th/Slc1a2/Igf1/Klhl1/Snca/Oprk1/Serpine2/Nr4a2/Ntsr1/Chrna4/Calb1/Slc10a4/Drd2/Cck/Foxa2/Zfhx3/Penk/Bdnf/En1	19
+brown	GO:0015837	amine transport	10/146	88/23276	2.05355019904198e-10	6.11187877989869e-08	4.24490442459861e-08	Th/Ddc/Slc18a2/Snca/Oprk1/Ntsr1/Chrna4/Chrna6/Drd2/Cck	10
+brown	GO:1901615	organic hydroxy compound metabolic process	18/146	438/23276	3.23782651526394e-10	8.56584992538159e-08	5.94926953857268e-08	Th/Abhd3/Ddc/Slc6a3/Sncaip/Rbp4/Maoa/Snca/Cubn/Nr4a2/Ntsr1/Tacr3/Dkk3/Drd2/Gch1/Tigar/Slco4a1/Aldh1a1	18
+brown	GO:0050769	positive regulation of neurogenesis	18/146	455/23276	5.95312126941731e-10	1.41743817424826e-07	9.84458264658378e-08	Bmp7/Etv5/Ntn1/Rgs6/Il1rap/Serpine2/Ret/Trpc6/Drd2/Foxa1/Foxa2/Nbl1/Bdnf/Ndnf/Ntf3/Robo2/Syt17/Dcc	18
+brown	GO:0007409	axonogenesis	17/146	408/23276	8.43181350095932e-10	1.82510435870765e-07	1.26759607751264e-07	Bmp7/Ntn1/Nr4a2/Sema6d/Epha5/Ret/Fgfr2/Cdh11/Drd2/Cck/Nrn1/Bdnf/Ntf3/Flrt3/Robo2/Dcc/Lgi1	17
+brown	GO:0045666	positive regulation of neuron differentiation	16/146	361/23276	1.12458323986838e-09	2.23136057843885e-07	1.54975462266073e-07	Bmp7/Etv5/Ntn1/Rgs6/Il1rap/Serpine2/Ret/Trpc6/Foxa1/Foxa2/Nbl1/Bdnf/Ndnf/Robo2/Syt17/Dcc	16
+brown	GO:0061564	axon development	17/146	433/23276	2.07032263862157e-09	3.6493573234091e-07	2.53460083338522e-07	Bmp7/Ntn1/Nr4a2/Sema6d/Epha5/Ret/Fgfr2/Cdh11/Drd2/Cck/Nrn1/Bdnf/Ntf3/Flrt3/Robo2/Dcc/Lgi1	17
+brown	GO:0097164	ammonium ion metabolic process	11/146	146/23276	2.14577919058074e-09	3.6493573234091e-07	2.53460083338522e-07	Th/Abhd3/Ddc/Slc6a3/Sncaip/Maoa/Snca/Nr4a2/Tacr3/Drd2/Gch1	11
+brown	GO:0015872	dopamine transport	7/146	37/23276	2.90737555557835e-09	4.61497413188804e-07	3.2052540335534e-07	Slc6a3/Snca/Oprk1/Chrna4/Chrna6/Drd2/Chrm5	7
+brown	GO:0009713	catechol-containing compound biosynthetic process	6/146	22/23276	3.77280297860947e-09	5.28414346592303e-07	3.67001453832537e-07	Th/Ddc/Slc6a3/Snca/Nr4a2/Gch1	6
+brown	GO:0042423	catecholamine biosynthetic process	6/146	22/23276	3.77280297860947e-09	5.28414346592303e-07	3.67001453832537e-07	Th/Ddc/Slc6a3/Snca/Nr4a2/Gch1	6
+brown	GO:0030534	adult behavior	11/146	167/23276	8.84079061397456e-09	1.16944013621519e-06	8.12215324827721e-07	Slc1a2/Klhl1/Snca/Oprk1/Nr4a2/Ntsr1/Chrna4/Slc10a4/Drd2/Foxa2/En1	11
+brown	GO:0050804	modulation of synaptic transmission	14/146	313/23276	1.16007978404959e-08	1.45376313990635e-06	1.00968716938609e-06	Sncaip/Snca/Serpine2/Ntsr1/Chrna4/Calb1/Car7/Drd2/Lmx1b/Bdnf/Ntf3/Erbb4/Lgi1/Lrrtm2	14
+brown	GO:0015844	monoamine transport	8/146	83/23276	5.23978553840913e-08	6.23796468347607e-06	4.33247530570566e-06	Slc6a3/Slc18a2/Snca/Oprk1/Chrna4/Chrna6/Drd2/Chrm5	8
+brown	GO:0007631	feeding behavior	9/146	124/23276	9.02170399697094e-08	9.83776537151014e-06	6.83265739677819e-06	Th/Oprk1/Tacr3/Adrb3/Drd2/Cck/Bdnf/Mchr1/En1	9
+brown	GO:0043279	response to alkaloid	8/146	89/23276	9.08991340500727e-08	9.83776537151014e-06	6.83265739677819e-06	Slc6a3/Snca/Oprk1/Chrna4/Tacr3/Chrna6/Chrnb3/Drd2	8
+brown	GO:0051937	catecholamine transport	7/146	65/23276	1.69819302449805e-07	1.75799895275211e-05	1.22098912653842e-05	Slc6a3/Snca/Oprk1/Chrna4/Chrna6/Drd2/Chrm5	7
+brown	GO:0050808	synapse organization	11/146	224/23276	1.79935738977733e-07	1.78511247710826e-05	1.23982037690359e-05	Etv5/Il1rap/Snca/Fgfr2/Drd2/F2r/Bdnf/Elfn1/Flrt3/Erbb4/Lrrtm2	11
+brown	GO:0015696	ammonium transport	8/146	100/23276	2.26012551340787e-07	2.10974879367841e-05	1.46529116685549e-05	Slc6a3/Slc18a2/Snca/Oprk1/Chrna4/Chrna6/Drd2/Chrm5	8
+brown	GO:0046189	phenol-containing compound biosynthetic process	6/146	42/23276	2.39240728388564e-07	2.10974879367841e-05	1.46529116685549e-05	Th/Ddc/Slc6a3/Snca/Nr4a2/Gch1	6
+brown	GO:0051954	positive regulation of amine transport	6/146	42/23276	2.39240728388564e-07	2.10974879367841e-05	1.46529116685549e-05	Oprk1/Ntsr1/Chrna4/Chrna6/Drd2/Cck	6
+brown	GO:0007270	neuron-neuron synaptic transmission	9/146	143/23276	3.06390444381891e-07	2.60541302883316e-05	1.80954657189455e-05	Th/Slc6a3/Snca/Serpine2/Car7/Drd2/Cdh8/Bdnf/Erbb4	9
+brown	GO:0014046	dopamine secretion	5/146	24/23276	3.49988695867406e-07	2.77774361620098e-05	1.92923593406208e-05	Snca/Oprk1/Chrna4/Chrna6/Drd2	5
+brown	GO:0014059	regulation of dopamine secretion	5/146	24/23276	3.49988695867406e-07	2.77774361620098e-05	1.92923593406208e-05	Snca/Oprk1/Chrna4/Chrna6/Drd2	5
+brown	GO:0006836	neurotransmitter transport	9/146	150/23276	4.59482032013044e-07	3.47834282842976e-05	2.4158255414413e-05	Th/Cadps2/Ddc/Slc6a3/Sncaip/Slc18a2/Snca/Drd2/Sv2c	9
+brown	GO:0007411	axon guidance	10/146	196/23276	4.67479926542428e-07	3.47834282842976e-05	2.4158255414413e-05	Bmp7/Ntn1/Sema6d/Epha5/Bdnf/Ntf3/Flrt3/Robo2/Dcc/Lgi1	10
+brown	GO:0097485	neuron projection guidance	10/146	197/23276	4.89866213700206e-07	3.53445895400058e-05	2.45480006929194e-05	Bmp7/Ntn1/Sema6d/Epha5/Bdnf/Ntf3/Flrt3/Robo2/Dcc/Lgi1	10
+brown	GO:1901215	negative regulation of neuron death	10/146	198/23276	5.13185951615532e-07	3.59381103175466e-05	2.49602207426626e-05	Igf1/Snca/Nr4a2/Tigar/Tox3/F2r/Bdnf/Ndnf/Ntf3/En1	10
+brown	GO:0021954	central nervous system neuron development	7/146	78/23276	6.02114897213259e-07	4.09610162932791e-05	2.84487970984069e-05	Nr4a2/Fgfr2/Cdh11/Drd2/Lmx1b/Robo2/Dcc	7
+brown	GO:0043270	positive regulation of ion transport	11/146	254/23276	6.29615603986691e-07	4.16420764747864e-05	2.89218161948272e-05	Snca/Oprk1/Ntsr1/Chrna4/Chrna6/Trpc6/Drd2/Cck/F2r/Mchr1/Hspa2	11
+brown	GO:0051952	regulation of amine transport	7/146	83/23276	9.21875022517408e-07	5.93239034760527e-05	4.1202436995017e-05	Snca/Oprk1/Ntsr1/Chrna4/Chrna6/Drd2/Cck	7
+brown	GO:0007274	neuromuscular synaptic transmission	5/146	29/23276	9.53475596446661e-07	5.97427735563026e-05	4.14933562885791e-05	Etv5/Chrna4/Chrna6/Chrnb3/Ntf3	5
+brown	GO:0042220	response to cocaine	5/146	31/23276	1.35049906460235e-06	8.24496993030305e-05	5.7264076396499e-05	Slc6a3/Snca/Oprk1/Tacr3/Drd2	5
+brown	GO:0071542	dopaminergic neuron differentiation	5/146	34/23276	2.17842123458016e-06	0.000129670523988384	9.00605199875115e-05	Pitx3/Nr4a2/Foxa2/Lmx1b/En1	5
+brown	GO:1901214	regulation of neuron death	11/146	299/23276	3.0806649733063e-06	0.000175612688164711	0.000121968891048326	Igf1/Snca/Nr4a2/Tigar/Tox3/F2r/Bdnf/Ndnf/Ntf3/En1/Dcc	11
+brown	GO:0044070	regulation of anion transport	8/146	141/23276	3.09774586430821e-06	0.000175612688164711	0.000121968891048326	Snca/Oprk1/Ntsr1/Chrna4/Chrna6/Car7/Drd2/Cck	8
+brown	GO:0008344	adult locomotory behavior	7/146	102/23276	3.71326564781192e-06	0.000205611290870702	0.000142803924913403	Klhl1/Snca/Nr4a2/Ntsr1/Drd2/Foxa2/En1	7
+brown	GO:0050806	positive regulation of synaptic transmission	8/146	145/23276	3.81557626836877e-06	0.000206474706704228	0.000143403596115008	Snca/Serpine2/Ntsr1/Car7/Drd2/Erbb4/Lgi1/Lrrtm2	8
+brown	GO:0042053	regulation of dopamine metabolic process	4/146	18/23276	4.24521859644596e-06	0.000224619232847507	0.000156005576959453	Slc6a3/Snca/Nr4a2/Tacr3	4
+brown	GO:1903793	positive regulation of anion transport	6/146	70/23276	5.1765300587992e-06	0.000267941697173933	0.00018609447877285	Oprk1/Ntsr1/Chrna4/Chrna6/Drd2/Cck	6
+brown	GO:0042069	regulation of catecholamine metabolic process	4/146	19/23276	5.35109079977893e-06	0.000271083982856886	0.00018827690137632	Slc6a3/Snca/Nr4a2/Tacr3	4
+brown	GO:0001505	regulation of neurotransmitter levels	8/146	154/23276	5.9605723843261e-06	0.000295669225980842	0.000205352175784568	Th/Cadps2/Slc6a3/Sncaip/Maoa/Snca/Drd2/Prima1	8
+brown	GO:0050803	regulation of synapse structure or activity	10/146	261/23276	6.15287260758282e-06	0.000298979381197035	0.000207651189398767	Etv5/Il1rap/Snca/Serpine2/Calb1/Drd2/Lmx1b/Bdnf/Flrt3/Lrrtm2	10
+brown	GO:0001764	neuron migration	8/146	156/23276	6.55535259790004e-06	0.000308376264342583	0.00021417763932987	Ntn1/Nr4a2/Drd2/Cck/Lmx1b/Ndnf/Dcc/Erbb4	8
+brown	GO:1903532	positive regulation of secretion by cell	12/146	389/23276	6.60528747646861e-06	0.000308376264342583	0.00021417763932987	Cadps2/Igf1/Il1rap/Rbp4/Snca/Oprk1/Ntsr1/Chrna4/Chrna6/Drd2/Cck/F2r	12
+brown	GO:0015850	organic hydroxy compound transport	9/146	209/23276	7.13643016999777e-06	0.000323437216028962	0.000224637974482857	Slc6a3/Rbp4/Slc18a2/Snca/Oprk1/Chrna4/Chrna6/Drd2/Chrm5	9
+brown	GO:0043524	negative regulation of neuron apoptotic process	8/146	158/23276	7.19956843743594e-06	0.000323437216028962	0.000224637974482857	Snca/Nr4a2/Tox3/F2r/Bdnf/Ndnf/Ntf3/En1	8
+brown	GO:0010721	negative regulation of cell development	11/146	332/23276	8.32791874731988e-06	0.000360984087883538	0.000250715533970706	Bmp7/Igf1/Ntn1/Sema6d/Trpc6/Foxa1/Foxa2/Ctnna1/Bdnf/Pbx1/Erbb4	11
+brown	GO:0010975	regulation of neuron projection development	13/146	468/23276	8.33856565879655e-06	0.000360984087883538	0.000250715533970706	Bmp7/Ntn1/Sdc2/Il1rap/Serpine2/Sema6d/Ret/Trpc6/Bdnf/Ndnf/Robo2/Syt17/Dcc	13
+brown	GO:0070997	neuron death	11/146	333/23276	8.56665139560873e-06	0.00036423566023115	0.000252973859821453	Igf1/Snca/Nr4a2/Tigar/Tox3/F2r/Bdnf/Ndnf/Ntf3/En1/Dcc	11
+brown	GO:0010976	positive regulation of neuron projection development	10/146	272/23276	8.83242162291554e-06	0.000368947296213367	0.000256246248746082	Bmp7/Ntn1/Il1rap/Serpine2/Ret/Bdnf/Ndnf/Robo2/Syt17/Dcc	10
+brown	GO:0048638	regulation of developmental growth	11/146	338/23276	9.8519819445432e-06	0.00039533513375443	0.000274573485323817	Igf1/Ntn1/Slc6a3/Rbp4/Sema6d/Fgfr2/Adrb3/Drd2/Bdnf/Syt17/Erbb4	11
+brown	GO:0051930	regulation of sensory perception of pain	5/146	46/23276	1.01013056490983e-05	0.00039533513375443	0.000274573485323817	Oprk1/Ntsr1/Cck/Fam19a4/F2r	5
+brown	GO:0051931	regulation of sensory perception	5/146	46/23276	1.01013056490983e-05	0.00039533513375443	0.000274573485323817	Oprk1/Ntsr1/Cck/Fam19a4/F2r	5
+brown	GO:0010959	regulation of metal ion transport	11/146	339/23276	1.01282835611173e-05	0.00039533513375443	0.000274573485323817	Igf1/Snca/Oprk1/Serpine2/Ntsr1/Kcnip4/Trpc6/Drd2/F2r/Mchr1/Hspa2	11
+brown	GO:0050433	regulation of catecholamine secretion	5/146	48/23276	1.2491727731667e-05	0.000479722640791922	0.000333183434065346	Snca/Oprk1/Chrna4/Chrna6/Drd2	5
+brown	GO:0051047	positive regulation of secretion	12/146	416/23276	1.29395312017434e-05	0.000489032123672239	0.000339649181586281	Cadps2/Igf1/Il1rap/Rbp4/Snca/Oprk1/Ntsr1/Chrna4/Chrna6/Drd2/Cck/F2r	12
+brown	GO:0001657	ureteric bud development	6/146	83/23276	1.39380611336158e-05	0.000502826114532412	0.000349229570030469	Bmp7/Ret/Fgfr2/Bdnf/Robo2/Pbx1	6
+brown	GO:0072163	mesonephric epithelium development	6/146	83/23276	1.39380611336158e-05	0.000502826114532412	0.000349229570030469	Bmp7/Ret/Fgfr2/Bdnf/Robo2/Pbx1	6
+brown	GO:0072164	mesonephric tubule development	6/146	83/23276	1.39380611336158e-05	0.000502826114532412	0.000349229570030469	Bmp7/Ret/Fgfr2/Bdnf/Robo2/Pbx1	6
+brown	GO:0007169	transmembrane receptor protein tyrosine kinase signaling pathway	13/146	492/23276	1.41698388596323e-05	0.000503558004847529	0.00034973789235636	Igf1/Snca/Epha10/Epha5/Ret/Fgfr2/Eif4ebp1/Igfbp2/Bdnf/Ntf3/Flrt3/Epha6/Erbb4	13
+brown	GO:0001823	mesonephros development	6/146	84/23276	1.49332623993132e-05	0.000522883790775952	0.000363160297667508	Bmp7/Ret/Fgfr2/Bdnf/Robo2/Pbx1	6
+brown	GO:0048639	positive regulation of developmental growth	8/146	175/23276	1.51790016710549e-05	0.000523785550417125	0.000363786599927188	Igf1/Ntn1/Slc6a3/Fgfr2/Drd2/Bdnf/Syt17/Erbb4	8
+brown	GO:0019233	sensory perception of pain	7/146	127/23276	1.57722462082353e-05	0.000536062473644094	0.000372313334112103	Oprk1/Ntsr1/Chrna4/Cck/Penk/Fam19a4/F2r	7
+brown	GO:0033555	multicellular organismal response to stress	6/146	85/23276	1.59850632628016e-05	0.000536062473644094	0.000372313334112103	Nr4a2/Ret/Cck/Gch1/Penk/Bdnf	6
+brown	GO:0050432	catecholamine secretion	5/146	51/23276	1.68800268148205e-05	0.000558213108973437	0.000387697691901797	Snca/Oprk1/Chrna4/Chrna6/Drd2	5
+brown	GO:0060359	response to ammonium ion	5/146	54/23276	2.23846659251503e-05	0.000730108076270999	0.000507084501346952	Slc6a3/Snca/Oprk1/Tacr3/Drd2	5
+brown	GO:0021953	central nervous system neuron differentiation	8/146	194/23276	3.18414403332321e-05	0.00102451985720846	0.000711563339452456	Nr4a2/Fgfr2/Cdh11/Drd2/Lmx1b/Robo2/Dcc/Erbb4	8
+brown	GO:0014047	glutamate secretion	4/146	30/23276	3.58584740585995e-05	0.00113838702311367	0.000790647898190314	Snca/Ntsr1/Cck/Bdnf	4
+brown	GO:1901617	organic hydroxy compound biosynthetic process	8/146	198/23276	3.68193967915238e-05	0.00115351294421866	0.000801153356779556	Th/Ddc/Slc6a3/Snca/Nr4a2/Ntsr1/Dkk3/Gch1	8
+brown	GO:0046717	acid secretion	6/146	99/23276	3.81130436529959e-05	0.00117362802014893	0.00081512395042064	Snca/Ntsr1/Drd2/Cck/Bdnf/Chrm5	6
+brown	GO:0033603	positive regulation of dopamine secretion	3/146	11/23276	3.8447284994379e-05	0.00117362802014893	0.00081512395042064	Oprk1/Chrna4/Chrna6	3
+brown	GO:0010817	regulation of hormone levels	12/146	466/23276	3.93638999030208e-05	0.00118639804644421	0.00082399316119448	Igf1/Rbp4/Slc18a2/Oprk1/Pcsk2/Epha5/Dkk3/Drd2/Foxa1/Foxa2/Slco4a1/Aldh1a1	12
+brown	GO:0045927	positive regulation of growth	9/146	262/23276	4.27236687909435e-05	0.00127156319239046	0.00088314320619174	Igf1/Ntn1/Slc6a3/Fgfr2/Drd2/Bdnf/Syt17/Erbb4/Lgi1	9
+brown	GO:0050795	regulation of behavior	9/146	264/23276	4.53173761663618e-05	0.0013321070697791	0.000925192955911037	Sema6d/Tacr3/Drd2/Zfhx3/Nbl1/Penk/Ntf3/Mchr1/Robo2	9
+brown	GO:0001963	synaptic transmission, dopaminergic	4/146	32/23276	4.6596228605454e-05	0.0013529953696291	0.000939700579450169	Th/Slc6a3/Snca/Drd2	4
+brown	GO:0050890	cognition	9/146	268/23276	5.09058236375399e-05	0.00144638181134036	0.00100456058958673	Th/Igf1/Oprk1/Ntsr1/Chrna4/Calb1/Drd2/Bdnf/En1	9
+brown	GO:0060525	prostate glandular acinus development	3/146	12/23276	5.10273297574928e-05	0.00144638181134036	0.00100456058958673	Igf1/Fgfr2/Foxa1	3
+brown	GO:0032228	regulation of synaptic transmission, GABAergic	4/146	33/23276	5.2765713213737e-05	0.00146087399025474	0.00101462589300833	Car7/Drd2/Bdnf/Erbb4	4
+brown	GO:0060740	prostate gland epithelium morphogenesis	4/146	33/23276	5.2765713213737e-05	0.00146087399025474	0.00101462589300833	Bmp7/Igf1/Fgfr2/Foxa1	4
+brown	GO:0048732	gland development	11/146	408/23276	5.53566534554755e-05	0.00149751964367085	0.0010400775261199	Bmp7/Etv5/Igf1/Ntn1/Slc6a3/Serpine2/Fgfr2/Drd2/Foxa1/Pbx1/Erbb4	11
+brown	GO:0050768	negative regulation of neurogenesis	9/146	271/23276	5.54695527357829e-05	0.00149751964367085	0.0010400775261199	Bmp7/Ntn1/Sema6d/Trpc6/Foxa2/Ctnna1/Bdnf/Pbx1/Erbb4	9
+brown	GO:0051928	positive regulation of calcium ion transport	6/146	106/23276	5.59761647571212e-05	0.00149751964367085	0.0010400775261199	Snca/Ntsr1/Trpc6/F2r/Mchr1/Hspa2	6
+brown	GO:0042445	hormone metabolic process	7/146	155/23276	5.67141067770596e-05	0.00150040320262421	0.00104208025434808	Igf1/Rbp4/Pcsk2/Dkk3/Foxa1/Slco4a1/Aldh1a1	7
+brown	GO:0060512	prostate gland morphogenesis	4/146	34/23276	5.95106854776246e-05	0.00154120545137509	0.0010704187820731	Bmp7/Igf1/Fgfr2/Foxa1	4
+brown	GO:0006835	dicarboxylic acid transport	5/146	66/23276	5.95509876213809e-05	0.00154120545137509	0.0010704187820731	Slc1a2/Snca/Ntsr1/Cck/Bdnf	5
+brown	GO:0072073	kidney epithelium development	6/146	108/23276	6.21488467008499e-05	0.00159114412897552	0.00110510286550125	Bmp7/Ret/Fgfr2/Bdnf/Robo2/Pbx1	6
+brown	GO:0008589	regulation of smoothened signaling pathway	5/146	67/23276	6.40308019758163e-05	0.00162188659047254	0.00112645453419941	Serpine2/Fgfr2/Foxa1/Foxa2/Ctnna1	5
+brown	GO:0042493	response to drug	8/146	215/23276	6.58390202117186e-05	0.00162672025402716	0.00112981167535828	Slc1a2/Slc18a2/Snca/Gabra4/Slc10a4/Drd2/Bdnf/Aldh1a1	8
+brown	GO:0051924	regulation of calcium ion transport	8/146	215/23276	6.58390202117186e-05	0.00162672025402716	0.00112981167535828	Igf1/Snca/Ntsr1/Trpc6/Drd2/F2r/Mchr1/Hspa2	8
+brown	GO:0048167	regulation of synaptic plasticity	7/146	159/23276	6.66252589499304e-05	0.00162672025402716	0.00112981167535828	Snca/Serpine2/Calb1/Drd2/Lmx1b/Bdnf/Lrrtm2	7
+brown	GO:0031346	positive regulation of cell projection organization	10/146	345/23276	6.69544665664265e-05	0.00162672025402716	0.00112981167535828	Bmp7/Ntn1/Il1rap/Serpine2/Ret/Bdnf/Ndnf/Robo2/Syt17/Dcc	10
+brown	GO:0032102	negative regulation of response to external stimulus	9/146	280/23276	7.12855641853359e-05	0.00171445382146752	0.00119074557506818	Slc6a3/Serpine2/Sema6d/Drd2/Cck/Tigar/Metrnl/Nbl1/Robo2	9
+brown	GO:0097305	response to alcohol	7/146	163/23276	7.7909163588075e-05	0.00185501718503207	0.00128837153680911	Th/Slc6a3/Tacr3/Drd2/Foxa1/Ctnna1/Aldh1a1	7
+brown	GO:0015711	organic anion transport	10/146	354/23276	8.28613816695806e-05	0.0019533955421314	0.00135669859930079	Car4/Slc1a2/Slc7a8/Snca/Ntsr1/Drd2/Cck/Slco2a1/Slco4a1/Bdnf	10
+brown	GO:0001655	urogenital system development	9/146	291/23276	9.56190973367449e-05	0.00223204971332147	0.00155023324990739	Bmp7/Igf1/Rbp4/Ret/Fgfr2/Foxa1/Bdnf/Robo2/Pbx1	9
+brown	GO:0044106	cellular amine metabolic process	6/146	117/23276	9.69973617490235e-05	0.00224223998373228	0.00155731073385504	Abhd3/Slc6a3/Maoa/Snca/Nr4a2/Tacr3	6
+brown	GO:0051961	negative regulation of nervous system development	9/146	293/23276	0.000100717489036155	0.00229469956172178	0.00159374566699747	Bmp7/Ntn1/Sema6d/Trpc6/Foxa2/Ctnna1/Bdnf/Pbx1/Erbb4	9
+brown	GO:0001763	morphogenesis of a branching structure	8/146	229/23276	0.00010216485749212	0.00229469956172178	0.00159374566699747	Bmp7/Etv5/Igf1/Fgfr2/Drd2/Foxa1/Foxa2/Pbx1	8
+brown	GO:0098657	import into cell	4/146	39/23276	0.000103009166690662	0.00229469956172178	0.00159374566699747	Slc6a3/Snca/Ntsr1/Drd2	4
+brown	GO:0060442	branching involved in prostate gland morphogenesis	3/146	15/23276	0.000104085490409892	0.00229469956172178	0.00159374566699747	Bmp7/Igf1/Fgfr2	3
+brown	GO:0098810	neurotransmitter reuptake	3/146	15/23276	0.000104085490409892	0.00229469956172178	0.00159374566699747	Slc6a3/Snca/Drd2	3
+brown	GO:0060485	mesenchyme development	8/146	232/23276	0.000111786987816901	0.00244187906414716	0.0016959667586707	Bmp7/Sema6d/Bnc2/Ret/Fgfr2/Foxa1/Foxa2/Erbb4	8
+brown	GO:0033238	regulation of cellular amine metabolic process	4/146	40/23276	0.000113899311602661	0.00246540237205397	0.00171230448351943	Slc6a3/Snca/Nr4a2/Tacr3	4
+brown	GO:0043523	regulation of neuron apoptotic process	8/146	235/23276	0.000122146992458477	0.0025975940487192	0.00180411602844354	Snca/Nr4a2/Tox3/F2r/Bdnf/Ndnf/Ntf3/En1	8
+brown	GO:0050807	regulation of synapse organization	6/146	122/23276	0.000122188380284145	0.0025975940487192	0.00180411602844354	Etv5/Il1rap/Drd2/Bdnf/Flrt3/Lrrtm2	6
+brown	GO:0007271	synaptic transmission, cholinergic	4/146	41/23276	0.000125600493207985	0.00262328749410713	0.00182196098642424	Chrna4/Chrna6/Chrnb3/Chrm5	4
+brown	GO:0042755	eating behavior	4/146	41/23276	0.000125600493207985	0.00262328749410713	0.00182196098642424	Th/Oprk1/Adrb3/Cck	4
+brown	GO:0048148	behavioral response to cocaine	3/146	16/23276	0.000127516823687637	0.00264015267130665	0.00183367441659751	Snca/Oprk1/Drd2	3
+brown	GO:0048754	branching morphogenesis of an epithelial tube	7/146	177/23276	0.000130329028476161	0.00267511566208395	0.00185795738417467	Bmp7/Etv5/Igf1/Fgfr2/Foxa1/Foxa2/Pbx1	7
+brown	GO:0009308	amine metabolic process	6/146	124/23276	0.000133609969908028	0.00271901998590611	0.0018884504068872	Abhd3/Slc6a3/Maoa/Snca/Nr4a2/Tacr3	6
+brown	GO:0001666	response to hypoxia	7/146	179/23276	0.00013972662586308	0.00281939912016944	0.00195816707610079	Th/Nr4a2/Chrna4/Eif4ebp1/Drd2/Tigar/Ndnf	7
+brown	GO:0007611	learning or memory	8/146	240/23276	0.000141171704292746	0.00282462040269772	0.00196179343161348	Th/Igf1/Oprk1/Ntsr1/Calb1/Drd2/Bdnf/En1	8
+brown	GO:0099504	synaptic vesicle cycle	5/146	80/23276	0.000149312277175557	0.00296260443295835	0.00205762796002457	Th/Cadps2/Ddc/Slc18a2/Snca	5
+brown	GO:0030879	mammary gland development	6/146	127/23276	0.00015231268052795	0.00299716109369462	0.00208162871778521	Etv5/Igf1/Ntn1/Slc6a3/Fgfr2/Erbb4	6
+brown	GO:0050878	regulation of body fluid levels	9/146	311/23276	0.000157772680650369	0.00306507989256187	0.00212880059736718	Slc6a3/Cldn1/Oprk1/Serpine2/Pdpn/Drd2/Foxa2/F2r/Erbb4	9
+brown	GO:0007200	phospholipase C-activating G-protein coupled receptor signaling pathway	5/146	81/23276	0.000158338860472537	0.00306507989256187	0.00212880059736718	Ntsr2/Oprk1/Drd2/F2r/Chrm5	5
+brown	GO:0036293	response to decreased oxygen levels	7/146	184/23276	0.000165644700587954	0.00316060022992655	0.00219514266947307	Th/Nr4a2/Chrna4/Eif4ebp1/Drd2/Tigar/Ndnf	7
+brown	GO:0051932	synaptic transmission, GABAergic	4/146	44/23276	0.000165928193507274	0.00316060022992655	0.00219514266947307	Car7/Drd2/Bdnf/Erbb4	4
+brown	GO:0034767	positive regulation of ion transmembrane transport	6/146	130/23276	0.000173029719886098	0.0032697124051492	0.00227092472799549	Snca/Oprk1/Ntsr1/Trpc6/F2r/Hspa2	6
+brown	GO:0048762	mesenchymal cell differentiation	7/146	186/23276	0.000177043797012398	0.00330434588643917	0.00229497884020245	Bmp7/Sema6d/Ret/Fgfr2/Foxa1/Foxa2/Erbb4	7
+brown	GO:0031644	regulation of neurological system process	5/146	83/23276	0.000177638082093328	0.00330434588643917	0.00229497884020245	Oprk1/Ntsr1/Cck/Fam19a4/F2r	5
+brown	GO:0030901	midbrain development	4/146	45/23276	0.000181233497944561	0.00334509270237209	0.00232327886797965	Pitx3/Fgfr2/Lmx1b/En1	4
+brown	GO:0001975	response to amphetamine	3/146	18/23276	0.000184107985765105	0.00337200857005165	0.00234197283916583	Slc18a2/Nr4a2/Drd2	3
+brown	GO:0035239	tube morphogenesis	10/146	393/23276	0.000194093665085378	0.00352001728778582	0.00244476984863128	Bmp7/Etv5/Igf1/Ntn1/Pdpn/Ret/Fgfr2/Foxa1/Foxa2/Pbx1	10
+brown	GO:0048871	multicellular organismal homeostasis	9/146	320/23276	0.000195145855517736	0.00352001728778582	0.00244476984863128	Cldn1/Rbp4/Oprk1/Ntsr1/Adrb3/Drd2/Metrnl/F2r/Erbb4	9
+brown	GO:0034765	regulation of ion transmembrane transport	10/146	395/23276	0.000202166612381669	0.00361923837654701	0.00251368221647488	Snca/Oprk1/Ntsr1/Chrna4/Kcnip4/Trpc6/Drd2/Kcnd3/F2r/Hspa2	10
+brown	GO:0046942	carboxylic acid transport	8/146	254/23276	0.000207834840691169	0.00369294593795279	0.00256487458543462	Slc1a2/Slc7a8/Snca/Ntsr1/Drd2/Cck/Slco2a1/Bdnf	8
+brown	GO:0001504	neurotransmitter uptake	3/146	19/23276	0.000217624903571104	0.00378222551388904	0.0026268822398018	Slc6a3/Snca/Drd2	3
+brown	GO:0014075	response to amine	3/146	19/23276	0.000217624903571104	0.00378222551388904	0.0026268822398018	Slc18a2/Nr4a2/Drd2	3
+brown	GO:0033605	positive regulation of catecholamine secretion	3/146	19/23276	0.000217624903571104	0.00378222551388904	0.0026268822398018	Oprk1/Chrna4/Chrna6	3
+brown	GO:0051402	neuron apoptotic process	8/146	257/23276	0.000225039766294504	0.00388275133005228	0.00269670078450546	Snca/Nr4a2/Tox3/F2r/Bdnf/Ndnf/Ntf3/En1	8
+brown	GO:0015849	organic acid transport	8/146	258/23276	0.000231027878089141	0.00395739120669241	0.00274854067760728	Slc1a2/Slc7a8/Snca/Ntsr1/Drd2/Cck/Slco2a1/Bdnf	8
+brown	GO:0070838	divalent metal ion transport	10/146	403/23276	0.000237342799505084	0.00403652289729718	0.00280350028588336	Igf1/Snca/Ntsr1/Chrna4/Trpc6/Drd2/F2r/Mchr1/Hspa2/Slc39a4	10
+brown	GO:0034764	positive regulation of transmembrane transport	6/146	138/23276	0.000239298178718183	0.00404091463495031	0.00280655049470896	Snca/Oprk1/Ntsr1/Trpc6/F2r/Hspa2	6
+brown	GO:0016049	cell growth	11/146	483/23276	0.000242815462125959	0.00407143391071766	0.00282774715344612	Igf1/Ntn1/Serpine2/Sema6d/Nrn1/Igfbp2/Bdnf/Ndnf/Flrt3/Syt17/Lgi1	11
+brown	GO:0072511	divalent inorganic cation transport	10/146	405/23276	0.000246897656983346	0.00408575183190699	0.00283769142904391	Igf1/Snca/Ntsr1/Chrna4/Trpc6/Drd2/F2r/Mchr1/Hspa2/Slc39a4	10
+brown	GO:0006865	amino acid transport	6/146	139/23276	0.000248817310216931	0.00408575183190699	0.00283769142904391	Slc1a2/Slc7a8/Snca/Ntsr1/Cck/Bdnf	6
+brown	GO:0098742	cell-cell adhesion via plasma-membrane adhesion molecules	6/146	139/23276	0.000248817310216931	0.00408575183190699	0.00283769142904391	Cldn1/Ret/Cdh11/Cdh8/Pcdh18/Robo2	6
+brown	GO:0035264	multicellular organism growth	7/146	197/23276	0.000251633769990775	0.00409404810068459	0.00284345346545038	Slc1a2/Igf1/Slc6a3/Fgfr2/Adrb3/Drd2/En1	7
+brown	GO:0060428	lung epithelium development	4/146	49/23276	0.000252761474506777	0.00409404810068459	0.00284345346545038	Igf1/Fgfr2/Foxa1/Foxa2	4
+brown	GO:0060080	inhibitory postsynaptic potential	3/146	20/23276	0.000254854657864408	0.00410006040794024	0.00284762921411796	Ntsr1/Chrna4/Bdnf	3
+brown	GO:0007156	homophilic cell adhesion via plasma membrane adhesion molecules	5/146	90/23276	0.000259615261538579	0.00414861703170039	0.00288135341488596	Ret/Cdh11/Cdh8/Pcdh18/Robo2	5
+brown	GO:0051259	protein oligomerization	11/146	490/23276	0.000274516590118949	0.00435749334048812	0.00302642500404821	Cldn1/Cubn/Chrna4/Chrna6/Chrnb3/Cck/Gch1/Ctnna1/Kcnd3/Aldh1a1/Lgi1	11
+brown	GO:0022612	gland morphogenesis	6/146	142/23276	0.000279173319628669	0.00437538040089138	0.00303884816631684	Bmp7/Etv5/Igf1/Ntn1/Fgfr2/Foxa1	6
+brown	GO:0006935	chemotaxis	11/146	491/23276	0.000279318698418938	0.00437538040089138	0.00303884816631684	Bmp7/Ntn1/Sema6d/Epha5/Nbl1/Bdnf/Ntf3/Flrt3/Robo2/Dcc/Lgi1	11
+brown	GO:0034762	regulation of transmembrane transport	10/146	412/23276	0.000282921491856371	0.00440285014450993	0.00305792682288516	Snca/Oprk1/Ntsr1/Chrna4/Kcnip4/Trpc6/Drd2/Kcnd3/F2r/Hspa2	10
+brown	GO:0042330	taxis	11/146	493/23276	0.000289136124860519	0.00441377242505344	0.00306551271237603	Bmp7/Ntn1/Sema6d/Epha5/Nbl1/Bdnf/Ntf3/Flrt3/Robo2/Dcc/Lgi1	11
+brown	GO:0030902	hindbrain development	6/146	143/23276	0.000289913348422576	0.00441377242505344	0.00306551271237603	Igf1/Klhl1/Serpine2/Foxa2/Lmx1b/En1	6
+brown	GO:0051291	protein heterooligomerization	6/146	143/23276	0.000289913348422576	0.00441377242505344	0.00306551271237603	Cldn1/Chrna4/Chrna6/Chrnb3/Gch1/Ctnna1	6
+brown	GO:0040013	negative regulation of locomotion	8/146	267/23276	0.000291038332941365	0.00441377242505344	0.00306551271237603	Gsn/Sema6d/Drd2/Ctnna1/Nbl1/Robo2/Erbb4/Mcc	8
+brown	GO:0014048	regulation of glutamate secretion	3/146	21/23276	0.000295966691603903	0.00446010565005629	0.0030976926882727	Snca/Ntsr1/Cck	3
+brown	GO:0030850	prostate gland development	4/146	52/23276	0.000318297516174056	0.00473922704985207	0.00329155184478773	Bmp7/Igf1/Fgfr2/Foxa1	4
+brown	GO:0010769	regulation of cell morphogenesis involved in differentiation	9/146	342/23276	0.000318469688356292	0.00473922704985207	0.00329155184478773	Ntn1/Sdc2/Sema6d/Ret/Trpc6/Foxa1/Foxa2/Bdnf/Robo2	9
+brown	GO:0052548	regulation of endopeptidase activity	8/146	272/23276	0.000329532349880749	0.00487339456562772	0.00338473567612067	Igf1/Snca/Serpine2/Gsn/Serpini1/Ret/Cck/F2r	8
+brown	GO:0009991	response to extracellular stimulus	9/146	348/23276	0.000361506473949179	0.00531325255847528	0.00369023177760988	Slc1a2/Cadps2/Cubn/Nr4a2/Adrb3/Cck/Foxa2/Tigar/Slc39a4	9
+brown	GO:0060562	epithelial tube morphogenesis	9/146	351/23276	0.000384762336511803	0.00562036271923069	0.00390353006561216	Bmp7/Etv5/Igf1/Ntn1/Ret/Fgfr2/Foxa1/Foxa2/Pbx1	9
+brown	GO:0007612	learning	6/146	151/23276	0.000387995787732759	0.00563303640604695	0.00391233236539259	Th/Oprk1/Ntsr1/Drd2/Bdnf/En1	6
+brown	GO:1904062	regulation of cation transmembrane transport	7/146	212/23276	0.000392131983323129	0.00563444918907971	0.00391331359050564	Snca/Oprk1/Ntsr1/Kcnip4/Drd2/F2r/Hspa2	7
+brown	GO:0045471	response to ethanol	4/146	55/23276	0.000395192362274805	0.00563444918907971	0.00391331359050564	Th/Slc6a3/Drd2/Aldh1a1	4
+brown	GO:0045776	negative regulation of blood pressure	4/146	55/23276	0.000395192362274805	0.00563444918907971	0.00391331359050564	Ntsr1/Adrb3/Drd2/Gch1	4
+brown	GO:0009636	response to toxic substance	6/146	152/23276	0.000401881834011652	0.00569571813560561	0.00395586692501444	Ddc/Slc18a2/Nr4a2/Drd2/Gch1/Gucy2c	6
+brown	GO:0061138	morphogenesis of a branching epithelium	7/146	214/23276	0.000414846871002817	0.00582859366671857	0.0040481534297464	Bmp7/Etv5/Igf1/Fgfr2/Foxa1/Foxa2/Pbx1	7
+brown	GO:1990138	neuron projection extension	6/146	153/23276	0.000416153264738411	0.00582859366671857	0.0040481534297464	Ntn1/Sema6d/Nrn1/Bdnf/Flrt3/Syt17	6
+brown	GO:0043410	positive regulation of MAPK cascade	10/146	434/23276	0.000426022914592319	0.00590072983943348	0.00409825441665377	Igf1/Ntsr2/Oprk1/Fgfr2/Adrb3/Drd2/F2r/Ntf3/Dcc/Erbb4	10
+brown	GO:0006816	calcium ion transport	9/146	356/23276	0.000426260198396707	0.00590072983943348	0.00409825441665377	Igf1/Snca/Ntsr1/Chrna4/Trpc6/Drd2/F2r/Mchr1/Hspa2	9
+brown	GO:0090596	sensory organ morphogenesis	8/146	284/23276	0.000439085748745552	0.00604313969805295	0.00419716283102685	Th/Bmp7/Ntn1/Rbp4/Pitx3/Fgfr2/Bdnf/Aldh1a1	8
+brown	GO:1904064	positive regulation of cation transmembrane transport	5/146	101/23276	0.000442815378017861	0.00605944491414096	0.00420848734946195	Snca/Oprk1/Ntsr1/F2r/Hspa2	5
+brown	GO:1904427	positive regulation of calcium ion transmembrane transport	4/146	57/23276	0.000453294342869717	0.00616739331641598	0.00428346112871173	Snca/Ntsr1/F2r/Hspa2	4
+brown	GO:0048286	lung alveolus development	4/146	58/23276	0.000484517153651796	0.00655474626616435	0.00455249072001777	Igf1/Pdpn/Fgfr2/Foxa1	4
+brown	GO:0042391	regulation of membrane potential	9/146	365/23276	0.000510240553921786	0.00686374440049589	0.00476710026887378	Ntsr2/Snca/Ntsr1/Chrna4/Chrna6/Cck/Kcnd3/Fam19a4/Bdnf	9
+brown	GO:0009880	embryonic pattern specification	4/146	60/23276	0.000551508380472377	0.00722863705576946	0.00502053043374691	Bmp7/Fgfr2/Foxa2/Erbb4	4
+brown	GO:0060425	lung morphogenesis	4/146	60/23276	0.000551508380472377	0.00722863705576946	0.00502053043374691	Igf1/Fgfr2/Foxa1/Foxa2	4
+brown	GO:0048863	stem cell differentiation	8/146	294/23276	0.000551508888601968	0.00722863705576946	0.00502053043374691	Bmp7/Sema6d/Ret/Fgfr2/Foxa1/Foxa2/Sox6/Erbb4	8
+brown	GO:0031638	zymogen activation	5/146	106/23276	0.000552545965623705	0.00722863705576946	0.00502053043374691	Snca/Serpine2/Ret/Cck/F2r	5
+brown	GO:0043280	positive regulation of cysteine-type endopeptidase activity involved in apoptotic process	5/146	106/23276	0.000552545965623705	0.00722863705576946	0.00502053043374691	Snca/Gsn/Ret/Cck/F2r	5
+brown	GO:0021952	central nervous system projection neuron axonogenesis	3/146	26/23276	0.000565445023249077	0.00731698152367419	0.00508188862428089	Nr4a2/Cdh11/Dcc	3
+brown	GO:0042133	neurotransmitter metabolic process	3/146	26/23276	0.000565445023249077	0.00731698152367419	0.00508188862428089	Th/Maoa/Prima1	3
+brown	GO:0060560	developmental growth involved in morphogenesis	7/146	228/23276	0.000604950563241739	0.00778587724907341	0.00540755240314522	Ntn1/Sema6d/Fgfr2/Nrn1/Bdnf/Flrt3/Syt17	7
+brown	GO:0032844	regulation of homeostatic process	10/146	455/23276	0.00061444985046488	0.00782242829375707	0.00543293832732481	Snca/Oprk1/Ntsr1/Epha5/Car7/Drd2/Cck/Foxa2/Metrnl/F2r	10
+brown	GO:0035265	organ growth	6/146	165/23276	0.000620246380282511	0.00782242829375707	0.00543293832732481	Igf1/Rbp4/Bnc2/Fgfr2/Lmx1b/Erbb4	6
+brown	GO:0048592	eye morphogenesis	6/146	165/23276	0.000620246380282511	0.00782242829375707	0.00543293832732481	Th/Bmp7/Rbp4/Pitx3/Bdnf/Aldh1a1	6
+brown	GO:0007405	neuroblast proliferation	4/146	62/23276	0.000624831277711794	0.00782242829375707	0.00543293832732481	Fgfr2/Drd2/Ctnna1/Bdnf	4
+brown	GO:0060291	long-term synaptic potentiation	4/146	62/23276	0.000624831277711794	0.00782242829375707	0.00543293832732481	Snca/Serpine2/Drd2/Lrrtm2	4
+brown	GO:0010771	negative regulation of cell morphogenesis involved in differentiation	5/146	109/23276	0.000627502647672239	0.00782242829375707	0.00543293832732481	Ntn1/Sema6d/Trpc6/Foxa1/Foxa2	5
+brown	GO:0048596	embryonic camera-type eye morphogenesis	3/146	27/23276	0.000633212934118934	0.00785249997988115	0.00545382412007042	Th/Bmp7/Aldh1a1	3
+brown	GO:0070374	positive regulation of ERK1 and ERK2 cascade	6/146	166/23276	0.000640229720769227	0.00789837805777995	0.00548568798106603	Ntsr2/Fgfr2/Drd2/F2r/Dcc/Erbb4	6
+brown	GO:0072503	cellular divalent inorganic cation homeostasis	9/146	379/23276	0.000667559995599453	0.00819309458516648	0.00569037847578264	Snca/Ntsr1/Rap1gds1/Calb1/Trpc6/Drd2/F2r/Mchr1/Slc39a4	9
+brown	GO:0016358	dendrite development	7/146	234/23276	0.00070509555240519	0.00853234498096542	0.00592599923300545	Bmp7/Klhl1/Sdc2/Il1rap/Epha5/Trpc6/Bdnf	7
+brown	GO:0009409	response to cold	3/146	28/23276	0.000705952104682986	0.00853234498096542	0.00592599923300545	Adrb3/Cdh8/Metrnl	3
+brown	GO:0045880	positive regulation of smoothened signaling pathway	3/146	28/23276	0.000705952104682986	0.00853234498096542	0.00592599923300545	Foxa1/Foxa2/Ctnna1	3
+brown	GO:0099531	presynaptic process involved in synaptic transmission	5/146	113/23276	0.00073899367101727	0.00886891117238076	0.00615975572042272	Cadps2/Slc6a3/Sncaip/Snca/Drd2	5
+brown	GO:0070482	response to oxygen levels	7/146	236/23276	0.000741248770812167	0.00886891117238076	0.00615975572042272	Th/Nr4a2/Chrna4/Eif4ebp1/Drd2/Tigar/Ndnf	7
+brown	GO:0014031	mesenchymal cell development	6/146	172/23276	0.000770837191354409	0.00917681676307424	0.00637360646114619	Sema6d/Ret/Fgfr2/Foxa1/Foxa2/Erbb4	6
+brown	GO:0051588	regulation of neurotransmitter transport	4/146	66/23276	0.00079177979865268	0.00937924229150264	0.00651419776739125	Sncaip/Slc18a2/Snca/Drd2	4
+brown	GO:0070372	regulation of ERK1 and ERK2 cascade	7/146	239/23276	0.000798215714937892	0.00938311703501567	0.00651688890647876	Igf1/Ntsr2/Fgfr2/Drd2/F2r/Dcc/Erbb4	7
+brown	GO:1903169	regulation of calcium ion transmembrane transport	5/146	115/23276	0.000799988558634264	0.00938311703501567	0.00651688890647876	Snca/Ntsr1/Drd2/F2r/Hspa2	5
+brown	GO:2001056	positive regulation of cysteine-type endopeptidase activity	5/146	116/23276	0.000831857589766111	0.00970908294722113	0.00674328314511125	Snca/Gsn/Ret/Cck/F2r	5
+brown	GO:0010676	positive regulation of cellular carbohydrate metabolic process	4/146	67/23276	0.000837986084155972	0.00973290178719693	0.00675982612687565	Igf1/Snca/Ntsr1/Tigar	4
+midnightblue	GO:0001501	skeletal system development	6/22	467/23276	3.58780229928882e-06	0.00209527654278467	0.001352034971732	Mmp14/Nfib/Dscaml1/Zic1/Chd7/Sox5	6
+midnightblue	GO:0010001	glial cell differentiation	4/22	197/23276	3.23089532097071e-05	0.00943421433723448	0.00608768697319745	Nfix/Nfib/Id2/Sox5	4
+grey60	GO:0000731	DNA synthesis involved in DNA repair	2/16	12/23276	2.91216061444592e-05	0.00678595002421996	0.00442192232154684	Wrn/Pold1	2
+grey60	GO:0071478	cellular response to radiation	3/16	118/23276	6.77812356389713e-05	0.00678595002421996	0.00442192232154684	Ddb2/Wrn/Pold1	3
+grey60	GO:0009411	response to UV	3/16	124/23276	7.85556765197546e-05	0.00678595002421996	0.00442192232154684	Ddb2/Wrn/Pold1	3
+grey60	GO:0045005	DNA-dependent DNA replication maintenance of fidelity	2/16	21/23276	9.23258506696593e-05	0.00678595002421996	0.00442192232154684	Wrn/Pold1	2
+blue	GO:0010975	regulation of neuron projection development	29/403	468/23276	3.77298208256627e-09	1.10684999131843e-05	8.31938614509655e-06	Crabp2/Mef2c/Gprc5b/Map2/Wnt5a/Asap1/Tnfrsf12a/Htr7/Zeb2/Pax6/Tnik/Ngf/Dab1/Hgf/Ccdc88a/Mgll/Plppr5/Inpp5j/Frmd7/Lzts1/Ndrg4/Lpar1/Sipa1l1/Cd24a/H2-K1/Kalrn/Qk/Sema3e/H2-D1	29
+blue	GO:0032412	regulation of ion transmembrane transporter activity	17/403	171/23276	8.01584832876321e-09	1.10684999131843e-05	8.31938614509655e-06	Mef2c/Crhr1/Ryr2/Hcn1/Shisa9/Fgf12/Arc/Cnih3/Pde4b/Ppargc1a/Rasgrf1/Stac/Atp1b2/Nppa/Actn2/Cacng8/Cacnb2	17
+blue	GO:0043405	regulation of MAP kinase activity	21/403	269/23276	1.11036954789691e-08	1.10684999131843e-05	8.31938614509655e-06	Kit/Grm1/Dusp6/Egfr/Map3k1/Wnt5a/Spry2/Zeb2/Bmp2/Ptpn1/Tnik/Sfrp2/Hgf/Dusp16/Adra2a/Mapkbp1/Dusp5/Gadd45a/Lpar1/Cd24a/Pde5a	21
+blue	GO:0022898	regulation of transmembrane transporter activity	17/403	176/23276	1.23878006862723e-08	1.10684999131843e-05	8.31938614509655e-06	Mef2c/Crhr1/Ryr2/Hcn1/Shisa9/Fgf12/Arc/Cnih3/Pde4b/Ppargc1a/Rasgrf1/Stac/Atp1b2/Nppa/Actn2/Cacng8/Cacnb2	17
+blue	GO:0010035	response to inorganic substance	25/403	386/23276	1.94179852524054e-08	1.37925674131956e-05	1.03668695074e-05	Fosb/Pde1c/Mef2c/Kdm6b/Egfr/Akr1c18/Net1/Fos/Ryr2/Hcn1/Nr4a1/Itgav/Nr4a3/Hgf/Blm/Mef2a/Mt2/Mt1/Kcnc2/Plekha1/Foxo3/Junb/Sipa1/Abat/Kcnma1	25
+blue	GO:0007215	glutamate receptor signaling pathway	11/403	68/23276	2.31548417680955e-08	1.37925674131956e-05	1.03668695074e-05	Mef2c/Grm1/Gria1/Grin2c/Shisa9/Arc/Homer2/Cnih3/Ppargc1a/Rasgrf1/Cacng8	11
+blue	GO:0071900	regulation of protein serine/threonine kinase activity	25/403	394/23276	2.90476990091167e-08	1.48309251797976e-05	1.11473274994385e-05	Kit/Apc/Grm1/Dusp6/Egfr/Map3k1/Wnt5a/Spry2/Cdkn1a/Zeb2/Bmp2/Ptpn1/Tnik/Sfrp2/Hgf/Ccnl2/Dusp16/Blm/Adra2a/Mapkbp1/Dusp5/Gadd45a/Lpar1/Cd24a/Pde5a	25
+blue	GO:0032409	regulation of transporter activity	17/403	189/23276	3.5872055364045e-08	1.60258407338871e-05	1.20454585906635e-05	Mef2c/Crhr1/Ryr2/Hcn1/Shisa9/Fgf12/Arc/Cnih3/Pde4b/Ppargc1a/Rasgrf1/Stac/Atp1b2/Nppa/Actn2/Cacng8/Cacnb2	17
+blue	GO:0051056	regulation of small GTPase mediated signal transduction	17/403	193/23276	4.88530894781462e-08	1.94001046438772e-05	1.45816472921906e-05	Sipa1l2/Net1/Spry2/Bcl6/Tiam2/Arhgef2/Rasa3/Rasgrf1/Ogt/Frmd7/Lpar1/Iqsec3/Arhgef1/Iqsec2/Sipa1l1/Sipa1/Kalrn	17
+blue	GO:0044708	single-organism behavior	27/403	472/23276	6.87542253114627e-08	2.24528837564169e-05	1.68761992596754e-05	Zfp385a/Etv1/Mef2c/Kit/Trh/Crhr1/Egfr/Gria1/Adcy3/Adcy8/Pde1b/Fgf12/Htr7/Homer2/Slc4a10/Meis2/Ngf/Nr4a3/Dab1/Slc6a1/Ndrg4/Egr1/Fzd9/Pde5a/Abat/Kcnma1/Gad1	27
+blue	GO:0034762	regulation of transmembrane transport	25/403	412/23276	6.91051262788433e-08	2.24528837564169e-05	1.68761992596754e-05	Mef2c/Kcnab3/Crhr1/Ryr2/Hcn1/Shisa9/Fgf12/Arc/Cnih3/Kcnj3/Car2/Ngf/Pde4b/Ppargc1a/Rasgrf1/Stac/Kcnc2/Atp1b2/Nppa/Actn2/Cacng8/Cacnb2/Kcnh7/Kcnc3/Kcnma1	25
+blue	GO:0009187	cyclic nucleotide metabolic process	16/403	177/23276	8.45905617767376e-08	2.5193888982505e-05	1.89364134784416e-05	Pde1c/Crhr1/Adcy3/Wnt5a/Adcy8/Pde1b/Pde10a/Pde4b/Adcyap1r1/Pde4a/Adra2a/Gucy1a3/Lpar1/Nppa/Gpr3/Pde5a	16
+blue	GO:0034765	regulation of ion transmembrane transport	24/403	395/23276	1.23823531607642e-07	3.40419463050547e-05	2.55868544666155e-05	Mef2c/Kcnab3/Crhr1/Ryr2/Hcn1/Shisa9/Fgf12/Arc/Cnih3/Kcnj3/Ngf/Pde4b/Ppargc1a/Rasgrf1/Stac/Kcnc2/Atp1b2/Nppa/Actn2/Cacng8/Cacnb2/Kcnh7/Kcnc3/Kcnma1	24
+blue	GO:0045860	positive regulation of protein kinase activity	24/403	398/23276	1.42375708169828e-07	3.56576072072104e-05	2.68012292265193e-05	Kit/Gprc5b/Grm1/Egfr/Map3k1/Wnt5a/Spry2/Angpt1/Emp2/Cdkn1a/Zeb2/Bmp2/Ptpn1/Tnik/Dab1/Hgf/Ccnl2/Ccdc88a/Adra2a/Mapkbp1/Gadd45a/Lpar1/Cd24a/Pde5a	24
+blue	GO:0050804	modulation of synaptic transmission	21/403	313/23276	1.49654199246826e-07	3.56576072072104e-05	2.68012292265193e-05	Mef2c/Kit/Crhr1/Grm1/Egfr/Gria1/Shisa9/Htr7/Car2/Ngf/Slc6a1/Cckbr/Rasgrf1/Mgll/Myo6/Lzts1/Egr1/Sipa1l1/Abat/Kcnc3/Shisa8	21
+blue	GO:0030099	myeloid cell differentiation	22/403	352/23276	2.58059322578957e-07	5.74684248518296e-05	4.319483410063e-05	Zfp385a/Mef2c/Kit/Apc/Pabpc4/Meis1/Fos/Bcl6/Tmem178/Esrra/Fam20c/Meis2/Car2/Lmo2/Nfatc1/Ogt/Prkx/Cited2/Tob2/Foxo3/Junb/Hmgb2	22
+blue	GO:0009214	cyclic nucleotide catabolic process	6/403	17/23276	2.73352888215194e-07	5.74684248518296e-05	4.319483410063e-05	Pde1c/Pde1b/Pde10a/Pde4b/Pde4a/Pde5a	6
+blue	GO:0021879	forebrain neuron differentiation	10/403	69/23276	2.9651199329633e-07	5.88741035578379e-05	4.42513805200136e-05	Foxg1/Wnt5a/Dlx2/Sall3/Slc4a10/Pax6/Dcx/Sall1/Arx/Dlx1	10
+blue	GO:0046058	cAMP metabolic process	13/403	132/23276	5.18994351719861e-07	9.26856680117245e-05	6.96650737095163e-05	Pde1c/Crhr1/Adcy3/Adcy8/Pde1b/Pde10a/Pde4b/Adcyap1r1/Pde4a/Adra2a/Gucy1a3/Lpar1/Gpr3	13
+blue	GO:0033674	positive regulation of kinase activity	24/403	428/23276	5.32991181251164e-07	9.26856680117245e-05	6.96650737095163e-05	Kit/Gprc5b/Grm1/Egfr/Map3k1/Wnt5a/Spry2/Angpt1/Emp2/Cdkn1a/Zeb2/Bmp2/Ptpn1/Tnik/Dab1/Hgf/Ccnl2/Ccdc88a/Adra2a/Mapkbp1/Gadd45a/Lpar1/Cd24a/Pde5a	24
+blue	GO:0051592	response to calcium ion	11/403	92/23276	5.59913709645107e-07	9.26856680117245e-05	6.96650737095163e-05	Fosb/Pde1c/Mef2c/Egfr/Akr1c18/Fos/Ryr2/Hcn1/Mef2a/Junb/Kcnma1	11
+blue	GO:0032147	activation of protein kinase activity	17/403	229/23276	5.70532931241729e-07	9.26856680117245e-05	6.96650737095163e-05	Kit/Gprc5b/Grm1/Egfr/Map3k1/Wnt5a/Angpt1/Emp2/Bmp2/Ptpn1/Tnik/Hgf/Ccdc88a/Adra2a/Mapkbp1/Gadd45a/Lpar1	17
+blue	GO:0048511	rhythmic process	19/403	286/23276	6.82330647263247e-07	0.000106028249274732	7.96937213645678e-05	Kit/Sgpl1/Egfr/Per1/Angpt1/Sik1/Htr7/Ppargc1a/Prkg2/Cckbr/Enox2/Klf9/Ogt/Prkcdbp/Plekha1/Hs3st2/Nrip1/Foxo3/Kcnma1	19
+blue	GO:1900449	regulation of glutamate receptor signaling pathway	7/403	31/23276	8.13388212568228e-07	0.000121127061321619	9.10423999330754e-05	Mef2c/Shisa9/Arc/Cnih3/Ppargc1a/Rasgrf1/Cacng8	7
+blue	GO:0021872	forebrain generation of neurons	10/403	78/23276	9.55457428268825e-07	0.000135466345300926	0.000101820196509282	Foxg1/Wnt5a/Dlx2/Sall3/Slc4a10/Pax6/Dcx/Sall1/Arx/Dlx1	10
+blue	GO:0001649	osteoblast differentiation	16/403	212/23276	9.85485444270867e-07	0.000135466345300926	0.000101820196509282	Col6a1/Mef2c/Apc/Hdac5/H3f3b/Smoc1/Esrra/Fam20c/Creb3l1/Bmp2/Sfrp2/Dlx5/Rbmx/Nfatc1/Tob1/Junb	16
+blue	GO:0007611	learning or memory	17/403	240/23276	1.09627790560851e-06	0.000145114712394253	0.000109072172129159	Zfp385a/Mef2c/Kit/Crhr1/Egfr/Gria1/Adcy3/Adcy8/Pde1b/Htr7/Meis2/Ngf/Slc6a1/Ndrg4/Egr1/Fzd9/Pde5a	17
+blue	GO:0021537	telencephalon development	16/403	215/23276	1.18696736355526e-06	0.000151507905619518	0.000113877470368159	Bcan/Kdm6b/Egfr/Foxg1/Wnt5a/Dlx2/Sall3/Zeb2/Pax6/Bmp2/Nr4a3/Dab1/Dcx/Sall1/Arx/Dlx1	16
+blue	GO:0007169	transmembrane receptor protein tyrosine kinase signaling pathway	25/403	492/23276	1.86139125738238e-06	0.000229400425996021	0.000172423611210157	Kit/Dusp6/Sgpl1/Egfr/Wnt5a/Spry2/Angpt1/Hbegf/Fam20c/Bmp2/Ptpn1/Ngf/Pik3r3/Hgf/Fgf16/Adgra2/Csrnp1/Adra2a/Ogt/Tiparp/Ndrg4/Plekha1/Sipa1l1/Adamts3/Tcf4	25
+blue	GO:0006198	cAMP catabolic process	5/403	14/23276	2.67174342521512e-06	0.000312384768801624	0.000234796904539141	Pde1c/Pde1b/Pde10a/Pde4b/Pde4a	5
+blue	GO:0090287	regulation of cellular response to growth factor stimulus	16/403	229/23276	2.70954891797716e-06	0.000312384768801624	0.000234796904539141	Dusp6/Wnt5a/Spry2/Angpt1/Fam20c/Ptpn1/Ngf/Sfrp2/Fgf16/Adgra2/Chst11/Tob1/Cited2/Adamts3/Rasl11b/Tcf4	16
+blue	GO:0044057	regulation of system process	24/403	472/23276	2.96117737404529e-06	0.000330726497963684	0.000248583047979065	Crhr1/Grm1/Egfr/Ryr2/Emp2/Hbegf/Nr4a3/Pde4b/Hgf/Ptpro/Mef2a/Cckbr/Mlip/Nfatc1/Mgll/Ptprm/Adra2a/Gucy1a3/Adk/Nppa/Chrm2/Pde5a/Abat/Kcnma1	24
+blue	GO:0048167	regulation of synaptic plasticity	13/403	159/23276	4.26045943022471e-06	0.000461420666776458	0.000346816346600748	Mef2c/Kit/Crhr1/Gria1/Shisa9/Htr7/Rasgrf1/Mgll/Myo6/Lzts1/Egr1/Sipa1l1/Shisa8	13
+blue	GO:0009154	purine ribonucleotide catabolic process	6/403	26/23276	4.45623161298027e-06	0.000468428581905632	0.000352083686573549	Pde1c/Pde1b/Pde10a/Pde4b/Pde4a/Pde5a	6
+blue	GO:0006163	purine nucleotide metabolic process	22/403	419/23276	4.61274705802407e-06	0.000471027371010801	0.000354037007280524	Pde1c/Crhr1/Adcy3/Wnt5a/Adcy8/Pde1b/Gpd1/Pde10a/Ak1/Pde4b/Gale/Ppargc1a/Adcyap1r1/Pde4a/Adra2a/Gucy1a3/Ogt/Lpar1/Adk/Nppa/Gpr3/Pde5a	22
+blue	GO:0050890	cognition	17/403	268/23276	4.90148738349322e-06	0.000483977163962203	0.000363770424537314	Zfp385a/Mef2c/Kit/Crhr1/Egfr/Gria1/Adcy3/Adcy8/Pde1b/Htr7/Meis2/Ngf/Slc6a1/Ndrg4/Egr1/Fzd9/Pde5a	17
+blue	GO:0003012	muscle system process	19/403	328/23276	5.14924370569834e-06	0.000483977163962203	0.000363770424537314	Mef2c/Ryr2/Htr7/Nr4a3/Pde4b/Grip2/Mlip/Stac/Nfatc1/Adra2a/Gucy1a3/Adk/Nppa/Chrm2/Actn2/Pde5a/Ryr3/Abat/Kcnma1	19
+blue	GO:0051347	positive regulation of transferase activity	24/403	489/23276	5.4029608260072e-06	0.000483977163962203	0.000363770424537314	Kit/Gprc5b/Grm1/Egfr/Map3k1/Wnt5a/Spry2/Angpt1/Emp2/Cdkn1a/Zeb2/Bmp2/Ptpn1/Tnik/Dab1/Hgf/Ccnl2/Ccdc88a/Adra2a/Mapkbp1/Gadd45a/Lpar1/Cd24a/Pde5a	24
+blue	GO:0009261	ribonucleotide catabolic process	6/403	27/23276	5.64612683932478e-06	0.000483977163962203	0.000363770424537314	Pde1c/Pde1b/Pde10a/Pde4b/Pde4a/Pde5a	6
+blue	GO:0045666	positive regulation of neuron differentiation	20/403	361/23276	5.67933973019271e-06	0.000483977163962203	0.000363770424537314	Crabp2/Mef2c/Gprc5b/Foxg1/Wnt5a/Bcl6/Tnfrsf12a/Htr7/Zeb2/Bmp2/Ngf/Dab1/Hgf/Sall1/Plppr5/Ndrg4/Lpar1/Cd24a/Tcf4/Qk	20
+blue	GO:0050768	negative regulation of neurogenesis	17/403	271/23276	5.68311117258148e-06	0.000483977163962203	0.000363770424537314	Meis1/Foxg1/Wnt5a/Asap1/Dlx2/Mib1/Pax6/Arhgef2/Dab1/Inpp5j/Lpar1/Dlx1/Cd24a/Foxo3/H2-K1/Sema3e/H2-D1	17
+blue	GO:0021543	pallium development	12/403	139/23276	5.6874764651406e-06	0.000483977163962203	0.000363770424537314	Bcan/Kdm6b/Egfr/Foxg1/Dlx2/Zeb2/Pax6/Nr4a3/Dab1/Dcx/Arx/Dlx1	12
+blue	GO:0010721	negative regulation of cell development	19/403	332/23276	6.12671140240986e-06	0.000500720308113225	0.000376355027922408	Meis1/Foxg1/Wnt5a/Asap1/Dlx2/Mib1/Pax6/Sfrp2/Arhgef2/Dab1/Sall1/Inpp5j/Lpar1/Dlx1/Cd24a/Foxo3/H2-K1/Sema3e/H2-D1	19
+blue	GO:0050673	epithelial cell proliferation	20/403	363/23276	6.16443580217737e-06	0.000500720308113225	0.000376355027922408	Mef2c/Kit/Apc/Egfr/Lgr5/Wnt5a/Nr4a1/Pax6/Bmp2/Sfrp2/Nr4a3/Dlx6/Dlx5/Ptprm/Klf9/Prkx/Vash2/Ppp1r16b/Adk/Hmgb2	20
+blue	GO:0030003	cellular cation homeostasis	24/403	495/23276	6.6314085021333e-06	0.000526681199702764	0.000395867941460682	Crhr1/Grm1/Ryr2/Scgn/Cacna1i/Atp13a3/Tmem178/Slc4a10/Itgav/Car2/Ngf/Adcyap1r1/Cckbr/Rasa3/Mt2/Mt1/Pygm/Lpar1/Atp1b2/Cd24a/Kcnk3/Gpr3/Ryr3/Kcnma1	24
+blue	GO:0048839	inner ear development	14/403	193/23276	7.39916056691882e-06	0.000566242859345193	0.000425603562880727	Lgr5/Foxg1/Cxcl14/Slc4a7/Wnt5a/Spry2/Bmp2/Nr4a3/Dlx6/Dlx5/Myo6/Whrn/H2-K1/Kcnma1	14
+blue	GO:0071902	positive regulation of protein serine/threonine kinase activity	16/403	248/23276	7.50841256644422e-06	0.000566242859345193	0.000425603562880727	Kit/Grm1/Egfr/Map3k1/Wnt5a/Spry2/Zeb2/Bmp2/Ptpn1/Hgf/Ccnl2/Adra2a/Gadd45a/Lpar1/Cd24a/Pde5a	16
+blue	GO:0072507	divalent inorganic cation homeostasis	21/403	400/23276	7.6048285530412e-06	0.000566242859345193	0.000425603562880727	Crhr1/Grm1/Egfr/Ryr2/Scgn/Cacna1i/Atp13a3/Tmem178/Itgav/Ngf/Adcyap1r1/Cckbr/Rasa3/Mt2/Mt1/Pygm/Lpar1/Cd24a/Kcnk3/Gpr3/Ryr3	21
+blue	GO:0043410	positive regulation of MAPK cascade	22/403	434/23276	8.04786667228822e-06	0.000587001540546084	0.00044120635333361	Kit/Grm1/Egfr/Map3k1/Peli2/Wnt5a/Spry2/Angpt1/Zeb2/Itgav/Bmp2/Ptpn1/Tnik/Hgf/Adra2a/Mapkbp1/Gadd45a/Ndrg4/Prkcdbp/Lpar1/Cd24a/Pde5a	22
+blue	GO:0043583	ear development	15/403	223/23276	8.77345241425054e-06	0.000620746444275546	0.000466569942506168	Lgr5/Foxg1/Cxcl14/Slc4a7/Wnt5a/Spry2/Bmp2/Nr4a3/Dlx6/Dlx5/Sall1/Myo6/Whrn/H2-K1/Kcnma1	15
+blue	GO:0043406	positive regulation of MAP kinase activity	13/403	170/23276	8.85788154953913e-06	0.000620746444275546	0.000466569942506168	Kit/Grm1/Egfr/Map3k1/Wnt5a/Zeb2/Bmp2/Ptpn1/Hgf/Adra2a/Lpar1/Cd24a/Pde5a	13
+blue	GO:0009166	nucleotide catabolic process	9/403	79/23276	9.03250557624515e-06	0.000620811056336542	0.000466618506691855	Pde1c/Pde1b/Gpd1/Pde10a/Pde4b/Ppargc1a/Pde4a/Ogt/Pde5a	9
+blue	GO:0009150	purine ribonucleotide metabolic process	21/403	406/23276	9.53317035620746e-06	0.000642859450058216	0.000483190680219294	Pde1c/Crhr1/Adcy3/Wnt5a/Adcy8/Pde1b/Gpd1/Pde10a/Ak1/Pde4b/Gale/Ppargc1a/Adcyap1r1/Pde4a/Adra2a/Gucy1a3/Ogt/Lpar1/Nppa/Gpr3/Pde5a	21
+blue	GO:0046578	regulation of Ras protein signal transduction	13/403	172/23276	1.00529280665687e-05	0.000665354905739197	0.000500098877697532	Net1/Spry2/Bcl6/Tiam2/Arhgef2/Rasa3/Rasgrf1/Ogt/Lpar1/Iqsec3/Arhgef1/Iqsec2/Kalrn	13
+blue	GO:0007409	axonogenesis	21/403	408/23276	1.02679936343526e-05	0.000667232895439564	0.000501510425930483	Etv1/Crabp2/Apc/Map2/Foxg1/Wnt5a/Tnfrsf12a/Zeb2/Pax6/Ngf/Nr4a3/Dab1/Dlx5/Ptpro/Dcx/Mgll/Ptprm/Arx/Sipa1l1/Kalrn/Sema3e	21
+blue	GO:0072503	cellular divalent inorganic cation homeostasis	20/403	379/23276	1.16122928668087e-05	0.000741113119749544	0.000557040815716089	Crhr1/Grm1/Ryr2/Scgn/Cacna1i/Atp13a3/Tmem178/Itgav/Ngf/Adcyap1r1/Cckbr/Rasa3/Mt2/Mt1/Pygm/Lpar1/Cd24a/Kcnk3/Gpr3/Ryr3	20
+blue	GO:0006875	cellular metal ion homeostasis	22/403	445/23276	1.18927555549044e-05	0.000745696637775932	0.00056048591276299	Crhr1/Grm1/Ryr2/Scgn/Cacna1i/Atp13a3/Tmem178/Itgav/Ngf/Adcyap1r1/Cckbr/Rasa3/Mt2/Mt1/Pygm/Lpar1/Atp1b2/Cd24a/Kcnk3/Gpr3/Ryr3/Kcnma1	22
+blue	GO:0009259	ribonucleotide metabolic process	21/403	414/23276	1.27896855532677e-05	0.00078810924426515	0.000592364383519766	Pde1c/Crhr1/Adcy3/Wnt5a/Adcy8/Pde1b/Gpd1/Pde10a/Ak1/Pde4b/Gale/Ppargc1a/Adcyap1r1/Pde4a/Adra2a/Gucy1a3/Ogt/Lpar1/Nppa/Gpr3/Pde5a	21
+blue	GO:0010038	response to metal ion	14/403	204/23276	1.39075074816862e-05	0.000842464944738076	0.000633219609157238	Fosb/Pde1c/Mef2c/Egfr/Akr1c18/Fos/Ryr2/Hcn1/Mef2a/Mt2/Mt1/Junb/Abat/Kcnma1	14
+blue	GO:0001666	response to hypoxia	13/403	179/23276	1.54290663203193e-05	0.000909065751102688	0.000683278590055094	Arnt/Crhr1/Ryr2/Bmp2/Fosl2/Pygm/Ogt/Egr1/Cited2/Cd24a/Kcnk3/Abat/Kcnma1	13
+blue	GO:0007626	locomotory behavior	15/403	234/23276	1.55655846895712e-05	0.000909065751102688	0.000683278590055094	Zfp385a/Trh/Gprc5b/Crhr1/Grm1/Meis1/Pde1b/Fgf12/Slc4a10/Ngf/Dab1/Myo6/Abat/Kcnma1/Gad1	15
+blue	GO:0051961	negative regulation of nervous system development	17/403	293/23276	1.57700270196885e-05	0.000909065751102688	0.000683278590055094	Meis1/Foxg1/Wnt5a/Asap1/Dlx2/Mib1/Pax6/Arhgef2/Dab1/Inpp5j/Lpar1/Dlx1/Cd24a/Foxo3/H2-K1/Sema3e/H2-D1	17
+blue	GO:0050769	positive regulation of neurogenesis	22/403	455/23276	1.67552263989928e-05	0.000950526653174609	0.000714441733838425	Crabp2/Mef2c/Kit/Gprc5b/Foxg1/Wnt5a/Bcl6/Tnfrsf12a/Htr7/Zeb2/Pax6/Bmp2/Ngf/Dab1/Hgf/Sall1/Plppr5/Ndrg4/Lpar1/Cd24a/Tcf4/Qk	22
+blue	GO:0045667	regulation of osteoblast differentiation	11/403	131/23276	1.81014637471991e-05	0.000996910683107191	0.00074930523467427	Mef2c/Apc/Hdac5/Smoc1/Esrra/Fam20c/Bmp2/Sfrp2/Dlx5/Nfatc1/Tob1	11
+blue	GO:0019932	second-messenger-mediated signaling	14/403	209/23276	1.82585114025426e-05	0.000996910683107191	0.00074930523467427	Grm1/Adcy3/Ryr2/Adcy8/Pde10a/Homer2/Adcyap1r1/Mt2/Mt1/Pde4a/Nfatc1/Gucy1a3/Kcnc2/Cd24a	14
+blue	GO:2000311	regulation of alpha-amino-3-hydroxy-5-methyl-4-isoxazole propionate selective glutamate receptor activity	5/403	20/23276	1.89904367573269e-05	0.000996910683107191	0.00074930523467427	Mef2c/Shisa9/Arc/Cnih3/Cacng8	5
+blue	GO:0030278	regulation of ossification	14/403	210/23276	1.92601010756555e-05	0.000996910683107191	0.00074930523467427	Mef2c/Apc/Hdac5/Smoc1/Wnt5a/Esrra/Fam20c/Creb3l1/Bmp2/Sfrp2/Dlx5/Nfatc1/Tob1/Tob2	14
+blue	GO:0006195	purine nucleotide catabolic process	6/403	33/23276	1.93501610176843e-05	0.000996910683107191	0.00074930523467427	Pde1c/Pde1b/Pde10a/Pde4b/Pde4a/Pde5a	6
+blue	GO:0019693	ribose phosphate metabolic process	21/403	426/23276	1.95723175803195e-05	0.000996910683107191	0.00074930523467427	Pde1c/Crhr1/Adcy3/Wnt5a/Adcy8/Pde1b/Gpd1/Pde10a/Ak1/Pde4b/Gale/Ppargc1a/Adcyap1r1/Pde4a/Adra2a/Gucy1a3/Ogt/Lpar1/Nppa/Gpr3/Pde5a	21
+blue	GO:0051480	regulation of cytosolic calcium ion concentration	16/403	268/23276	1.9709985618446e-05	0.000996910683107191	0.00074930523467427	Crhr1/Grm1/Ryr2/Scgn/Cacna1i/Tmem178/Itgav/Ngf/Adcyap1r1/Cckbr/Rasa3/Lpar1/Cd24a/Kcnk3/Gpr3/Ryr3	16
+blue	GO:0048568	embryonic organ development	22/403	460/23276	1.98043252659794e-05	0.000996910683107191	0.00074930523467427	Mef2c/Kit/Arnt/Egfr/Foxg1/Ryr2/Wnt5a/Spry2/Dlx2/Mib1/Itgav/Pax6/Bmp2/Nr4a3/Dlx6/Dlx5/Sall1/Lmo2/Myo6/Chst11/Cited2/Junb	22
+blue	GO:0036293	response to decreased oxygen levels	13/403	184/23276	2.0679070165143e-05	0.00102648606625307	0.000771534898559135	Arnt/Crhr1/Ryr2/Bmp2/Fosl2/Pygm/Ogt/Egr1/Cited2/Cd24a/Kcnk3/Abat/Kcnma1	13
+blue	GO:0045665	negative regulation of neuron differentiation	14/403	212/23276	2.14095103906936e-05	0.00102983651955061	0.00077405319055552	Meis1/Foxg1/Wnt5a/Asap1/Mib1/Pax6/Dab1/Inpp5j/Lpar1/Cd24a/Foxo3/H2-K1/Sema3e/H2-D1	14
+blue	GO:0007264	small GTPase mediated signal transduction	22/403	463/23276	2.1865420328573e-05	0.00102983651955061	0.00077405319055552	Sipa1l2/Net1/Spry2/Bcl6/Tiam2/Arhgef2/Dab1/Rasa3/Rasgrf1/Ogt/Frmd7/Rapgefl1/Dock10/Lpar1/Dock3/Iqsec3/Arhgef1/Iqsec2/Sipa1l1/Rasl11b/Sipa1/Kalrn	22
+blue	GO:0002573	myeloid leukocyte differentiation	13/403	185/23276	2.18991537453404e-05	0.00102983651955061	0.00077405319055552	Mef2c/Kit/Apc/Fos/Tmem178/Esrra/Fam20c/Car2/Nfatc1/Ogt/Cited2/Tob2/Junb	13
+blue	GO:0008406	gonad development	13/403	185/23276	2.18991537453404e-05	0.00102983651955061	0.00077405319055552	Kit/H3f3b/Sgpl1/Wnt5a/Angpt1/Itgav/Sfrp2/Tiparp/Cited2/Plekha1/Nrip1/Foxo3/Hmgb2	13
+blue	GO:0090257	regulation of muscle system process	13/403	186/23276	2.31818311817864e-05	0.00107599824212603	0.000808749599123975	Ryr2/Nr4a3/Pde4b/Mlip/Nfatc1/Adra2a/Gucy1a3/Adk/Nppa/Chrm2/Pde5a/Abat/Kcnma1	13
+blue	GO:0030316	osteoclast differentiation	9/403	89/23276	2.39611247951801e-05	0.00109791102587146	0.000825219844497971	Apc/Fos/Tmem178/Esrra/Fam20c/Car2/Nfatc1/Tob2/Junb	9
+blue	GO:0061082	myeloid leukocyte cytokine production	5/403	21/23276	2.45717622390673e-05	0.00111163896509401	0.000835538137696201	Kit/Gprc5b/Wnt5a/Bcl6/Nr4a3	5
+blue	GO:0061564	axon development	21/403	433/23276	2.48831559699931e-05	0.00111165499295944	0.000835550184676609	Etv1/Crabp2/Apc/Map2/Foxg1/Wnt5a/Tnfrsf12a/Zeb2/Pax6/Ngf/Nr4a3/Dab1/Dlx5/Ptpro/Dcx/Mgll/Ptprm/Arx/Sipa1l1/Kalrn/Sema3e	21
+blue	GO:0045137	development of primary sexual characteristics	13/403	188/23276	2.59458914750285e-05	0.00114482242137965	0.000860479727670861	Kit/H3f3b/Sgpl1/Wnt5a/Angpt1/Itgav/Sfrp2/Tiparp/Cited2/Plekha1/Nrip1/Foxo3/Hmgb2	13
+blue	GO:0097066	response to thyroid hormone	4/403	11/23276	2.65345096761764e-05	0.00115651631198359	0.000869269174500671	Kit/Ppargc1a/Lmo2/Klf9	4
+blue	GO:0045637	regulation of myeloid cell differentiation	13/403	189/23276	2.74329727109072e-05	0.00117180663865654	0.00088076180068079	Mef2c/Apc/Meis1/Fos/Tmem178/Esrra/Meis2/Car2/Lmo2/Ogt/Tob2/Foxo3/Hmgb2	13
+blue	GO:0021884	forebrain neuron development	6/403	35/23276	2.7541062576147e-05	0.00117180663865654	0.00088076180068079	Foxg1/Wnt5a/Sall3/Slc4a10/Dcx/Arx	6
+blue	GO:0072521	purine-containing compound metabolic process	22/403	471/23276	2.83389999720506e-05	0.00119111494765751	0.000895274451866396	Pde1c/Crhr1/Adcy3/Wnt5a/Adcy8/Pde1b/Gpd1/Pde10a/Ak1/Pde4b/Gale/Ppargc1a/Adcyap1r1/Pde4a/Adra2a/Gucy1a3/Ogt/Lpar1/Adk/Nppa/Gpr3/Pde5a	22
+blue	GO:1901292	nucleoside phosphate catabolic process	9/403	91/23276	2.86614117231523e-05	0.00119111494765751	0.000895274451866396	Pde1c/Pde1b/Gpd1/Pde10a/Pde4b/Ppargc1a/Pde4a/Ogt/Pde5a	9
+blue	GO:0060537	muscle tissue development	20/403	404/23276	2.90117773392601e-05	0.00119181715184501	0.000895802247668384	Mef2c/Hdac5/Eya2/Kdm6b/Fos/Meg3/Ryr2/Wnt5a/Angpt1/Nr4a1/Sik1/Gpcpd1/Bmp2/Ppargc1a/Mef2a/Sap30/Tiparp/Egr1/Cited2/Actn2	20
+blue	GO:0046068	cGMP metabolic process	7/403	52/23276	3.02683539283362e-05	0.00122930791977129	0.000923981330443948	Pde1c/Wnt5a/Pde1b/Pde10a/Gucy1a3/Nppa/Pde5a	7
+blue	GO:1901385	regulation of voltage-gated calcium channel activity	5/403	22/23276	3.13483428283371e-05	0.00125886491312895	0.000946197172062878	Crhr1/Pde4b/Stac/Nppa/Cacnb2	5
+blue	GO:0000187	activation of MAPK activity	9/403	98/23276	5.17455918475793e-05	0.00205487494736943	0.00154450000462015	Kit/Grm1/Map3k1/Wnt5a/Bmp2/Ptpn1/Hgf/Adra2a/Lpar1	9
+blue	GO:0006935	chemotaxis	22/403	491/23276	5.2671493737891e-05	0.00206865844636508	0.00155486005805781	Etv1/Kit/Foxg1/Cxcl14/Wnt5a/Angpt1/Nr4a1/Hbegf/Itgav/Pax6/Nr4a3/Pde4b/Hgf/Dlx5/Ptpro/Fgf16/Adgra2/Ptprm/Arx/Lpar1/Hmgb2/Sema3e	22
+blue	GO:0050803	regulation of synapse structure or activity	15/403	261/23276	5.51236414889984e-05	0.00214143363784435	0.00160955987505634	Mef2c/Kit/Crhr1/Gria1/Wnt5a/Shisa9/Htr7/Rasgrf1/Mgll/Myo6/Lzts1/Egr1/Sipa1l1/Malat1/Shisa8	15
+blue	GO:0042330	taxis	22/403	493/23276	5.59195111785497e-05	0.00214899282744233	0.00161524156794181	Etv1/Kit/Foxg1/Cxcl14/Wnt5a/Angpt1/Nr4a1/Hbegf/Itgav/Pax6/Nr4a3/Pde4b/Hgf/Dlx5/Ptpro/Fgf16/Adgra2/Ptprm/Arx/Lpar1/Hmgb2/Sema3e	22
+blue	GO:0006874	cellular calcium ion homeostasis	18/403	358/23276	5.92592926559046e-05	0.00225311395693833	0.00169350184611275	Crhr1/Grm1/Ryr2/Scgn/Cacna1i/Atp13a3/Tmem178/Itgav/Ngf/Adcyap1r1/Cckbr/Rasa3/Pygm/Lpar1/Cd24a/Kcnk3/Gpr3/Ryr3	18
+blue	GO:0021772	olfactory bulb development	6/403	40/23276	6.05430074415307e-05	0.0022776916694319	0.00171197512455165	Wnt5a/Dlx2/Sall3/Pax6/Sall1/Arx	6
+blue	GO:0021954	central nervous system neuron development	8/403	78/23276	6.13521284833833e-05	0.00228408861666262	0.00171678324440345	Map2/Foxg1/Wnt5a/Sall3/Zeb2/Slc4a10/Dcx/Arx	8
+blue	GO:0001933	negative regulation of protein phosphorylation	19/403	393/23276	6.28062666763251e-05	0.00229050609286925	0.00172160679439293	Apc/Dusp6/Adarb1/Per1/Spry2/Angpt1/Cdkn1a/Pax6/Ptpn1/Sfrp2/Hgf/Ppargc1a/Dusp16/Ogt/Inpp5j/Ppp1r1c/Dusp5/Gadd45a/Ppm1e	19
+blue	GO:0035239	tube morphogenesis	19/403	393/23276	6.28062666763251e-05	0.00229050609286925	0.00172160679439293	Mef2c/Hdac5/Egfr/Lgr5/Ryr2/Wnt5a/Spry2/Angpt1/Mib1/Zeb2/Bmp2/Sfrp2/Nr4a3/Sall1/Prkx/Gatad2a/Cited2/Adamts16/Sema3e	19
+blue	GO:0042326	negative regulation of phosphorylation	20/403	430/23276	6.90584167949589e-05	0.00248629819622232	0.00186876947449691	Apc/Dusp6/Adarb1/Per1/Spry2/Angpt1/Cdkn1a/Pax6/Ptpn1/Sfrp2/Hgf/Ppargc1a/Dusp16/Ogt/Inpp5j/Ppp1r1c/Dusp5/Midn/Gadd45a/Ppm1e	20
+blue	GO:0021766	hippocampus development	7/403	59/23276	6.95662617857392e-05	0.00248629819622232	0.00186876947449691	Bcan/Kdm6b/Dlx2/Zeb2/Nr4a3/Dcx/Dlx1	7
+blue	GO:0030177	positive regulation of Wnt signaling pathway	9/403	102/23276	7.08806465197268e-05	0.00250819238278717	0.00188522574172322	Gprc5b/Lgr5/Wnt5a/Zeb2/Bmp2/Sfrp2/Wls/Dlx5/Sall1	9
+blue	GO:0010817	regulation of hormone levels	21/403	466/23276	7.16429839031196e-05	0.0025103139653897	0.00188682038101921	Pde1c/Crabp2/Trh/Arnt/Crhr1/Sgpl1/Egfr/Akr1c18/Pcsk1/Pax6/Bmp2/Ppargc1a/Cckbr/Cplx1/Adra2a/Tiparp/Midn/Plekha1/Abat/Kcnma1/Hmgn3	21
+blue	GO:0001501	skeletal system development	21/403	467/23276	7.38432444673958e-05	0.00256228889054828	0.00192588615105564	Zfp385a/Bcan/Mef2c/Kit/Sgpl1/Meis1/Wnt5a/Dlx2/Esrra/Fam20c/Bmp2/Sfrp2/Slc35d1/Dlx5/Csrnp1/Foxn3/Chst11/Tiparp/Cited2/Plekha1/Dlx1	21
+blue	GO:0050678	regulation of epithelial cell proliferation	16/403	301/23276	7.93223237361725e-05	0.00272594216377962	0.00204889241067522	Mef2c/Apc/Egfr/Wnt5a/Nr4a1/Pax6/Bmp2/Sfrp2/Nr4a3/Dlx6/Dlx5/Ptprm/Klf9/Vash2/Ppp1r16b/Hmgb2	16
+blue	GO:0021988	olfactory lobe development	6/403	42/23276	8.03635066765512e-05	0.00273542069392375	0.00205601673221613	Wnt5a/Dlx2/Sall3/Pax6/Sall1/Arx	6
+blue	GO:2001257	regulation of cation channel activity	8/403	82/23276	8.78240908853987e-05	0.00296116321532467	0.00222569096265678	Crhr1/Hcn1/Fgf12/Pde4b/Stac/Nppa/Actn2/Cacnb2	8
+blue	GO:0055074	calcium ion homeostasis	18/403	371/23276	9.32553037681637e-05	0.00311490145483567	0.00234124481275311	Crhr1/Grm1/Ryr2/Scgn/Cacna1i/Atp13a3/Tmem178/Itgav/Ngf/Adcyap1r1/Cckbr/Rasa3/Pygm/Lpar1/Cd24a/Kcnk3/Gpr3/Ryr3	18
+blue	GO:1901342	regulation of vasculature development	14/403	243/23276	9.45256157354226e-05	0.0031280976910963	0.00235116346351655	Hdac5/Wnt5a/Emp2/Tnfrsf12a/Sfrp2/Hgf/Tspan12/Adgra2/Ptprm/Vash2/Ppp1r16b/Egr1/Tcf4/Sema3e	14
+blue	GO:0034754	cellular hormone metabolic process	8/403	83/23276	9.57441127868104e-05	0.00313935283578037	0.00235962313695741	Crabp2/Sgpl1/Akr1c18/Bmp2/Ppargc1a/Tiparp/Plekha1/Kcnma1	8
+blue	GO:0010631	epithelial cell migration	13/403	214/23276	9.8413216070563e-05	0.00319753485669266	0.00240335432930217	Kit/Hdac5/Wnt5a/Angpt1/Emp2/Nr4a1/Hbegf/Zeb2/Itgav/Fgf16/Adgra2/Ptprm/Prkx	13
+blue	GO:0042493	response to drug	13/403	215/23276	0.000103135921089253	0.0032929454324704	0.00247506751794082	Mef2c/Hdac5/Fos/Sfrp2/Pde4b/Pde4a/Ptprm/Myo6/Ppm1e/Kcnk3/Junb/Hmgb2/Abat	13
+blue	GO:0035335	peptidyl-tyrosine dephosphorylation	6/403	44/23276	0.000105035192865592	0.0032929454324704	0.00247506751794082	Eya2/Dusp14/Dusp6/Ptpn1/Ptpro/Ptprm	6
+blue	GO:0071277	cellular response to calcium ion	6/403	44/23276	0.000105035192865592	0.0032929454324704	0.00247506751794082	Fosb/Mef2c/Akr1c18/Fos/Mef2a/Junb	6
+blue	GO:0072523	purine-containing compound catabolic process	6/403	44/23276	0.000105035192865592	0.0032929454324704	0.00247506751794082	Pde1c/Pde1b/Pde10a/Pde4b/Pde4a/Pde5a	6
+blue	GO:0061515	myeloid cell development	7/403	63/23276	0.000106325654735888	0.00330441643500925	0.00248368943602733	Zfp385a/Kit/Pabpc4/Meis1/Bcl6/Fam20c/Cited2	7
+blue	GO:0090132	epithelium migration	13/403	216/23276	0.000108053210654736	0.00332915668000022	0.0025022848783202	Kit/Hdac5/Wnt5a/Angpt1/Emp2/Nr4a1/Hbegf/Zeb2/Itgav/Fgf16/Adgra2/Ptprm/Prkx	13
+blue	GO:0072001	renal system development	14/403	247/23276	0.000112341539947203	0.00340625642740743	0.00256023514939586	Mef2c/Apc/Hdac5/Sgpl1/Lgr5/Wnt5a/Angpt1/Bmp2/Ptpro/Sall1/Tiparp/Prkx/Egr1/Adamts16	14
+blue	GO:0030900	forebrain development	17/403	343/23276	0.000112461739908807	0.00340625642740743	0.00256023514939586	Bcan/Kdm6b/Egfr/Foxg1/Wnt5a/Dlx2/Sall3/Zeb2/Slc4a10/Pax6/Bmp2/Nr4a3/Dab1/Dcx/Sall1/Arx/Dlx1	17
+blue	GO:0001503	ossification	18/403	378/23276	0.000117899127805965	0.00352927037021116	0.00265269578086734	Col6a1/Mef2c/Apc/Hdac5/H3f3b/Smoc1/Wnt5a/Esrra/Fam20c/Creb3l1/Bmp2/Sfrp2/Dlx5/Rbmx/Nfatc1/Tob1/Tob2/Junb	18
+blue	GO:0090130	tissue migration	13/403	218/23276	0.000118498165759748	0.00352927037021116	0.00265269578086734	Kit/Hdac5/Wnt5a/Angpt1/Emp2/Nr4a1/Hbegf/Zeb2/Itgav/Fgf16/Adgra2/Ptprm/Prkx	13
+blue	GO:1900542	regulation of purine nucleotide metabolic process	12/403	191/23276	0.00013209159203181	0.00390161446216272	0.00293255974654353	Crhr1/Adcy3/Wnt5a/Gpd1/Ppargc1a/Adcyap1r1/Adra2a/Gucy1a3/Ogt/Lpar1/Gpr3/Pde5a	12
+blue	GO:0045765	regulation of angiogenesis	13/403	221/23276	0.000135795938635991	0.00396456287229132	0.00297987348690467	Hdac5/Wnt5a/Emp2/Tnfrsf12a/Sfrp2/Hgf/Tspan12/Adgra2/Ptprm/Vash2/Ppp1r16b/Tcf4/Sema3e	13
+blue	GO:0034614	cellular response to reactive oxygen species	9/403	111/23276	0.000136441307580255	0.00396456287229132	0.00297987348690467	Kdm6b/Akr1c18/Net1/Fos/Nr4a3/Hgf/Kcnc2/Plekha1/Foxo3	9
+blue	GO:0014706	striated muscle tissue development	18/403	383/23276	0.000138846477949207	0.00400191380798761	0.00300794746796583	Mef2c/Hdac5/Eya2/Kdm6b/Fos/Meg3/Ryr2/Wnt5a/Angpt1/Nr4a1/Sik1/Gpcpd1/Bmp2/Mef2a/Sap30/Egr1/Cited2/Actn2	18
+blue	GO:0090596	sensory organ morphogenesis	15/403	284/23276	0.000141374039574581	0.00404216653951641	0.00303820251784699	Meis1/Foxg1/Hcn1/Slc4a7/Wnt5a/Spry2/Pax6/Nr4a3/Tspan12/Dlx6/Dlx5/Sall1/Ptprm/Myo6/Cited2	15
+blue	GO:0060562	epithelial tube morphogenesis	17/403	351/23276	0.000148206840726281	0.00420389879964863	0.00315976489167476	Mef2c/Hdac5/Lgr5/Ryr2/Wnt5a/Spry2/Angpt1/Mib1/Zeb2/Bmp2/Sfrp2/Sall1/Prkx/Gatad2a/Cited2/Adamts16/Sema3e	17
+blue	GO:0006936	muscle contraction	14/403	254/23276	0.000150582906257083	0.00423766383435286	0.00318514361183651	Ryr2/Htr7/Pde4b/Grip2/Stac/Adra2a/Gucy1a3/Nppa/Chrm2/Actn2/Pde5a/Ryr3/Abat/Kcnma1	14
+blue	GO:0021953	central nervous system neuron differentiation	12/403	194/23276	0.000152903578704524	0.00426935461164037	0.00320896326360151	Map2/Foxg1/Wnt5a/Dlx2/Sall3/Zeb2/Slc4a10/Pax6/Dcx/Sall1/Arx/Dlx1	12
+blue	GO:0060563	neuroepithelial cell differentiation	8/403	89/23276	0.000156681049233581	0.0043409152710141	0.00326275020517421	Mef2c/Kit/Slc4a7/Fam20c/Zeb2/Bmp2/Myo6/Kcnma1	8
+blue	GO:0001525	angiogenesis	19/403	424/23276	0.000168709316612792	0.00462188466543592	0.00347393445827835	Hdac5/Meis1/Wnt5a/Angpt1/Emp2/Nr4a1/Tnfrsf12a/Hbegf/Itgav/Sfrp2/Hgf/Tspan12/Adgra2/Ptprm/Prkx/Vash2/Ppp1r16b/Tcf4/Sema3e	19
+blue	GO:0060021	palate development	8/403	90/23276	0.000169408755224428	0.00462188466543592	0.00347393445827835	Mef2c/Sgpl1/Wnt5a/Dlx6/Dlx5/Csrnp1/Tiparp/Plekha1	8
+blue	GO:0008015	blood circulation	19/403	425/23276	0.000173852149430333	0.00470717865200009	0.00353804374279275	Egfr/Ryr2/Angpt1/Emp2/Hbegf/Htr7/Pde4b/Grip2/Ptpro/Mef2a/Ptprm/Adra2a/Gucy1a3/Nppa/Chrm2/Adamts16/Pde5a/Abat/Kcnma1	19
+blue	GO:0006140	regulation of nucleotide metabolic process	12/403	198/23276	0.000184970283360732	0.00497055483256584	0.00373600445695757	Crhr1/Adcy3/Wnt5a/Gpd1/Ppargc1a/Adcyap1r1/Adra2a/Gucy1a3/Ogt/Lpar1/Gpr3/Pde5a	12
+blue	GO:0003013	circulatory system process	19/403	428/23276	0.000190116290481067	0.00507071359835324	0.00381128651459296	Egfr/Ryr2/Angpt1/Emp2/Hbegf/Htr7/Pde4b/Grip2/Ptpro/Mef2a/Ptprm/Adra2a/Gucy1a3/Nppa/Chrm2/Adamts16/Pde5a/Abat/Kcnma1	19
+blue	GO:0001667	ameboidal-type cell migration	16/403	325/23276	0.000191775040197719	0.00507706661975295	0.00381606161859321	Kit/Hdac5/Sgpl1/Wnt5a/Angpt1/Emp2/Nr4a1/Hbegf/Zeb2/Itgav/Pax6/Fgf16/Adgra2/Ptprm/Prkx/Sema3e	16
+blue	GO:0072089	stem cell proliferation	11/403	170/23276	0.00019330575841163	0.00507996162178798	0.00381823758100991	Hdac5/Foxg1/Wnt5a/Pax6/Bmp2/Ngf/Sfrp2/Nfatc1/Cd24a/Fzd9/Hmgb2	11
+blue	GO:0071407	cellular response to organic cyclic compound	19/403	431/23276	0.000207700613814543	0.00541840871367283	0.00407262363776193	Mef2c/Egfr/Adcy3/Per1/Akr1c18/Ryr2/Hcn1/Gpd1/Nr4a1/Esrra/Bmp2/Nr4a3/Pde4b/Blm/Ipo13/Klf9/Tiparp/Egr1/Nrip1	19
+blue	GO:0043542	endothelial cell migration	10/403	144/23276	0.00021220821560866	0.00545634649341978	0.00410113870680272	Hdac5/Wnt5a/Angpt1/Emp2/Nr4a1/Itgav/Fgf16/Adgra2/Ptprm/Prkx	10
+blue	GO:0046434	organophosphate catabolic process	10/403	144/23276	0.00021220821560866	0.00545634649341978	0.00410113870680272	Pde1c/Pde1b/Gpd1/Pde10a/Gpcpd1/Pde4b/Ppargc1a/Pde4a/Ogt/Pde5a	10
+blue	GO:0032870	cellular response to hormone stimulus	20/403	468/23276	0.00021435477455485	0.00547217117327881	0.00411303296739832	Mef2c/Kit/Trh/Crhr1/Egfr/Per1/Akr1c18/Nr4a1/Esrra/Ptpn1/Nr4a3/Pik3r3/Ppargc1a/Lmo2/Ipo13/Adra2a/Klf9/Ogt/Nrip1/Junb	20
+blue	GO:0071479	cellular response to ionizing radiation	6/403	50/23276	0.000216670408984747	0.0054920570334148	0.00412797972175495	Net1/Cdkn1a/Sfrp2/Blm/Gadd45a/Egr1	6
+blue	GO:0003300	cardiac muscle hypertrophy	7/403	71/23276	0.000227031237854048	0.0057141524231716	0.00429491266866961	Mef2c/Ryr2/Nr4a3/Mlip/Adk/Nppa/Pde5a	7
+blue	GO:0001704	formation of primary germ layer	8/403	94/23276	0.000229127528355642	0.00572658591848297	0.00430425802255133	Kdm6b/Dusp6/Wnt5a/Itgav/Sfrp2/Wls/Nr4a3/Dusp5	8
+blue	GO:0016358	dendrite development	13/403	234/23276	0.00023825192534655	0.00591328042492063	0.00444458270090933	Mef2c/Map2/Asap1/Tnik/Dab1/Mef2a/Dcx/Myo6/Grip1/Lzts1/Lpar1/Sipa1l1/Kalrn	13
+blue	GO:0035023	regulation of Rho protein signal transduction	8/403	95/23276	0.000246478474390946	0.00607526943084994	0.00456633805187437	Net1/Bcl6/Tiam2/Arhgef2/Rasgrf1/Lpar1/Arhgef1/Kalrn	8
+blue	GO:0051272	positive regulation of cellular component movement	19/403	438/23276	0.000254377050261021	0.00622701080570471	0.00468039100408165	Kit/Apc/Egfr/Cxcl14/Wnt5a/Angpt1/Bcl6/Hbegf/Itgav/Pax6/Bmp2/Hgf/Fgf16/Adgra2/Adra2a/Plvap/Egr1/Lpar1/Sema3e	19
+blue	GO:0033673	negative regulation of kinase activity	13/403	236/23276	0.000258774589921973	0.00624905665122386	0.00469696126231063	Apc/Dusp6/Adarb1/Spry2/Cdkn1a/Ptpn1/Sfrp2/Dusp16/Ppp1r1c/Dusp5/Midn/Gadd45a/Ppm1e	13
+blue	GO:0070482	response to oxygen levels	13/403	236/23276	0.000258774589921973	0.00624905665122386	0.00469696126231063	Arnt/Crhr1/Ryr2/Bmp2/Fosl2/Pygm/Ogt/Egr1/Cited2/Cd24a/Kcnk3/Abat/Kcnma1	13
+blue	GO:0048008	platelet-derived growth factor receptor signaling pathway	6/403	52/23276	0.000269634141670012	0.00646760014985653	0.00486122451106938	Sgpl1/Ptpn1/Csrnp1/Tiparp/Ndrg4/Plekha1	6
+blue	GO:0021889	olfactory bulb interneuron differentiation	4/403	19/23276	0.000279239670648766	0.00664598928908557	0.00499530664911683	Wnt5a/Sall3/Sall1/Arx	4
+blue	GO:0030111	regulation of Wnt signaling pathway	13/403	238/23276	0.000280790258156665	0.00664598928908557	0.00499530664911683	Apc/Gprc5b/Lgr5/Wnt5a/Zeb2/Bmp2/Sfrp2/Wls/Dlx5/Ptpro/Sall1/Egr1/Foxo3	13
+blue	GO:0042698	ovulation cycle	8/403	97/23276	0.000284412098758799	0.00668742658528912	0.00502645205008625	Kit/Sgpl1/Egfr/Angpt1/Cckbr/Plekha1/Nrip1/Foxo3	8
+blue	GO:0014897	striated muscle hypertrophy	7/403	74/23276	0.000293887258334991	0.00686505268816509	0.00515996066921842	Mef2c/Ryr2/Nr4a3/Mlip/Adk/Nppa/Pde5a	7
+blue	GO:0007204	positive regulation of cytosolic calcium ion concentration	13/403	240/23276	0.000304386226552248	0.00701855724966279	0.00527533888055237	Crhr1/Grm1/Ryr2/Cacna1i/Itgav/Ngf/Adcyap1r1/Cckbr/Rasa3/Lpar1/Cd24a/Gpr3/Ryr3	13
+blue	GO:0007548	sex differentiation	13/403	240/23276	0.000304386226552248	0.00701855724966279	0.00527533888055237	Kit/H3f3b/Sgpl1/Wnt5a/Angpt1/Itgav/Sfrp2/Tiparp/Cited2/Plekha1/Nrip1/Foxo3/Hmgb2	13
+blue	GO:0048562	embryonic organ morphogenesis	15/403	306/23276	0.000315892023209054	0.0072371672496741	0.00543965211355942	Mef2c/Foxg1/Ryr2/Wnt5a/Spry2/Dlx2/Mib1/Pax6/Nr4a3/Dlx6/Dlx5/Sall1/Myo6/Chst11/Cited2	15
+blue	GO:0010769	regulation of cell morphogenesis involved in differentiation	16/403	342/23276	0.000338887273733949	0.007647252850005	0.00574788362536823	Crabp2/Map2/Net1/Wnt5a/Tnfrsf12a/Zeb2/Bmp2/Tnik/Ngf/Sfrp2/Dab1/Sall1/Mgll/Lzts1/Sipa1l1/Sema3e	16
+blue	GO:0007263	nitric oxide mediated signal transduction	4/403	20/23276	0.000344301979121626	0.007647252850005	0.00574788362536823	Mt2/Mt1/Gucy1a3/Kcnc2	4
+blue	GO:0060850	regulation of transcription involved in cell fate commitment	4/403	20/23276	0.000344301979121626	0.007647252850005	0.00574788362536823	Dlx2/Pax6/Bmp2/Dlx1	4
+blue	GO:0071805	potassium ion transmembrane transport	10/403	153/23276	0.000345834758969848	0.007647252850005	0.00574788362536823	Hcn1/Kcnj3/Kcnc2/Atp1b2/Nppa/Kcnk3/Actn2/Kcnh7/Kcnc3/Kcnma1	10
+blue	GO:1904062	regulation of cation transmembrane transport	12/403	212/23276	0.000346279637750717	0.007647252850005	0.00574788362536823	Crhr1/Ryr2/Hcn1/Fgf12/Ngf/Pde4b/Stac/Kcnc2/Atp1b2/Nppa/Actn2/Cacnb2	12
+blue	GO:0014896	muscle hypertrophy	7/403	76/23276	0.000346629815808844	0.007647252850005	0.00574788362536823	Mef2c/Ryr2/Nr4a3/Mlip/Adk/Nppa/Pde5a	7
+blue	GO:0051403	stress-activated MAPK cascade	12/403	213/23276	0.000361348353323344	0.00787378009750135	0.00591814767732555	Per1/Map3k1/Wnt5a/Fgf12/Zeb2/Bmp2/Ptpn1/Tnik/Sfrp2/Hgf/Mapkbp1/Gadd45a	12
+blue	GO:0002065	columnar/cuboidal epithelial cell differentiation	10/403	154/23276	0.000364265365518607	0.00787378009750135	0.00591814767732555	Mef2c/Kit/Slc4a7/Wnt5a/Fam20c/Zeb2/Pax6/Bmp2/Myo6/Kcnma1	10
+blue	GO:0071804	cellular potassium ion transport	10/403	154/23276	0.000364265365518607	0.00787378009750135	0.00591814767732555	Hcn1/Kcnj3/Kcnc2/Atp1b2/Nppa/Kcnk3/Actn2/Kcnh7/Kcnc3/Kcnma1	10
+blue	GO:0060325	face morphogenesis	5/403	36/23276	0.000367755155023505	0.00787378009750135	0.00591814767732555	Sgpl1/Dlx5/Csrnp1/Tiparp/Plekha1	5
+blue	GO:0030335	positive regulation of cell migration	18/403	415/23276	0.000367913059955995	0.00787378009750135	0.00591814767732555	Kit/Apc/Egfr/Cxcl14/Wnt5a/Angpt1/Hbegf/Itgav/Pax6/Bmp2/Hgf/Fgf16/Adgra2/Adra2a/Plvap/Egr1/Lpar1/Sema3e	18
+blue	GO:0003002	regionalization	16/403	345/23276	0.00037306466838544	0.00788954511721635	0.0059299970957312	Mef2c/Apc/Dusp6/Foxg1/Wnt5a/Arc/Dlx2/Mib1/Zeb2/Pax6/Bmp2/Sfrp2/Wls/Cited2/Dlx1/Sp8	16
+blue	GO:0031346	positive regulation of cell projection organization	16/403	345/23276	0.00037306466838544	0.00788954511721635	0.0059299970957312	Crabp2/Kit/Apc/Gprc5b/Wnt5a/Tnfrsf12a/Htr7/Zeb2/Ngf/Hgf/Plppr5/Frmd7/Ndrg4/Lpar1/Cd24a/Qk	16
+blue	GO:0042445	hormone metabolic process	10/403	155/23276	0.00038350723561754	0.00806267564762993	0.00606012672009884	Crabp2/Arnt/Sgpl1/Akr1c18/Pcsk1/Bmp2/Ppargc1a/Tiparp/Plekha1/Kcnma1	10
+blue	GO:0016055	Wnt signaling pathway	17/403	382/23276	0.000397350323464569	0.00826709758149268	0.00621377581597188	Apc/Gprc5b/Lgr5/Ryr2/Wnt5a/Zeb2/Bmp2/Tnik/Sfrp2/Wls/Dlx5/Ptpro/Sall1/Egr1/Frat2/Foxo3/Fzd9	17
+blue	GO:0048736	appendage development	11/403	185/23276	0.000400170084386747	0.00826709758149268	0.00621377581597188	Crabp2/Smoc1/Wnt5a/Sall3/Sfrp2/Dlx6/Dlx5/Sall1/Chst11/Sp8/Rc3h2	11
+blue	GO:0060173	limb development	11/403	185/23276	0.000400170084386747	0.00826709758149268	0.00621377581597188	Crabp2/Smoc1/Wnt5a/Sall3/Sfrp2/Dlx6/Dlx5/Sall1/Chst11/Sp8/Rc3h2	11
+blue	GO:0060324	face development	6/403	56/23276	0.000405750135079685	0.00832625953985037	0.00625824355600334	Sgpl1/Wnt5a/Dlx5/Csrnp1/Tiparp/Plekha1	6
+blue	GO:0032844	regulation of homeostatic process	19/403	455/23276	0.000407693178364246	0.00832625953985037	0.00625824355600334	Egfr/Ryr2/Hcn1/Fgf12/Itgav/Car2/Ngf/Nr4a3/Ppargc1a/Adcyap1r1/Rasa3/Lmo2/Adra2a/Cd24a/Foxo3/Hmgb2/Ryr3/Abat/Hmgn3	19
+blue	GO:0007389	pattern specification process	19/403	458/23276	0.000441795491572867	0.0089714607209172	0.00674319434505955	Mef2c/Apc/Dusp6/Foxg1/Wnt5a/Angpt1/Arc/Dlx2/Mib1/Zeb2/Pax6/Bmp2/Sfrp2/Wls/Nfatc1/Cited2/Dlx1/Sp8/Sema3e	19
+blue	GO:0006469	negative regulation of protein kinase activity	12/403	218/23276	0.000445285390494227	0.00899124285664614	0.00675806313732541	Apc/Dusp6/Adarb1/Spry2/Cdkn1a/Ptpn1/Sfrp2/Dusp16/Ppp1r1c/Dusp5/Gadd45a/Ppm1e	12
+blue	GO:0001935	endothelial cell proliferation	8/403	104/23276	0.000456522942984214	0.00916636515857069	0.00688968983143533	Wnt5a/Nr4a1/Bmp2/Ptprm/Prkx/Vash2/Ppp1r16b/Hmgb2	8
+blue	GO:0061351	neural precursor cell proliferation	10/403	159/23276	0.000469149877776925	0.00936727186131135	0.00704069678380896	Hdac5/Foxg1/Wnt5a/Zeb2/Pax6/Sall1/Arx/Cd24a/Foxo3/Fzd9	10
+blue	GO:0043506	regulation of JUN kinase activity	7/403	80/23276	0.000474802571621949	0.0093981928837483	0.0070639378668529	Map3k1/Wnt5a/Zeb2/Ptpn1/Tnik/Sfrp2/Mapkbp1	7
+blue	GO:0032350	regulation of hormone metabolic process	5/403	38/23276	0.000475957725785798	0.0093981928837483	0.0070639378668529	Arnt/Akr1c18/Bmp2/Ppargc1a/Kcnma1	5
+blue	GO:0032872	regulation of stress-activated MAPK cascade	11/403	189/23276	0.000479390351330709	0.00941396217393381	0.00707579049506055	Per1/Map3k1/Wnt5a/Zeb2/Bmp2/Ptpn1/Tnik/Sfrp2/Hgf/Mapkbp1/Gadd45a	11
+blue	GO:0010469	regulation of receptor activity	8/403	105/23276	0.000486845510433706	0.0094411789900976	0.00709624739573206	Mef2c/Shisa9/Arc/Cnih3/Ppargc1a/Rasgrf1/Adra2a/Cacng8	8
+blue	GO:0010171	body morphogenesis	6/403	58/23276	0.000491342834963109	0.0094411789900976	0.00709624739573206	Sgpl1/Dlx5/Csrnp1/Tiparp/Gatad2a/Plekha1	6
+blue	GO:0019935	cyclic-nucleotide-mediated signaling	6/403	58/23276	0.000491342834963109	0.0094411789900976	0.00709624739573206	Adcy3/Adcy8/Pde10a/Adcyap1r1/Pde4a/Kcnc2	6
+blue	GO:0032922	circadian regulation of gene expression	6/403	58/23276	0.000491342834963109	0.0094411789900976	0.00709624739573206	Per1/Ppargc1a/Prkg2/Ogt/Prkcdbp/Nrip1	6
+blue	GO:0070302	regulation of stress-activated protein kinase signaling cascade	11/403	190/23276	0.000501124456767372	0.00957764068709405	0.00719881572569847	Per1/Map3k1/Wnt5a/Zeb2/Bmp2/Ptpn1/Tnik/Sfrp2/Hgf/Mapkbp1/Gadd45a	11
+blue	GO:0008209	androgen metabolic process	4/403	22/23276	0.000505795790734728	0.00961550083024424	0.00722727244095759	Sgpl1/Akr1c18/Tiparp/Plekha1	4
+blue	GO:0021761	limbic system development	7/403	81/23276	0.000512105751965741	0.0096839468652146	0.00727871834595696	Bcan/Kdm6b/Dlx2/Zeb2/Nr4a3/Dcx/Dlx1	7
+blue	GO:0050679	positive regulation of epithelial cell proliferation	10/403	161/23276	0.000517587846439837	0.00973609980618936	0.00731791791753166	Egfr/Wnt5a/Nr4a1/Bmp2/Nr4a3/Dlx6/Dlx5/Vash2/Ppp1r16b/Hmgb2	10
+blue	GO:0043270	positive regulation of ion transport	13/403	254/23276	0.000521936088627828	0.00976648995160134	0.00734075997893754	Trh/Ryr2/Hcn1/Fgf12/Arc/Adcyap1r1/Slc6a1/Kcnc2/Atp1b2/Nppa/Actn2/Abat/Cacnb2	13
+blue	GO:0006937	regulation of muscle contraction	9/403	133/23276	0.000526953738267035	0.0097961678503886	0.00736306669637196	Ryr2/Pde4b/Adra2a/Gucy1a3/Nppa/Chrm2/Pde5a/Abat/Kcnma1	9
+blue	GO:2000147	positive regulation of cell motility	18/403	428/23276	0.000529004027735031	0.0097961678503886	0.00736306669637196	Kit/Apc/Egfr/Cxcl14/Wnt5a/Angpt1/Hbegf/Itgav/Pax6/Bmp2/Hgf/Fgf16/Adgra2/Adra2a/Plvap/Egr1/Lpar1/Sema3e	18
+blue	GO:1901019	regulation of calcium ion transmembrane transporter activity	6/403	59/23276	0.000539091126266207	0.00993150353234754	0.0074647886827529	Crhr1/Ryr2/Pde4b/Stac/Nppa/Cacnb2	6
