@@ -5,8 +5,16 @@ output:
     toc: false
 ---
 
-![A P7 mouse SN neuron](/Volumes/PAULHOOK/sc-da-parkinsons/output/Composite-Ldb2-22-SN.png)
+***  
+<center>
+![A P7 mouse SN neuron](Composite-Ldb2-22-SN.png){ width=50% }
+<br>
+P7 mouse _substantia nigra_ dopaminergic neuron.
+<br>
+Single molecule FISH against _Slc6a3_ (green) and _Th_ (red) is shown. 
+</center>  
 
+***
 
 Single-cell RNA-seq of mouse dopaminergic neurons informs candidate gene selection for sporadic Parkinson's disease. Paul W. Hook, Sarah A. McClymont, Gabrielle H. Cannon, William D. Law, A. Jennifer Morton, Loyal A. Goff, Andrew S. McCallion. bioRxiv 148049; doi: https://doi.org/10.1101/148049
 
