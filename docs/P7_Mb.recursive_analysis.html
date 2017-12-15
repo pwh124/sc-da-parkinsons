@@ -24,8 +24,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/textmate.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -35,10 +35,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -296,15 +298,19 @@ div.tocify {
     <li>
       <a href="cds_creation-qc_filtering.html">CDS creation and QC</a>
     </li>
+    <li class="divider"></li>
     <li>
       <a href="E15.clustering.html">E15.5 Analyses</a>
     </li>
+    <li class="divider"></li>
     <li>
       <a href="P7.analyses.links.html">P7 Analyses</a>
     </li>
+    <li class="divider"></li>
     <li>
       <a href="All.cells.analyses.links.html">All cell analyses</a>
     </li>
+    <li class="divider"></li>
     <li>
       <a href="PD.GWAS.scoring.links.html">PD Gene Scoring</a>
     </li>
@@ -341,8 +347,8 @@ div.tocify {
 </div>
 
 
-<p><strong>Last update:</strong> 2017-11-27</p>
-<p><strong>Code version:</strong> e48523aa6c442f9b1ca408833b3e3baa541393d7</p>
+<p><strong>Last update:</strong> 2017-12-15</p>
+<p><strong>Code version:</strong> 97cdbba92f549b083d57cc1acd1fcd954ca4c492</p>
 <div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level3">
 <h3>Setting important directories. Also loading important libraries and custom functions for analysis.</h3>
 <pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
@@ -678,7 +684,7 @@ saveRDS(P7.Mb.clusters.df, file = file.path(Rdata_dir, &quot;P7.Mb.clusters.df.r
 ## [34] gdata_2.18.0           nlme_3.1-131           iterators_1.0.8       
 ## [37] mime_0.5               rngtools_1.2.4         gtools_3.5.0          
 ## [40] WriteXLS_4.0.0         XML_3.98-1.9           DEoptimR_1.0-8        
-## [43] yaml_2.1.14            pkgmaker_0.22          rpart_4.1-11          
+## [43] yaml_2.1.15            pkgmaker_0.22          rpart_4.1-11          
 ## [46] fastICA_1.2-1          latticeExtra_0.6-28    stringi_1.1.5         
 ## [49] pcaPP_1.9-72           foreach_1.4.3          e1071_1.6-8           
 ## [52] checkmate_1.8.4        caTools_1.17.1         rlang_0.1.2           
@@ -688,7 +694,7 @@ saveRDS(P7.Mb.clusters.df, file = file.path(Rdata_dir, &quot;P7.Mb.clusters.df.r
 ## [64] magrittr_1.5           R6_2.2.2               combinat_0.0-8        
 ## [67] wdman_0.2.2            foreign_0.8-69         mgcv_1.8-22           
 ## [70] nnet_7.3-12            tibble_1.3.4           KernSmooth_2.23-15    
-## [73] rmarkdown_1.6          data.table_1.10.4      HSMMSingleCell_0.106.2
+## [73] rmarkdown_1.8          data.table_1.10.4      HSMMSingleCell_0.106.2
 ## [76] digest_0.6.12          xtable_1.8-2           httpuv_1.3.5          
 ## [79] openssl_0.9.7          munsell_0.4.3          registry_0.3</code></pre>
 </div>
@@ -699,6 +705,16 @@ saveRDS(P7.Mb.clusters.df, file = file.path(Rdata_dir, &quot;P7.Mb.clusters.df.r
     This <a href="http://rmarkdown.rstudio.com">R Markdown</a> site was created with <a href="https://github.com/jdblischak/workflowr">workflowr</a>
 </p>
 <hr>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-318359-10"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-318359-10');
+</script>
 
 <!-- To enable disqus, uncomment the section below and provide your disqus_shortname -->
 
