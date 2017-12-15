@@ -5,21 +5,16 @@ output:
     toc: false
 ---
 
-The goal of this new template is to simplify the setup and maintenance of a research website.
-Specifically,
+![A P7 mouse SN neuron](/Volumes/PAULHOOK/sc-da-parkinsons/output/Composite-Ldb2-22-SN.png)
 
-*  Easier to build and extend the website using the new tools in the [rmarkdown][] package and [latest RStudio release][rstudio]
-*  Easier to deploy the website with Git and GitHub by only using one branch
 
-[rmarkdown]: http://rmarkdown.rstudio.com/rmarkdown_websites.htm
-[rstudio]: https://www.rstudio.com/products/rstudio/download/preview/
+Single-cell RNA-seq of mouse dopaminergic neurons informs candidate gene selection for sporadic Parkinson's disease  
+Paul W. Hook, Sarah A. McClymont, Gabrielle H. Cannon, William D. Law, A. Jennifer Morton, Loyal A. Goff, Andrew S. McCallion  
+bioRxiv 148049; doi: https://doi.org/10.1101/148049
+Find the preprint here [link](https://doi.org/10.1101/148049)
 
-QC and filtering [link](cds_creation-qc_filtering.html)   
-E15.5 MB analysis [link](E15_Mb.recursive_analysis.html)  
-E15.5 FB analysis [link](E15_Fb.recursive_analysis.html)  
-E15.5 All cells analysis [link](E15_all.recursive_analysis.html)  
-
-The template for this was adapted from: https://github.com/jdblischak/singleCellSeq
+The template for this was adapted from: 
+https://github.com/jdblischak/singleCellSeq [link](https://github.com/jdblischak/singleCellSeq)
 
 **Last update:** `r Sys.Date()`
 
