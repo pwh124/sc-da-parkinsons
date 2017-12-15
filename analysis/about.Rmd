@@ -5,6 +5,4 @@ output:
     toc: false
 ---
 
-* Describe your project.
-
-* This is for Loyal!
+My name is Paul Hook and I am a 4th year graduate student in the Human Genetics Program at Johns Hopkins School of Medicine.
