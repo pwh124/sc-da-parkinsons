@@ -16,12 +16,16 @@ navbar:
       menu:
         - text: "CDS creation and QC"
           href: cds_creation-qc_filtering.html
+        - text: "---------"
         - text: "E15.5 Analyses"
           href: E15.clustering.html
+        - text: "---------"
         - text: "P7 Analyses"
           href: P7.analyses.links.html
+        - text: "---------"
         - text: "All cell analyses"
           href: All.cells.analyses.links.html
+        - text: "---------"
         - text: "PD Gene Scoring"
           href: PD.GWAS.scoring.links.html
     - text: "Paper Figures"
@@ -33,7 +37,7 @@ output:
   html_document:
     toc: true
     toc_float: true
-    theme: simplex
+    theme: litera
     highlight: textmate
     include:
       after_body: include/footer.html
