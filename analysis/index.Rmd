@@ -9,7 +9,7 @@ output:
 <center>
 ![A P7 mouse SN neuron](Composite-Ldb2-22-SN.png){ width=50% }
 <br>
-P7 mouse _substantia nigra_ dopaminergic neuron.
+A single P7 mouse _substantia nigra_ dopaminergic neuron (40x).
 <br>
 Single molecule FISH against _Slc6a3_ (green) and _Th_ (red) is shown. 
 </center>  
