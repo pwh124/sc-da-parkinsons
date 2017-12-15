@@ -5,6 +5,6 @@ output:
     toc: false
 ---
 
-Describe your project.
+* Describe your project.
 
-This is for Loyal!
+* This is for Loyal!
