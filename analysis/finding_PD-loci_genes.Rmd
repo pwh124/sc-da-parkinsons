@@ -1,0 +1,302 @@
+---
+title: "Finding all genes within PD loci"
+author: "Paul Hook"
+output: html_document
+---
+
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
+
+###Setting important directories. Also loading important libraries and custom functions for analysis.
+```{r init, message=FALSE, warning=FALSE}
+seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
+Rdata_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
+source(file.path(Script_dir,'init.R'))
+source(file.path(Script_dir,"tools_R.r"))
+
+# Loading additional libraries. This may be redundant
+library(biomaRt)
+library(GenomicRanges)
+library(stringr)
+library(dplyr)
+library(tidyr)
+library(data.table)
+library(DT)
+```
+
+###Obtaining SNP coordinates
+In order to find all the genes in our specified search regions, we first need to make sure we have all the PD GWAS SNP coordinates from Nalls (2014) and Chang (2017) in the same genome. In our case the human genome version we are using is GRCh38.
+
+```{r, message=F, warning=F}
+# Loading a file that contains all the lead SNPs
+dat <- read.delim(file = file.path(Rdata_dir,"new.PD.loci.txt"), header = T)
+
+# Using GRCh38 - Ensembl v87
+snpmart<-useEnsembl(biomart = "snp",dataset = 'hsapiens_snp', version = 87)
+
+#Obtaining all the SNP attributes we want
+snpPos<-getBM(attributes = c('refsnp_id','chr_name','chrom_start','chrom_end'), 
+      filters = c('snp_filter'), 
+      values = dat$Lead.SNP,
+      mart = snpmart)
+
+# Removing duplicated SNPs
+snpPos<-snpPos[!duplicated(snpPos$refsnp_id),]
+
+# Changing column names and order
+names(snpPos) <- c('snp','chr','start','end')
+snpPos <- snpPos[,c(2,3,4,1)]
+
+# Writing out a bed file and making an interactive table
+write.table(snpPos, file = file.path(file_dir,"all.PD.snps.bed"), sep = "\t", row.names = F, col.names = F, quote = F)
+
+datatable(snpPos)
+```
+
+###Finding all genes within +/- 1 Mb
+Now that we have a BED file containing PD GWAS SNP locations, we can now start searching for genes. The first "range" that we wanted to extract genes from was +/- 1 Mb. This represents a conservative genomic range that would encompass the longest reported enhancer-promoter interaction
+```{r}
+# Copying over the data
+mega.snp <- snpPos
+
+# Adding +/- 1 Mb
+mega.snp$upstream <- mega.snp$start-1e+06
+mega.snp$downstream <- mega.snp$end+1e+06
+
+# Adding chromosome coordinates
+mega.snp$coordinates <- paste0(mega.snp$chr,":",mega.snp$upstream,":", mega.snp$downstream)
+
+# Using biomart to find genes
+ensembl<-useEnsembl("ensembl", dataset = "hsapiens_gene_ensembl", version = 87)
+
+# From https://www.biostars.org/p/167818/
+mega.coords.list <- as.list(mega.snp$coordinates)
+
+# Finding all genes in the intervials in GRCh38, ensembl version 87
+mega.results <- data.frame()
+for(i in 1:length(mega.coords.list)){
+  results<-getBM(attributes = c("hgnc_symbol", "chromosome_name", "start_position",
+                                "end_position","gene_biotype"),
+                 filters = c("chromosomal_region"),
+                 values = list(chromosomal_region=mega.coords.list[i]), 
+                 mart = ensembl)
+  results$snp <- mega.snp$snp[i]
+  mega.results <- rbind(mega.results,results)
+}
+
+# Removing all human genes with no official symbol
+mega.results <- mega.results[!(mega.results$hgnc_symbol == ""),]
+
+# Checking  that all the gene names are unique to a locus
+summary(duplicated(mega.results[,c(1,6)]))
+# Some are duplicated by that may be becuase there are overlaps between the loci
+
+# Removing duplicated gene-locus
+mega.results.final <- mega.results[!(duplicated(mega.results[,c(1,6)])),] 
+summary(duplicated(mega.results.final[,c(1,6)]))
+head(mega.results.final)
+```
+
+###Intersecting SNPs with TADs
+The second "range" that we wanted to extract genes from was from within TADs. This range was chosen becasue it has been shown that enhancer-promoter interactions preferentially occur in TADs. We used TADs from human ESCs (Dixon, 2012). These TADs are in hg18, so the coordinates were lifted over to GRCh38.
+```{r, message=F,warning=F}
+# Load data and change column names
+hESC.GRCh38.domains <-read.delim(file = file.path(Rdata_dir,"Dixon.hESC.combined.domains.hg38.sorted.bed"), header = F)
+colnames(hESC.GRCh38.domains) <- c("chr","start","end")
+
+# Make both the domain bed and the snp bed in to GRanges objects so they can be intersected
+domains.bed <- with(hESC.GRCh38.domains, GRanges(chr, IRanges(start+1, end)))
+snp.bed <- with(snpPos, GRanges(paste0("chr",chr), IRanges(start,end, names = snp)), snp = snp)
+
+# Finding overlaps between the two
+overlaps <- findOverlaps(snp.bed, domains.bed, ignore.strand = T, type = "any")
+
+# Matching SNPs in GRCh38 TADs
+match_hit <- data.frame(snp.bed[queryHits(overlaps),],
+                        domains.bed[subjectHits(overlaps),],
+                        names(snp.bed)[queryHits(overlaps)],
+                        stringsAsFactors=F
+                        )
+
+# Looking at which SNPs are not in TADs in GRCh38
+names(snp.bed)[!(names(snp.bed) %in% names(snp.bed)[queryHits(overlaps)])]
+
+# Making a bedfile for TADs containing SNPs
+snp.tads <- match_hit %>%
+  dplyr::select(seqnames.1, start.1, end.1, width.1, names.snp.bed..queryHits.overlaps..) %>%
+  rename(seqnames.1 = "chr",
+         start.1 = "start",
+         end.1 = "end",
+         width.1 = "tad.length",
+         names.snp.bed..queryHits.overlaps.. = "snp")
+
+# Writing out the table
+write.table(snp.tads[,c(1,2,3,5)], file = file.path(file_dir,"pd.gwas.snp.tads.bed"),sep = "\t", row.names = F, col.names = F, quote = F)
+
+head(snp.tads[,c(1,2,3,5)])
+```
+
+###Finding all genes within TADs
+Now that we have all the TAD boundaries surrounding SNPs, we can now extract all the genes falling within those boundaries.
+```{r, message=F, warning=F}
+# Rearranging the data and modifying it
+pd.tads <- snp.tads[,c(1,2,3,5)]
+names(pd.tads) <- c("chr","start","end","snp")
+pd.tads$chr <- str_extract(pd.tads$chr,"[0-9]+")
+
+# Creating coordinates
+pd.tads$coordinates <- paste0(pd.tads$chr, ":",pd.tads$start,":", pd.tads$end)
+
+# From https://www.biostars.org/p/167818/
+tad.coords.list <- as.list(pd.tads$coordinates)
+
+# Finding all genes in the intervials in CRCh38, ensembl version 87
+ensembl<-useEnsembl("ensembl", dataset = "hsapiens_gene_ensembl", version = 87)
+tad.results <- data.frame()
+for(i in 1:length(tad.coords.list)){
+  results<-getBM(attributes = c("hgnc_symbol", "chromosome_name", "start_position",
+                                "end_position","gene_biotype"),
+                 filters = c("chromosomal_region"),
+                 values = list(chromosomal_region=tad.coords.list[i]), 
+                 mart = ensembl)
+  results$snp <- pd.tads$snp[i]
+  tad.results <- rbind(tad.results,results)
+}
+
+# Removing all human genes with no official symbol
+tad.results <- tad.results[!(tad.results$hgnc_symbol == ""),]
+
+# Checking  that all the gene names and snps are unique
+summary(duplicated(tad.results[,c(1,6)]))
+# no duplicates
+```
+
+###Merging Mb and TAD data
+Now that we have genes within Mb and TAD boundaries, we can now merge those and only keep the unique gene-loci
+```{r Put Mb and TAD data together}
+# Combine and only keep unique rows
+all.results <- unique(rbind(mega.results, tad.results))
+
+# Check for duplicated genes/snps
+summary(duplicated(all.results[,c(1,6)])) #2 for whatever reason
+all.results.dedup <- all.results[!(duplicated(all.results[,c(1,6)])),]
+summary(duplicated(all.results.dedup[,c(1,6)]))
+
+# Merge with locus names so that each gene is easy to track
+PD.loci <- read.delim(file = file.path(Rdata_dir,"new.PD.loci.txt"))
+all.results.final <- merge(x = all.results.dedup, y = PD.loci, by.x = "snp", by.y = "Lead.SNP") %>%
+  dplyr::select(hgnc_symbol, chromosome_name, snp, Locus, gene_biotype)
+
+# Rename columns
+names(all.results.final) <- c("HumanSymbol","chr", 'snp', 'locus', 'gene_biotype')
+
+# Check for duplicates
+summary(duplicated(all.results.final[,c(1,4)]))
+```
+
+###Finding all mouse homologs
+We have a dataframe that contains all the _human_ genes within PD GWAS loci. We now need to match those _human_ genes their _mouse_ homologs, so we can use mouse data to score them. While homolog data is not perfect, we had to choose a database to use. We decided to the MGI database. This database was downloaded on 07-07-2017.
+```{r, message=F, warning=FALSE}
+# Loading data
+homolog.table <- read.delim(file = file.path(Rdata_dir,"HOM_MouseHumanSequence.rpt")) %>%
+  dplyr::select(HomoloGene.ID, NCBI.Taxon.ID,Symbol)
+
+# Extracting just human data and just mouse data  
+human <- homolog.table[homolog.table$NCBI.Taxon.ID == "9606",]
+mice <- homolog.table[homolog.table$NCBI.Taxon.ID == "10090",]
+
+# Merging the human and mouse data based on the Homologene.ID
+homolog.table.final <- merge(human,mice,by = "HomoloGene.ID",all.x = T) %>%
+  dplyr::select(Symbol.x, Symbol.y) %>%
+  dplyr::rename(HumanSymbol = Symbol.x, MouseSymbol = Symbol.y)
+
+# check for duplicate rows
+summary(duplicated(homolog.table.final))
+homolog.table.final <- homolog.table.final[!(duplicated(homolog.table.final)),]
+
+# check for duplicate human genes (only want 1 to 1 homologs)
+summary(duplicated(homolog.table.final$HumanSymbol))
+
+# There are duplicated human genes. We want to get rid of genes that don't have 1-to-1 mouse homologs.
+idx.all <- duplicated(homolog.table.final$HumanSymbol) | duplicated(homolog.table.final$HumanSymbol, fromLast = TRUE) 
+small.df <- homolog.table.final[idx.all,]
+nrow(small.df[order(small.df$HumanSymbol),])
+
+# We want to get rid of genes with without 1-to-1 mouse homologs so duplicated human genes should be thrown out
+good.genes <- homolog.table.final[!(idx.all),]
+summary(duplicated(good.genes))
+summary(duplicated(good.genes$HumanSymbol))
+
+# Now we want to see if there are any duplicated mouse genes
+summary(duplicated(good.genes$MouseSymbol))
+idx.mouse <- duplicated(good.genes$MouseSymbol) | duplicated(good.genes$MouseSymbol, fromLast = TRUE) 
+small.df <- good.genes[idx.mouse,]
+nrow(small.df[order(small.df$HumanSymbol),])
+
+# We want to remove these genes becasue they do not have 1-to-1 mouse-human homologs
+one.to.one.genes <- good.genes[!(idx.mouse),]
+
+# Checking for one to one matchups
+summary(duplicated(one.to.one.genes))
+summary(duplicated(one.to.one.genes$MouseSymbol))
+summary(duplicated(one.to.one.genes$HumanSymbol))
+
+# Writing out the table
+write.table(one.to.one.genes, file = file.path(file_dir,"MGI_one-to-one.bed"),sep = "\t", row.names = F, col.names = F, quote = F)
+
+head(one.to.one.genes)
+```
+
+###Merging the tables
+We now have 1) the genes contained within our designated ranges and 2) a table with all the one-to-one mouse-human homologs from MGI. We will merge these tables.
+```{r Merging Tables}
+# Merging based on the human symbol of the gene
+final.table <- unique(merge(all.results.final, one.to.one.genes, by = "HumanSymbol", all.x = T))
+
+# Checking to look for duplicated rows
+summary(duplicated(final.table))
+
+# Looking at all the genes that are designated as "protein_coding" but do not have a mouse homolog
+head(final.table[final.table$gene_biotype == "protein_coding" & is.na(final.table$MouseSymbol),]$HumanSymbol)
+
+# Protein coding genes with no apparent mouse homolog were manually curated using MGI website
+manual.table <- read.delim(file = file.path(Rdata_dir,"no-homologs-manual-new.txt"))
+manual.table$MouseSymbol <- gsub('\\s+', '', manual.table$MouseSymbol)
+manual.table$HumanSymbol <- gsub('\\s+', '', manual.table$HumanSymbol)
+
+# no.homolog table
+no.homolog.protein <- final.table[final.table$gene_biotype == "protein_coding" & is.na(final.table$MouseSymbol),]
+
+# homolog table
+homolog.table <- final.table[!(final.table$gene_biotype == "protein_coding" & is.na(final.table$MouseSymbol)),]
+
+# merging no.homolog table with maunally curated table
+no.homolog.table <- merge(x = no.homolog.protein, y = manual.table, by = "HumanSymbol", all.x = T) %>%
+  dplyr::rename(MouseSymbol = MouseSymbol.y) %>%
+  dplyr::select(HumanSymbol, chr, snp, locus, gene_biotype, MouseSymbol)
+
+# Remaking the final table
+all.final.table <- rbind(homolog.table, no.homolog.table)
+nrow(all.final.table) == nrow(final.table) # TRUE
+
+# Checking for duplicates
+summary(duplicated(all.final.table[,c(1,4)]))
+
+
+# writing out table
+write.table(all.final.table, file = file.path(file_dir,"PD.loci.genes.final-new.txt"), quote = F, sep = "\t", row.names = F)
+```
+
+###Making an interactive table for all PD GWAS loci genes
+This is an interactive table that displays all the genes in our PD GWAS loci with their associated mouse homologs.
+```{r}
+datatable(all.final.table)
+```
+
+###Session Info
+```{r session info}
+sessionInfo()
+```
