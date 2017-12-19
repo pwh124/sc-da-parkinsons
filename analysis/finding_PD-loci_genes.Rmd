@@ -292,7 +292,7 @@ write.table(all.final.table, file = file.path(file_dir,"PD.loci.genes.final-new.
 
 ###Making an interactive table for all PD GWAS loci genes
 This is an interactive table that displays all the genes in our PD GWAS loci with their associated mouse homologs.
-```{r datatable}
+```{r datatable, message=F, warning=F}
 datatable(all.final.table, rownames = F, caption = "PD GWAS loci genes")
 ```
 
