@@ -1,0 +1,136 @@
+---
+title: "New.GWAS.Scoring"
+author: "Paul Hook"
+date: "6/23/2017"
+output: html_document
+---
+
+
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
+
+###Setting important directories. Also loading important libraries and custom functions for analysis.
+```{r init, message=FALSE, warning=FALSE}
+seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
+Rdata_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
+source(file.path(Script_dir,'init.R'))
+source(file.path(Script_dir,"tools_R.r"))
+```
+
+###Loading genesets needed for scoring
+In order to score the PD GWAS loci genes, we need to load:
+1) SN DA neuron expressed genes from our data
+2) SN DA neuron expressed genes from La Manno, et al.
+3) P7 MB differentially expressed genes from our data
+4) SN DA neuron specific genes
+5) Genes in WGCNA modules enriched for 'Parkinson's disease' genesets
+
+```{r Loading the gene sets needed}
+# SNC expressed genes in our data
+SN.expressed.genes <- readRDS(file = file.path(Rdata_dir, "SN.expressed.genes.rds"))
+
+# SNC expresed genes in Linnarsson Data
+lin.snc.exprs <- readRDS("/Volumes/PAULHOOK/Revision/Linnarsson.Data/lin.snc.expressed.rds")
+
+# P7 Mb differentially expressed genes
+P7.Mb.diff.genes <- readRDS(file = file.path(Rdata_dir,"P7.diff.genes.rds"))
+
+# SN Specific genes
+specific.genes <- read.delim("/Volumes/PAULHOOK/Revision/Tables/P7.specific.genes.txt")
+SN.specific.genes <- specific.genes$P7.MB.4
+
+# Co-regulated with PD
+WGCNA.brown <- readRDS(file = file.path(Rdata_dir, "WGCNA.ParkGeneSet.Brown.rds"))
+WGCNA.green <- readRDS(file = file.path(Rdata_dir, "WGCNA.ParkGeneSet.Green.rds"))
+
+co.reg.genes <- lookupGeneName(dat,unique(c(WGCNA.green, WGCNA.brown)))
+```
+
+```{r Loading the GWAS gene table}
+
+PD.GWAS.gene.table <- read.delim(file = "/Volumes/PAULHOOK/Revision/PD.loci.genes.final-new.txt", header = T)
+
+```
+
+```{r Scoring the genes}
+scoring.table <- PD.GWAS.gene.table
+
+# Scoring based on expression
+scoring.table$expression <- if_else(scoring.table$MouseSymbol %in% SN.expressed.genes, 1, 0)
+
+# Scoring based on being expressed in Lin
+scoring.table$lin.exprs <- if_else(scoring.table$MouseSymbol %in% lin.snc.exprs, 1, 0)
+
+# Specific genes
+scoring.table$specific <- if_else(scoring.table$MouseSymbol %in% SN.specific.genes, 1, 0)
+
+# Co-regulated genes
+scoring.table$co.reg <- if_else(scoring.table$MouseSymbol %in% co.reg.genes, 1, 0)
+
+# Differentially regulated genes (differentially expressd)
+scoring.table$diff <- if_else(scoring.table$MouseSymbol %in% P7.Mb.diff.genes, 1, 0)
+
+# Adding up the scores
+scoring.table$score <- scoring.table$co.reg + scoring.table$specific + scoring.table$diff + scoring.table$lin.exprs + scoring.table$expression
+
+# Add pLI scores
+pli.table <- read.delim(file = "/Volumes/PAULHOOK/Th_Experiments/Single-Cell-RNA-seq/TADs/fordist_cleaned_exac_r03_march16_z_pli_rec_null_data.txt") %>% dplyr::select(gene, pLI)
+
+scoring.table <- merge(x = scoring.table, y = pli.table, by.x = "HumanSymbol", by.y = "gene", all.x = T)
+scoring.table$pLI[is.na(scoring.table$pLI)] <- 0
+
+score.pLI <- scoring.table$pLI + scoring.table$score
+
+scoring.table$score.pLI <- round(score.pLI,3)
+
+```
+
+```{r Writing out the tables}
+# Writing out each individual loci ordered by "score"
+scoring.table$locus <- as.factor(scoring.table$locus)
+locus.levels <- levels(scoring.table$locus)
+Results.folder <- "/Volumes/PAULHOOK/Revision/New.scoring"
+
+for(i in 1:length(locus.levels)){
+  x <- scoring.table[scoring.table$locus == locus.levels[i],]
+  y <- x[!(duplicated(x$HumanSymbol)),]
+  z <- y[order(y$score, decreasing = T),]
+  write.table(z, file = paste0(Results.folder,".",locus.levels[i],".locus-new.txt"), row.names = F, quote = F, sep = "\t")
+}
+
+# Writing out the entire table ordered by score
+write.table(scoring.table[order(scoring.table$score.pLI, decreasing = T),],
+            file = file.path(Results.folder,"PD.GWAS.Score.Final-new.txt"),
+            row.names = F, quote = F, sep = "\t")
+```
+
+```{r Beginning to write out summary table}
+# Group by locus and count how many genes are in each locus and how many are expressed in either
+sum.table <- scoring.table %>% 
+  group_by(locus) %>% 
+  dplyr::summarize(num_genes = length(locus),
+                   num_expressed_either = sum(lin.exprs == 1 | expression == 1),
+                   num_expressed_both = sum(lin.exprs == 1 & expression == 1),
+                   num_homolog = sum(!is.na(MouseSymbol)),
+                   num_no_homolog = sum(is.na(MouseSymbol)))
+
+
+# Writing out summary table
+write.table(sum.table, file = file.path(Results.folder, "PD-GWAS-Summary-Table-new.txt"),
+            row.names = F, quote = F, sep = "\t")
+
+
+# Getting summary stats
+sum(sum.table$num_genes)
+sum(sum.table$num_homolog)
+sum(sum.table$num_no_homolog)
+
+sum(sum.table$num_expressed_both)
+sum(sum.table$num_expressed_either)
+
+nrow(scoring.table[is.na(scoring.table$MouseSymbol),]) #462
+nrow(scoring.table[is.na(scoring.table$MouseSymbol) & scoring.table$gene_biotype == "protein_coding",]) #87
+```
