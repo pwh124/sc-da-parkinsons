@@ -43,11 +43,10 @@ dim(linnarsson.t)
 
 # Extracting just the columns of cell annotations
 linnarsson.cells <- linnarsson.t[,2:3]
-names(linnarsson.cells) <- c("CELL_ID", "CELL_TYPE")
-head(linnarsson.cells)
 
 # Removing the first two rows (CEF and X1) that are useless
 linnarsson.cells <- as_data_frame(linnarsson.cells[-1:-2,])
+names(linnarsson.cells) <- c("CELL_ID", "CELL_TYPE")
 head(linnarsson.cells)
 ```
 
@@ -56,17 +55,17 @@ Now, we need to extract the expression data.
 ```{r extracting expression data}
 # Now extracting the expression matrix. Start with row 5 as thats where the expression data actually starts.
 linnarsson.exprs <- linnarsson.adult[5:nrow(linnarsson.adult),]
-head(linnarsson.exprs)
+#head(linnarsson.exprs)
 dim(linnarsson.exprs)
 
 # Removing the 2nd column which is blank ("X1")
 linnarsson.exprs <- linnarsson.exprs[,-2]
-head(linnarsson.exprs)
+#head(linnarsson.exprs)
 
 # Renaming rows as gene names
 rownames(linnarsson.exprs) <- linnarsson.exprs[,1]
 linnarsson.exprs <- linnarsson.exprs[,-1]
-head(linnarsson.exprs)
+#head(linnarsson.exprs)
 dim(linnarsson.exprs)
 ```
 
@@ -75,11 +74,11 @@ Again, the column order of the expression matrix is in the same order as the cel
 ```{r merging}
 # Adding back in column names
 names(linnarsson.exprs) <- linnarsson.cells$CELL_ID
-head(linnarsson.exprs)
+#head(linnarsson.exprs)
 
 # Making sure all columns are 'numeric'
 linnarsson.final <- as.data.frame(apply(linnarsson.exprs, 2, as.numeric))
-head(linnarsson.final)
+#head(linnarsson.final)
 
 # Making sure rownames are the same
 rownames(linnarsson.final) <- rownames(linnarsson.exprs)
