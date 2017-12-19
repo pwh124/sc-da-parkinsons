@@ -82,7 +82,7 @@ linnarsson.final <- as.data.frame(apply(linnarsson.exprs, 2, as.numeric))
 
 # Making sure rownames are the same
 rownames(linnarsson.final) <- rownames(linnarsson.exprs)
-head(linnarsson.final)
+#head(linnarsson.final)
 ```
 
 ###Extracting SN DA neuron information
@@ -103,8 +103,10 @@ names(snc.mean.df) <- "snc.mean"
 rownames(snc.mean.df) <- rownames(lin.snc.exprs)
 head(snc.mean.df)
 
-# Only keeping rownames (genes) that have an average expression >= 0.5
+# Only keeping rownames (genes) that have an average expression >= 0.5. I have to duplicate a column because dataframes do not cooperate.
+snc.mean.df$mean.2 <- snc.mean.df$snc.mean
 lin.snc.expressed <- row.names(snc.mean.df[snc.mean.df$snc.mean >= 0.5,])
+head(lin.snc.expressed)
 
 # Saving the names of genes that are expressed above 0.5 for later use
 saveRDS(object = lin.snc.expressed, file = file.path(Rdata_dir,"lin.snc.expressed.rds"))
