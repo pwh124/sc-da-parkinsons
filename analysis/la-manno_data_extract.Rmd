@@ -98,8 +98,10 @@ snc.cells <- lin.snc.cell$CELL_ID
 lin.snc.exprs <- linnarsson.final[,colnames(linnarsson.final) %in% snc.cells]
 
 # Calculating the mean
-snc.mean.df <- as_data_frame(apply(lin.snc.exprs, 1, mean))
+snc.mean.df <- as.data.frame(apply(lin.snc.exprs, 1, mean))
 names(snc.mean.df) <- "snc.mean"
+rownames(snc.mean.df) <- rownames(lin.snc.exprs)
+head(snc.mean.df)
 
 # Only keeping rownames (genes) that have an average expression >= 0.5
 lin.snc.expressed <- row.names(snc.mean.df[snc.mean.df$snc.mean >= 0.5,])
