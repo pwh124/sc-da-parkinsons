@@ -5,3 +5,4 @@ dat.filter.final.Rds
 genes.fpkm_table
 isoforms.count_table
 isoforms.fpkm_table
+._no-homologs-manual-new.txt
