@@ -1,0 +1,115 @@
+---
+title: "Extracting La Manno SN data"
+author: "Paul Hook"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
+
+###Setting important directories. Also loading important libraries and custom functions for analysis.
+```{r init, message=FALSE, warning=FALSE}
+seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
+Rdata_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
+source(file.path(Script_dir,'init.R'))
+source(file.path(Script_dir,"tools_R.r"))
+
+library(DT)
+```
+
+###Loading La Manno (2016) data
+In order to incorporate other information about expression of genes in SN DA neurons, we downloaded expression data from adult midbrain. This came from La Manno, et al. (2016) courtesy of GEO:GSE76381. This data was not in a very friendly format (an extensive header; see below), so it had to be extensively processed.
+```{r loading data}
+# Loading in the data
+linnarsson.adult <- read.csv(file = file.path(Rdata_dir,"GSE76381_MouseAdultDAMoleculeCounts.cef.txt"), stringsAsFactors = F)
+dim(linnarsson.adult)
+
+# This is a very convoluted header
+test <- head(linnarsson.adult)[,1:5]
+datatable(test)
+```
+
+###Extracting cell annotation
+In order to better work with this data, we needed to extract the cell annotation. This is contained in the "CELL_ID" and "Cell_type" data seen above. This annotation dataframe will have rows in the same order as columns.
+```{r getting cell data}
+# First, in order to make the data easier to work with, we transpose the data to make it easer to work with
+linnarsson.t <- t(linnarsson.adult)
+dim(linnarsson.t)
+
+# Extracting just the columns of cell annotations
+linnarsson.cells <- linnarsson.t[,2:3]
+names(linnarsson.cells) <- c("CELL_ID", "CELL_TYPE")
+head(linnarsson.cells)
+
+# Removing the first two rows (CEF and X1) that are useless
+linnarsson.cells <- as_data_frame(linnarsson.cells[-1:-2,])
+head(linnarsson.cells)
+```
+
+###Extracting expression data
+Now, we need to extract the expression data. 
+```{r extracting expression data}
+# Now extracting the expression matrix. Start with row 5 as thats where the expression data actually starts.
+linnarsson.exprs <- linnarsson.adult[5:nrow(linnarsson.adult),]
+head(linnarsson.exprs)
+dim(linnarsson.exprs)
+
+# Removing the 2nd column which is blank ("X1")
+linnarsson.exprs <- linnarsson.exprs[,-2]
+head(linnarsson.exprs)
+
+# Renaming rows as gene names
+rownames(linnarsson.exprs) <- linnarsson.exprs[,1]
+linnarsson.exprs <- linnarsson.exprs[,-1]
+head(linnarsson.exprs)
+dim(linnarsson.exprs)
+```
+
+###Merging expression data with the cellular annotation. 
+Again, the column order of the expression matrix is in the same order as the cellular annotations, so we can just pop the cell names back on back on.
+```{r merging}
+# Adding back in column names
+names(linnarsson.exprs) <- linnarsson.cells$CELL_ID
+head(linnarsson.exprs)
+
+# Making sure all columns are 'numeric'
+linnarsson.final <- as.data.frame(apply(linnarsson.exprs, 2, as.numeric))
+head(linnarsson.final)
+
+# Making sure rownames are the same
+rownames(linnarsson.final) <- rownames(linnarsson.exprs)
+head(linnarsson.final)
+```
+
+###Extracting SN DA neuron information
+Now, we want to just extract 'DA-SNC' data and calculate the average expression for each gene
+```{r Pulling out just the SNC cells}
+# Extracting cells classified as 'DA-SNC'
+lin.snc.cell <- linnarsson.cells[linnarsson.cells$CELL_TYPE == "DA-SNC",]
+
+# Saving list of cell names that were classified as 'DA-SNC'
+snc.cells <- lin.snc.cell$CELL_ID
+
+# Extracting the expression for all 'DA-SNC' cells
+lin.snc.exprs <- linnarsson.final[,colnames(linnarsson.final) %in% snc.cells]
+
+# Calculating the mean
+snc.mean.df <- as_data_frame(apply(lin.snc.exprs, 1, mean))
+names(snc.mean.df) <- "snc.mean"
+
+# Only keeping rownames (genes) that have an average expression >= 0.5
+lin.snc.expressed <- row.names(snc.mean.df[snc.mean.df$snc.mean >= 0.5,])
+
+# Saving the names of genes that are expressed above 0.5 for later use
+saveRDS(object = lin.snc.expressed, file = file.path(Rdata_dir,"lin.snc.expressed.rds"))
+```
+
+###Session Info
+```{r session infomation with outliers removed}
+sessionInfo()
+```

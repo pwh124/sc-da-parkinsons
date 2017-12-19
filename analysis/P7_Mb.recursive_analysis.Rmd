@@ -2,6 +2,8 @@
 title: "P7 MB Recursive Analysis"
 author: "Paul Hook"
 output: html_document
+editor_options: 
+  chunk_output_type: console
 ---
 
 **Last update:** `r Sys.Date()`
@@ -293,6 +295,35 @@ saveRDS(object = P7.Mb.dat.filter.final, file = file.path(Rdata_dir, "P7.Mb.dat.
 ```{r extacting pData information}
 P7.Mb.clusters.df <- pData(P7.Mb.dat.filter)[,c(1,39)]
 saveRDS(P7.Mb.clusters.df, file = file.path(Rdata_dir, "P7.Mb.clusters.df.rds"))
+```
+
+###Extracting SN expressed genes
+In order to score the PD GWAS genes later, we determined the genes expressed in SN DA neurons
+```{r SN expressed}
+# Extracting just the SN DA neurons
+sn_exprs <- P7.Mb.dat.filter[,pData(P7.Mb.dat.filter)$kmeans_tSNE_cluster == 4]
+
+# Finding the average expression for each gene
+sn.average <- as.data.frame(apply(exprs(sn_exprs),1, function(x) mean(x)))
+names(sn.average) <- "average"
+
+# Adding a column so dataframe functions can be used
+sn.average$average.2 <- sn.average$average
+
+# Only keeping genes that have an an average >= 0.5 transcripts
+sn.expressed <- sn.average[which(sn.average$average >= 0.5),]
+
+# Looking up gene names
+sn.expressed$gene <- lookupGeneName(P7.Mb.dat.filter, row.names(sn.expressed))
+
+#Counting number of rowns
+nrow(sn.expressed)
+
+#Kepping only unique gene names
+SN.expressed.genes <- unique(sn.expressed$gene)
+
+#Saving the rds for later scoring
+saveRDS(SN.expressed.genes, file = file.path(Rdata_dir,"SN.expressed.genes.rds"))
 ```
 
 ###Session Info

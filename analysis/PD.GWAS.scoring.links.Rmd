@@ -5,7 +5,9 @@ output: html_document
 
 Below are links to analyses that allowed for the prioritization of candidate genes in Parkinson's GWAS loci
 
+* [La Manno SN DA neuron expression data](la-manno_data_extract.html)
 * [Finding PD GWAS loci genes](finding_PD-loci_genes.html)
+* [Scoring PD GWAS genes](pd_gene_scoring.html)
 
 **Last update:** `r Sys.Date()`
 
