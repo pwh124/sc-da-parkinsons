@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Paul Hook" />
+
+
+<title>Extracting La Manno SN data</title>
+
+<script src="site_libs/jquery-1.12.4/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-0.9/htmlwidgets.js"></script>
+<script src="site_libs/datatables-binding-0.2/datatables.js"></script>
+<link href="site_libs/dt-core-1.10.12/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.10.12/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.10.12/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 41px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+
+.section h2 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h3 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h4 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h5 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h6 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">sc-da-parkinsons</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-line-chart"></span>
+     
+    Analyses
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="cds_creation-qc_filtering.html">CDS creation and QC</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="E15.clustering.html">E15.5 Analyses</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="P7.analyses.links.html">P7 Analyses</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="All.cells.analyses.links.html">All cell analyses</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="PD.GWAS.scoring.links.html">PD Gene Scoring</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="paper-figures.html">
+    <span class="fa fa-paperclip"></span>
+     
+    Paper Figures
+  </a>
+</li>
+<li>
+  <a href="https://github.com/pwh124/sc-da-parkinsons">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Extracting La Manno SN data</h1>
+<h4 class="author"><em>Paul Hook</em></h4>
+
+</div>
+
+
+<p><strong>Last update:</strong> 2017-12-19</p>
+<p><strong>Code version:</strong> 8ac2e1736fd4b2e7f4a9bdfa1a82f781822ac8e8</p>
+<div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level3">
+<h3>Setting important directories. Also loading important libraries and custom functions for analysis.</h3>
+<pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
+file_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/output&quot;
+Rdata_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
+Script_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/code&quot;
+source(file.path(Script_dir,&#39;init.R&#39;))
+source(file.path(Script_dir,&quot;tools_R.r&quot;))
+
+library(DT)</code></pre>
+</div>
+<div id="loading-la-manno-2016-data" class="section level3">
+<h3>Loading La Manno (2016) data</h3>
+<p>In order to incorporate other information about expression of genes in SN DA neurons, we downloaded expression data from adult midbrain. This came from La Manno, et al. (2016) courtesy of <a href="GEO:GSE76381" class="uri">GEO:GSE76381</a>. This data was not in a very friendly format (an extensive header; see below), so it had to be extensively processed.</p>
+<pre class="r"><code># Loading in the data
+linnarsson.adult &lt;- read.csv(file = file.path(Rdata_dir,&quot;GSE76381_MouseAdultDAMoleculeCounts.cef.txt&quot;), stringsAsFactors = F)
+dim(linnarsson.adult)</code></pre>
+<pre><code>## [1] 18224   245</code></pre>
+<pre class="r"><code># This is a very convoluted header
+test &lt;- head(linnarsson.adult)[,1:5]
+datatable(test)</code></pre>
+<div id="htmlwidget-e0c2e2742a5382bafd08" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e0c2e2742a5382bafd08">{"x":{"filter":"none","data":[["1","2","3","4","5","6"],["Dataset","","","Gene","Xkr4","Rp1"],["Adult dopaminergic neurons","CELL_ID","Cell_type","","",""],["","1772072122_A04","DA-VTA4","","0","0"],["","1772072122_A05","DA-VTA2","","0","0"],["","1772072122_A06","DA-VTA3","","1","0"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>CEF<\/th>\n      <th>X1<\/th>\n      <th>X1.1<\/th>\n      <th>X2<\/th>\n      <th>X18220<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"order":[],"autoWidth":false,"orderClasses":false,"columnDefs":[{"orderable":false,"targets":0}]},"selection":{"mode":"multiple","selected":null,"target":"row"}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="extracting-cell-annotation" class="section level3">
+<h3>Extracting cell annotation</h3>
+<p>In order to better work with this data, we needed to extract the cell annotation. This is contained in the “CELL_ID” and “Cell_type” data seen above. This annotation dataframe will have rows in the same order as columns.</p>
+<pre class="r"><code># First, in order to make the data easier to work with, we transpose the data to make it easer to work with
+linnarsson.t &lt;- t(linnarsson.adult)
+dim(linnarsson.t)</code></pre>
+<pre><code>## [1]   245 18224</code></pre>
+<pre class="r"><code># Extracting just the columns of cell annotations
+linnarsson.cells &lt;- linnarsson.t[,2:3]
+names(linnarsson.cells) &lt;- c(&quot;CELL_ID&quot;, &quot;CELL_TYPE&quot;)
+head(linnarsson.cells)</code></pre>
+<pre><code>##        [,1]             [,2]       
+## CEF    &quot;&quot;               &quot;&quot;         
+## X1     &quot;CELL_ID&quot;        &quot;Cell_type&quot;
+## X1.1   &quot;1772072122_A04&quot; &quot;DA-VTA4&quot;  
+## X2     &quot;1772072122_A05&quot; &quot;DA-VTA2&quot;  
+## X18220 &quot;1772072122_A06&quot; &quot;DA-VTA3&quot;  
+## X243   &quot;1772072122_A07&quot; &quot;DA-SNC&quot;</code></pre>
+<pre class="r"><code># Removing the first two rows (CEF and X1) that are useless
+linnarsson.cells &lt;- as_data_frame(linnarsson.cells[-1:-2,])
+head(linnarsson.cells)</code></pre>
+<pre><code>## # A tibble: 6 x 2
+##               V1      V2
+##            &lt;chr&gt;   &lt;chr&gt;
+## 1 1772072122_A04 DA-VTA4
+## 2 1772072122_A05 DA-VTA2
+## 3 1772072122_A06 DA-VTA3
+## 4 1772072122_A07  DA-SNC
+## 5 1772072122_A08 DA-VTA4
+## 6 1772072122_A09 DA-VTA1</code></pre>
+</div>
+<div id="extracting-expression-data" class="section level3">
+<h3>Extracting expression data</h3>
+<p>Now, we need to extract the expression data.</p>
+<pre class="r"><code># Now extracting the expression matrix. Start with row 5 as thats where the expression data actually starts.
+linnarsson.exprs &lt;- linnarsson.adult[5:nrow(linnarsson.adult),]
+head(linnarsson.exprs)</code></pre>
+<pre><code>##       CEF X1 X1.1 X2 X18220 X243 X0 X X.1 X.2 X.3 X.4 X.5 X.6 X.7 X.8 X.9
+## 5    Xkr4       0  0      1    0  0 0   0   0   0   0   0   0   0   0   0
+## 6     Rp1       0  0      0    0  0 0   0   0   0   0   0   0   0   0   0
+## 7   Sox17       0  0      0    0  0 0   0   0   0   0   0   0   0   0   0
+## 8  Mrpl15       1  2      1    1  0 0   0   2   2   0   1   0   1   1   0
+## 9  Lypla1       0  0      1    0  0 0   1   1   0   0   0   0   0   1   0
+## 10  Tcea1       1  0      4    2  0 0   1   2   1   2   0   2   2   0   2
+##    X.10 X.11 X.12 X.13 X.14 X.15 X.16 X.17 X.18 X.19 X.20 X.21 X.22 X.23
+## 5     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 6     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 7     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 8     1    2    1    2    2    2    7    1    1    1    1    0    1    2
+## 9     1    0    0    0    1    1    1    0    0    0    0    0    0    0
+## 10    2    2    1    4    0    0    1    1    0    2    1    3    1    1
+##    X.24 X.25 X.26 X.27 X.28 X.29 X.30 X.31 X.32 X.33 X.34 X.35 X.36 X.37
+## 5     0    1    0    0    0    1    0    0    0    0    0    1    1    0
+## 6     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 7     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 8     0    1    1    1    1    0    2    3    0    1    3    2    2    0
+## 9     0    0    1    0    0    1    0    2    0    0    0    1    1    0
+## 10    3    1    1    0    0    0    1    4    1    3    1    2    6    3
+##    X.38 X.39 X.40 X.41 X.42 X.43 X.44 X.45 X.46 X.47 X.48 X.49 X.50 X.51
+## 5     0    0    0    1    0    0    0    1    0    0    0    1    0    0
+## 6     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 7     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 8     0    4    0    0    0    3    2    0    0    1    0    0    1    1
+## 9     0    0    0    0    0    0    0    1    0    0    0    1    0    0
+## 10    1    2    2    3    0    2    3    2    4    0    4    0    1    3
+##    X.52 X.53 X.54 X.55 X.56 X.57 X.58 X.59 X.60 X.61 X.62 X.63 X.64 X.65
+## 5     0    1    0    0    0    1    0    0    2    0    0    0    0    0
+## 6     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 7     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 8     0    0    0    4    1    0    0    0    0    3    5    2    2    0
+## 9     0    0    0    1    0    2    0    0    0    0    1    0    0    1
+## 10    3    1    0    3    2    1    2    1    0    3    5    2    0    1
+##    X.66 X.67 X.68 X.69 X.70 X.71 X.72 X.73 X.74 X.75 X.76 X.77 X.78 X.79
+## 5     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 6     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 7     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 8     3    0    0    1    2    1    0    3    1    3    0    0    0    2
+## 9     0    0    0    1    1    0    0    1    1    1    1    1    1    1
+## 10    2    2    0    0    0    1    1    1    0    2    2    3    0    5
+##    X.80 X.81 X.82 X.83 X.84 X.85 X.86 X.87 X.88 X.89 X.90 X.91 X.92 X.93
+## 5     1    0    0    0    1    1    0    0    0    2    0    0    0    2
+## 6     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 7     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 8     0    5    2    1    0    0    0    1    0    4    0    3    4    0
+## 9     0    1    0    0    1    0    0    0    0    0    1    0    0    1
+## 10    6    4    0    1    4    1    0    2    4    0    2    2    1    3
+##    X.94 X.95 X.96 X.97 X.98 X.99 X.100 X.101 X.102 X.103 X.104 X.105 X.106
+## 5     0    0    0    0    0    0     1     0     0     0     0     0     0
+## 6     0    0    0    0    0    0     0     0     0     0     0     0     0
+## 7     0    0    0    0    0    0     0     0     0     0     0     0     0
+## 8     2    3    0    2    2    0     1     1     0     1     2     0     0
+## 9     0    1    0    1    1    3     0     1     1     1     1     0     0
+## 10    2    2    5    3    7    1     6     4     1     1     2     2     2
+##    X.107 X.108 X.109 X.110 X.111 X.112 X.113 X.114 X.115 X.116 X.117 X.118
+## 5      0     0     1     1     0     1     0     0     0     0     0     0
+## 6      0     0     0     0     0     0     0     0     0     0     0     0
+## 7      0     0     0     0     0     0     0     0     0     0     0     0
+## 8      1     1     0     0     1     0     0     1     1     0     0     0
+## 9      0     0     0     0     0     0     0     0     0     0     2     0
+## 10     6     0     4     2     0     0     0     0     4     3     1     2
+##    X.119 X.120 X.121 X.122 X.123 X.124 X.125 X.126 X.127 X.128 X.129 X.130
+## 5      0     0     1     0     0     0     0     2     1     1     0     0
+## 6      0     0     0     0     0     0     0     0     0     0     0     0
+## 7      0     0     0     0     0     0     0     0     0     0     0     0
+## 8      1     0     0     0     0     2     0     3     0     0     0     0
+## 9      0     0     0     0     1     1     0     0     0     0     0     0
+## 10     1     1     2     1     1     5     0     0     1     5     2     0
+##    X.131 X.132 X.133 X.134 X.135 X.136 X.137 X.138 X.139 X.140 X.141 X.142
+## 5      0     0     0     0     1     0     0     0     0     0     0     0
+## 6      0     0     0     0     0     0     0     0     0     0     0     0
+## 7      0     0     0     0     0     0     0     0     0     0     0     0
+## 8      0     0     1     2     2     1     0     1     0     0     0     3
+## 9      1     2     0     1     0     0     0     4     0     0     0     0
+## 10     2     1     2     1     6     0     1     0     4     1     1     0
+##    X.143 X.144 X.145 X.146 X.147 X.148 X.149 X.150 X.151 X.152 X.153 X.154
+## 5      0     0     0     0     0     0     1     1     0     0     0     0
+## 6      0     0     0     0     0     0     0     0     0     0     0     0
+## 7      0     0     0     0     0     0     0     0     0     0     0     0
+## 8      1     1     1     0     0     0     1     1     1     3     1     0
+## 9      0     2     1     0     1     0     0     0     1     1     0     0
+## 10     2     5     0     0     1     1     6     3     2     3     0     1
+##    X.155 X.156 X.157 X.158 X.159 X.160 X.161 X.162 X.163 X.164 X.165 X.166
+## 5      0     0     0     0     0     0     0     0     0     0     0     1
+## 6      0     0     0     0     0     0     0     0     0     0     0     0
+## 7      0     0     0     0     0     0     0     0     0     0     0     0
+## 8      2     0     1     0     1     0     0     2     1     3     0     0
+## 9      1     0     0     2     0     0     0     1     3     1     1     0
+## 10     6     1     0     1     0     1     1     2     1     2     3     3
+##    X.167 X.168 X.169 X.170 X.171 X.172 X.173 X.174 X.175 X.176 X.177 X.178
+## 5      0     0     0     0     0     1     0     0     0     1     0     0
+## 6      0     0     0     0     0     0     0     0     0     0     0     0
+## 7      0     0     0     0     2     0     0     0     0     0     0     0
+## 8      1     1     4     0     0     3     0     1     2     0     2     0
+## 9      0     0     0     0     0     0     0     2     2     3     2     0
+## 10     2     1     2     4     1     4     1     5     3     2     1     0
+##    X.179 X.180 X.181 X.182 X.183 X.184 X.185 X.186 X.187 X.188 X.189 X.190
+## 5      0     0     0     0     1     0     0     0     0     0     1     0
+## 6      0     0     0     0     0     0     0     0     0     0     0     0
+## 7      0     0     0     0     0     0     0     0     0     0     0     0
+## 8      0     1     2     2     0     2     2     0     0     2     1     1
+## 9      0     1     2     2     1     1     0     0     1     1     0     0
+## 10     2     6     4     3     2     4     2     1     4     3     3     0
+##    X.191 X.192 X.193 X.194 X.195 X.196 X.197 X.198 X.199 X.200 X.201 X.202
+## 5      0     0     0     1     1     1     0     0     2     0     1     0
+## 6      0     0     0     0     0     0     0     0     0     0     0     0
+## 7      0     0     0     0     0     0     0     0     0     0     0     0
+## 8      2     0     1     2     1     0     0     0     1     2     1     0
+## 9      0     0     0     2     0     2     1     0     4     0     0     3
+## 10     0     1     2     2     2     1     2     2     2     3     2     3
+##    X.203 X.204 X.205 X.206 X.207 X.208 X.209 X.210 X.211 X.212 X.213 X.214
+## 5      1     0     0     0     0     0     0     0     0     0     1     0
+## 6      0     0     0     0     0     0     0     0     0     0     0     0
+## 7      0     0     0     0     0     0     0     0     0     0     0     0
+## 8      3     1     1     4     1     1     0     0     1     2     1     1
+## 9      0     3     1     0     2     1     3     0     1     1     1     0
+## 10     1     3     1     2     5     4     2     1     2     3     2     4
+##    X.215 X.216 X.217 X.218 X.219 X.220 X.221 X.222 X.223 X.224 X.225 X.226
+## 5      0     0     0     0     1     0     2     0     2     0     0     0
+## 6      0     0     0     0     0     0     0     0     0     0     0     0
+## 7      0     0     0     0     0     0     0     0     0     0     0     0
+## 8      1     1     1     0     1     0     1     0     1     2     1     0
+## 9      1     2     0     0     0     0     0     2     3     2     0     1
+## 10     1     3     2     2     5     3     2     1     2     0     3     2
+##    X.227 X.228 X.229 X.230 X.231 X.232 X.233 X.234 X.235 X.236 X.237
+## 5      0     0     0     0     0     0     0     0     0     0     0
+## 6      0     0     0     0     0     0     0     0     0     0     0
+## 7      0     0     0     0     0     0     0     0     0     0     0
+## 8      1     2     0     2     2     3     2     0     1     2     2
+## 9      0     1     0     0     2     2     0     2     0     0     1
+## 10     1     2     1     3     1     1     4     2     5     6     1</code></pre>
+<pre class="r"><code>dim(linnarsson.exprs)</code></pre>
+<pre><code>## [1] 18220   245</code></pre>
+<pre class="r"><code># Removing the 2nd column which is blank (&quot;X1&quot;)
+linnarsson.exprs &lt;- linnarsson.exprs[,-2]
+head(linnarsson.exprs)</code></pre>
+<pre><code>##       CEF X1.1 X2 X18220 X243 X0 X X.1 X.2 X.3 X.4 X.5 X.6 X.7 X.8 X.9
+## 5    Xkr4    0  0      1    0  0 0   0   0   0   0   0   0   0   0   0
+## 6     Rp1    0  0      0    0  0 0   0   0   0   0   0   0   0   0   0
+## 7   Sox17    0  0      0    0  0 0   0   0   0   0   0   0   0   0   0
+## 8  Mrpl15    1  2      1    1  0 0   0   2   2   0   1   0   1   1   0
+## 9  Lypla1    0  0      1    0  0 0   1   1   0   0   0   0   0   1   0
+## 10  Tcea1    1  0      4    2  0 0   1   2   1   2   0   2   2   0   2
+##    X.10 X.11 X.12 X.13 X.14 X.15 X.16 X.17 X.18 X.19 X.20 X.21 X.22 X.23
+## 5     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 6     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 7     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 8     1    2    1    2    2    2    7    1    1    1    1    0    1    2
+## 9     1    0    0    0    1    1    1    0    0    0    0    0    0    0
+## 10    2    2    1    4    0    0    1    1    0    2    1    3    1    1
+##    X.24 X.25 X.26 X.27 X.28 X.29 X.30 X.31 X.32 X.33 X.34 X.35 X.36 X.37
+## 5     0    1    0    0    0    1    0    0    0    0    0    1    1    0
+## 6     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 7     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 8     0    1    1    1    1    0    2    3    0    1    3    2    2    0
+## 9     0    0    1    0    0    1    0    2    0    0    0    1    1    0
+## 10    3    1    1    0    0    0    1    4    1    3    1    2    6    3
+##    X.38 X.39 X.40 X.41 X.42 X.43 X.44 X.45 X.46 X.47 X.48 X.49 X.50 X.51
+## 5     0    0    0    1    0    0    0    1    0    0    0    1    0    0
+## 6     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 7     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 8     0    4    0    0    0    3    2    0    0    1    0    0    1    1
+## 9     0    0    0    0    0    0    0    1    0    0    0    1    0    0
+## 10    1    2    2    3    0    2    3    2    4    0    4    0    1    3
+##    X.52 X.53 X.54 X.55 X.56 X.57 X.58 X.59 X.60 X.61 X.62 X.63 X.64 X.65
+## 5     0    1    0    0    0    1    0    0    2    0    0    0    0    0
+## 6     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 7     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 8     0    0    0    4    1    0    0    0    0    3    5    2    2    0
+## 9     0    0    0    1    0    2    0    0    0    0    1    0    0    1
+## 10    3    1    0    3    2    1    2    1    0    3    5    2    0    1
+##    X.66 X.67 X.68 X.69 X.70 X.71 X.72 X.73 X.74 X.75 X.76 X.77 X.78 X.79
+## 5     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 6     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 7     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 8     3    0    0    1    2    1    0    3    1    3    0    0    0    2
+## 9     0    0    0    1    1    0    0    1    1    1    1    1    1    1
+## 10    2    2    0    0    0    1    1    1    0    2    2    3    0    5
+##    X.80 X.81 X.82 X.83 X.84 X.85 X.86 X.87 X.88 X.89 X.90 X.91 X.92 X.93
+## 5     1    0    0    0    1    1    0    0    0    2    0    0    0    2
+## 6     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 7     0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 8     0    5    2    1    0    0    0    1    0    4    0    3    4    0
+## 9     0    1    0    0    1    0    0    0    0    0    1    0    0    1
+## 10    6    4    0    1    4    1    0    2    4    0    2    2    1    3
+##    X.94 X.95 X.96 X.97 X.98 X.99 X.100 X.101 X.102 X.103 X.104 X.105 X.106
+## 5     0    0    0    0    0    0     1     0     0     0     0     0     0
+## 6     0    0    0    0    0    0     0     0     0     0     0     0     0
+## 7     0    0    0    0    0    0     0     0     0     0     0     0     0
+## 8     2    3    0    2    2    0     1     1     0     1     2     0     0
+## 9     0    1    0    1    1    3     0     1     1     1     1     0     0
+## 10    2    2    5    3    7    1     6     4     1     1     2     2     2
+##    X.107 X.108 X.109 X.110 X.111 X.112 X.113 X.114 X.115 X.116 X.117 X.118
+## 5      0     0     1     1     0     1     0     0     0     0     0     0
+## 6      0     0     0     0     0     0     0     0     0     0     0     0
+## 7      0     0     0     0     0     0     0     0     0     0     0     0
+## 8      1     1     0     0     1     0     0     1     1     0     0     0
+## 9      0     0     0     0     0     0     0     0     0     0     2     0
+## 10     6     0     4     2     0     0     0     0     4     3     1     2
+##    X.119 X.120 X.121 X.122 X.123 X.124 X.125 X.126 X.127 X.128 X.129 X.130
+## 5      0     0     1     0     0     0     0     2     1     1     0     0
+## 6      0     0     0     0     0     0     0     0     0     0     0     0
+## 7      0     0     0     0     0     0     0     0     0     0     0     0
+## 8      1     0     0     0     0     2     0     3     0     0     0     0
+## 9      0     0     0     0     1     1     0     0     0     0     0     0
+## 10     1     1     2     1     1     5     0     0     1     5     2     0
+##    X.131 X.132 X.133 X.134 X.135 X.136 X.137 X.138 X.139 X.140 X.141 X.142
+## 5      0     0     0     0     1     0     0     0     0     0     0     0
+## 6      0     0     0     0     0     0     0     0     0     0     0     0
+## 7      0     0     0     0     0     0     0     0     0     0     0     0
+## 8      0     0     1     2     2     1     0     1     0     0     0     3
+## 9      1     2     0     1     0     0     0     4     0     0     0     0
+## 10     2     1     2     1     6     0     1     0     4     1     1     0
+##    X.143 X.144 X.145 X.146 X.147 X.148 X.149 X.150 X.151 X.152 X.153 X.154
+## 5      0     0     0     0     0     0     1     1     0     0     0     0
+## 6      0     0     0     0     0     0     0     0     0     0     0     0
+## 7      0     0     0     0     0     0     0     0     0     0     0     0
+## 8      1     1     1     0     0     0     1     1     1     3     1     0
+## 9      0     2     1     0     1     0     0     0     1     1     0     0
+## 10     2     5     0     0     1     1     6     3     2     3     0     1
+##    X.155 X.156 X.157 X.158 X.159 X.160 X.161 X.162 X.163 X.164 X.165 X.166
+## 5      0     0     0     0     0     0     0     0     0     0     0     1
+## 6      0     0     0     0     0     0     0     0     0     0     0     0
+## 7      0     0     0     0     0     0     0     0     0     0     0     0
+## 8      2     0     1     0     1     0     0     2     1     3     0     0
+## 9      1     0     0     2     0     0     0     1     3     1     1     0
+## 10     6     1     0     1     0     1     1     2     1     2     3     3
+##    X.167 X.168 X.169 X.170 X.171 X.172 X.173 X.174 X.175 X.176 X.177 X.178
+## 5      0     0     0     0     0     1     0     0     0     1     0     0
+## 6      0     0     0     0     0     0     0     0     0     0     0     0
+## 7      0     0     0     0     2     0     0     0     0     0     0     0
+## 8      1     1     4     0     0     3     0     1     2     0     2     0
+## 9      0     0     0     0     0     0     0     2     2     3     2     0
+## 10     2     1     2     4     1     4     1     5     3     2     1     0
+##    X.179 X.180 X.181 X.182 X.183 X.184 X.185 X.186 X.187 X.188 X.189 X.190
+## 5      0     0     0     0     1     0     0     0     0     0     1     0
+## 6      0     0     0     0     0     0     0     0     0     0     0     0
+## 7      0     0     0     0     0     0     0     0     0     0     0     0
+## 8      0     1     2     2     0     2     2     0     0     2     1     1
+## 9      0     1     2     2     1     1     0     0     1     1     0     0
+## 10     2     6     4     3     2     4     2     1     4     3     3     0
+##    X.191 X.192 X.193 X.194 X.195 X.196 X.197 X.198 X.199 X.200 X.201 X.202
+## 5      0     0     0     1     1     1     0     0     2     0     1     0
+## 6      0     0     0     0     0     0     0     0     0     0     0     0
+## 7      0     0     0     0     0     0     0     0     0     0     0     0
+## 8      2     0     1     2     1     0     0     0     1     2     1     0
+## 9      0     0     0     2     0     2     1     0     4     0     0     3
+## 10     0     1     2     2     2     1     2     2     2     3     2     3
+##    X.203 X.204 X.205 X.206 X.207 X.208 X.209 X.210 X.211 X.212 X.213 X.214
+## 5      1     0     0     0     0     0     0     0     0     0     1     0
+## 6      0     0     0     0     0     0     0     0     0     0     0     0
+## 7      0     0     0     0     0     0     0     0     0     0     0     0
+## 8      3     1     1     4     1     1     0     0     1     2     1     1
+## 9      0     3     1     0     2     1     3     0     1     1     1     0
+## 10     1     3     1     2     5     4     2     1     2     3     2     4
+##    X.215 X.216 X.217 X.218 X.219 X.220 X.221 X.222 X.223 X.224 X.225 X.226
+## 5      0     0     0     0     1     0     2     0     2     0     0     0
+## 6      0     0     0     0     0     0     0     0     0     0     0     0
+## 7      0     0     0     0     0     0     0     0     0     0     0     0
+## 8      1     1     1     0     1     0     1     0     1     2     1     0
+## 9      1     2     0     0     0     0     0     2     3     2     0     1
+## 10     1     3     2     2     5     3     2     1     2     0     3     2
+##    X.227 X.228 X.229 X.230 X.231 X.232 X.233 X.234 X.235 X.236 X.237
+## 5      0     0     0     0     0     0     0     0     0     0     0
+## 6      0     0     0     0     0     0     0     0     0     0     0
+## 7      0     0     0     0     0     0     0     0     0     0     0
+## 8      1     2     0     2     2     3     2     0     1     2     2
+## 9      0     1     0     0     2     2     0     2     0     0     1
+## 10     1     2     1     3     1     1     4     2     5     6     1</code></pre>
+<pre class="r"><code># Renaming rows as gene names
+rownames(linnarsson.exprs) &lt;- linnarsson.exprs[,1]
+linnarsson.exprs &lt;- linnarsson.exprs[,-1]
+head(linnarsson.exprs)</code></pre>
+<pre><code>##        X1.1 X2 X18220 X243 X0 X X.1 X.2 X.3 X.4 X.5 X.6 X.7 X.8 X.9 X.10
+## Xkr4      0  0      1    0  0 0   0   0   0   0   0   0   0   0   0    0
+## Rp1       0  0      0    0  0 0   0   0   0   0   0   0   0   0   0    0
+## Sox17     0  0      0    0  0 0   0   0   0   0   0   0   0   0   0    0
+## Mrpl15    1  2      1    1  0 0   0   2   2   0   1   0   1   1   0    1
+## Lypla1    0  0      1    0  0 0   1   1   0   0   0   0   0   1   0    1
+## Tcea1     1  0      4    2  0 0   1   2   1   2   0   2   2   0   2    2
+##        X.11 X.12 X.13 X.14 X.15 X.16 X.17 X.18 X.19 X.20 X.21 X.22 X.23
+## Xkr4      0    0    0    0    0    0    0    0    0    0    0    0    0
+## Rp1       0    0    0    0    0    0    0    0    0    0    0    0    0
+## Sox17     0    0    0    0    0    0    0    0    0    0    0    0    0
+## Mrpl15    2    1    2    2    2    7    1    1    1    1    0    1    2
+## Lypla1    0    0    0    1    1    1    0    0    0    0    0    0    0
+## Tcea1     2    1    4    0    0    1    1    0    2    1    3    1    1
+##        X.24 X.25 X.26 X.27 X.28 X.29 X.30 X.31 X.32 X.33 X.34 X.35 X.36
+## Xkr4      0    1    0    0    0    1    0    0    0    0    0    1    1
+## Rp1       0    0    0    0    0    0    0    0    0    0    0    0    0
+## Sox17     0    0    0    0    0    0    0    0    0    0    0    0    0
+## Mrpl15    0    1    1    1    1    0    2    3    0    1    3    2    2
+## Lypla1    0    0    1    0    0    1    0    2    0    0    0    1    1
+## Tcea1     3    1    1    0    0    0    1    4    1    3    1    2    6
+##        X.37 X.38 X.39 X.40 X.41 X.42 X.43 X.44 X.45 X.46 X.47 X.48 X.49
+## Xkr4      0    0    0    0    1    0    0    0    1    0    0    0    1
+## Rp1       0    0    0    0    0    0    0    0    0    0    0    0    0
+## Sox17     0    0    0    0    0    0    0    0    0    0    0    0    0
+## Mrpl15    0    0    4    0    0    0    3    2    0    0    1    0    0
+## Lypla1    0    0    0    0    0    0    0    0    1    0    0    0    1
+## Tcea1     3    1    2    2    3    0    2    3    2    4    0    4    0
+##        X.50 X.51 X.52 X.53 X.54 X.55 X.56 X.57 X.58 X.59 X.60 X.61 X.62
+## Xkr4      0    0    0    1    0    0    0    1    0    0    2    0    0
+## Rp1       0    0    0    0    0    0    0    0    0    0    0    0    0
+## Sox17     0    0    0    0    0    0    0    0    0    0    0    0    0
+## Mrpl15    1    1    0    0    0    4    1    0    0    0    0    3    5
+## Lypla1    0    0    0    0    0    1    0    2    0    0    0    0    1
+## Tcea1     1    3    3    1    0    3    2    1    2    1    0    3    5
+##        X.63 X.64 X.65 X.66 X.67 X.68 X.69 X.70 X.71 X.72 X.73 X.74 X.75
+## Xkr4      0    0    0    0    0    0    0    0    0    0    0    0    0
+## Rp1       0    0    0    0    0    0    0    0    0    0    0    0    0
+## Sox17     0    0    0    0    0    0    0    0    0    0    0    0    0
+## Mrpl15    2    2    0    3    0    0    1    2    1    0    3    1    3
+## Lypla1    0    0    1    0    0    0    1    1    0    0    1    1    1
+## Tcea1     2    0    1    2    2    0    0    0    1    1    1    0    2
+##        X.76 X.77 X.78 X.79 X.80 X.81 X.82 X.83 X.84 X.85 X.86 X.87 X.88
+## Xkr4      0    0    0    0    1    0    0    0    1    1    0    0    0
+## Rp1       0    0    0    0    0    0    0    0    0    0    0    0    0
+## Sox17     0    0    0    0    0    0    0    0    0    0    0    0    0
+## Mrpl15    0    0    0    2    0    5    2    1    0    0    0    1    0
+## Lypla1    1    1    1    1    0    1    0    0    1    0    0    0    0
+## Tcea1     2    3    0    5    6    4    0    1    4    1    0    2    4
+##        X.89 X.90 X.91 X.92 X.93 X.94 X.95 X.96 X.97 X.98 X.99 X.100 X.101
+## Xkr4      2    0    0    0    2    0    0    0    0    0    0     1     0
+## Rp1       0    0    0    0    0    0    0    0    0    0    0     0     0
+## Sox17     0    0    0    0    0    0    0    0    0    0    0     0     0
+## Mrpl15    4    0    3    4    0    2    3    0    2    2    0     1     1
+## Lypla1    0    1    0    0    1    0    1    0    1    1    3     0     1
+## Tcea1     0    2    2    1    3    2    2    5    3    7    1     6     4
+##        X.102 X.103 X.104 X.105 X.106 X.107 X.108 X.109 X.110 X.111 X.112
+## Xkr4       0     0     0     0     0     0     0     1     1     0     1
+## Rp1        0     0     0     0     0     0     0     0     0     0     0
+## Sox17      0     0     0     0     0     0     0     0     0     0     0
+## Mrpl15     0     1     2     0     0     1     1     0     0     1     0
+## Lypla1     1     1     1     0     0     0     0     0     0     0     0
+## Tcea1      1     1     2     2     2     6     0     4     2     0     0
+##        X.113 X.114 X.115 X.116 X.117 X.118 X.119 X.120 X.121 X.122 X.123
+## Xkr4       0     0     0     0     0     0     0     0     1     0     0
+## Rp1        0     0     0     0     0     0     0     0     0     0     0
+## Sox17      0     0     0     0     0     0     0     0     0     0     0
+## Mrpl15     0     1     1     0     0     0     1     0     0     0     0
+## Lypla1     0     0     0     0     2     0     0     0     0     0     1
+## Tcea1      0     0     4     3     1     2     1     1     2     1     1
+##        X.124 X.125 X.126 X.127 X.128 X.129 X.130 X.131 X.132 X.133 X.134
+## Xkr4       0     0     2     1     1     0     0     0     0     0     0
+## Rp1        0     0     0     0     0     0     0     0     0     0     0
+## Sox17      0     0     0     0     0     0     0     0     0     0     0
+## Mrpl15     2     0     3     0     0     0     0     0     0     1     2
+## Lypla1     1     0     0     0     0     0     0     1     2     0     1
+## Tcea1      5     0     0     1     5     2     0     2     1     2     1
+##        X.135 X.136 X.137 X.138 X.139 X.140 X.141 X.142 X.143 X.144 X.145
+## Xkr4       1     0     0     0     0     0     0     0     0     0     0
+## Rp1        0     0     0     0     0     0     0     0     0     0     0
+## Sox17      0     0     0     0     0     0     0     0     0     0     0
+## Mrpl15     2     1     0     1     0     0     0     3     1     1     1
+## Lypla1     0     0     0     4     0     0     0     0     0     2     1
+## Tcea1      6     0     1     0     4     1     1     0     2     5     0
+##        X.146 X.147 X.148 X.149 X.150 X.151 X.152 X.153 X.154 X.155 X.156
+## Xkr4       0     0     0     1     1     0     0     0     0     0     0
+## Rp1        0     0     0     0     0     0     0     0     0     0     0
+## Sox17      0     0     0     0     0     0     0     0     0     0     0
+## Mrpl15     0     0     0     1     1     1     3     1     0     2     0
+## Lypla1     0     1     0     0     0     1     1     0     0     1     0
+## Tcea1      0     1     1     6     3     2     3     0     1     6     1
+##        X.157 X.158 X.159 X.160 X.161 X.162 X.163 X.164 X.165 X.166 X.167
+## Xkr4       0     0     0     0     0     0     0     0     0     1     0
+## Rp1        0     0     0     0     0     0     0     0     0     0     0
+## Sox17      0     0     0     0     0     0     0     0     0     0     0
+## Mrpl15     1     0     1     0     0     2     1     3     0     0     1
+## Lypla1     0     2     0     0     0     1     3     1     1     0     0
+## Tcea1      0     1     0     1     1     2     1     2     3     3     2
+##        X.168 X.169 X.170 X.171 X.172 X.173 X.174 X.175 X.176 X.177 X.178
+## Xkr4       0     0     0     0     1     0     0     0     1     0     0
+## Rp1        0     0     0     0     0     0     0     0     0     0     0
+## Sox17      0     0     0     2     0     0     0     0     0     0     0
+## Mrpl15     1     4     0     0     3     0     1     2     0     2     0
+## Lypla1     0     0     0     0     0     0     2     2     3     2     0
+## Tcea1      1     2     4     1     4     1     5     3     2     1     0
+##        X.179 X.180 X.181 X.182 X.183 X.184 X.185 X.186 X.187 X.188 X.189
+## Xkr4       0     0     0     0     1     0     0     0     0     0     1
+## Rp1        0     0     0     0     0     0     0     0     0     0     0
+## Sox17      0     0     0     0     0     0     0     0     0     0     0
+## Mrpl15     0     1     2     2     0     2     2     0     0     2     1
+## Lypla1     0     1     2     2     1     1     0     0     1     1     0
+## Tcea1      2     6     4     3     2     4     2     1     4     3     3
+##        X.190 X.191 X.192 X.193 X.194 X.195 X.196 X.197 X.198 X.199 X.200
+## Xkr4       0     0     0     0     1     1     1     0     0     2     0
+## Rp1        0     0     0     0     0     0     0     0     0     0     0
+## Sox17      0     0     0     0     0     0     0     0     0     0     0
+## Mrpl15     1     2     0     1     2     1     0     0     0     1     2
+## Lypla1     0     0     0     0     2     0     2     1     0     4     0
+## Tcea1      0     0     1     2     2     2     1     2     2     2     3
+##        X.201 X.202 X.203 X.204 X.205 X.206 X.207 X.208 X.209 X.210 X.211
+## Xkr4       1     0     1     0     0     0     0     0     0     0     0
+## Rp1        0     0     0     0     0     0     0     0     0     0     0
+## Sox17      0     0     0     0     0     0     0     0     0     0     0
+## Mrpl15     1     0     3     1     1     4     1     1     0     0     1
+## Lypla1     0     3     0     3     1     0     2     1     3     0     1
+## Tcea1      2     3     1     3     1     2     5     4     2     1     2
+##        X.212 X.213 X.214 X.215 X.216 X.217 X.218 X.219 X.220 X.221 X.222
+## Xkr4       0     1     0     0     0     0     0     1     0     2     0
+## Rp1        0     0     0     0     0     0     0     0     0     0     0
+## Sox17      0     0     0     0     0     0     0     0     0     0     0
+## Mrpl15     2     1     1     1     1     1     0     1     0     1     0
+## Lypla1     1     1     0     1     2     0     0     0     0     0     2
+## Tcea1      3     2     4     1     3     2     2     5     3     2     1
+##        X.223 X.224 X.225 X.226 X.227 X.228 X.229 X.230 X.231 X.232 X.233
+## Xkr4       2     0     0     0     0     0     0     0     0     0     0
+## Rp1        0     0     0     0     0     0     0     0     0     0     0
+## Sox17      0     0     0     0     0     0     0     0     0     0     0
+## Mrpl15     1     2     1     0     1     2     0     2     2     3     2
+## Lypla1     3     2     0     1     0     1     0     0     2     2     0
+## Tcea1      2     0     3     2     1     2     1     3     1     1     4
+##        X.234 X.235 X.236 X.237
+## Xkr4       0     0     0     0
+## Rp1        0     0     0     0
+## Sox17      0     0     0     0
+## Mrpl15     0     1     2     2
+## Lypla1     2     0     0     1
+## Tcea1      2     5     6     1</code></pre>
+<pre class="r"><code>dim(linnarsson.exprs)</code></pre>
+<pre><code>## [1] 18220   243</code></pre>
+</div>
+<div id="merging-expression-data-with-the-cellular-annotation." class="section level3">
+<h3>Merging expression data with the cellular annotation.</h3>
+<p>Again, the column order of the expression matrix is in the same order as the cellular annotations, so we can just pop the cell names back on back on.</p>
+<pre class="r"><code># Adding back in column names
+names(linnarsson.exprs) &lt;- linnarsson.cells$CELL_ID</code></pre>
+<pre><code>## Warning: Unknown or uninitialised column: &#39;CELL_ID&#39;.</code></pre>
+<pre class="r"><code>head(linnarsson.exprs)</code></pre>
+<pre><code>##                                                                           
+## Xkr4   0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0
+## Rp1    0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## Sox17  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## Mrpl15 1 2 1 1 0 0 0 2 2 0 1 0 1 1 0 1 2 1 2 2 2 7 1 1 1 1 0 1 2 0 1 1 1 1
+## Lypla1 0 0 1 0 0 0 1 1 0 0 0 0 0 1 0 1 0 0 0 1 1 1 0 0 0 0 0 0 0 0 0 1 0 0
+## Tcea1  1 0 4 2 0 0 1 2 1 2 0 2 2 0 2 2 2 1 4 0 0 1 1 0 2 1 3 1 1 3 1 1 0 0
+##                                                                           
+## Xkr4   1 0 0 0 0 0 1 1 0 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 2 0 0
+## Rp1    0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## Sox17  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## Mrpl15 0 2 3 0 1 3 2 2 0 0 4 0 0 0 3 2 0 0 1 0 0 1 1 0 0 0 4 1 0 0 0 0 3 5
+## Lypla1 1 0 2 0 0 0 1 1 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 1 0 2 0 0 0 0 1
+## Tcea1  0 1 4 1 3 1 2 6 3 1 2 2 3 0 2 3 2 4 0 4 0 1 3 3 1 0 3 2 1 2 1 0 3 5
+##                                                                           
+## Xkr4   0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 1 0 0 0 2 0 0 0 2 0 0 0
+## Rp1    0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## Sox17  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## Mrpl15 2 2 0 3 0 0 1 2 1 0 3 1 3 0 0 0 2 0 5 2 1 0 0 0 1 0 4 0 3 4 0 2 3 0
+## Lypla1 0 0 1 0 0 0 1 1 0 0 1 1 1 1 1 1 1 0 1 0 0 1 0 0 0 0 0 1 0 0 1 0 1 0
+## Tcea1  2 0 1 2 2 0 0 0 1 1 1 0 2 2 3 0 5 6 4 0 1 4 1 0 2 4 0 2 2 1 3 2 2 5
+##                                                                           
+## Xkr4   0 0 0 1 0 0 0 0 0 0 0 0 1 1 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 2 1 1 0 0
+## Rp1    0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## Sox17  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## Mrpl15 2 2 0 1 1 0 1 2 0 0 1 1 0 0 1 0 0 1 1 0 0 0 1 0 0 0 0 2 0 3 0 0 0 0
+## Lypla1 1 1 3 0 1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 1 1 0 0 0 0 0 0
+## Tcea1  3 7 1 6 4 1 1 2 2 2 6 0 4 2 0 0 0 0 4 3 1 2 1 1 2 1 1 5 0 0 1 5 2 0
+##                                                                           
+## Xkr4   0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## Rp1    0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## Sox17  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## Mrpl15 0 0 1 2 2 1 0 1 0 0 0 3 1 1 1 0 0 0 1 1 1 3 1 0 2 0 1 0 1 0 0 2 1 3
+## Lypla1 1 2 0 1 0 0 0 4 0 0 0 0 0 2 1 0 1 0 0 0 1 1 0 0 1 0 0 2 0 0 0 1 3 1
+## Tcea1  2 1 2 1 6 0 1 0 4 1 1 0 2 5 0 0 1 1 6 3 2 3 0 1 6 1 0 1 0 1 1 2 1 2
+##                                                                           
+## Xkr4   0 1 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 1 1 1 0 0
+## Rp1    0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## Sox17  0 0 0 0 0 0 2 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## Mrpl15 0 0 1 1 4 0 0 3 0 1 2 0 2 0 0 1 2 2 0 2 2 0 0 2 1 1 2 0 1 2 1 0 0 0
+## Lypla1 1 0 0 0 0 0 0 0 0 2 2 3 2 0 0 1 2 2 1 1 0 0 1 1 0 0 0 0 0 2 0 2 1 0
+## Tcea1  3 3 2 1 2 4 1 4 1 5 3 2 1 0 2 6 4 3 2 4 2 1 4 3 3 0 0 1 2 2 2 1 2 2
+##                                                                           
+## Xkr4   2 0 1 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0 2 0 2 0 0 0 0 0 0 0 0 0
+## Rp1    0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## Sox17  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## Mrpl15 1 2 1 0 3 1 1 4 1 1 0 0 1 2 1 1 1 1 1 0 1 0 1 0 1 2 1 0 1 2 0 2 2 3
+## Lypla1 4 0 0 3 0 3 1 0 2 1 3 0 1 1 1 0 1 2 0 0 0 0 0 2 3 2 0 1 0 1 0 0 2 2
+## Tcea1  2 3 2 3 1 3 1 2 5 4 2 1 2 3 2 4 1 3 2 2 5 3 2 1 2 0 3 2 1 2 1 3 1 1
+##                 
+## Xkr4   0 0 0 0 0
+## Rp1    0 0 0 0 0
+## Sox17  0 0 0 0 0
+## Mrpl15 2 0 1 2 2
+## Lypla1 0 2 0 0 1
+## Tcea1  4 2 5 6 1</code></pre>
+<pre class="r"><code># Making sure all columns are &#39;numeric&#39;
+linnarsson.final &lt;- as.data.frame(apply(linnarsson.exprs, 2, as.numeric))
+head(linnarsson.final)</code></pre>
+<pre><code>##   V1 V2 V3 V4 V5 V6 V7 V8 V9 V10 V11 V12 V13 V14 V15 V16 V17 V18 V19 V20
+## 1  0  0  1  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0
+## 2  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0
+## 3  0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0   0
+## 4  1  2  1  1  0  0  0  2  2   0   1   0   1   1   0   1   2   1   2   2
+## 5  0  0  1  0  0  0  1  1  0   0   0   0   0   1   0   1   0   0   0   1
+## 6  1  0  4  2  0  0  1  2  1   2   0   2   2   0   2   2   2   1   4   0
+##   V21 V22 V23 V24 V25 V26 V27 V28 V29 V30 V31 V32 V33 V34 V35 V36 V37 V38
+## 1   0   0   0   0   0   0   0   0   0   0   1   0   0   0   1   0   0   0
+## 2   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 3   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 4   2   7   1   1   1   1   0   1   2   0   1   1   1   1   0   2   3   0
+## 5   1   1   0   0   0   0   0   0   0   0   0   1   0   0   1   0   2   0
+## 6   0   1   1   0   2   1   3   1   1   3   1   1   0   0   0   1   4   1
+##   V39 V40 V41 V42 V43 V44 V45 V46 V47 V48 V49 V50 V51 V52 V53 V54 V55 V56
+## 1   0   0   1   1   0   0   0   0   1   0   0   0   1   0   0   0   1   0
+## 2   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 3   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 4   1   3   2   2   0   0   4   0   0   0   3   2   0   0   1   0   0   1
+## 5   0   0   1   1   0   0   0   0   0   0   0   0   1   0   0   0   1   0
+## 6   3   1   2   6   3   1   2   2   3   0   2   3   2   4   0   4   0   1
+##   V57 V58 V59 V60 V61 V62 V63 V64 V65 V66 V67 V68 V69 V70 V71 V72 V73 V74
+## 1   0   0   1   0   0   0   1   0   0   2   0   0   0   0   0   0   0   0
+## 2   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 3   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 4   1   0   0   0   4   1   0   0   0   0   3   5   2   2   0   3   0   0
+## 5   0   0   0   0   1   0   2   0   0   0   0   1   0   0   1   0   0   0
+## 6   3   3   1   0   3   2   1   2   1   0   3   5   2   0   1   2   2   0
+##   V75 V76 V77 V78 V79 V80 V81 V82 V83 V84 V85 V86 V87 V88 V89 V90 V91 V92
+## 1   0   0   0   0   0   0   0   0   0   0   0   1   0   0   0   1   1   0
+## 2   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 3   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## 4   1   2   1   0   3   1   3   0   0   0   2   0   5   2   1   0   0   0
+## 5   1   1   0   0   1   1   1   1   1   1   1   0   1   0   0   1   0   0
+## 6   0   0   1   1   1   0   2   2   3   0   5   6   4   0   1   4   1   0
+##   V93 V94 V95 V96 V97 V98 V99 V100 V101 V102 V103 V104 V105 V106 V107 V108
+## 1   0   0   2   0   0   0   2    0    0    0    0    0    0    1    0    0
+## 2   0   0   0   0   0   0   0    0    0    0    0    0    0    0    0    0
+## 3   0   0   0   0   0   0   0    0    0    0    0    0    0    0    0    0
+## 4   1   0   4   0   3   4   0    2    3    0    2    2    0    1    1    0
+## 5   0   0   0   1   0   0   1    0    1    0    1    1    3    0    1    1
+## 6   2   4   0   2   2   1   3    2    2    5    3    7    1    6    4    1
+##   V109 V110 V111 V112 V113 V114 V115 V116 V117 V118 V119 V120 V121 V122
+## 1    0    0    0    0    0    0    1    1    0    1    0    0    0    0
+## 2    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 3    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 4    1    2    0    0    1    1    0    0    1    0    0    1    1    0
+## 5    1    1    0    0    0    0    0    0    0    0    0    0    0    0
+## 6    1    2    2    2    6    0    4    2    0    0    0    0    4    3
+##   V123 V124 V125 V126 V127 V128 V129 V130 V131 V132 V133 V134 V135 V136
+## 1    0    0    0    0    1    0    0    0    0    2    1    1    0    0
+## 2    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 3    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 4    0    0    1    0    0    0    0    2    0    3    0    0    0    0
+## 5    2    0    0    0    0    0    1    1    0    0    0    0    0    0
+## 6    1    2    1    1    2    1    1    5    0    0    1    5    2    0
+##   V137 V138 V139 V140 V141 V142 V143 V144 V145 V146 V147 V148 V149 V150
+## 1    0    0    0    0    1    0    0    0    0    0    0    0    0    0
+## 2    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 3    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 4    0    0    1    2    2    1    0    1    0    0    0    3    1    1
+## 5    1    2    0    1    0    0    0    4    0    0    0    0    0    2
+## 6    2    1    2    1    6    0    1    0    4    1    1    0    2    5
+##   V151 V152 V153 V154 V155 V156 V157 V158 V159 V160 V161 V162 V163 V164
+## 1    0    0    0    0    1    1    0    0    0    0    0    0    0    0
+## 2    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 3    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 4    1    0    0    0    1    1    1    3    1    0    2    0    1    0
+## 5    1    0    1    0    0    0    1    1    0    0    1    0    0    2
+## 6    0    0    1    1    6    3    2    3    0    1    6    1    0    1
+##   V165 V166 V167 V168 V169 V170 V171 V172 V173 V174 V175 V176 V177 V178
+## 1    0    0    0    0    0    0    0    1    0    0    0    0    0    1
+## 2    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 3    0    0    0    0    0    0    0    0    0    0    0    0    2    0
+## 4    1    0    0    2    1    3    0    0    1    1    4    0    0    3
+## 5    0    0    0    1    3    1    1    0    0    0    0    0    0    0
+## 6    0    1    1    2    1    2    3    3    2    1    2    4    1    4
+##   V179 V180 V181 V182 V183 V184 V185 V186 V187 V188 V189 V190 V191 V192
+## 1    0    0    0    1    0    0    0    0    0    0    1    0    0    0
+## 2    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 3    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 4    0    1    2    0    2    0    0    1    2    2    0    2    2    0
+## 5    0    2    2    3    2    0    0    1    2    2    1    1    0    0
+## 6    1    5    3    2    1    0    2    6    4    3    2    4    2    1
+##   V193 V194 V195 V196 V197 V198 V199 V200 V201 V202 V203 V204 V205 V206
+## 1    0    0    1    0    0    0    0    1    1    1    0    0    2    0
+## 2    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 3    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 4    0    2    1    1    2    0    1    2    1    0    0    0    1    2
+## 5    1    1    0    0    0    0    0    2    0    2    1    0    4    0
+## 6    4    3    3    0    0    1    2    2    2    1    2    2    2    3
+##   V207 V208 V209 V210 V211 V212 V213 V214 V215 V216 V217 V218 V219 V220
+## 1    1    0    1    0    0    0    0    0    0    0    0    0    1    0
+## 2    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 3    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 4    1    0    3    1    1    4    1    1    0    0    1    2    1    1
+## 5    0    3    0    3    1    0    2    1    3    0    1    1    1    0
+## 6    2    3    1    3    1    2    5    4    2    1    2    3    2    4
+##   V221 V222 V223 V224 V225 V226 V227 V228 V229 V230 V231 V232 V233 V234
+## 1    0    0    0    0    1    0    2    0    2    0    0    0    0    0
+## 2    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 3    0    0    0    0    0    0    0    0    0    0    0    0    0    0
+## 4    1    1    1    0    1    0    1    0    1    2    1    0    1    2
+## 5    1    2    0    0    0    0    0    2    3    2    0    1    0    1
+## 6    1    3    2    2    5    3    2    1    2    0    3    2    1    2
+##   V235 V236 V237 V238 V239 V240 V241 V242 V243
+## 1    0    0    0    0    0    0    0    0    0
+## 2    0    0    0    0    0    0    0    0    0
+## 3    0    0    0    0    0    0    0    0    0
+## 4    0    2    2    3    2    0    1    2    2
+## 5    0    0    2    2    0    2    0    0    1
+## 6    1    3    1    1    4    2    5    6    1</code></pre>
+<pre class="r"><code># Making sure rownames are the same
+rownames(linnarsson.final) &lt;- rownames(linnarsson.exprs)
+head(linnarsson.final)</code></pre>
+<pre><code>##        V1 V2 V3 V4 V5 V6 V7 V8 V9 V10 V11 V12 V13 V14 V15 V16 V17 V18 V19
+## Xkr4    0  0  1  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0
+## Rp1     0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0
+## Sox17   0  0  0  0  0  0  0  0  0   0   0   0   0   0   0   0   0   0   0
+## Mrpl15  1  2  1  1  0  0  0  2  2   0   1   0   1   1   0   1   2   1   2
+## Lypla1  0  0  1  0  0  0  1  1  0   0   0   0   0   1   0   1   0   0   0
+## Tcea1   1  0  4  2  0  0  1  2  1   2   0   2   2   0   2   2   2   1   4
+##        V20 V21 V22 V23 V24 V25 V26 V27 V28 V29 V30 V31 V32 V33 V34 V35 V36
+## Xkr4     0   0   0   0   0   0   0   0   0   0   0   1   0   0   0   1   0
+## Rp1      0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## Sox17    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## Mrpl15   2   2   7   1   1   1   1   0   1   2   0   1   1   1   1   0   2
+## Lypla1   1   1   1   0   0   0   0   0   0   0   0   0   1   0   0   1   0
+## Tcea1    0   0   1   1   0   2   1   3   1   1   3   1   1   0   0   0   1
+##        V37 V38 V39 V40 V41 V42 V43 V44 V45 V46 V47 V48 V49 V50 V51 V52 V53
+## Xkr4     0   0   0   0   1   1   0   0   0   0   1   0   0   0   1   0   0
+## Rp1      0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## Sox17    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## Mrpl15   3   0   1   3   2   2   0   0   4   0   0   0   3   2   0   0   1
+## Lypla1   2   0   0   0   1   1   0   0   0   0   0   0   0   0   1   0   0
+## Tcea1    4   1   3   1   2   6   3   1   2   2   3   0   2   3   2   4   0
+##        V54 V55 V56 V57 V58 V59 V60 V61 V62 V63 V64 V65 V66 V67 V68 V69 V70
+## Xkr4     0   1   0   0   0   1   0   0   0   1   0   0   2   0   0   0   0
+## Rp1      0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## Sox17    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## Mrpl15   0   0   1   1   0   0   0   4   1   0   0   0   0   3   5   2   2
+## Lypla1   0   1   0   0   0   0   0   1   0   2   0   0   0   0   1   0   0
+## Tcea1    4   0   1   3   3   1   0   3   2   1   2   1   0   3   5   2   0
+##        V71 V72 V73 V74 V75 V76 V77 V78 V79 V80 V81 V82 V83 V84 V85 V86 V87
+## Xkr4     0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   1   0
+## Rp1      0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## Sox17    0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+## Mrpl15   0   3   0   0   1   2   1   0   3   1   3   0   0   0   2   0   5
+## Lypla1   1   0   0   0   1   1   0   0   1   1   1   1   1   1   1   0   1
+## Tcea1    1   2   2   0   0   0   1   1   1   0   2   2   3   0   5   6   4
+##        V88 V89 V90 V91 V92 V93 V94 V95 V96 V97 V98 V99 V100 V101 V102 V103
+## Xkr4     0   0   1   1   0   0   0   2   0   0   0   2    0    0    0    0
+## Rp1      0   0   0   0   0   0   0   0   0   0   0   0    0    0    0    0
+## Sox17    0   0   0   0   0   0   0   0   0   0   0   0    0    0    0    0
+## Mrpl15   2   1   0   0   0   1   0   4   0   3   4   0    2    3    0    2
+## Lypla1   0   0   1   0   0   0   0   0   1   0   0   1    0    1    0    1
+## Tcea1    0   1   4   1   0   2   4   0   2   2   1   3    2    2    5    3
+##        V104 V105 V106 V107 V108 V109 V110 V111 V112 V113 V114 V115 V116
+## Xkr4      0    0    1    0    0    0    0    0    0    0    0    1    1
+## Rp1       0    0    0    0    0    0    0    0    0    0    0    0    0
+## Sox17     0    0    0    0    0    0    0    0    0    0    0    0    0
+## Mrpl15    2    0    1    1    0    1    2    0    0    1    1    0    0
+## Lypla1    1    3    0    1    1    1    1    0    0    0    0    0    0
+## Tcea1     7    1    6    4    1    1    2    2    2    6    0    4    2
+##        V117 V118 V119 V120 V121 V122 V123 V124 V125 V126 V127 V128 V129
+## Xkr4      0    1    0    0    0    0    0    0    0    0    1    0    0
+## Rp1       0    0    0    0    0    0    0    0    0    0    0    0    0
+## Sox17     0    0    0    0    0    0    0    0    0    0    0    0    0
+## Mrpl15    1    0    0    1    1    0    0    0    1    0    0    0    0
+## Lypla1    0    0    0    0    0    0    2    0    0    0    0    0    1
+## Tcea1     0    0    0    0    4    3    1    2    1    1    2    1    1
+##        V130 V131 V132 V133 V134 V135 V136 V137 V138 V139 V140 V141 V142
+## Xkr4      0    0    2    1    1    0    0    0    0    0    0    1    0
+## Rp1       0    0    0    0    0    0    0    0    0    0    0    0    0
+## Sox17     0    0    0    0    0    0    0    0    0    0    0    0    0
+## Mrpl15    2    0    3    0    0    0    0    0    0    1    2    2    1
+## Lypla1    1    0    0    0    0    0    0    1    2    0    1    0    0
+## Tcea1     5    0    0    1    5    2    0    2    1    2    1    6    0
+##        V143 V144 V145 V146 V147 V148 V149 V150 V151 V152 V153 V154 V155
+## Xkr4      0    0    0    0    0    0    0    0    0    0    0    0    1
+## Rp1       0    0    0    0    0    0    0    0    0    0    0    0    0
+## Sox17     0    0    0    0    0    0    0    0    0    0    0    0    0
+## Mrpl15    0    1    0    0    0    3    1    1    1    0    0    0    1
+## Lypla1    0    4    0    0    0    0    0    2    1    0    1    0    0
+## Tcea1     1    0    4    1    1    0    2    5    0    0    1    1    6
+##        V156 V157 V158 V159 V160 V161 V162 V163 V164 V165 V166 V167 V168
+## Xkr4      1    0    0    0    0    0    0    0    0    0    0    0    0
+## Rp1       0    0    0    0    0    0    0    0    0    0    0    0    0
+## Sox17     0    0    0    0    0    0    0    0    0    0    0    0    0
+## Mrpl15    1    1    3    1    0    2    0    1    0    1    0    0    2
+## Lypla1    0    1    1    0    0    1    0    0    2    0    0    0    1
+## Tcea1     3    2    3    0    1    6    1    0    1    0    1    1    2
+##        V169 V170 V171 V172 V173 V174 V175 V176 V177 V178 V179 V180 V181
+## Xkr4      0    0    0    1    0    0    0    0    0    1    0    0    0
+## Rp1       0    0    0    0    0    0    0    0    0    0    0    0    0
+## Sox17     0    0    0    0    0    0    0    0    2    0    0    0    0
+## Mrpl15    1    3    0    0    1    1    4    0    0    3    0    1    2
+## Lypla1    3    1    1    0    0    0    0    0    0    0    0    2    2
+## Tcea1     1    2    3    3    2    1    2    4    1    4    1    5    3
+##        V182 V183 V184 V185 V186 V187 V188 V189 V190 V191 V192 V193 V194
+## Xkr4      1    0    0    0    0    0    0    1    0    0    0    0    0
+## Rp1       0    0    0    0    0    0    0    0    0    0    0    0    0
+## Sox17     0    0    0    0    0    0    0    0    0    0    0    0    0
+## Mrpl15    0    2    0    0    1    2    2    0    2    2    0    0    2
+## Lypla1    3    2    0    0    1    2    2    1    1    0    0    1    1
+## Tcea1     2    1    0    2    6    4    3    2    4    2    1    4    3
+##        V195 V196 V197 V198 V199 V200 V201 V202 V203 V204 V205 V206 V207
+## Xkr4      1    0    0    0    0    1    1    1    0    0    2    0    1
+## Rp1       0    0    0    0    0    0    0    0    0    0    0    0    0
+## Sox17     0    0    0    0    0    0    0    0    0    0    0    0    0
+## Mrpl15    1    1    2    0    1    2    1    0    0    0    1    2    1
+## Lypla1    0    0    0    0    0    2    0    2    1    0    4    0    0
+## Tcea1     3    0    0    1    2    2    2    1    2    2    2    3    2
+##        V208 V209 V210 V211 V212 V213 V214 V215 V216 V217 V218 V219 V220
+## Xkr4      0    1    0    0    0    0    0    0    0    0    0    1    0
+## Rp1       0    0    0    0    0    0    0    0    0    0    0    0    0
+## Sox17     0    0    0    0    0    0    0    0    0    0    0    0    0
+## Mrpl15    0    3    1    1    4    1    1    0    0    1    2    1    1
+## Lypla1    3    0    3    1    0    2    1    3    0    1    1    1    0
+## Tcea1     3    1    3    1    2    5    4    2    1    2    3    2    4
+##        V221 V222 V223 V224 V225 V226 V227 V228 V229 V230 V231 V232 V233
+## Xkr4      0    0    0    0    1    0    2    0    2    0    0    0    0
+## Rp1       0    0    0    0    0    0    0    0    0    0    0    0    0
+## Sox17     0    0    0    0    0    0    0    0    0    0    0    0    0
+## Mrpl15    1    1    1    0    1    0    1    0    1    2    1    0    1
+## Lypla1    1    2    0    0    0    0    0    2    3    2    0    1    0
+## Tcea1     1    3    2    2    5    3    2    1    2    0    3    2    1
+##        V234 V235 V236 V237 V238 V239 V240 V241 V242 V243
+## Xkr4      0    0    0    0    0    0    0    0    0    0
+## Rp1       0    0    0    0    0    0    0    0    0    0
+## Sox17     0    0    0    0    0    0    0    0    0    0
+## Mrpl15    2    0    2    2    3    2    0    1    2    2
+## Lypla1    1    0    0    2    2    0    2    0    0    1
+## Tcea1     2    1    3    1    1    4    2    5    6    1</code></pre>
+</div>
+<div id="extracting-sn-da-neuron-information" class="section level3">
+<h3>Extracting SN DA neuron information</h3>
+<p>Now, we want to just extract ‘DA-SNC’ data and calculate the average expression for each gene</p>
+<pre class="r"><code># Extracting cells classified as &#39;DA-SNC&#39;
+lin.snc.cell &lt;- linnarsson.cells[linnarsson.cells$CELL_TYPE == &quot;DA-SNC&quot;,]</code></pre>
+<pre><code>## Warning: Unknown or uninitialised column: &#39;CELL_TYPE&#39;.</code></pre>
+<pre class="r"><code># Saving list of cell names that were classified as &#39;DA-SNC&#39;
+snc.cells &lt;- lin.snc.cell$CELL_ID</code></pre>
+<pre><code>## Warning: Unknown or uninitialised column: &#39;CELL_ID&#39;.</code></pre>
+<pre class="r"><code># Extracting the expression for all &#39;DA-SNC&#39; cells
+lin.snc.exprs &lt;- linnarsson.final[,colnames(linnarsson.final) %in% snc.cells]
+
+# Calculating the mean
+snc.mean.df &lt;- as_data_frame(apply(lin.snc.exprs, 1, mean))
+names(snc.mean.df) &lt;- &quot;snc.mean&quot;
+
+# Only keeping rownames (genes) that have an average expression &gt;= 0.5
+lin.snc.expressed &lt;- row.names(snc.mean.df[snc.mean.df$snc.mean &gt;= 0.5,])
+
+# Saving the names of genes that are expressed above 0.5 for later use
+saveRDS(object = lin.snc.expressed, file = file.path(Rdata_dir,&quot;lin.snc.expressed.rds&quot;))</code></pre>
+</div>
+<div id="session-info" class="section level3">
+<h3>Session Info</h3>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.3.0 (2016-05-03)
+## Platform: x86_64-apple-darwin13.4.0 (64-bit)
+## Running under: OS X 10.11.6 (El Capitan)
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+##  [1] grid      splines   stats4    parallel  stats     graphics  grDevices
+##  [8] utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] DT_0.2              ggbiplot_0.55       scales_0.5.0       
+##  [4] SC3_1.1.4           ROCR_1.0-7          jackstraw_1.1.1    
+##  [7] lfa_1.2.2           tsne_0.1-3          gridExtra_2.3      
+## [10] slackr_1.4.2        vegan_2.4-4         permute_0.9-4      
+## [13] MASS_7.3-47         gplots_3.0.1        RColorBrewer_1.1-2 
+## [16] Hmisc_4.0-3         Formula_1.2-2       survival_2.41-3    
+## [19] lattice_0.20-35     Heatplus_2.18.0     Rtsne_0.13         
+## [22] pheatmap_1.0.8      tidyr_0.7.1         dplyr_0.7.4        
+## [25] plyr_1.8.4          heatmap.plus_1.3    stringr_1.2.0      
+## [28] marray_1.50.0       limma_3.28.21       reshape2_1.4.2     
+## [31] monocle_2.2.0       DDRTree_0.1.5       irlba_2.2.1        
+## [34] VGAM_1.0-2          ggplot2_2.2.1       Biobase_2.32.0     
+## [37] BiocGenerics_0.18.0 Matrix_1.2-11      
+## 
+## loaded via a namespace (and not attached):
+##  [1] RSelenium_1.7.1        colorspace_1.3-2       class_7.3-14          
+##  [4] rprojroot_1.2          htmlTable_1.9          corpcor_1.6.9         
+##  [7] base64enc_0.1-3        mvtnorm_1.0-6          codetools_0.2-15      
+## [10] doParallel_1.0.11      robustbase_0.92-7      knitr_1.17            
+## [13] jsonlite_1.5           cluster_2.0.6          semver_0.2.0          
+## [16] shiny_1.0.5            rrcov_1.4-3            httr_1.3.1            
+## [19] backports_1.1.1        assertthat_0.2.0       lazyeval_0.2.1        
+## [22] acepack_1.4.1          htmltools_0.3.6        tools_3.3.0           
+## [25] bindrcpp_0.2           igraph_1.1.2           gtable_0.2.0          
+## [28] glue_1.1.1             binman_0.1.0           doRNG_1.6.6           
+## [31] Rcpp_0.12.13           slam_0.1-37            gdata_2.18.0          
+## [34] nlme_3.1-131           iterators_1.0.8        mime_0.5              
+## [37] rngtools_1.2.4         gtools_3.5.0           WriteXLS_4.0.0        
+## [40] XML_3.98-1.9           DEoptimR_1.0-8         yaml_2.1.15           
+## [43] pkgmaker_0.22          rpart_4.1-11           fastICA_1.2-1         
+## [46] latticeExtra_0.6-28    stringi_1.1.5          pcaPP_1.9-72          
+## [49] foreach_1.4.3          e1071_1.6-8            checkmate_1.8.4       
+## [52] caTools_1.17.1         rlang_0.1.2            pkgconfig_2.0.1       
+## [55] matrixStats_0.52.2     bitops_1.0-6           qlcMatrix_0.9.5       
+## [58] evaluate_0.10.1        purrr_0.2.3            bindr_0.1             
+## [61] htmlwidgets_0.9        magrittr_1.5           R6_2.2.2              
+## [64] combinat_0.0-8         wdman_0.2.2            foreign_0.8-69        
+## [67] mgcv_1.8-22            nnet_7.3-12            tibble_1.3.4          
+## [70] KernSmooth_2.23-15     rmarkdown_1.8          data.table_1.10.4     
+## [73] HSMMSingleCell_0.106.2 digest_0.6.12          xtable_1.8-2          
+## [76] httpuv_1.3.5           openssl_0.9.7          munsell_0.4.3         
+## [79] registry_0.3</code></pre>
+</div>
+
+<hr>
+<p>
+    This <a href="http://rmarkdown.rstudio.com">R Markdown</a> site was created with <a href="https://github.com/jdblischak/workflowr">workflowr</a>
+</p>
+<hr>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-318359-10"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-318359-10');
+</script>
+
+<!-- To enable disqus, uncomment the section below and provide your disqus_shortname -->
+
+<!-- disqus
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'rmarkdown'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+-->
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

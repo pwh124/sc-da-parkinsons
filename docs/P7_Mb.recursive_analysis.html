@@ -347,8 +347,8 @@ div.tocify {
 </div>
 
 
-<p><strong>Last update:</strong> 2017-12-15</p>
-<p><strong>Code version:</strong> 97cdbba92f549b083d57cc1acd1fcd954ca4c492</p>
+<p><strong>Last update:</strong> 2017-12-19</p>
+<p><strong>Code version:</strong> 8ac2e1736fd4b2e7f4a9bdfa1a82f781822ac8e8</p>
 <div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level3">
 <h3>Setting important directories. Also loading important libraries and custom functions for analysis.</h3>
 <pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
@@ -639,6 +639,34 @@ saveRDS(object = P7.Mb.dat.filter.final, file = file.path(Rdata_dir, &quot;P7.Mb
 <h3>Extracting pData information and saving it</h3>
 <pre class="r"><code>P7.Mb.clusters.df &lt;- pData(P7.Mb.dat.filter)[,c(1,39)]
 saveRDS(P7.Mb.clusters.df, file = file.path(Rdata_dir, &quot;P7.Mb.clusters.df.rds&quot;))</code></pre>
+</div>
+<div id="extracting-sn-expressed-genes" class="section level3">
+<h3>Extracting SN expressed genes</h3>
+<p>In order to score the PD GWAS genes later, we determined the genes expressed in SN DA neurons</p>
+<pre class="r"><code># Extracting just the SN DA neurons
+sn_exprs &lt;- P7.Mb.dat.filter[,pData(P7.Mb.dat.filter)$kmeans_tSNE_cluster == 4]
+
+# Finding the average expression for each gene
+sn.average &lt;- as.data.frame(apply(exprs(sn_exprs),1, function(x) mean(x)))
+names(sn.average) &lt;- &quot;average&quot;
+
+# Adding a column so dataframe functions can be used
+sn.average$average.2 &lt;- sn.average$average
+
+# Only keeping genes that have an an average &gt;= 0.5 transcripts
+sn.expressed &lt;- sn.average[which(sn.average$average &gt;= 0.5),]
+
+# Looking up gene names
+sn.expressed$gene &lt;- lookupGeneName(P7.Mb.dat.filter, row.names(sn.expressed))
+
+#Counting number of rowns
+nrow(sn.expressed)</code></pre>
+<pre><code>## [1] 6127</code></pre>
+<pre class="r"><code>#Kepping only unique gene names
+SN.expressed.genes &lt;- unique(sn.expressed$gene)
+
+#Saving the rds for later scoring
+saveRDS(SN.expressed.genes, file = file.path(Rdata_dir,&quot;SN.expressed.genes.rds&quot;))</code></pre>
 </div>
 <div id="session-info" class="section level3">
 <h3>Session Info</h3>
