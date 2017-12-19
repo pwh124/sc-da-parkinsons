@@ -353,7 +353,7 @@ div.tocify {
 
 
 <p><strong>Last update:</strong> 2017-12-19</p>
-<p><strong>Code version:</strong> 8be1cc90b8691a0152673333fb21608065f53a07</p>
+<p><strong>Code version:</strong> c28dd7a5249902333c48a3563fc537ba757b8d4f</p>
 <div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level3">
 <h3>Setting important directories. Also loading important libraries and custom functions for analysis.</h3>
 <pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
@@ -876,10 +876,18 @@ snc.cells &lt;- lin.snc.cell$CELL_ID
 lin.snc.exprs &lt;- linnarsson.final[,colnames(linnarsson.final) %in% snc.cells]
 
 # Calculating the mean
-snc.mean.df &lt;- as_data_frame(apply(lin.snc.exprs, 1, mean))
+snc.mean.df &lt;- as.data.frame(apply(lin.snc.exprs, 1, mean))
 names(snc.mean.df) &lt;- &quot;snc.mean&quot;
-
-# Only keeping rownames (genes) that have an average expression &gt;= 0.5
+rownames(snc.mean.df) &lt;- rownames(lin.snc.exprs)
+head(snc.mean.df)</code></pre>
+<pre><code>##         snc.mean
+## Xkr4   0.2465753
+## Rp1    0.0000000
+## Sox17  0.0000000
+## Mrpl15 1.3013699
+## Lypla1 0.8904110
+## Tcea1  2.2602740</code></pre>
+<pre class="r"><code># Only keeping rownames (genes) that have an average expression &gt;= 0.5
 lin.snc.expressed &lt;- row.names(snc.mean.df[snc.mean.df$snc.mean &gt;= 0.5,])
 
 # Saving the names of genes that are expressed above 0.5 for later use
