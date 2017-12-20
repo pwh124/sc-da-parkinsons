@@ -23,6 +23,7 @@ source(file.path(Script_dir,"tools_R.r"))
 
 #loading any special libraries
 library(readr)
+library(cowplot)
 ```
 
 ###Loading the cds data needed to produce figures
@@ -38,7 +39,7 @@ path_to_sheets <- file.path(file_dir, "PC1.all.cells.3_27_17.GseaPreranked.14906
 
 ###Figure 1B
 This panel shows the results from running principle component analysis (PCA) using genes with a high biological variance in all the valid cells in our dataset. One part of the panel will show the cells colored by timepoint, the other part of the panel will show the cells colored by regional identity.
-```{r PCA plots of all cells, Figure 1b, fig.height=4, fig.width=4, fig.align='center'}
+```{r PCA plots of all cells, Figure 1b, fig.align='center'}
 
 p <- ggbiplot(dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(dat.filter)$age,ellipse=F,var.axes=F) + scale_color_manual(values=c("darkgreen","darkred")) + monocle:::monocle_theme_opts() + theme(legend.position = "bottom",axis.line = element_line(colour = "black")) + coord_fixed(ratio = 1) + labs(color = "Age")
 
@@ -49,8 +50,7 @@ p
 q
 dev.off()
 
-p
-q
+plot_grid(p,q,ncol=2)
 ```
 
 ###Figure 1C
@@ -126,7 +126,7 @@ b
 ###Figures 1D and 1E
 The following script was used to produce the t-SNE plots of all the cells that passed QC. One plot (Figure 1D) will show the plot colored by brain region and one plot (Figure 1E) will show the plot colored by subset clusters identified through iterative analysis.
 
-```{r, Figure 1d and 1e,fig.height=5,fig.width=5,fig.align='center',warning=F,message=FALSE}
+```{r, Figure 1d and 1e,fig.height=8,fig.width=8,fig.align='center',warning=FALSE,message=FALSE,fig.asp=0.60}
 # Setting up colors
 library(pals)
 #Random shuffling of 13 colors to get a combination I like
@@ -136,10 +136,10 @@ library(pals)
 color <- c("#F6937A","#882F1C","#BF1F36","#C2B280","#F2C318","#E790AC","#F18421","#0168A5","#848483","#A4CAEB","#885793","#008957","#222222")
 
 # tSNE colored by region
-r <- myTSNEPlotAlpha(dat.filter,color="region", shape="age") + scale_color_brewer(palette="Set1", name = "Region") + ggtitle("All valid cells - tSNE Plot") + xlab("tSNE 1") + ylab("tSNE 2") + theme(legend.position = "bottom",axis.line = element_line(colour = "black")) + theme(plot.title = element_text(hjust = 0.5)) + coord_fixed(ratio = 1) + scale_shape(name = "Age")
+r <- myTSNEPlotAlpha(dat.filter,color="region", shape="age") + scale_color_brewer(palette="Set1", name = "Region") + ggtitle("All valid cells - tSNE Plot") + xlab("t-SNE 1") + ylab("t-SNE 2") + theme(legend.position = "bottom",axis.line = element_line(colour = "black")) + theme(plot.title = element_text(hjust = 0.5)) + coord_fixed(ratio = 1) + scale_shape(name = "Age")
 
 # tSNE colored by regional subsets
-s <- myTSNEPlotAlpha(dat.filter,color="subset.cluster", shape="age") + scale_color_manual(values = color, name = "Subset Cluster") + ggtitle("All valid cells - tSNE Plot") + xlab("tSNE 1") + ylab("tSNE 2") + theme(legend.position = "bottom",axis.line = element_line(colour = "black")) + theme(plot.title = element_text(hjust = 0.5)) + coord_fixed(ratio = 1) + scale_shape(name = "Age")
+s <- myTSNEPlotAlpha(dat.filter,color="subset.cluster", shape="age") + scale_color_manual(values = color, name = "Subset Cluster") + ggtitle("All valid cells - tSNE Plot") + xlab("t-SNE 1") + ylab("t-SNE 2") + theme(legend.position = "bottom",axis.line = element_line(colour = "black")) + theme(plot.title = element_text(hjust = 0.5)) + coord_fixed(ratio = 1) + scale_shape(name = "Age")
 
 pdf(file = file.path(file_dir, "Figure.1D-1E.pdf"), width = 8, height = 8)
 r
