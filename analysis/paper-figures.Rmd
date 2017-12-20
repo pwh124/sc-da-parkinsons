@@ -4,10 +4,12 @@ output:
   html_document:
     toc: FALSE
 ---
-* This page contains links to code used to create paper figures
+This page contains links to code used to create paper figures
 
-* [Results](All.cells.analyses.links.html)
+* [Figure 1](Figure.1_script.html)
 
+***
 **Last update:** `r Sys.Date()`
 
 **Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
+***

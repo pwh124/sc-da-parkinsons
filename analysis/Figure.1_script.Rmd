@@ -1,0 +1,155 @@
+---
+title: "Figure 1"
+author: "Paul Hook"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+***
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
+***
+
+###Setting important directories. Also loading important libraries and custom functions for analysis.
+```{r init, message=FALSE, warning=FALSE}
+seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
+Rdata_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
+source(file.path(Script_dir,'init.R'))
+source(file.path(Script_dir,"tools_R.r"))
+
+#loading any special libraries
+library(readr)
+```
+
+###Loading the cds data needed to produce figures
+In order to produce the figures seen in Figure 1, we needed to load:
+*The final valid cell dataset (dat.filter.final.Rds)
+*The PCA results using genes with a high biological variance in the entire dataset
+*GSEA results for PC1
+```{r loading data needed}
+dat.filter <- readRDS(file.path(Rdata_dir,"dat.filter.final.Rds"))
+dat.filter.BCV.pca <- readRDS(file.path(Rdata_dir, "dat.filter.BCV.pca"))
+path_to_sheets <- file.path(file_dir, "PC1.all.cells.3_27_17.GseaPreranked.1490670535140")
+```
+
+###Figure 1B
+This panel shows the results from running principle component analysis (PCA) using genes with a high biological variance in all the valid cells in our dataset. One part of the panel will show the cells colored by timepoint, the other part of the panel will show the cells colored by regional identity.
+```{r PCA plots of all cells, Figure 1b, fig.height=4, fig.width=4, fig.align='center'}
+
+p <- ggbiplot(dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(dat.filter)$age,ellipse=F,var.axes=F) + scale_color_manual(values=c("darkgreen","darkred")) + monocle:::monocle_theme_opts() + theme(legend.position = "bottom",axis.line = element_line(colour = "black")) + coord_fixed(ratio = 1) + labs(color = "Age")
+
+q <- ggbiplot(dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(dat.filter)$region,ellipse=F,var.axes=F) + scale_color_brewer(palette="Set1") + monocle:::monocle_theme_opts() + theme(legend.position = "bottom",axis.line = element_line(colour = "black")) + coord_fixed(ratio = 1) + labs(color = "Region")
+
+pdf(file = file.path(file_dir, "Figure.1B.pdf"), width = 4, height = 4)
+p
+q
+dev.off()
+
+p
+q
+```
+
+###Figure 1C
+This script is meant to take the GSEA output Excel sheets and make a double sided barplot displaying the enrichment scores of significant gene sets
+
+```{r, Figure 1c,fig.height=5,fig.width=12,fig.align='left',fig.asp=0.5}
+# We now need to "construct" the file name of the of the Excel files that contain the GSEA output that we want. Those are normally named "gsea_report_for_na_" + "pos_" or "neg_" + GSEA number + ".xls"
+
+# The first step is to extract the GSEA number from the directory file path
+path_unlisted <- unlist(strsplit(path_to_sheets, split = "/"))
+dir_name <- path_unlisted[length(path_unlisted)]
+dir_name_unlisted <- unlist(strsplit(dir_name, split = ".", fixed = T))
+gsea_number <- dir_name_unlisted[length(dir_name_unlisted)]
+
+# Next, I want to save the beginning of the file names as  variable I can use later
+gsea_preamble <- "gsea_report_for_na"
+
+# Now I can construct the Excel file names for the positive and negative results
+gsea_pos <- paste0(gsea_preamble, "_", "pos", "_", gsea_number, ".xls")
+gsea_neg <- paste0(gsea_preamble, "_", "neg", "_", gsea_number, ".xls")
+
+# I want to first set the path to each of the Excel sheets, then make sure that the files exist in the paths that I expect them to be in
+pos.file <- file.path(path_to_sheets, gsea_pos)
+neg.file <- file.path(path_to_sheets, gsea_neg)
+#file.exists(pos.file)
+#file.exists(neg.file)
+
+# I want to first load the data now that I have the path
+pos.set <- read_delim(file = file.path(path_to_sheets, gsea_pos), delim = "\t")
+
+# Then I want to clean up the data so that I only retain the data I want. I will do this using the dplyr package and protocol
+pos.set <- pos.set %>% 
+  dplyr::select(NAME,SIZE, ES, NES, `NOM p-val`, `FDR q-val`, `FWER p-val`)
+
+# Had to rename outside of the pipe because for some reason I could not rename some of the columns
+names(pos.set) <- c("Name","Size","ES","NES","NOM p.val","FDR q.val", "FWER p.val")
+
+# Going back in to the pipe now, I only want gene sets with an FDR <= 0.05 and I only want the top 10. I only need to "head" the top 10 because the Excel sheets are already ordered with lowest p-value on top
+pos.set <- pos.set %>%
+  filter(`FDR q.val` <= 0.05) %>%
+  head(10)
+
+# I want to first load the data now that I have the path
+neg.set <- read_delim(file = file.path(path_to_sheets, gsea_neg), delim = "\t")
+
+# Then I want to clean up the data so that I only retain the data I want. I will do this using the dplyr package and protocol
+neg.set <- neg.set %>% 
+  dplyr::select(NAME,SIZE, ES, NES, `NOM p-val`, `FDR q-val`, `FWER p-val`)
+
+# Had to rename outside of the pipe because for some reason I could not rename some of the columns
+names(neg.set) <- c("Name","Size","ES","NES","NOM p.val","FDR q.val", "FWER p.val")
+
+# Going back in to the pipe now, I only want gene sets with an FDR <= 0.05 and I only want the top 10. I only need to "head" the top 10 because the Excel sheets are already ordered with lowest p-value on top
+neg.set <- neg.set %>%
+  filter(`FDR q.val` <= 0.05) %>%
+  head(10)
+
+# I then want to combine both the positive and negative data sets and give the postitive and negative NES values colors for plotting.
+all.set <- rbind(neg.set, pos.set) %>%
+  mutate(NES_direction = if_else(NES > 0, "darkred", "darkgreen")) 
+
+# Making the plot
+b <- ggplot(all.set) + geom_bar(aes(x=reorder(Name, -NES),y=NES,fill=NES_direction),stat='identity') + coord_flip() + xlab("GO Gene Set") + theme_minimal(base_size = 10) + scale_fill_identity() + geom_hline(yintercept = 0, size = 1) + theme(axis.title.y = element_blank(), plot.title = element_text(hjust = 0.5)) + ggtitle("Top 10 postive and negative enriched GO gene sets for PC2 genes (FDR <= 0.05)")
+
+# Write the plot out to a pdf
+pdf(file = file.path(file_dir,"Figure.1C.pdf"), width = 10, height = 6)
+b
+dev.off()
+
+b
+```
+
+###Figures 1D and 1E
+The following script was used to produce the t-SNE plots of all the cells that passed QC. One plot (Figure 1D) will show the plot colored by brain region and one plot (Figure 1E) will show the plot colored by subset clusters identified through iterative analysis.
+
+```{r, Figure 1d and 1e,fig.height=5,fig.width=5,fig.align='center',warning=F,message=FALSE}
+# Setting up colors
+library(pals)
+#Random shuffling of 13 colors to get a combination I like
+#color.sample <- sample(kelly(22)[c(2:12,13,18)])
+
+#Setting the order of a good looking set of hex codes
+color <- c("#F6937A","#882F1C","#BF1F36","#C2B280","#F2C318","#E790AC","#F18421","#0168A5","#848483","#A4CAEB","#885793","#008957","#222222")
+
+# tSNE colored by region
+r <- myTSNEPlotAlpha(dat.filter,color="region", shape="age") + scale_color_brewer(palette="Set1", name = "Region") + ggtitle("All valid cells - tSNE Plot") + xlab("tSNE 1") + ylab("tSNE 2") + theme(legend.position = "bottom",axis.line = element_line(colour = "black")) + theme(plot.title = element_text(hjust = 0.5)) + coord_fixed(ratio = 1) + scale_shape(name = "Age")
+
+# tSNE colored by regional subsets
+s <- myTSNEPlotAlpha(dat.filter,color="subset.cluster", shape="age") + scale_color_manual(values = color, name = "Subset Cluster") + ggtitle("All valid cells - tSNE Plot") + xlab("tSNE 1") + ylab("tSNE 2") + theme(legend.position = "bottom",axis.line = element_line(colour = "black")) + theme(plot.title = element_text(hjust = 0.5)) + coord_fixed(ratio = 1) + scale_shape(name = "Age")
+
+pdf(file = file.path(file_dir, "Figure.1D-1E.pdf"), width = 8, height = 8)
+r
+s
+dev.off()
+
+r
+s
+```
+
+###Session Info
+```{r session info}
+sessionInfo()
+```
