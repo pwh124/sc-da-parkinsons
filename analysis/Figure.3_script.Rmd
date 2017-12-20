@@ -1,0 +1,79 @@
+---
+title: "Figure 3"
+author: "Paul Hook"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+***
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`  
+
+***
+
+###Setting important directories. Also loading important libraries and custom functions for analysis.
+```{r init, message=FALSE, warning=FALSE}
+seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
+Rdata_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
+figure_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/figures/"
+source(file.path(Script_dir,'init.R'))
+source(file.path(Script_dir,"tools_R.r"))
+
+#loading special libraries
+library(cowplot)
+```
+
+###Loading the cds data needed to produce figures
+```{r loading data needed}
+dat.filter <- readRDS(file.path(Rdata_dir,"dat.filter.final.Rds"))
+```
+
+### Making  expression boxplots of genes
+Below is code to make expression boxplots identified as important for the identification of the P7 neuroblast population and as well as the single molecule in situs displayed in the rest of Figure 3.
+```{r P7 Neuroblast Markers, Figure 2e}
+# Setting the colors to follow the rest of the figures
+color <- c("#F6937A","#882F1C","#BF1F36","#C2B280","#F2C318","#E790AC","#F18421","#0168A5","#848483","#A4CAEB","#885793","#008957","#222222")
+
+# Lhx9 boxplot
+lhx9 <- myBoxplot.subset(dat.filter, markers = "Lhx9", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "none")
+
+# Ldb2 boxplot
+ldb2 <- myBoxplot.subset(dat.filter, markers = "Ldb2", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "none")
+
+#Th boxplot
+th <- myBoxplot.subset(dat.filter, markers = "Th", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "none")
+
+#Slc6a3 boxplot
+slc6a3 <- myBoxplot.subset(dat.filter, markers = "Slc6a3", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") +
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "none")
+
+#Write out plots
+pdf(file = file.path(file_dir,"NB-marker.boxplots.pdf"), height = 3, width = 6)
+lhx9
+ldb2
+th
+slc6a3
+dev.off()
+
+plot_grid(th, lhx9, slc6a3, ldb2, ncol = 2)
+```
+
+###Session Info
+```{r session info}
+sessionInfo()
+```
