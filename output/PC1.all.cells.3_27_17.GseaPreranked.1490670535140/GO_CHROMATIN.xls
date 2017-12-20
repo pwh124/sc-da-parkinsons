@@ -1,0 +1,29 @@
+NAME	PROBE	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	HMGN3	HMGN3	high mobility group nucleosomal binding domain 3	149	0.01963452808558941	-0.17117837	No	
+row_1	PAX6	PAX6	paired box gene 6 (aniridia, keratitis)	163	0.017225682735443115	-0.169459	No	
+row_2	PPARGC1A	PPARGC1A	peroxisome proliferative activated receptor, gamma, coactivator 1, alpha	201	0.010845405049622059	-0.20555727	No	
+row_3	HAT1	HAT1	histone acetyltransferase 1	258	0.003991211764514446	-0.27353036	No	
+row_4	CCND2	CCND2	cyclin D2	272	0.0026620537973940372	-0.28744656	No	
+row_5	JUNB	JUNB	jun B proto-oncogene	345	-0.006391759030520916	-0.37348756	No	
+row_6	BCAS3	BCAS3	breast carcinoma amplified sequence 3	347	-0.0064891730435192585	-0.36781108	No	
+row_7	TCF4	TCF4	transcription factor 4	371	-0.00781452376395464	-0.38909882	No	
+row_8	PLCB1	PLCB1	phospholipase C, beta 1 (phosphoinositide-specific)	446	-0.013718994334340096	-0.4698539	No	
+row_9	MEF2A	MEF2A	MADS box transcription enhancer factor 2, polypeptide A (myocyte enhancer factor 2A)	451	-0.014159025624394417	-0.45981404	No	
+row_10	DLX5	DLX5	distal-less homeobox 5	457	-0.014448409900069237	-0.45075378	No	
+row_11	RFX3	RFX3	regulatory factor X, 3 (influences HLA class II expression)	555	-0.022236056625843048	-0.55204237	No	
+row_12	TCF12	TCF12	transcription factor 12 (HTF4, helix-loop-helix transcription factors 4)	559	-0.022529400885105133	-0.53172565	No	
+row_13	TCF7L2	TCF7L2	transcription factor 7-like 2 (T-cell specific, HMG-box)	560	-0.022550130262970924	-0.5075158	No	
+row_14	AFF4	AFF4	AF4/FMR2 family, member 4	617	-0.028437938541173935	-0.54924273	No	
+row_15	CBX3	CBX3	chromobox homolog 3 (HP1 gamma homolog, Drosophila)	622	-0.02904391661286354	-0.5232224	No	
+row_16	SIRT7	SIRT7	sirtuin (silent mating type information regulation 2 homolog) 7 (S. cerevisiae)	685	-0.038303352892398834	-0.56209975	Yes	
+row_17	JUN	JUN	jun oncogene	715	-0.04441137611865997	-0.5518389	Yes	
+row_18	MCM7	MCM7	MCM7 minichromosome maintenance deficient 7 (S. cerevisiae)	722	-0.04496050626039505	-0.51131105	Yes	
+row_19	PLK2	PLK2	polo-like kinase 2 (Drosophila)	728	-0.04769006371498108	-0.46656242	Yes	
+row_20	USP3	USP3	ubiquitin specific peptidase 3	732	-0.048410478979349136	-0.4184597	Yes	
+row_21	SUV420H2	SUV420H2	suppressor of variegation 4-20 homolog 2 (Drosophila)	735	-0.04852961003780365	-0.36893877	Yes	
+row_22	H2AFV	H2AFV	H2A histone family, member V	748	-0.052626512944698334	-0.3279226	Yes	
+row_23	SFPQ	SFPQ	splicing factor proline/glutamine-rich (polypyrimidine tract binding protein associated)	751	-0.053348660469055176	-0.27322793	Yes	
+row_24	CDK4	CDK4	cyclin-dependent kinase 4	777	-0.06777319312095642	-0.23272446	Yes	
+row_25	RBMX	RBMX	RNA binding motif protein, X-linked	779	-0.07023342698812485	-0.1586119	Yes	
+row_26	ZFP57	ZFP57	zinc finger protein 57 homolog (mouse)	795	-0.08347366750240326	-0.08834908	Yes	
+row_27	H3F3A	H3F3A	H3 histone, family 3A	798	-0.08950313925743103	0.005161187	Yes	

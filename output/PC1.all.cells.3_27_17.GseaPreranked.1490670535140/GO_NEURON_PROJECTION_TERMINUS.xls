@@ -1,0 +1,27 @@
+NAME	PROBE	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	TH	TH	tyrosine hydroxylase	1	0.07856127619743347	0.098668166	Yes	
+row_1	SYT1	SYT1	synaptotagmin I	13	0.05252663418650627	0.15134189	Yes	
+row_2	KCNC2	KCNC2	potassium voltage-gated channel, Shaw-related subfamily, member 2	28	0.04557005316019058	0.19130361	Yes	
+row_3	CALB1	CALB1	calbindin 1, 28kDa	35	0.04419327527284622	0.23980963	Yes	
+row_4	SNCA	SNCA	synuclein, alpha (non A4 component of amyloid precursor)	43	0.040898408740758896	0.28283653	Yes	
+row_5	SLC18A2	SLC18A2	solute carrier family 18 (vesicular monoamine), member 2	47	0.03944431617856026	0.32916135	Yes	
+row_6	ANXA5	ANXA5	annexin A5	48	0.03941164165735245	0.37930563	Yes	
+row_7	CALB2	CALB2	calbindin 2, 29kDa (calretinin)	60	0.03738706186413765	0.41271695	Yes	
+row_8	OPRK1	OPRK1	opioid receptor, kappa 1	67	0.03585394471883774	0.45061266	Yes	
+row_9	PRSS12	PRSS12	protease, serine, 12 (neurotrypsin, motopsin)	81	0.03309369832277298	0.47598746	Yes	
+row_10	DRD2	DRD2	dopamine receptor D2	84	0.032136887311935425	0.5143019	Yes	
+row_11	CPLX1	CPLX1	complexin 1	86	0.031858883798122406	0.55354965	Yes	
+row_12	CCK	CCK	cholecystokinin	89	0.030479969456791878	0.58975595	Yes	
+row_13	PENK	PENK	proenkephalin	95	0.02987654134631157	0.6213335	Yes	
+row_14	SCRG1	SCRG1	-	101	0.028337717056274414	0.6509532	Yes	
+row_15	GHRH	GHRH	growth hormone releasing hormone	111	0.02624044194817543	0.67275643	Yes	
+row_16	VAMP1	VAMP1	vesicle-associated membrane protein 1 (synaptobrevin 1)	121	0.02438165992498398	0.6921947	Yes	
+row_17	CRHBP	CRHBP	corticotropin releasing hormone binding protein	184	0.014080174267292023	0.6303151	No	
+row_18	ADCYAP1	ADCYAP1	adenylate cyclase activating polypeptide 1 (pituitary)	210	0.009301340207457542	0.6099744	No	
+row_19	NTS	NTS	neurotensin	262	0.0035309772938489914	0.54882985	No	
+row_20	DMD	DMD	dystrophin (muscular dystrophy, Duchenne and Becker types)	393	-0.009801127016544342	0.39398986	No	
+row_21	CDH8	CDH8	cadherin 8, type 2	453	-0.014266637153923512	0.33620852	No	
+row_22	GRIA3	GRIA3	glutamate receptor, ionotrophic, AMPA 3	483	-0.016644617542624474	0.3200628	No	
+row_23	PNOC	PNOC	prepronociceptin	495	-0.017289822921156883	0.32790396	No	
+row_24	EPHA4	EPHA4	EPH receptor A4	535	-0.020501306280493736	0.30379516	No	
+row_25	GRIK2	GRIK2	glutamate receptor, ionotropic, kainate 2	633	-0.03029671125113964	0.21750318	No	

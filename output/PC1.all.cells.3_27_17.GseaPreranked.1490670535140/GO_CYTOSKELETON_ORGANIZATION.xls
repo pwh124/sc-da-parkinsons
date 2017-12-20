@@ -1,0 +1,37 @@
+NAME	PROBE	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	ARHGAP26	ARHGAP26	Rho GTPase activating protein 26	80	0.03359951823949814	-0.075286224	No	
+row_1	PAX6	PAX6	paired box gene 6 (aniridia, keratitis)	163	0.017225682735443115	-0.16732031	No	
+row_2	EPS8	EPS8	epidermal growth factor receptor pathway substrate 8	233	0.007131071761250496	-0.25112286	No	
+row_3	ARC	ARC	activity-regulated cytoskeleton-associated protein	252	0.004950194153934717	-0.27031597	No	
+row_4	KLHL1	KLHL1	kelch-like 1 (Drosophila)	300	-0.001154512632638216	-0.33059666	No	
+row_5	NEBL	NEBL	nebulette	320	-0.003040541661903262	-0.3527427	No	
+row_6	BCAS3	BCAS3	breast carcinoma amplified sequence 3	347	-0.0064891730435192585	-0.38103703	No	
+row_7	KIT	KIT	v-kit Hardy-Zuckerman 4 feline sarcoma viral oncogene homolog	355	-0.006963804364204407	-0.3841496	No	
+row_8	NEFL	NEFL	neurofilament, light polypeptide 68kDa	381	-0.009100757539272308	-0.4088848	No	
+row_9	CORO2B	CORO2B	coronin, actin binding protein, 2B	388	-0.00952732190489769	-0.40847978	No	
+row_10	NEK6	NEK6	NIMA (never in mitosis gene a)-related kinase 6	410	-0.01078815758228302	-0.4265426	No	
+row_11	MAST4	MAST4	microtubule associated serine/threonine kinase family member 4	423	-0.011943751014769077	-0.43187347	No	
+row_12	SRGAP2	SRGAP2	SLIT-ROBO Rho GTPase activating protein 2	435	-0.013116303831338882	-0.43488792	No	
+row_13	NCK1	NCK1	NCK adaptor protein 1	441	-0.01336358767002821	-0.42986614	No	
+row_14	MEF2A	MEF2A	MADS box transcription enhancer factor 2, polypeptide A (myocyte enhancer factor 2A)	451	-0.014159025624394417	-0.42937258	No	
+row_15	FGF13	FGF13	fibroblast growth factor 13	475	-0.015805799514055252	-0.44570976	No	
+row_16	MKLN1	MKLN1	muskelin 1, intracellular mediator containing kelch motifs	509	-0.018280383199453354	-0.47294778	No	
+row_17	KPTN	KPTN	kaptin (actin binding protein)	564	-0.023196127265691757	-0.52331996	No	
+row_18	RND3	RND3	Rho family GTPase 3	574	-0.024138193577528	-0.51420844	No	
+row_19	VIM	VIM	vimentin	581	-0.024564282968640327	-0.50081766	No	
+row_20	KATNA1	KATNA1	katanin p60 (ATPase-containing) subunit A 1	613	-0.0280527975410223	-0.5170087	No	
+row_21	SH3KBP1	SH3KBP1	SH3-domain kinase binding protein 1	653	-0.033497028052806854	-0.5389284	Yes	
+row_22	SEMA6A	SEMA6A	sema domain, transmembrane domain (TM), and cytoplasmic domain, (semaphorin) 6A	670	-0.036063164472579956	-0.5286451	Yes	
+row_23	CDK5RAP2	CDK5RAP2	CDK5 regulatory subunit associated protein 2	703	-0.04115599766373634	-0.53482413	Yes	
+row_24	MAST2	MAST2	microtubule associated serine/threonine kinase 2	726	-0.0469941683113575	-0.5229235	Yes	
+row_25	PLK2	PLK2	polo-like kinase 2 (Drosophila)	728	-0.04769006371498108	-0.4830426	Yes	
+row_26	MYO1B	MYO1B	myosin IB	729	-0.04789828136563301	-0.44167805	Yes	
+row_27	FIGN	FIGN	fidgetin	746	-0.05192328989505768	-0.41769806	Yes	
+row_28	SYNE2	SYNE2	spectrin repeat containing, nuclear envelope 2	749	-0.052902378141880035	-0.37461957	Yes	
+row_29	FLNA	FLNA	filamin A, alpha (actin binding protein 280)	752	-0.05417187884449959	-0.33044478	Yes	
+row_30	MAGEL2	MAGEL2	MAGE-like 2	756	-0.054898615926504135	-0.28694615	Yes	
+row_31	EPB41	EPB41	erythrocyte membrane protein band 4.1 (elliptocytosis 1, RH-linked)	780	-0.07080182433128357	-0.25578928	Yes	
+row_32	CNN3	CNN3	calponin 3, acidic	781	-0.07108164578676224	-0.19440378	Yes	
+row_33	AKAP9	AKAP9	A kinase (PRKA) anchor protein (yotiao) 9	791	-0.0787409096956253	-0.13813785	Yes	
+row_34	INA	INA	internexin neuronal intermediate filament protein, alpha	796	-0.08374296128749847	-0.07103327	Yes	
+row_35	DBN1	DBN1	drebrin 1	799	-0.08980200439691544	0.0039113956	Yes	

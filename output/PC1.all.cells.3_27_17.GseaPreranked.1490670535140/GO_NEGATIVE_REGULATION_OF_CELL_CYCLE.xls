@@ -1,0 +1,29 @@
+NAME	PROBE	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	CDKN1A	CDKN1A	cyclin-dependent kinase inhibitor 1A (p21, Cip1)	30	0.045163970440626144	0.007996316	No	
+row_1	BTG2	BTG2	BTG family, member 2	191	0.01270977035164833	-0.18531159	No	
+row_2	RPRM	RPRM	reprimo, TP53 dependent G2 arrest mediator candidate	195	0.012378400191664696	-0.17638153	No	
+row_3	FBXW7	FBXW7	F-box and WD-40 domain protein 7 (archipelago homolog, Drosophila)	196	0.012314899824559689	-0.16364616	No	
+row_4	ADCYAP1	ADCYAP1	adenylate cyclase activating polypeptide 1 (pituitary)	210	0.009301340207457542	-0.17080143	No	
+row_5	NR4A1	NR4A1	nuclear receptor subfamily 4, group A, member 1	211	0.00929186400026083	-0.16119233	No	
+row_6	PLAGL1	PLAGL1	pleiomorphic adenoma gene-like 1	280	0.0015327190048992634	-0.24734922	No	
+row_7	DDIT3	DDIT3	DNA-damage-inducible transcript 3	318	-0.0028054057620465755	-0.29218996	No	
+row_8	MYC	MYC	v-myc myelocytomatosis viral oncogene homolog (avian)	403	-0.010294877924025059	-0.3899307	No	
+row_9	TRIAP1	TRIAP1	TP53 regulated inhibitor of apoptosis 1	411	-0.010943816974759102	-0.38764548	No	
+row_10	ZFYVE19	ZFYVE19	zinc finger, FYVE domain containing 19	536	-0.020545534789562225	-0.5263985	No	
+row_11	HEXIM2	HEXIM2	hexamthylene bis-acetamide inducible 2	541	-0.020826306194067	-0.5100224	No	
+row_12	TCF7L2	TCF7L2	transcription factor 7-like 2 (T-cell specific, HMG-box)	560	-0.022550130262970924	-0.5099281	No	
+row_13	RASSF1	RASSF1	Ras association (RalGDS/AF-6) domain family 1	608	-0.027770085260272026	-0.54185504	No	
+row_14	NME6	NME6	non-metastatic cells 6, protein expressed in (nucleoside-diphosphate kinase)	643	-0.03211391344666481	-0.5525157	Yes	
+row_15	CUL5	CUL5	cullin 5	658	-0.03421660512685776	-0.53519535	Yes	
+row_16	CASP2	CASP2	caspase 2, apoptosis-related cysteine peptidase (neural precursor cell expressed, developmentally down-regulated 2)	669	-0.03605489060282707	-0.51081264	Yes	
+row_17	BUB3	BUB3	BUB3 budding uninhibited by benzimidazoles 3 homolog (yeast)	693	-0.03961701691150665	-0.49952042	Yes	
+row_18	CDK5RAP2	CDK5RAP2	CDK5 regulatory subunit associated protein 2	703	-0.04115599766373634	-0.46857214	Yes	
+row_19	MAGI2	MAGI2	membrane associated guanylate kinase, WW and PDZ domain containing 2	725	-0.04564996436238289	-0.44846034	Yes	
+row_20	PLK2	PLK2	polo-like kinase 2 (Drosophila)	728	-0.04769006371498108	-0.40172264	Yes	
+row_21	NR2F2	NR2F2	nuclear receptor subfamily 2, group F, member 2	741	-0.05084751173853874	-0.36462292	Yes	
+row_22	APBB2	APBB2	amyloid beta (A4) precursor protein-binding, family B, member 2 (Fe65-like)	754	-0.0547124445438385	-0.32352632	Yes	
+row_23	DUSP1	DUSP1	dual specificity phosphatase 1	772	-0.06524845212697983	-0.2779856	Yes	
+row_24	CDKN1C	CDKN1C	cyclin-dependent kinase inhibitor 1C (p57, Kip2)	774	-0.06578847765922546	-0.21124123	Yes	
+row_25	CDK4	CDK4	cyclin-dependent kinase 4	777	-0.06777319312095642	-0.14373472	Yes	
+row_26	SOX4	SOX4	SRY (sex determining region Y)-box 4	787	-0.07749968022108078	-0.07520189	Yes	
+row_27	SOX11	SOX11	SRY (sex determining region Y)-box 11	800	-0.09018711745738983	0.0025806	Yes	

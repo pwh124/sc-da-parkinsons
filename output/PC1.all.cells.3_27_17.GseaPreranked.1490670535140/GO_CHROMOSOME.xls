@@ -1,0 +1,43 @@
+NAME	PROBE	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	DYNC1I1	DYNC1I1	dynein, cytoplasmic 1, intermediate chain 1	38	0.04272521287202835	-0.016061941	No	
+row_1	HMGN3	HMGN3	high mobility group nucleosomal binding domain 3	149	0.01963452808558941	-0.14504242	No	
+row_2	PAX6	PAX6	paired box gene 6 (aniridia, keratitis)	163	0.017225682735443115	-0.14846876	No	
+row_3	PPARGC1A	PPARGC1A	peroxisome proliferative activated receptor, gamma, coactivator 1, alpha	201	0.010845405049622059	-0.18849081	No	
+row_4	HAT1	HAT1	histone acetyltransferase 1	258	0.003991211764514446	-0.25891396	No	
+row_5	CCND2	CCND2	cyclin D2	272	0.0026620537973940372	-0.2738863	No	
+row_6	CHRAC1	CHRAC1	chromatin accessibility complex 1	306	-0.0013389619998633862	-0.31618878	No	
+row_7	XRCC4	XRCC4	X-ray repair complementing defective repair in Chinese hamster cells 4	312	-0.0022761053405702114	-0.3209546	No	
+row_8	JUNB	JUNB	jun B proto-oncogene	345	-0.006391759030520916	-0.35793716	No	
+row_9	BCAS3	BCAS3	breast carcinoma amplified sequence 3	347	-0.0064891730435192585	-0.35410663	No	
+row_10	MBD5	MBD5	methyl-CpG binding domain protein 5	366	-0.007500981446355581	-0.37181297	No	
+row_11	TCF4	TCF4	transcription factor 4	371	-0.00781452376395464	-0.3708739	No	
+row_12	PPP1CC	PPP1CC	protein phosphatase 1, catalytic subunit, gamma isoform	399	-0.010009569115936756	-0.39841798	No	
+row_13	OBFC1	OBFC1	oligonucleotide/oligosaccharide-binding fold containing 1	400	-0.010163554921746254	-0.39036036	No	
+row_14	NGDN	NGDN	neuroguidin, EIF4E binding protein	407	-0.010715232230722904	-0.38974974	No	
+row_15	PLCB1	PLCB1	phospholipase C, beta 1 (phosphoinositide-specific)	446	-0.013718994334340096	-0.42880768	No	
+row_16	MEF2A	MEF2A	MADS box transcription enhancer factor 2, polypeptide A (myocyte enhancer factor 2A)	451	-0.014159025624394417	-0.42283872	No	
+row_17	DLX5	DLX5	distal-less homeobox 5	457	-0.014448409900069237	-0.4179544	No	
+row_18	XPA	XPA	xeroderma pigmentosum, complementation group A	533	-0.020414575934410095	-0.5003243	No	
+row_19	POLE3	POLE3	polymerase (DNA directed), epsilon 3 (p17 subunit)	546	-0.021508026868104935	-0.4990416	No	
+row_20	RFX3	RFX3	regulatory factor X, 3 (influences HLA class II expression)	555	-0.022236056625843048	-0.49192542	No	
+row_21	TCF12	TCF12	transcription factor 12 (HTF4, helix-loop-helix transcription factors 4)	559	-0.022529400885105133	-0.4780064	No	
+row_22	TCF7L2	TCF7L2	transcription factor 7-like 2 (T-cell specific, HMG-box)	560	-0.022550130262970924	-0.46012875	No	
+row_23	THOC6	THOC6	THO complex 6 homolog (Drosophila)	598	-0.026661887764930725	-0.48761156	No	
+row_24	AFF4	AFF4	AF4/FMR2 family, member 4	617	-0.028437938541173935	-0.4887192	No	
+row_25	CBX3	CBX3	chromobox homolog 3 (HP1 gamma homolog, Drosophila)	622	-0.02904391661286354	-0.47094953	No	
+row_26	SIRT7	SIRT7	sirtuin (silent mating type information regulation 2 homolog) 7 (S. cerevisiae)	685	-0.038303352892398834	-0.52205455	Yes	
+row_27	BUB3	BUB3	BUB3 budding uninhibited by benzimidazoles 3 homolog (yeast)	693	-0.03961701691150665	-0.4998448	Yes	
+row_28	RFC3	RFC3	replication factor C (activator 1) 3, 38kDa	702	-0.04072871059179306	-0.47806773	Yes	
+row_29	TOP3B	TOP3B	topoisomerase (DNA) III beta	710	-0.0420854352414608	-0.45390102	Yes	
+row_30	JUN	JUN	jun oncogene	715	-0.04441137611865997	-0.4239481	Yes	
+row_31	MCM7	MCM7	MCM7 minichromosome maintenance deficient 7 (S. cerevisiae)	722	-0.04496050626039505	-0.396188	Yes	
+row_32	PLK2	PLK2	polo-like kinase 2 (Drosophila)	728	-0.04769006371498108	-0.36494982	Yes	
+row_33	USP3	USP3	ubiquitin specific peptidase 3	732	-0.048410478979349136	-0.3305124	Yes	
+row_34	SUV420H2	SUV420H2	suppressor of variegation 4-20 homolog 2 (Drosophila)	735	-0.04852961003780365	-0.29466647	Yes	
+row_35	H2AFV	H2AFV	H2A histone family, member V	748	-0.052626512944698334	-0.26871312	Yes	
+row_36	SFPQ	SFPQ	splicing factor proline/glutamine-rich (polypyrimidine tract binding protein associated)	751	-0.053348660469055176	-0.22904666	Yes	
+row_37	FLNA	FLNA	filamin A, alpha (actin binding protein 280)	752	-0.05417187884449959	-0.18609944	Yes	
+row_38	CDK4	CDK4	cyclin-dependent kinase 4	777	-0.06777319312095642	-0.1639066	Yes	
+row_39	RBMX	RBMX	RNA binding motif protein, X-linked	779	-0.07023342698812485	-0.109539926	Yes	
+row_40	ZFP57	ZFP57	zinc finger protein 57 homolog (mouse)	795	-0.08347366750240326	-0.063073285	Yes	
+row_41	H3F3A	H3F3A	H3 histone, family 3A	798	-0.08950313925743103	0.0052562766	Yes	

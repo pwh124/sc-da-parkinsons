@@ -1,0 +1,18 @@
+NAME	PROBE	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	ADCYAP1R1	ADCYAP1R1	adenylate cyclase activating polypeptide 1 (pituitary) receptor type I	14	0.05137595534324646	0.14292336	Yes	
+row_1	SNCA	SNCA	synuclein, alpha (non A4 component of amyloid precursor)	43	0.040898408740758896	0.23525488	Yes	
+row_2	DRD2	DRD2	dopamine receptor D2	84	0.032136887311935425	0.2849079	Yes	
+row_3	GRM2	GRM2	glutamate receptor, metabotropic 2	105	0.02756647951900959	0.34570724	Yes	
+row_4	GHRH	GHRH	growth hormone releasing hormone	111	0.02624044194817543	0.42144188	Yes	
+row_5	GUCY1A3	GUCY1A3	guanylate cyclase 1, soluble, alpha 3	131	0.022631382569670677	0.4680735	Yes	
+row_6	WNT5A	WNT5A	wingless-type MMTV integration site family, member 5A	136	0.022005457431077957	0.53183085	Yes	
+row_7	VIP	VIP	vasoactive intestinal peptide	165	0.017138494178652763	0.549827	Yes	
+row_8	GRM7	GRM7	glutamate receptor, metabotropic 7	176	0.015530414879322052	0.5856929	Yes	
+row_9	CALCR	CALCR	calcitonin receptor	178	0.015297969803214073	0.6322819	Yes	
+row_10	DNAJC15	DNAJC15	DnaJ (Hsp40) homolog, subfamily C, member 15	193	0.012573348358273506	0.6538072	Yes	
+row_11	PPARGC1A	PPARGC1A	peroxisome proliferative activated receptor, gamma, coactivator 1, alpha	201	0.010845405049622059	0.67883235	Yes	
+row_12	ADCYAP1	ADCYAP1	adenylate cyclase activating polypeptide 1 (pituitary)	210	0.009301340207457542	0.69775444	Yes	
+row_13	ECE1	ECE1	endothelin converting enzyme 1	231	0.007166315335780382	0.69472975	No	
+row_14	HPCA	HPCA	hippocalcin	251	0.00499599426984787	0.6861872	No	
+row_15	PDE2A	PDE2A	phosphodiesterase 2A, cGMP-stimulated	260	0.003919160924851894	0.68827057	No	
+row_16	PRKCA	PRKCA	protein kinase C, alpha	293	7.866121450206265E-6	0.6475827	No	

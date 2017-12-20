@@ -1,0 +1,26 @@
+NAME	PROBE	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	PPARGC1A	PPARGC1A	peroxisome proliferative activated receptor, gamma, coactivator 1, alpha	201	0.010845405049622059	-0.24392624	No	
+row_1	POLR2K	POLR2K	polymerase (RNA) II (DNA directed) polypeptide K, 7.0kDa	205	0.009820026345551014	-0.23471792	No	
+row_2	RPP25	RPP25	ribonuclease P 25kDa subunit	292	7.768366776872426E-5	-0.3451544	No	
+row_3	POP5	POP5	processing of precursor 5, ribonuclease P/MRP subunit (S. cerevisiae)	363	-0.007213436998426914	-0.4255321	No	
+row_4	CDKAL1	CDKAL1	CDK5 regulatory subunit associated protein 1-like 1	369	-0.007674382068216801	-0.421749	No	
+row_5	PPIL3	PPIL3	peptidylprolyl isomerase (cyclophilin)-like 3	384	-0.009290504269301891	-0.42738393	No	
+row_6	NGDN	NGDN	neuroguidin, EIF4E binding protein	407	-0.010715232230722904	-0.44140625	No	
+row_7	TRMU	TRMU	tRNA 5-methylaminomethyl-2-thiouridylate methyltransferase	443	-0.01339704543352127	-0.46857023	No	
+row_8	EXOSC7	EXOSC7	exosome component 7	469	-0.015407465398311615	-0.4802061	No	
+row_9	OSGEP	OSGEP	O-sialoglycoprotein endopeptidase	572	-0.024034803733229637	-0.5793361	Yes	
+row_10	PRPF3	PRPF3	PRP3 pre-mRNA processing factor 3 homolog (S. cerevisiae)	594	-0.026211896911263466	-0.5714566	Yes	
+row_11	THOC6	THOC6	THO complex 6 homolog (Drosophila)	598	-0.026661887764930725	-0.5398422	Yes	
+row_12	DKC1	DKC1	dyskeratosis congenita 1, dyskerin	635	-0.03068205714225769	-0.5452959	Yes	
+row_13	CHD7	CHD7	chromodomain helicase DNA binding protein 7	644	-0.03219076246023178	-0.5127527	Yes	
+row_14	TSEN2	TSEN2	tRNA splicing endonuclease 2 homolog (S. cerevisiae)	652	-0.03346235677599907	-0.4772325	Yes	
+row_15	WDR3	WDR3	WD repeat domain 3	671	-0.03606661409139633	-0.4523864	Yes	
+row_16	RBMS1	RBMS1	RNA binding motif, single stranded interacting protein 1	674	-0.03635292127728462	-0.40659392	Yes	
+row_17	ZCCHC11	ZCCHC11	zinc finger, CCHC domain containing 11	675	-0.03666464984416962	-0.35781598	Yes	
+row_18	AFF2	AFF2	AF4/FMR2 family, member 2	681	-0.03783896937966347	-0.31390253	Yes	
+row_19	PTBP1	PTBP1	polypyrimidine tract binding protein 1	705	-0.04145953431725502	-0.28830856	Yes	
+row_20	RBM4	RBM4	RNA binding motif protein 4	738	-0.049635421484708786	-0.26340568	Yes	
+row_21	SFPQ	SFPQ	splicing factor proline/glutamine-rich (polypyrimidine tract binding protein associated)	751	-0.053348660469055176	-0.20785585	Yes	
+row_22	LAS1L	LAS1L	LAS1-like (S. cerevisiae)	760	-0.05638277158141136	-0.14312811	Yes	
+row_23	RBMX	RBMX	RNA binding motif protein, X-linked	779	-0.07023342698812485	-0.072827205	Yes	
+row_24	RBM5	RBM5	RNA binding motif protein 5	786	-0.07599692791700363	0.020565517	Yes	

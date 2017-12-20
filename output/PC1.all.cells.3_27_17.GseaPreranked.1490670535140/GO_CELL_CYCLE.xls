@@ -1,0 +1,57 @@
+NAME	PROBE	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	CDKN1A	CDKN1A	cyclin-dependent kinase inhibitor 1A (p21, Cip1)	30	0.045163970440626144	-0.012733041	No	
+row_1	CAMK2A	CAMK2A	calcium/calmodulin-dependent protein kinase (CaM kinase) II alpha	39	0.04257001727819443	0.0024097746	No	
+row_2	CDH13	CDH13	cadherin 13, H-cadherin (heart)	143	0.020454658195376396	-0.1230532	No	
+row_3	KLHL13	KLHL13	kelch-like 13 (Drosophila)	162	0.017485778778791428	-0.13653065	No	
+row_4	PAX6	PAX6	paired box gene 6 (aniridia, keratitis)	163	0.017225682735443115	-0.12606968	No	
+row_5	BTG2	BTG2	BTG family, member 2	191	0.01270977035164833	-0.15449575	No	
+row_6	CAMK2D	CAMK2D	calcium/calmodulin-dependent protein kinase (CaM kinase) II delta	194	0.01245542336255312	-0.14960909	No	
+row_7	RPRM	RPRM	reprimo, TP53 dependent G2 arrest mediator candidate	195	0.012378400191664696	-0.14209181	No	
+row_8	FBXW7	FBXW7	F-box and WD-40 domain protein 7 (archipelago homolog, Drosophila)	196	0.012314899824559689	-0.1346131	No	
+row_9	EPS8	EPS8	epidermal growth factor receptor pathway substrate 8	233	0.007131071761250496	-0.17847525	No	
+row_10	FBXO6	FBXO6	F-box protein 6	254	0.004591058939695358	-0.20246091	No	
+row_11	CCND2	CCND2	cyclin D2	272	0.0026620537973940372	-0.22360197	No	
+row_12	PLAGL1	PLAGL1	pleiomorphic adenoma gene-like 1	280	0.0015327190048992634	-0.23204198	No	
+row_13	HRSP12	HRSP12	heat-responsive protein 12	290	4.481740470509976E-4	-0.243818	No	
+row_14	PPP1R12B	PPP1R12B	protein phosphatase 1, regulatory (inhibitor) subunit 12B	291	4.4140222598798573E-4	-0.24354994	No	
+row_15	PRKCA	PRKCA	protein kinase C, alpha	293	7.866121450206265E-6	-0.24488385	No	
+row_16	DDIT3	DDIT3	DNA-damage-inducible transcript 3	318	-0.0028054057620465755	-0.27530867	No	
+row_17	BRE	BRE	brain and reproductive organ-expressed (TNFRSF1A modulator)	376	-0.00846928171813488	-0.3464706	No	
+row_18	PPP1CC	PPP1CC	protein phosphatase 1, catalytic subunit, gamma isoform	399	-0.010009569115936756	-0.36984304	No	
+row_19	MYC	MYC	v-myc myelocytomatosis viral oncogene homolog (avian)	403	-0.010294877924025059	-0.36760712	No	
+row_20	NEK6	NEK6	NIMA (never in mitosis gene a)-related kinase 6	410	-0.01078815758228302	-0.36908773	No	
+row_21	TRIAP1	TRIAP1	TP53 regulated inhibitor of apoptosis 1	411	-0.010943816974759102	-0.36244166	No	
+row_22	ID2	ID2	inhibitor of DNA binding 2, dominant negative helix-loop-helix protein	428	-0.01260245218873024	-0.37620732	No	
+row_23	EVI5	EVI5	ecotropic viral integration site 5	444	-0.01341159362345934	-0.3881429	No	
+row_24	PLCB1	PLCB1	phospholipase C, beta 1 (phosphoinositide-specific)	446	-0.013718994334340096	-0.38115022	No	
+row_25	NUP214	NUP214	nucleoporin 214kDa	480	-0.016091499477624893	-0.41555473	No	
+row_26	CDK2AP1	CDK2AP1	CDK2-associated protein 1	514	-0.018769754096865654	-0.44833276	No	
+row_27	ZFYVE19	ZFYVE19	zinc finger, FYVE domain containing 19	536	-0.020545534789562225	-0.46396813	No	
+row_28	TCF7L2	TCF7L2	transcription factor 7-like 2 (T-cell specific, HMG-box)	560	-0.022550130262970924	-0.4810635	No	
+row_29	NUP54	NUP54	nucleoporin 54kDa	562	-0.0229994785040617	-0.46843484	No	
+row_30	PTP4A1	PTP4A1	protein tyrosine phosphatase type IVA, member 1	595	-0.02628420852124691	-0.49531075	Yes	
+row_31	RASSF1	RASSF1	Ras association (RalGDS/AF-6) domain family 1	608	-0.027770085260272026	-0.49451053	Yes	
+row_32	KATNA1	KATNA1	katanin p60 (ATPase-containing) subunit A 1	613	-0.0280527975410223	-0.4828291	Yes	
+row_33	RABGAP1	RABGAP1	RAB GTPase activating protein 1	615	-0.02828008122742176	-0.4669936	Yes	
+row_34	RTEL1	RTEL1	regulator of telomere elongation helicase 1	640	-0.031554415822029114	-0.47995946	Yes	
+row_35	SFI1	SFI1	Sfi1 homolog, spindle assembly associated (yeast)	648	-0.03276664763689041	-0.46943143	Yes	
+row_36	CUL5	CUL5	cullin 5	658	-0.03421660512685776	-0.46070024	Yes	
+row_37	CASP2	CASP2	caspase 2, apoptosis-related cysteine peptidase (neural precursor cell expressed, developmentally down-regulated 2)	669	-0.03605489060282707	-0.45219138	Yes	
+row_38	SIRT7	SIRT7	sirtuin (silent mating type information regulation 2 homolog) 7 (S. cerevisiae)	685	-0.038303352892398834	-0.44901046	Yes	
+row_39	BUB3	BUB3	BUB3 budding uninhibited by benzimidazoles 3 homolog (yeast)	693	-0.03961701691150665	-0.4343223	Yes	
+row_40	CDK5RAP2	CDK5RAP2	CDK5 regulatory subunit associated protein 2	703	-0.04115599766373634	-0.42137688	Yes	
+row_41	ID4	ID4	inhibitor of DNA binding 4, dominant negative helix-loop-helix protein	708	-0.041829075664281845	-0.40132928	Yes	
+row_42	BANP	BANP	BTG3 associated nuclear protein	716	-0.04444608837366104	-0.38370848	Yes	
+row_43	MCM7	MCM7	MCM7 minichromosome maintenance deficient 7 (S. cerevisiae)	722	-0.04496050626039505	-0.36309788	Yes	
+row_44	MAGI2	MAGI2	membrane associated guanylate kinase, WW and PDZ domain containing 2	725	-0.04564996436238289	-0.3380525	Yes	
+row_45	PLK2	PLK2	polo-like kinase 2 (Drosophila)	728	-0.04769006371498108	-0.3117682	Yes	
+row_46	USP3	USP3	ubiquitin specific peptidase 3	732	-0.048410478979349136	-0.28638512	Yes	
+row_47	FIGN	FIGN	fidgetin	746	-0.05192328989505768	-0.2722556	Yes	
+row_48	FLNA	FLNA	filamin A, alpha (actin binding protein 280)	752	-0.05417187884449959	-0.24605101	Yes	
+row_49	APBB2	APBB2	amyloid beta (A4) precursor protein-binding, family B, member 2 (Fe65-like)	754	-0.0547124445438385	-0.21416342	Yes	
+row_50	DUSP1	DUSP1	dual specificity phosphatase 1	772	-0.06524845212697983	-0.19729643	Yes	
+row_51	CDKN1C	CDKN1C	cyclin-dependent kinase inhibitor 1C (p57, Kip2)	774	-0.06578847765922546	-0.15868247	Yes	
+row_52	CDK4	CDK4	cyclin-dependent kinase 4	777	-0.06777319312095642	-0.1202019	Yes	
+row_53	SOX4	SOX4	SRY (sex determining region Y)-box 4	787	-0.07749968022108078	-0.085185364	Yes	
+row_54	AKAP9	AKAP9	A kinase (PRKA) anchor protein (yotiao) 9	791	-0.0787409096956253	-0.04138291	Yes	
+row_55	SOX11	SOX11	SRY (sex determining region Y)-box 11	800	-0.09018711745738983	0.002677268	Yes	

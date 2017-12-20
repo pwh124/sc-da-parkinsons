@@ -1,0 +1,52 @@
+NAME	PROBE	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	ATP1B2	ATP1B2	ATPase, Na+/K+ transporting, beta 2 polypeptide	6	0.06385453045368195	0.040570617	Yes	
+row_1	RASGRF1	RASGRF1	Ras protein-specific guanine nucleotide-releasing factor 1	12	0.05339522659778595	0.07451869	Yes	
+row_2	ADCYAP1R1	ADCYAP1R1	adenylate cyclase activating polypeptide 1 (pituitary) receptor type I	14	0.05137595534324646	0.11225063	Yes	
+row_3	CNTN1	CNTN1	contactin 1	17	0.05017554759979248	0.14774011	Yes	
+row_4	KCNC2	KCNC2	potassium voltage-gated channel, Shaw-related subfamily, member 2	28	0.04557005316019058	0.16908967	Yes	
+row_5	TRH	TRH	thyrotropin-releasing hormone	33	0.044344186782836914	0.19748592	Yes	
+row_6	CAMK2A	CAMK2A	calcium/calmodulin-dependent protein kinase (CaM kinase) II alpha	39	0.04257001727819443	0.22320347	Yes	
+row_7	CD63	CD63	CD63 molecule	42	0.04098260775208473	0.25170344	Yes	
+row_8	SNCA	SNCA	synuclein, alpha (non A4 component of amyloid precursor)	43	0.040898408740758896	0.28279898	Yes	
+row_9	SLC6A1	SLC6A1	solute carrier family 6 (neurotransmitter transporter, GABA), member 1	51	0.039246898144483566	0.30333033	Yes	
+row_10	GAL	GAL	galanin	65	0.0364997498691082	0.31379429	Yes	
+row_11	OPRK1	OPRK1	opioid receptor, kappa 1	67	0.03585394471883774	0.33972466	Yes	
+row_12	CACNG5	CACNG5	calcium channel, voltage-dependent, gamma subunit 5	68	0.03569446876645088	0.36686358	Yes	
+row_13	PCP4	PCP4	Purkinje cell protein 4	70	0.03554677963256836	0.39256042	Yes	
+row_14	DRD2	DRD2	dopamine receptor D2	84	0.032136887311935425	0.39970723	Yes	
+row_15	CCK	CCK	cholecystokinin	89	0.030479969456791878	0.41756237	Yes	
+row_16	CHRNA6	CHRNA6	cholinergic receptor, nicotinic, alpha 6	102	0.02800324186682701	0.4228961	Yes	
+row_17	KCNIP4	KCNIP4	Kv channel interacting protein 4	115	0.025422777980566025	0.4262679	Yes	
+row_18	CNIH3	CNIH3	cornichon homolog 3 (Drosophila)	132	0.022495724260807037	0.42209506	Yes	
+row_19	SERPINE2	SERPINE2	serpin peptidase inhibitor, clade E (nexin, plasminogen activator inhibitor type 1), member 2	140	0.021365659311413765	0.4290311	Yes	
+row_20	CLCN7	CLCN7	chloride channel 7	142	0.020601237192749977	0.44336468	Yes	
+row_21	RAB3B	RAB3B	RAB3B, member RAS oncogene family	151	0.019349031150341034	0.44743767	Yes	
+row_22	SNCG	SNCG	synuclein, gamma (breast cancer-specific protein 1)	157	0.018753686919808388	0.45504737	Yes	
+row_23	FKBP1B	FKBP1B	FK506 binding protein 1B, 12.6 kDa	161	0.018101846799254417	0.46482104	Yes	
+row_24	VIP	VIP	vasoactive intestinal peptide	165	0.017138494178652763	0.4738623	Yes	
+row_25	GRM7	GRM7	glutamate receptor, metabotropic 7	176	0.015530414879322052	0.47237238	Yes	
+row_26	CACNB2	CACNB2	calcium channel, voltage-dependent, beta 2 subunit	180	0.014815300703048706	0.47964725	Yes	
+row_27	CRHBP	CRHBP	corticotropin releasing hormone binding protein	184	0.014080174267292023	0.4863632	Yes	
+row_28	PLCB4	PLCB4	phospholipase C, beta 4	188	0.013195879757404327	0.49240682	Yes	
+row_29	KCNIP1	KCNIP1	Kv channel interacting protein 1	190	0.012781957164406776	0.5007953	Yes	
+row_30	CAMK2D	CAMK2D	calcium/calmodulin-dependent protein kinase (CaM kinase) II delta	194	0.01245542336255312	0.50627595	Yes	
+row_31	PPARGC1A	PPARGC1A	peroxisome proliferative activated receptor, gamma, coactivator 1, alpha	201	0.010845405049622059	0.5065431	Yes	
+row_32	PARK2	PARK2	Parkinson disease (autosomal recessive, juvenile) 2, parkin	202	0.01059680711477995	0.5146	Yes	
+row_33	ADCYAP1	ADCYAP1	adenylate cyclase activating polypeptide 1 (pituitary)	210	0.009301340207457542	0.5123634	Yes	
+row_34	FXYD7	FXYD7	FXYD domain containing ion transport regulator 7	213	0.009066526778042316	0.5165972	Yes	
+row_35	WNK1	WNK1	WNK lysine deficient protein kinase 1	218	0.008920257911086082	0.5180602	Yes	
+row_36	MEF2C	MEF2C	MADS box transcription enhancer factor 2, polypeptide C (myocyte enhancer factor 2C)	242	0.0060506160371005535	0.49207547	No	
+row_37	PDE4B	PDE4B	phosphodiesterase 4B, cAMP-specific (phosphodiesterase E4 dunce homolog, Drosophila)	244	0.005774782504886389	0.49513632	No	
+row_38	ARC	ARC	activity-regulated cytoskeleton-associated protein	252	0.004950194153934717	0.4895915	No	
+row_39	CACNB4	CACNB4	calcium channel, voltage-dependent, beta 4 subunit	311	-0.002167548518627882	0.41411185	No	
+row_40	DMD	DMD	dystrophin (muscular dystrophy, Duchenne and Becker types)	393	-0.009801127016544342	0.313851	No	
+row_41	CHRNA4	CHRNA4	cholinergic receptor, nicotinic, alpha 4	397	-0.009978586807847023	0.3174485	No	
+row_42	TRIAP1	TRIAP1	TP53 regulated inhibitor of apoptosis 1	411	-0.010943816974759102	0.30848196	No	
+row_43	CACNA2D3	CACNA2D3	calcium channel, voltage-dependent, alpha 2/delta 3 subunit	485	-0.016697054728865623	0.22410247	No	
+row_44	COMMD1	COMMD1	copper metabolism (Murr1) domain containing 1	497	-0.01736142300069332	0.22267489	No	
+row_45	CACNG3	CACNG3	calcium channel, voltage-dependent, gamma subunit 3	498	-0.017541343346238136	0.23601179	No	
+row_46	NOS1AP	NOS1AP	nitric oxide synthase 1 (neuronal) adaptor protein	528	-0.01983979344367981	0.21253237	No	
+row_47	PLA2G6	PLA2G6	phospholipase A2, group VI (cytosolic, calcium-independent)	606	-0.027587121352553368	0.13111357	No	
+row_48	CNR1	CNR1	cannabinoid receptor 1 (brain)	704	-0.041336141526699066	0.03355256	No	
+row_49	NRXN1	NRXN1	neurexin 1	723	-0.04503365978598595	0.043856006	No	
+row_50	AKAP9	AKAP9	A kinase (PRKA) anchor protein (yotiao) 9	791	-0.0787409096956253	0.014627887	No	

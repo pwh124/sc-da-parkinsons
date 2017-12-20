@@ -1,0 +1,18 @@
+NAME	PROBE	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	WNT5A	WNT5A	wingless-type MMTV integration site family, member 5A	136	0.022005457431077957	-0.12422519	No	
+row_1	SERPINE2	SERPINE2	serpin peptidase inhibitor, clade E (nexin, plasminogen activator inhibitor type 1), member 2	140	0.021365659311413765	-0.0806581	No	
+row_2	ADCYAP1	ADCYAP1	adenylate cyclase activating polypeptide 1 (pituitary)	210	0.009301340207457542	-0.14781623	No	
+row_3	PRDX4	PRDX4	peroxiredoxin 4	277	0.0021095334086567163	-0.22710726	No	
+row_4	PLEKHA1	PLEKHA1	pleckstrin homology domain containing, family A (phosphoinositide binding specific) member 1	314	-0.002665998414158821	-0.26699623	No	
+row_5	SLIT2	SLIT2	slit homolog 2 (Drosophila)	325	-0.00371882994659245	-0.2714714	No	
+row_6	JUNB	JUNB	jun B proto-oncogene	345	-0.006391759030520916	-0.28146908	No	
+row_7	KIT	KIT	v-kit Hardy-Zuckerman 4 feline sarcoma viral oncogene homolog	355	-0.006963804364204407	-0.27747542	No	
+row_8	DAZAP1	DAZAP1	DAZ associated protein 1	638	-0.030758753418922424	-0.5680385	Yes	
+row_9	CHD7	CHD7	chromodomain helicase DNA binding protein 7	644	-0.03219076246023178	-0.5030085	Yes	
+row_10	CASP2	CASP2	caspase 2, apoptosis-related cysteine peptidase (neural precursor cell expressed, developmentally down-regulated 2)	669	-0.03605489060282707	-0.4535818	Yes	
+row_11	LHX9	LHX9	LIM homeobox 9	679	-0.037600863724946976	-0.38164252	Yes	
+row_12	ROBO2	ROBO2	roundabout, axon guidance receptor, homolog 2 (Drosophila)	691	-0.03950294107198715	-0.30802944	Yes	
+row_13	BOK	BOK	BCL2-related ovarian killer	707	-0.04180995374917984	-0.234389	Yes	
+row_14	ID4	ID4	inhibitor of DNA binding 4, dominant negative helix-loop-helix protein	708	-0.041829075664281845	-0.1416222	Yes	
+row_15	NR2F2	NR2F2	nuclear receptor subfamily 2, group F, member 2	741	-0.05084751173853874	-0.069567144	Yes	
+row_16	CDKN1C	CDKN1C	cyclin-dependent kinase inhibitor 1C (p57, Kip2)	774	-0.06578847765922546	0.035623383	Yes	

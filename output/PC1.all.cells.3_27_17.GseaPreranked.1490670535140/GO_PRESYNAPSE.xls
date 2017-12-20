@@ -1,0 +1,49 @@
+NAME	PROBE	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	TH	TH	tyrosine hydroxylase	1	0.07856127619743347	0.053140927	Yes	
+row_1	SYT1	SYT1	synaptotagmin I	13	0.05252663418650627	0.074987374	Yes	
+row_2	SLC6A3	SLC6A3	solute carrier family 6 (neurotransmitter transporter, dopamine), member 3	18	0.049497090280056	0.104004994	Yes	
+row_3	SYN2	SYN2	synapsin II	20	0.04910608008503914	0.13672505	Yes	
+row_4	KCNC2	KCNC2	potassium voltage-gated channel, Shaw-related subfamily, member 2	28	0.04557005316019058	0.1590466	Yes	
+row_5	CALB1	CALB1	calbindin 1, 28kDa	35	0.04419327527284622	0.18173817	Yes	
+row_6	SYT10	SYT10	synaptotagmin X	36	0.04384787380695343	0.21213728	Yes	
+row_7	CAMK2A	CAMK2A	calcium/calmodulin-dependent protein kinase (CaM kinase) II alpha	39	0.04257001727819443	0.23900147	Yes	
+row_8	SNCA	SNCA	synuclein, alpha (non A4 component of amyloid precursor)	43	0.040898408740758896	0.26338226	Yes	
+row_9	SV2C	SV2C	synaptic vesicle glycoprotein 2C	44	0.040872957557439804	0.2917189	Yes	
+row_10	SLC18A2	SLC18A2	solute carrier family 18 (vesicular monoamine), member 2	47	0.03944431617856026	0.31641608	Yes	
+row_11	ANXA5	ANXA5	annexin A5	48	0.03941164165735245	0.34373963	Yes	
+row_12	SYT17	SYT17	synaptotagmin XVII	50	0.03938359022140503	0.3697192	Yes	
+row_13	BAIAP3	BAIAP3	BAI1-associated protein 3	53	0.038948725908994675	0.39407283	Yes	
+row_14	CALB2	CALB2	calbindin 2, 29kDa (calretinin)	60	0.03738706186413765	0.41204572	Yes	
+row_15	DDC	DDC	dopa decarboxylase (aromatic L-amino acid decarboxylase)	62	0.03707662597298622	0.43642592	Yes	
+row_16	SYNPR	SYNPR	synaptoporin	69	0.03560537099838257	0.45316362	Yes	
+row_17	PRSS12	PRSS12	protease, serine, 12 (neurotrypsin, motopsin)	81	0.03309369832277298	0.46153748	Yes	
+row_18	DRD2	DRD2	dopamine receptor D2	84	0.032136887311935425	0.4811685	Yes	
+row_19	CPLX1	CPLX1	complexin 1	86	0.031858883798122406	0.5019313	Yes	
+row_20	CCK	CCK	cholecystokinin	89	0.030479969456791878	0.52041364	Yes	
+row_21	GRM2	GRM2	glutamate receptor, metabotropic 2	105	0.02756647951900959	0.51965755	Yes	
+row_22	LIN7B	LIN7B	lin-7 homolog B (C. elegans)	106	0.02741788700222969	0.538666	Yes	
+row_23	GHRH	GHRH	growth hormone releasing hormone	111	0.02624044194817543	0.5515601	Yes	
+row_24	GAD1	GAD1	glutamate decarboxylase 1 (brain, 67kDa)	112	0.026201557368040085	0.5697253	Yes	
+row_25	GABRA2	GABRA2	gamma-aminobutyric acid (GABA) A receptor, alpha 2	116	0.025074392557144165	0.5831355	Yes	
+row_26	VAMP1	VAMP1	vesicle-associated membrane protein 1 (synaptobrevin 1)	121	0.02438165992498398	0.594741	Yes	
+row_27	RAB3B	RAB3B	RAB3B, member RAS oncogene family	151	0.019349031150341034	0.56974477	No	
+row_28	GAD2	GAD2	glutamate decarboxylase 2 (pancreatic islets and brain, 65kDa)	155	0.01885189488530159	0.57884103	No	
+row_29	GRM7	GRM7	glutamate receptor, metabotropic 7	176	0.015530414879322052	0.563118	No	
+row_30	PARK2	PARK2	Parkinson disease (autosomal recessive, juvenile) 2, parkin	202	0.01059680711477995	0.537352	No	
+row_31	ADCYAP1	ADCYAP1	adenylate cyclase activating polypeptide 1 (pituitary)	210	0.009301340207457542	0.534529	No	
+row_32	NRXN3	NRXN3	neurexin 3	220	0.008779950439929962	0.52869546	No	
+row_33	GRIA1	GRIA1	glutamate receptor, ionotropic, AMPA 1	230	0.007399918977171183	0.5219052	No	
+row_34	PDE4B	PDE4B	phosphodiesterase 4B, cAMP-specific (phosphodiesterase E4 dunce homolog, Drosophila)	244	0.005774782504886389	0.50869024	No	
+row_35	PDE2A	PDE2A	phosphodiesterase 2A, cGMP-stimulated	260	0.003919160924851894	0.49153978	No	
+row_36	KCTD16	KCTD16	potassium channel tetramerisation domain containing 16	304	-0.0012854582164436579	0.43547732	No	
+row_37	DENND1A	DENND1A	DENN/MADD domain containing 1A	349	-0.006546318996697664	0.38173765	No	
+row_38	SYT6	SYT6	synaptotagmin VI	386	-0.009387772530317307	0.34056395	No	
+row_39	GRIA3	GRIA3	glutamate receptor, ionotrophic, AMPA 3	483	-0.016644617542624474	0.2249511	No	
+row_40	PDZD11	PDZD11	PDZ domain containing 11	547	-0.021778417751193047	0.15660606	No	
+row_41	SLC17A6	SLC17A6	solute carrier family 17 (sodium-dependent inorganic phosphate cotransporter), member 6	554	-0.022227859124541283	0.16406931	No	
+row_42	CTTNBP2	CTTNBP2	cortactin binding protein 2	570	-0.023748960345983505	0.16066657	No	
+row_43	TMEM163	TMEM163	transmembrane protein 163	593	-0.026066293939948082	0.1495989	No	
+row_44	GRIK2	GRIK2	glutamate receptor, ionotropic, kainate 2	633	-0.03029671125113964	0.11894756	No	
+row_45	NRXN1	NRXN1	neurexin 1	723	-0.04503365978598595	0.032287963	No	
+row_46	SNCAIP	SNCAIP	synuclein, alpha interacting protein (synphilin)	731	-0.04826344922184944	0.056476817	No	
+row_47	ZNRF1	ZNRF1	zinc and ring finger 1	747	-0.05227043107151985	0.07284762	No	

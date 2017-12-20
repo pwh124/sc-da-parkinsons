@@ -1,0 +1,46 @@
+NAME	PROBE	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	CX3CL1	CX3CL1	chemokine (C-X3-C motif) ligand 1	4	0.06660638749599457	0.052319743	Yes	
+row_1	GNG4	GNG4	guanine nucleotide binding protein (G protein), gamma 4	7	0.06149328127503395	0.10285653	Yes	
+row_2	ADCYAP1R1	ADCYAP1R1	adenylate cyclase activating polypeptide 1 (pituitary) receptor type I	14	0.05137595534324646	0.13936749	Yes	
+row_3	CCKBR	CCKBR	cholecystokinin B receptor	23	0.0483485609292984	0.17062202	Yes	
+row_4	LGR5	LGR5	leucine-rich repeat-containing G protein-coupled receptor 5	26	0.045938923954963684	0.20770845	Yes	
+row_5	GABRA4	GABRA4	gamma-aminobutyric acid (GABA) A receptor, alpha 4	29	0.04531412199139595	0.24425456	Yes	
+row_6	CAMK2A	CAMK2A	calcium/calmodulin-dependent protein kinase (CaM kinase) II alpha	39	0.04257001727819443	0.26919293	Yes	
+row_7	GRP	GRP	gastrin-releasing peptide	49	0.0393996424973011	0.2913898	Yes	
+row_8	BAIAP3	BAIAP3	BAI1-associated protein 3	53	0.038948725908994675	0.32111228	Yes	
+row_9	GABRE	GABRE	gamma-aminobutyric acid (GABA) A receptor, epsilon	64	0.036709144711494446	0.3396633	Yes	
+row_10	GAL	GAL	galanin	65	0.0364997498691082	0.37122586	Yes	
+row_11	OPRK1	OPRK1	opioid receptor, kappa 1	67	0.03585394471883774	0.40091074	Yes	
+row_12	DRD2	DRD2	dopamine receptor D2	84	0.032136887311935425	0.4075924	Yes	
+row_13	CCK	CCK	cholecystokinin	89	0.030479969456791878	0.4286724	Yes	
+row_14	PENK	PENK	proenkephalin	95	0.02987654134631157	0.44791135	Yes	
+row_15	GABRA1	GABRA1	gamma-aminobutyric acid (GABA) A receptor, alpha 1	97	0.02886534295976162	0.4715529	Yes	
+row_16	ENPP2	ENPP2	ectonucleotide pyrophosphatase/phosphodiesterase 2 (autotaxin)	98	0.02872270904481411	0.49639043	Yes	
+row_17	GRM2	GRM2	glutamate receptor, metabotropic 2	105	0.02756647951900959	0.51231253	Yes	
+row_18	GHRH	GHRH	growth hormone releasing hormone	111	0.02624044194817543	0.5284072	Yes	
+row_19	GABRA2	GABRA2	gamma-aminobutyric acid (GABA) A receptor, alpha 2	116	0.025074392557144165	0.54481286	Yes	
+row_20	RGS7	RGS7	regulator of G-protein signalling 7	141	0.02112436667084694	0.5314175	Yes	
+row_21	HTR7	HTR7	5-hydroxytryptamine (serotonin) receptor 7 (adenylate cyclase-coupled)	144	0.02025945857167244	0.546298	Yes	
+row_22	VIP	VIP	vasoactive intestinal peptide	165	0.017138494178652763	0.53473306	Yes	
+row_23	GRM7	GRM7	glutamate receptor, metabotropic 7	176	0.015530414879322052	0.5349701	Yes	
+row_24	CALCR	CALCR	calcitonin receptor	178	0.015297969803214073	0.54687953	Yes	
+row_25	ADCYAP1	ADCYAP1	adenylate cyclase activating polypeptide 1 (pituitary)	210	0.009301340207457542	0.51402557	No	
+row_26	POMC	POMC	proopiomelanocortin (adrenocorticotropin/ beta-lipotropin/ alpha-melanocyte stimulating hormone/ beta-melanocyte stimulating hormone/ beta-endorphin)	253	0.004770149942487478	0.46274152	No	
+row_27	GABRA5	GABRA5	gamma-aminobutyric acid (GABA) A receptor, alpha 5	275	0.002373886527493596	0.43708983	No	
+row_28	NPY	NPY	neuropeptide Y	278	0.002094545168802142	0.43626252	No	
+row_29	RGS10	RGS10	regulator of G-protein signalling 10	285	8.502925629727542E-4	0.4290822	No	
+row_30	TAC1	TAC1	tachykinin, precursor 1 (substance K, substance P, neurokinin 1, neurokinin 2, neuromedin L, neurokinin alpha, neuropeptide K, neuropeptide gamma)	286	6.963317864574492E-4	0.42968437	No	
+row_31	RAPGEF4	RAPGEF4	Rap guanine nucleotide exchange factor (GEF) 4	302	-0.0011588730849325657	0.41089755	No	
+row_32	CACNB4	CACNB4	calcium channel, voltage-dependent, beta 4 subunit	311	-0.002167548518627882	0.40221784	No	
+row_33	SST	SST	somatostatin	341	-0.0060761310160160065	0.3692135	No	
+row_34	ECEL1	ECEL1	endothelin converting enzyme-like 1	360	-0.007093650288879871	0.35160092	No	
+row_35	RGS6	RGS6	regulator of G-protein signalling 6	437	-0.013232959434390068	0.26278004	No	
+row_36	PLCB1	PLCB1	phospholipase C, beta 1 (phosphoinositide-specific)	446	-0.013718994334340096	0.26408923	No	
+row_37	SORCS2	SORCS2	sortilin-related VPS10 domain containing receptor 2	464	-0.014960642904043198	0.25459877	No	
+row_38	PNOC	PNOC	prepronociceptin	495	-0.017289822921156883	0.229972	No	
+row_39	NXPH4	NXPH4	neurexophilin 4	519	-0.019263196736574173	0.21628654	No	
+row_40	GLRA2	GLRA2	glycine receptor, alpha 2	525	-0.019474294036626816	0.2265303	No	
+row_41	GABRB2	GABRB2	gamma-aminobutyric acid (GABA) A receptor, beta 2	603	-0.02730272337794304	0.14855677	No	
+row_42	GPR19	GPR19	G protein-coupled receptor 19	641	-0.031720057129859924	0.12717351	No	
+row_43	CNR1	CNR1	cannabinoid receptor 1 (brain)	704	-0.041336141526699066	0.08112407	No	
+row_44	FLNA	FLNA	filamin A, alpha (actin binding protein 280)	752	-0.05417187884449959	0.06596304	No	

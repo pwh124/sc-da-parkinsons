@@ -1,0 +1,32 @@
+NAME	PROBE	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	TH	TH	tyrosine hydroxylase	1	0.07856127619743347	0.081624374	Yes	
+row_1	SYT1	SYT1	synaptotagmin I	13	0.05252663418650627	0.122816384	Yes	
+row_2	SYN2	SYN2	synapsin II	20	0.04910608008503914	0.16687477	Yes	
+row_3	SYT10	SYT10	synaptotagmin X	36	0.04384787380695343	0.19372518	Yes	
+row_4	NRSN1	NRSN1	neurensin 1	40	0.0421714261174202	0.23435019	Yes	
+row_5	SNCA	SNCA	synuclein, alpha (non A4 component of amyloid precursor)	43	0.040898408740758896	0.2749269	Yes	
+row_6	SV2C	SV2C	synaptic vesicle glycoprotein 2C	44	0.040872957557439804	0.3180674	Yes	
+row_7	SLC18A2	SLC18A2	solute carrier family 18 (vesicular monoamine), member 2	47	0.03944431617856026	0.35710937	Yes	
+row_8	ANXA5	ANXA5	annexin A5	48	0.03941164165735245	0.39870748	Yes	
+row_9	SYT17	SYT17	synaptotagmin XVII	50	0.03938359022140503	0.43898067	Yes	
+row_10	DDC	DDC	dopa decarboxylase (aromatic L-amino acid decarboxylase)	62	0.03707662597298622	0.46386552	Yes	
+row_11	SYNPR	SYNPR	synaptoporin	69	0.03560537099838257	0.4936742	Yes	
+row_12	SCGN	SCGN	secretagogin, EF-hand calcium binding protein	73	0.03481919690966606	0.5265391	Yes	
+row_13	DRD2	DRD2	dopamine receptor D2	84	0.032136887311935425	0.5475055	Yes	
+row_14	GABRA2	GABRA2	gamma-aminobutyric acid (GABA) A receptor, alpha 2	116	0.025074392557144165	0.53381556	Yes	
+row_15	VAMP1	VAMP1	vesicle-associated membrane protein 1 (synaptobrevin 1)	121	0.02438165992498398	0.5543685	Yes	
+row_16	CNIH3	CNIH3	cornichon homolog 3 (Drosophila)	132	0.022495724260807037	0.5651589	Yes	
+row_17	RAB3B	RAB3B	RAB3B, member RAS oncogene family	151	0.019349031150341034	0.5622653	Yes	
+row_18	GAD2	GAD2	glutamate decarboxylase 2 (pancreatic islets and brain, 65kDa)	155	0.01885189488530159	0.57827705	Yes	
+row_19	BET1	BET1	BET1 homolog (S. cerevisiae)	206	0.009648104198276997	0.52369356	No	
+row_20	GRIA1	GRIA1	glutamate receptor, ionotropic, AMPA 1	230	0.007399918977171183	0.5017113	No	
+row_21	PDE4B	PDE4B	phosphodiesterase 4B, cAMP-specific (phosphodiesterase E4 dunce homolog, Drosophila)	244	0.005774782504886389	0.49096707	No	
+row_22	NTS	NTS	neurotensin	262	0.0035309772938489914	0.4726732	No	
+row_23	SYT6	SYT6	synaptotagmin VI	386	-0.009387772530317307	0.3232554	No	
+row_24	YIPF1	YIPF1	Yip1 domain family, member 1	413	-0.011024544015526772	0.3012128	No	
+row_25	NCALD	NCALD	neurocalcin delta	425	-0.01207976695150137	0.299714	No	
+row_26	SLC17A6	SLC17A6	solute carrier family 17 (sodium-dependent inorganic phosphate cotransporter), member 6	554	-0.022227859124541283	0.15737192	No	
+row_27	CTTNBP2	CTTNBP2	cortactin binding protein 2	570	-0.023748960345983505	0.16300839	No	
+row_28	TMEM163	TMEM163	transmembrane protein 163	593	-0.026066293939948082	0.16202338	No	
+row_29	SNCAIP	SNCAIP	synuclein, alpha interacting protein (synphilin)	731	-0.04826344922184944	0.035503265	No	
+row_30	ZNRF1	ZNRF1	zinc and ring finger 1	747	-0.05227043107151985	0.07124351	No	

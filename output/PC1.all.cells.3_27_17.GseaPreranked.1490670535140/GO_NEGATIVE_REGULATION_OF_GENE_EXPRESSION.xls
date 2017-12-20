@@ -1,0 +1,83 @@
+NAME	PROBE	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	CDKN1A	CDKN1A	cyclin-dependent kinase inhibitor 1A (p21, Cip1)	30	0.045163970440626144	-0.022886548	No	
+row_1	SNCA	SNCA	synuclein, alpha (non A4 component of amyloid precursor)	43	0.040898408740758896	-0.022576023	No	
+row_2	WNT5A	WNT5A	wingless-type MMTV integration site family, member 5A	136	0.022005457431077957	-0.1410544	No	
+row_3	SERPINE2	SERPINE2	serpin peptidase inhibitor, clade E (nexin, plasminogen activator inhibitor type 1), member 2	140	0.021365659311413765	-0.13635835	No	
+row_4	NR4A2	NR4A2	nuclear receptor subfamily 4, group A, member 2	158	0.01850913092494011	-0.15226392	No	
+row_5	PAX6	PAX6	paired box gene 6 (aniridia, keratitis)	163	0.017225682735443115	-0.150671	No	
+row_6	DLX1	DLX1	distal-less homeobox 1	164	0.017162956297397614	-0.14355625	No	
+row_7	EGR1	EGR1	early growth response 1	168	0.01687190681695938	-0.14072305	No	
+row_8	FOXP2	FOXP2	forkhead box P2	189	0.012881592847406864	-0.16312234	No	
+row_9	BTG2	BTG2	BTG family, member 2	191	0.01270977035164833	-0.15924059	No	
+row_10	PARK2	PARK2	Parkinson disease (autosomal recessive, juvenile) 2, parkin	202	0.01059680711477995	-0.1687174	No	
+row_11	POLR2K	POLR2K	polymerase (RNA) II (DNA directed) polypeptide K, 7.0kDa	205	0.009820026345551014	-0.16742052	No	
+row_12	CREM	CREM	cAMP responsive element modulator	209	0.009329080581665039	-0.16771412	No	
+row_13	MEF2C	MEF2C	MADS box transcription enhancer factor 2, polypeptide C (myocyte enhancer factor 2C)	242	0.0060506160371005535	-0.20958869	No	
+row_14	HAT1	HAT1	histone acetyltransferase 1	258	0.003991211764514446	-0.2287386	No	
+row_15	PDE2A	PDE2A	phosphodiesterase 2A, cGMP-stimulated	260	0.003919160924851894	-0.22850092	No	
+row_16	HRSP12	HRSP12	heat-responsive protein 12	290	4.481740470509976E-4	-0.26853704	No	
+row_17	DDIT3	DDIT3	DNA-damage-inducible transcript 3	318	-0.0028054057620465755	-0.3048221	No	
+row_18	ST18	ST18	suppression of tumorigenicity 18 (breast carcinoma) (zinc finger protein)	335	-0.005025133956223726	-0.32493034	No	
+row_19	LIMS1	LIMS1	LIM and senescent cell antigen-like domains 1	338	-0.005874402355402708	-0.3252691	No	
+row_20	JUNB	JUNB	jun B proto-oncogene	345	-0.006391759030520916	-0.33094123	No	
+row_21	COPS2	COPS2	COP9 constitutive photomorphogenic homolog subunit 2 (Arabidopsis)	372	-0.007829289883375168	-0.3637567	No	
+row_22	LMO1	LMO1	LIM domain only 1 (rhombotin 1)	373	-0.007960202172398567	-0.36045685	No	
+row_23	DLX2	DLX2	distal-less homeobox 2	391	-0.009725539945065975	-0.38000357	No	
+row_24	MYC	MYC	v-myc myelocytomatosis viral oncogene homolog (avian)	403	-0.010294877924025059	-0.39099252	No	
+row_25	SOX6	SOX6	SRY (sex determining region Y)-box 6	404	-0.010301035828888416	-0.38672233	No	
+row_26	ID2	ID2	inhibitor of DNA binding 2, dominant negative helix-loop-helix protein	428	-0.01260245218873024	-0.4133982	No	
+row_27	NCK1	NCK1	NCK adaptor protein 1	441	-0.01336358767002821	-0.42450202	No	
+row_28	PLCB1	PLCB1	phospholipase C, beta 1 (phosphoinositide-specific)	446	-0.013718994334340096	-0.42436278	No	
+row_29	MEF2A	MEF2A	MADS box transcription enhancer factor 2, polypeptide A (myocyte enhancer factor 2A)	451	-0.014159025624394417	-0.42404112	No	
+row_30	FOXP1	FOXP1	forkhead box P1	452	-0.014179409481585026	-0.41816318	No	
+row_31	SETD6	SETD6	SET domain containing 6	478	-0.016044897958636284	-0.44618598	No	
+row_32	NUP214	NUP214	nucleoporin 214kDa	480	-0.016091499477624893	-0.44090232	No	
+row_33	NFIB	NFIB	nuclear factor I/B	491	-0.0169173963367939	-0.447759	No	
+row_34	COMMD1	COMMD1	copper metabolism (Murr1) domain containing 1	497	-0.01736142300069332	-0.4474968	No	
+row_35	NUDT16	NUDT16	nudix (nucleoside diphosphate linked moiety X)-type motif 16	502	-0.017627758905291557	-0.4457372	No	
+row_36	PHF14	PHF14	PHD finger protein 14	510	-0.018341971561312675	-0.44784245	No	
+row_37	MLX	MLX	MAX-like protein X	521	-0.019325070083141327	-0.45370102	No	
+row_38	HEXIM2	HEXIM2	hexamthylene bis-acetamide inducible 2	541	-0.020826306194067	-0.47141996	Yes	
+row_39	NFKBIA	NFKBIA	nuclear factor of kappa light polypeptide gene enhancer in B-cells inhibitor, alpha	548	-0.021784018725156784	-0.47071135	Yes	
+row_40	RFX3	RFX3	regulatory factor X, 3 (influences HLA class II expression)	555	-0.022236056625843048	-0.46981537	Yes	
+row_41	TCF7L2	TCF7L2	transcription factor 7-like 2 (T-cell specific, HMG-box)	560	-0.022550130262970924	-0.46601525	Yes	
+row_42	NUP54	NUP54	nucleoporin 54kDa	562	-0.0229994785040617	-0.45786798	Yes	
+row_43	SIRT4	SIRT4	sirtuin (silent mating type information regulation 2 homolog) 4 (S. cerevisiae)	576	-0.02436896599829197	-0.46579656	Yes	
+row_44	ZBTB20	ZBTB20	zinc finger and BTB domain containing 20	582	-0.024833453819155693	-0.46243688	Yes	
+row_45	SND1	SND1	-	587	-0.025195637717843056	-0.4575401	Yes	
+row_46	OLFM1	OLFM1	olfactomedin 1	596	-0.02644147351384163	-0.4576747	Yes	
+row_47	KLF12	KLF12	Kruppel-like factor 12	605	-0.02749108336865902	-0.45737424	Yes	
+row_48	HIPK2	HIPK2	homeodomain interacting protein kinase 2	610	-0.027896197512745857	-0.45135796	Yes	
+row_49	TLE2	TLE2	transducin-like enhancer of split 2 (E(sp1) homolog, Drosophila)	616	-0.02833075448870659	-0.4465485	Yes	
+row_50	CHCHD3	CHCHD3	coiled-coil-helix-coiled-coil-helix domain containing 3	619	-0.028766855597496033	-0.4373974	Yes	
+row_51	CBX3	CBX3	chromobox homolog 3 (HP1 gamma homolog, Drosophila)	622	-0.02904391661286354	-0.4281314	Yes	
+row_52	ISL1	ISL1	ISL1 transcription factor, LIM/homeodomain, (islet-1)	625	-0.02937856689095497	-0.4187267	Yes	
+row_53	MEIS2	MEIS2	Meis1, myeloid ecotropic viral integration site 1 homolog 2 (mouse)	627	-0.02954796887934208	-0.4078648	Yes	
+row_54	POU2F1	POU2F1	POU domain, class 2, transcription factor 1	651	-0.03298403322696686	-0.4260917	Yes	
+row_55	PAX5	PAX5	paired box gene 5 (B-cell lineage specific activator)	655	-0.03410295024514198	-0.41611552	Yes	
+row_56	TLE1	TLE1	transducin-like enhancer of split 1 (E(sp1) homolog, Drosophila)	659	-0.034344300627708435	-0.40603927	Yes	
+row_57	PHF21A	PHF21A	PHD finger protein 21A	665	-0.03550582006573677	-0.39825547	Yes	
+row_58	ZCCHC11	ZCCHC11	zinc finger, CCHC domain containing 11	675	-0.03666464984416962	-0.3955391	Yes	
+row_59	LHX9	LHX9	LIM homeobox 9	679	-0.037600863724946976	-0.3841129	Yes	
+row_60	SIRT7	SIRT7	sirtuin (silent mating type information regulation 2 homolog) 7 (S. cerevisiae)	685	-0.038303352892398834	-0.3751694	Yes	
+row_61	PTBP1	PTBP1	polypyrimidine tract binding protein 1	705	-0.04145953431725502	-0.38433498	Yes	
+row_62	BCL11A	BCL11A	B-cell CLL/lymphoma 11A (zinc finger protein)	706	-0.0417766310274601	-0.36701685	Yes	
+row_63	ID4	ID4	inhibitor of DNA binding 4, dominant negative helix-loop-helix protein	708	-0.041829075664281845	-0.35106394	Yes	
+row_64	NR2F1	NR2F1	nuclear receptor subfamily 2, group F, member 1	711	-0.04218620806932449	-0.33634993	Yes	
+row_65	JUN	JUN	jun oncogene	715	-0.04441137611865997	-0.32210046	Yes	
+row_66	DNAJB5	DNAJB5	DnaJ (Hsp40) homolog, subfamily B, member 5	719	-0.04461171105504036	-0.30776796	Yes	
+row_67	FOSB	FOSB	FBJ murine osteosarcoma viral oncogene homolog B	730	-0.048211660236120224	-0.30165187	Yes	
+row_68	RBM4	RBM4	RNA binding motif protein 4	738	-0.049635421484708786	-0.2907847	Yes	
+row_69	MTF2	MTF2	metal response element binding transcription factor 2	739	-0.04963548108935356	-0.27020872	Yes	
+row_70	NR2F2	NR2F2	nuclear receptor subfamily 2, group F, member 2	741	-0.05084751173853874	-0.2505173	Yes	
+row_71	H2AFV	H2AFV	H2A histone family, member V	748	-0.052626512944698334	-0.2370232	Yes	
+row_72	SFPQ	SFPQ	splicing factor proline/glutamine-rich (polypyrimidine tract binding protein associated)	751	-0.053348660469055176	-0.21768191	Yes	
+row_73	FLNA	FLNA	filamin A, alpha (actin binding protein 280)	752	-0.05417187884449959	-0.19522543	Yes	
+row_74	MAGEL2	MAGEL2	MAGE-like 2	756	-0.054898615926504135	-0.17662859	Yes	
+row_75	CDKN1C	CDKN1C	cyclin-dependent kinase inhibitor 1C (p57, Kip2)	774	-0.06578847765922546	-0.1729349	Yes	
+row_76	RBMX	RBMX	RNA binding motif protein, X-linked	779	-0.07023342698812485	-0.1493681	Yes	
+row_77	TIA1	TIA1	TIA1 cytotoxic granule-associated RNA binding protein	789	-0.07868072390556335	-0.12923436	Yes	
+row_78	RUNX1T1	RUNX1T1	runt-related transcription factor 1; translocated to, 1 (cyclin D-related)	790	-0.07870088517665863	-0.0966096	Yes	
+row_79	ZFP57	ZFP57	zinc finger protein 57 homolog (mouse)	795	-0.08347366750240326	-0.067554176	Yes	
+row_80	H3F3A	H3F3A	H3 histone, family 3A	798	-0.08950313925743103	-0.033225354	Yes	
+row_81	SOX11	SOX11	SRY (sex determining region Y)-box 11	800	-0.09018711745738983	0.0027739624	Yes	

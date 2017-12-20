@@ -1,0 +1,38 @@
+NAME	PROBE	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	PPARGC1A	PPARGC1A	peroxisome proliferative activated receptor, gamma, coactivator 1, alpha	201	0.010845405049622059	-0.25100794	No	
+row_1	POLR2K	POLR2K	polymerase (RNA) II (DNA directed) polypeptide K, 7.0kDa	205	0.009820026345551014	-0.24460751	No	
+row_2	MEF2C	MEF2C	MADS box transcription enhancer factor 2, polypeptide C (myocyte enhancer factor 2C)	242	0.0060506160371005535	-0.28524813	No	
+row_3	ZCCHC12	ZCCHC12	zinc finger, CCHC domain containing 12	255	0.004205435514450073	-0.2964957	No	
+row_4	FANCL	FANCL	Fanconi anemia, complementation group L	297	-4.6191757428459823E-4	-0.34953523	No	
+row_5	ANKS1B	ANKS1B	ankyrin repeat and sterile alpha motif domain containing 1B	353	-0.0067698536440730095	-0.41422442	No	
+row_6	CBLL1	CBLL1	Cas-Br-M (murine) ecotropic retroviral transforming sequence-like 1	362	-0.007153562735766172	-0.41715276	No	
+row_7	PPP1CC	PPP1CC	protein phosphatase 1, catalytic subunit, gamma isoform	399	-0.010009569115936756	-0.4536341	No	
+row_8	NEK6	NEK6	NIMA (never in mitosis gene a)-related kinase 6	410	-0.01078815758228302	-0.45535496	No	
+row_9	ELP4	ELP4	elongation protein 4 homolog (S. cerevisiae)	421	-0.011872494593262672	-0.45593658	No	
+row_10	PLCB1	PLCB1	phospholipase C, beta 1 (phosphoinositide-specific)	446	-0.013718994334340096	-0.47285503	No	
+row_11	TCEA2	TCEA2	transcription elongation factor A (SII), 2	447	-0.013877816498279572	-0.45827505	No	
+row_12	NXT1	NXT1	NTF2-like export factor 1	494	-0.017060810700058937	-0.5004032	No	
+row_13	MED6	MED6	mediator of RNA polymerase II transcription, subunit 6 homolog (S. cerevisiae)	538	-0.020692938938736916	-0.53479904	Yes	
+row_14	RPAIN	RPAIN	RPA interacting protein	539	-0.02070930413901806	-0.5130419	Yes	
+row_15	POLE3	POLE3	polymerase (DNA directed), epsilon 3 (p17 subunit)	546	-0.021508026868104935	-0.49827856	Yes	
+row_16	ATPAF2	ATPAF2	ATP synthase mitochondrial F1 complex assembly factor 2	556	-0.022250531241297722	-0.48665154	Yes	
+row_17	TCF7L2	TCF7L2	transcription factor 7-like 2 (T-cell specific, HMG-box)	560	-0.022550130262970924	-0.4668769	Yes	
+row_18	MED11	MED11	mediator of RNA polymerase II transcription, subunit 11 homolog (S. cerevisiae)	571	-0.023749545216560364	-0.45498052	Yes	
+row_19	PRPF3	PRPF3	PRP3 pre-mRNA processing factor 3 homolog (S. cerevisiae)	594	-0.026211896911263466	-0.45616302	Yes	
+row_20	FANCE	FANCE	Fanconi anemia, complementation group E	597	-0.02647559903562069	-0.4309588	Yes	
+row_21	THOC6	THOC6	THO complex 6 homolog (Drosophila)	598	-0.026661887764930725	-0.4029479	Yes	
+row_22	MGA	MGA	MAX gene associated	601	-0.02698357217013836	-0.37721	Yes	
+row_23	HIPK2	HIPK2	homeodomain interacting protein kinase 2	610	-0.027896197512745857	-0.3583462	Yes	
+row_24	AFF4	AFF4	AF4/FMR2 family, member 4	617	-0.028437938541173935	-0.33630228	Yes	
+row_25	RFWD2	RFWD2	ring finger and WD repeat domain 2	632	-0.030154289677739143	-0.32289904	Yes	
+row_26	DKC1	DKC1	dyskeratosis congenita 1, dyskerin	635	-0.03068205714225769	-0.29327554	Yes	
+row_27	CCDC101	CCDC101	coiled-coil domain containing 101	661	-0.0344545841217041	-0.28971472	Yes	
+row_28	PHF21A	PHF21A	PHD finger protein 21A	665	-0.03550582006573677	-0.25632888	Yes	
+row_29	PHF20	PHF20	PHD finger protein 20	676	-0.03675566241145134	-0.23076831	Yes	
+row_30	AFF2	AFF2	AF4/FMR2 family, member 2	681	-0.03783896937966347	-0.19623673	Yes	
+row_31	RBM4	RBM4	RNA binding motif protein 4	738	-0.049635421484708786	-0.21719696	Yes	
+row_32	MTF2	MTF2	metal response element binding transcription factor 2	739	-0.04963548108935356	-0.16505007	Yes	
+row_33	SFPQ	SFPQ	splicing factor proline/glutamine-rich (polypyrimidine tract binding protein associated)	751	-0.053348660469055176	-0.123362444	Yes	
+row_34	LAS1L	LAS1L	LAS1-like (S. cerevisiae)	760	-0.05638277158141136	-0.07457074	Yes	
+row_35	STK38	STK38	serine/threonine kinase 38	763	-0.05663483589887619	-0.017681312	Yes	
+row_36	MLLT3	MLLT3	myeloid/lymphoid or mixed-lineage leukemia (trithorax homolog, Drosophila); translocated to, 3	771	-0.06404903531074524	0.040470034	Yes	

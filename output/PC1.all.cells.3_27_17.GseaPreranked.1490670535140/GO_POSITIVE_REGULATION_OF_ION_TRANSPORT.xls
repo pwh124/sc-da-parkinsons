@@ -1,0 +1,23 @@
+NAME	PROBE	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	ATP1B2	ATP1B2	ATPase, Na+/K+ transporting, beta 2 polypeptide	6	0.06385453045368195	0.07820119	Yes	
+row_1	ADCYAP1R1	ADCYAP1R1	adenylate cyclase activating polypeptide 1 (pituitary) receptor type I	14	0.05137595534324646	0.13833842	Yes	
+row_2	CNTN1	CNTN1	contactin 1	17	0.05017554759979248	0.20326316	Yes	
+row_3	KCNC2	KCNC2	potassium voltage-gated channel, Shaw-related subfamily, member 2	28	0.04557005316019058	0.2517503	Yes	
+row_4	TRH	TRH	thyrotropin-releasing hormone	33	0.044344186782836914	0.3062711	Yes	
+row_5	CAMK2A	CAMK2A	calcium/calmodulin-dependent protein kinase (CaM kinase) II alpha	39	0.04257001727819443	0.35712525	Yes	
+row_6	SNCA	SNCA	synuclein, alpha (non A4 component of amyloid precursor)	43	0.040898408740758896	0.40829194	Yes	
+row_7	SLC6A1	SLC6A1	solute carrier family 6 (neurotransmitter transporter, GABA), member 1	51	0.039246898144483566	0.4521157	Yes	
+row_8	GAL	GAL	galanin	65	0.0364997498691082	0.48456216	Yes	
+row_9	OPRK1	OPRK1	opioid receptor, kappa 1	67	0.03585394471883774	0.5315049	Yes	
+row_10	PCP4	PCP4	Purkinje cell protein 4	70	0.03554677963256836	0.5767541	Yes	
+row_11	DRD2	DRD2	dopamine receptor D2	84	0.032136887311935425	0.6033325	Yes	
+row_12	CCK	CCK	cholecystokinin	89	0.030479969456791878	0.6392061	Yes	
+row_13	RAB3B	RAB3B	RAB3B, member RAS oncogene family	151	0.019349031150341034	0.58712536	No	
+row_14	CACNB2	CACNB2	calcium channel, voltage-dependent, beta 2 subunit	180	0.014815300703048706	0.5712003	No	
+row_15	WNK1	WNK1	WNK lysine deficient protein kinase 1	218	0.008920257911086082	0.5358228	No	
+row_16	ARC	ARC	activity-regulated cytoskeleton-associated protein	252	0.004950194153934717	0.5002273	No	
+row_17	DMD	DMD	dystrophin (muscular dystrophy, Duchenne and Becker types)	393	-0.009801127016544342	0.33415228	No	
+row_18	TRIAP1	TRIAP1	TP53 regulated inhibitor of apoptosis 1	411	-0.010943816974759102	0.32710463	No	
+row_19	NOS1AP	NOS1AP	nitric oxide synthase 1 (neuronal) adaptor protein	528	-0.01983979344367981	0.20526141	No	
+row_20	PLA2G6	PLA2G6	phospholipase A2, group VI (cytosolic, calcium-independent)	606	-0.027587121352553368	0.14377424	No	
+row_21	AKAP9	AKAP9	A kinase (PRKA) anchor protein (yotiao) 9	791	-0.0787409096956253	0.014084499	No	

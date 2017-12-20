@@ -1,0 +1,24 @@
+NAME	PROBE	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	ARHGAP26	ARHGAP26	Rho GTPase activating protein 26	80	0.03359951823949814	-0.052480094	No	
+row_1	CACNB2	CACNB2	calcium channel, voltage-dependent, beta 2 subunit	180	0.014815300703048706	-0.15731923	No	
+row_2	CAMK2D	CAMK2D	calcium/calmodulin-dependent protein kinase (CaM kinase) II delta	194	0.01245542336255312	-0.15541963	No	
+row_3	EPS8	EPS8	epidermal growth factor receptor pathway substrate 8	233	0.007131071761250496	-0.1935079	No	
+row_4	KLHL1	KLHL1	kelch-like 1 (Drosophila)	300	-0.001154512632638216	-0.27640235	No	
+row_5	NEBL	NEBL	nebulette	320	-0.003040541661903262	-0.29622903	No	
+row_6	KIT	KIT	v-kit Hardy-Zuckerman 4 feline sarcoma viral oncogene homolog	355	-0.006963804364204407	-0.32943842	No	
+row_7	CORO2B	CORO2B	coronin, actin binding protein, 2B	388	-0.00952732190489769	-0.35626248	No	
+row_8	DMD	DMD	dystrophin (muscular dystrophy, Duchenne and Becker types)	393	-0.009801127016544342	-0.34678096	No	
+row_9	SRGAP2	SRGAP2	SLIT-ROBO Rho GTPase activating protein 2	435	-0.013116303831338882	-0.37979367	No	
+row_10	NCK1	NCK1	NCK adaptor protein 1	441	-0.01336358767002821	-0.36628392	No	
+row_11	MEF2A	MEF2A	MADS box transcription enhancer factor 2, polypeptide A (myocyte enhancer factor 2A)	451	-0.014159025624394417	-0.35671672	No	
+row_12	MKLN1	MKLN1	muskelin 1, intracellular mediator containing kelch motifs	509	-0.018280383199453354	-0.4025446	No	
+row_13	KPTN	KPTN	kaptin (actin binding protein)	564	-0.023196127265691757	-0.43719882	No	
+row_14	RND3	RND3	Rho family GTPase 3	574	-0.024138193577528	-0.41275647	No	
+row_15	VIM	VIM	vimentin	581	-0.024564282968640327	-0.38383284	No	
+row_16	MYO1B	MYO1B	myosin IB	729	-0.04789828136563301	-0.5008964	Yes	
+row_17	SYNE2	SYNE2	spectrin repeat containing, nuclear envelope 2	749	-0.052902378141880035	-0.4463982	Yes	
+row_18	FLNA	FLNA	filamin A, alpha (actin binding protein 280)	752	-0.05417187884449959	-0.36821276	Yes	
+row_19	MAGEL2	MAGEL2	MAGE-like 2	756	-0.054898615926504135	-0.2902261	Yes	
+row_20	EPB41	EPB41	erythrocyte membrane protein band 4.1 (elliptocytosis 1, RH-linked)	780	-0.07080182433128357	-0.2141749	Yes	
+row_21	CNN3	CNN3	calponin 3, acidic	781	-0.07108164578676224	-0.108219385	Yes	
+row_22	DBN1	DBN1	drebrin 1	799	-0.08980200439691544	0.003846136	Yes	

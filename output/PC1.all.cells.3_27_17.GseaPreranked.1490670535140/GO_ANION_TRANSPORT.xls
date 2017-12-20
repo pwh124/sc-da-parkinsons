@@ -1,0 +1,26 @@
+NAME	PROBE	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	SYT1	SYT1	synaptotagmin I	13	0.05252663418650627	0.06826525	Yes	
+row_1	GABRA4	GABRA4	gamma-aminobutyric acid (GABA) A receptor, alpha 4	29	0.04531412199139595	0.1222918	Yes	
+row_2	SLC6A1	SLC6A1	solute carrier family 6 (neurotransmitter transporter, GABA), member 1	51	0.039246898144483566	0.15879104	Yes	
+row_3	GABRE	GABRE	gamma-aminobutyric acid (GABA) A receptor, epsilon	64	0.036709144711494446	0.20275296	Yes	
+row_4	SLC10A4	SLC10A4	solute carrier family 10 (sodium/bile acid cotransporter family), member 4	77	0.03398292139172554	0.24230453	Yes	
+row_5	DRD2	DRD2	dopamine receptor D2	84	0.032136887311935425	0.28658178	Yes	
+row_6	CPLX1	CPLX1	complexin 1	86	0.031858883798122406	0.336836	Yes	
+row_7	SLC7A3	SLC7A3	solute carrier family 7 (cationic amino acid transporter, y+ system), member 3	87	0.03127506375312805	0.38743114	Yes	
+row_8	GABRA1	GABRA1	gamma-aminobutyric acid (GABA) A receptor, alpha 1	97	0.02886534295976162	0.42255983	Yes	
+row_9	SLC35A3	SLC35A3	solute carrier family 35 (UDP-N-acetylglucosamine (UDP-GlcNAc) transporter), member A3	99	0.02859729714691639	0.46753764	Yes	
+row_10	GRM2	GRM2	glutamate receptor, metabotropic 2	105	0.02756647951900959	0.5057065	Yes	
+row_11	GABRB1	GABRB1	gamma-aminobutyric acid (GABA) A receptor, beta 1	110	0.026888040825724602	0.5440631	Yes	
+row_12	GABRQ	GABRQ	gamma-aminobutyric acid (GABA) receptor, theta	114	0.02585204876959324	0.5820291	Yes	
+row_13	GABRA2	GABRA2	gamma-aminobutyric acid (GABA) A receptor, alpha 2	116	0.025074392557144165	0.6213078	Yes	
+row_14	CLCN7	CLCN7	chloride channel 7	142	0.020601237192749977	0.6225017	Yes	
+row_15	GABRA5	GABRA5	gamma-aminobutyric acid (GABA) A receptor, alpha 5	275	0.002373886527493596	0.45667621	No	
+row_16	SLCO3A1	SLCO3A1	solute carrier organic anion transporter family, member 3A1	295	-2.2629204613622278E-4	0.4326207	No	
+row_17	CLCC1	CLCC1	chloride channel CLIC-like 1	307	-0.001449163188226521	0.42082626	No	
+row_18	CACNB4	CACNB4	calcium channel, voltage-dependent, beta 4 subunit	311	-0.002167548518627882	0.42047676	No	
+row_19	TRIAP1	TRIAP1	TP53 regulated inhibitor of apoptosis 1	411	-0.010943816974759102	0.31093174	No	
+row_20	GLRA2	GLRA2	glycine receptor, alpha 2	525	-0.019474294036626816	0.19719198	No	
+row_21	SLC1A2	SLC1A2	solute carrier family 1 (glial high affinity glutamate transporter), member 2	534	-0.020439235493540764	0.21997471	No	
+row_22	SLC17A6	SLC17A6	solute carrier family 17 (sodium-dependent inorganic phosphate cotransporter), member 6	554	-0.022227859124541283	0.23151214	No	
+row_23	SLC19A1	SLC19A1	solute carrier family 19 (folate transporter), member 1	585	-0.025043703615665436	0.23346609	No	
+row_24	GABRB2	GABRB2	gamma-aminobutyric acid (GABA) A receptor, beta 2	603	-0.02730272337794304	0.25578406	No	

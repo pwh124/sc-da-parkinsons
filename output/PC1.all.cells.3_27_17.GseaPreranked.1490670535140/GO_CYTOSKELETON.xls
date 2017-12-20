@@ -1,0 +1,75 @@
+NAME	PROBE	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	DYNC1I1	DYNC1I1	dynein, cytoplasmic 1, intermediate chain 1	38	0.04272521287202835	-0.031120187	No	
+row_1	SNCA	SNCA	synuclein, alpha (non A4 component of amyloid precursor)	43	0.040898408740758896	-0.016499296	No	
+row_2	PCP4	PCP4	Purkinje cell protein 4	70	0.03554677963256836	-0.03468788	No	
+row_3	ARHGAP26	ARHGAP26	Rho GTPase activating protein 26	80	0.03359951823949814	-0.030514231	No	
+row_4	ALDOC	ALDOC	aldolase C, fructose-bisphosphate	124	0.023805513978004456	-0.07779507	No	
+row_5	SNCG	SNCG	synuclein, gamma (breast cancer-specific protein 1)	157	0.018753686919808388	-0.11247049	No	
+row_6	CRHBP	CRHBP	corticotropin releasing hormone binding protein	184	0.014080174267292023	-0.14121322	No	
+row_7	PKP4	PKP4	plakophilin 4	241	0.006144944578409195	-0.21500959	No	
+row_8	PDE4B	PDE4B	phosphodiesterase 4B, cAMP-specific (phosphodiesterase E4 dunce homolog, Drosophila)	244	0.005774782504886389	-0.21491387	No	
+row_9	BBS5	BBS5	Bardet-Biedl syndrome 5	249	0.005016880575567484	-0.21793428	No	
+row_10	ARC	ARC	activity-regulated cytoskeleton-associated protein	252	0.004950194153934717	-0.21824399	No	
+row_11	IFT57	IFT57	intraflagellar transport 57 homolog (Chlamydomonas)	263	0.003525020321831107	-0.23022832	No	
+row_12	ITGB1BP1	ITGB1BP1	integrin beta 1 binding protein 1	284	0.0011412093881517649	-0.25710207	No	
+row_13	PPP1R12B	PPP1R12B	protein phosphatase 1, regulatory (inhibitor) subunit 12B	291	4.4140222598798573E-4	-0.2651155	No	
+row_14	RPP25	RPP25	ribonuclease P 25kDa subunit	292	7.768366776872426E-5	-0.26507732	No	
+row_15	KLHL1	KLHL1	kelch-like 1 (Drosophila)	300	-0.001154512632638216	-0.2741119	No	
+row_16	XRCC4	XRCC4	X-ray repair complementing defective repair in Chinese hamster cells 4	312	-0.0022761053405702114	-0.288082	No	
+row_17	NEBL	NEBL	nebulette	320	-0.003040541661903262	-0.2961893	No	
+row_18	ACTR6	ACTR6	ARP6 actin-related protein 6 homolog (yeast)	340	-0.006026401650160551	-0.3192895	No	
+row_19	BCAS3	BCAS3	breast carcinoma amplified sequence 3	347	-0.0064891730435192585	-0.32432953	No	
+row_20	DYNC2LI1	DYNC2LI1	dynein, cytoplasmic 2, light intermediate chain 1	352	-0.006722118705511093	-0.32651153	No	
+row_21	KALRN	KALRN	kalirin, RhoGEF kinase	374	-0.008337599225342274	-0.3512189	No	
+row_22	NEFL	NEFL	neurofilament, light polypeptide 68kDa	381	-0.009100757539272308	-0.35497496	No	
+row_23	CORO2B	CORO2B	coronin, actin binding protein, 2B	388	-0.00952732190489769	-0.35852125	No	
+row_24	DMD	DMD	dystrophin (muscular dystrophy, Duchenne and Becker types)	393	-0.009801127016544342	-0.35918945	No	
+row_25	OBFC1	OBFC1	oligonucleotide/oligosaccharide-binding fold containing 1	400	-0.010163554921746254	-0.36242297	No	
+row_26	NEK6	NEK6	NIMA (never in mitosis gene a)-related kinase 6	410	-0.01078815758228302	-0.3694646	No	
+row_27	DLGAP2	DLGAP2	discs, large (Drosophila) homolog-associated protein 2	414	-0.01108622457832098	-0.36812925	No	
+row_28	STOML2	STOML2	stomatin (EPB72)-like 2	415	-0.01111557800322771	-0.36266422	No	
+row_29	NME7	NME7	non-metastatic cells 7, protein expressed in (nucleoside-diphosphate kinase)	426	-0.012204557657241821	-0.37038124	No	
+row_30	ID2	ID2	inhibitor of DNA binding 2, dominant negative helix-loop-helix protein	428	-0.01260245218873024	-0.36555693	No	
+row_31	GDPD2	GDPD2	glycerophosphodiester phosphodiesterase domain containing 2	430	-0.012808442115783691	-0.36063135	No	
+row_32	EVI5	EVI5	ecotropic viral integration site 5	444	-0.01341159362345934	-0.37187013	No	
+row_33	TCEA2	TCEA2	transcription elongation factor A (SII), 2	447	-0.013877816498279572	-0.36779055	No	
+row_34	ANKRD23	ANKRD23	ankyrin repeat domain 23	458	-0.01452961191534996	-0.37436444	No	
+row_35	SLC25A5	SLC25A5	solute carrier family 25 (mitochondrial carrier; adenine nucleotide translocator), member 5	470	-0.015485645271837711	-0.38184002	No	
+row_36	FGF13	FGF13	fibroblast growth factor 13	475	-0.015805799514055252	-0.379556	No	
+row_37	SNTG1	SNTG1	syntrophin, gamma 1	484	-0.016656240448355675	-0.38234082	No	
+row_38	DAB1	DAB1	disabled homolog 1 (Drosophila)	487	-0.016726387664675713	-0.3768607	No	
+row_39	PMS2	PMS2	PMS2 postmeiotic segregation increased 2 (S. cerevisiae)	511	-0.018626349046826363	-0.39925307	No	
+row_40	CDC42SE1	CDC42SE1	CDC42 small effector 1	515	-0.018986646085977554	-0.39403343	No	
+row_41	ZFYVE19	ZFYVE19	zinc finger, FYVE domain containing 19	536	-0.020545534789562225	-0.411367	No	
+row_42	KPTN	KPTN	kaptin (actin binding protein)	564	-0.023196127265691757	-0.43699956	No	
+row_43	VIM	VIM	vimentin	581	-0.024564282968640327	-0.44687033	Yes	
+row_44	MSRA	MSRA	methionine sulfoxide reductase A	589	-0.025531195104122162	-0.44392002	Yes	
+row_45	PTP4A1	PTP4A1	protein tyrosine phosphatase type IVA, member 1	595	-0.02628420852124691	-0.437856	Yes	
+row_46	PLA2G6	PLA2G6	phospholipase A2, group VI (cytosolic, calcium-independent)	606	-0.027587121352553368	-0.4380101	Yes	
+row_47	RASSF1	RASSF1	Ras association (RalGDS/AF-6) domain family 1	608	-0.027770085260272026	-0.42572856	Yes	
+row_48	KATNA1	KATNA1	katanin p60 (ATPase-containing) subunit A 1	613	-0.0280527975410223	-0.41742328	Yes	
+row_49	RABGAP1	RABGAP1	RAB GTPase activating protein 1	615	-0.02828008122742176	-0.404891	Yes	
+row_50	CBX3	CBX3	chromobox homolog 3 (HP1 gamma homolog, Drosophila)	622	-0.02904391661286354	-0.39884192	Yes	
+row_51	RFWD2	RFWD2	ring finger and WD repeat domain 2	632	-0.030154289677739143	-0.39636213	Yes	
+row_52	SFI1	SFI1	Sfi1 homolog, spindle assembly associated (yeast)	648	-0.03276664763689041	-0.4008284	Yes	
+row_53	TSEN2	TSEN2	tRNA splicing endonuclease 2 homolog (S. cerevisiae)	652	-0.03346235677599907	-0.38849172	Yes	
+row_54	SH3KBP1	SH3KBP1	SH3-domain kinase binding protein 1	653	-0.033497028052806854	-0.37202278	Yes	
+row_55	KLHL5	KLHL5	kelch-like 5 (Drosophila)	657	-0.03420562297105789	-0.3593207	Yes	
+row_56	FRMD4A	FRMD4A	FERM domain containing 4A	667	-0.03566078841686249	-0.3541336	Yes	
+row_57	CDK5RAP2	CDK5RAP2	CDK5 regulatory subunit associated protein 2	703	-0.04115599766373634	-0.3819101	Yes	
+row_58	ARHGAP21	ARHGAP21	Rho GTPase activating protein 21	721	-0.044773682951927185	-0.38321653	Yes	
+row_59	MAST2	MAST2	microtubule associated serine/threonine kinase 2	726	-0.0469941683113575	-0.36559865	Yes	
+row_60	PLK2	PLK2	polo-like kinase 2 (Drosophila)	728	-0.04769006371498108	-0.34352338	Yes	
+row_61	MYO1B	MYO1B	myosin IB	729	-0.04789828136563301	-0.319974	Yes	
+row_62	FIGN	FIGN	fidgetin	746	-0.05192328989505768	-0.3163936	Yes	
+row_63	SYNE2	SYNE2	spectrin repeat containing, nuclear envelope 2	749	-0.052902378141880035	-0.29312745	Yes	
+row_64	FLNA	FLNA	filamin A, alpha (actin binding protein 280)	752	-0.05417187884449959	-0.2692371	Yes	
+row_65	LAS1L	LAS1L	LAS1-like (S. cerevisiae)	760	-0.05638277158141136	-0.2511185	Yes	
+row_66	DDAH2	DDAH2	dimethylarginine dimethylaminohydrolase 2	768	-0.06054678186774254	-0.23095264	Yes	
+row_67	EPB41	EPB41	erythrocyte membrane protein band 4.1 (elliptocytosis 1, RH-linked)	780	-0.07080182433128357	-0.21123181	Yes	
+row_68	CNN3	CNN3	calponin 3, acidic	781	-0.07108164578676224	-0.17628425	Yes	
+row_69	DCX	DCX	doublecortex; lissencephaly, X-linked (doublecortin)	784	-0.07510311156511307	-0.142103	Yes	
+row_70	TRAF4	TRAF4	TNF receptor-associated factor 4	785	-0.07580532878637314	-0.10483303	Yes	
+row_71	AKAP9	AKAP9	A kinase (PRKA) anchor protein (yotiao) 9	791	-0.0787409096956253	-0.07297847	Yes	
+row_72	INA	INA	internexin neuronal intermediate filament protein, alpha	796	-0.08374296128749847	-0.037292894	Yes	
+row_73	DBN1	DBN1	drebrin 1	799	-0.08980200439691544	0.004115119	Yes	

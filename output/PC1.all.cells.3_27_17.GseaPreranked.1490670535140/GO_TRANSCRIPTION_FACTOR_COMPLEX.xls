@@ -1,0 +1,21 @@
+NAME	PROBE	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	CREM	CREM	cAMP responsive element modulator	209	0.009329080581665039	-0.2510913	No	
+row_1	DDIT3	DDIT3	DNA-damage-inducible transcript 3	318	-0.0028054057620465755	-0.38426176	No	
+row_2	JUNB	JUNB	jun B proto-oncogene	345	-0.006391759030520916	-0.40662104	No	
+row_3	TCF4	TCF4	transcription factor 4	371	-0.00781452376395464	-0.42528883	No	
+row_4	MEF2A	MEF2A	MADS box transcription enhancer factor 2, polypeptide A (myocyte enhancer factor 2A)	451	-0.014159025624394417	-0.50215596	No	
+row_5	PBX3	PBX3	pre-B-cell leukemia transcription factor 3	459	-0.014566278085112572	-0.486378	No	
+row_6	MED6	MED6	mediator of RNA polymerase II transcription, subunit 6 homolog (S. cerevisiae)	538	-0.020692938938736916	-0.55088043	Yes	
+row_7	RFX3	RFX3	regulatory factor X, 3 (influences HLA class II expression)	555	-0.022236056625843048	-0.5335817	Yes	
+row_8	TCF12	TCF12	transcription factor 12 (HTF4, helix-loop-helix transcription factors 4)	559	-0.022529400885105133	-0.4991823	Yes	
+row_9	TCF7L2	TCF7L2	transcription factor 7-like 2 (T-cell specific, HMG-box)	560	-0.022550130262970924	-0.46091637	Yes	
+row_10	MEIS1	MEIS1	Meis1, myeloid ecotropic viral integration site 1 homolog (mouse)	568	-0.023604411631822586	-0.42980137	Yes	
+row_11	HIPK2	HIPK2	homeodomain interacting protein kinase 2	610	-0.027896197512745857	-0.43482623	Yes	
+row_12	LMO4	LMO4	LIM domain only 4	618	-0.028705738484859467	-0.39505464	Yes	
+row_13	FOS	FOS	v-fos FBJ murine osteosarcoma viral oncogene homolog	654	-0.0336926206946373	-0.38258055	Yes	
+row_14	LDB2	LDB2	LIM domain binding 2	662	-0.034641120582818985	-0.33273703	Yes	
+row_15	JUN	JUN	jun oncogene	715	-0.04441137611865997	-0.32378536	Yes	
+row_16	SFPQ	SFPQ	splicing factor proline/glutamine-rich (polypyrimidine tract binding protein associated)	751	-0.053348660469055176	-0.2779564	Yes	
+row_17	USF1	USF1	upstream transcription factor 1	753	-0.05465255677700043	-0.18649206	Yes	
+row_18	CDK4	CDK4	cyclin-dependent kinase 4	777	-0.06777319312095642	-0.10086002	Yes	
+row_19	SOX4	SOX4	SRY (sex determining region Y)-box 4	787	-0.07749968022108078	0.019157112	Yes	

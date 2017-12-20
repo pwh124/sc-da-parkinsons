@@ -1,0 +1,27 @@
+NAME	PROBE	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	TH	TH	tyrosine hydroxylase	1	0.07856127619743347	0.087911606	Yes	
+row_1	ACHE	ACHE	acetylcholinesterase (Yt blood group)	10	0.056426797062158585	0.14168267	Yes	
+row_2	SYT1	SYT1	synaptotagmin I	13	0.05252663418650627	0.1987475	Yes	
+row_3	SLC6A3	SLC6A3	solute carrier family 6 (neurotransmitter transporter, dopamine), member 3	18	0.049497090280056	0.24979857	Yes	
+row_4	SYN2	SYN2	synapsin II	20	0.04910608008503914	0.3042667	Yes	
+row_5	SYT10	SYT10	synaptotagmin X	36	0.04384787380695343	0.33474663	Yes	
+row_6	CAMK2A	CAMK2A	calcium/calmodulin-dependent protein kinase (CaM kinase) II alpha	39	0.04257001727819443	0.3805067	Yes	
+row_7	SNCA	SNCA	synuclein, alpha (non A4 component of amyloid precursor)	43	0.040898408740758896	0.42308182	Yes	
+row_8	SLC18A2	SLC18A2	solute carrier family 18 (vesicular monoamine), member 2	47	0.03944431617856026	0.46400595	Yes	
+row_9	SYT17	SYT17	synaptotagmin XVII	50	0.03938359022140503	0.50614816	Yes	
+row_10	BAIAP3	BAIAP3	BAI1-associated protein 3	53	0.038948725908994675	0.5477966	Yes	
+row_11	DRD2	DRD2	dopamine receptor D2	84	0.032136887311935425	0.5456748	Yes	
+row_12	CPLX1	CPLX1	complexin 1	86	0.031858883798122406	0.58056045	Yes	
+row_13	LIN7B	LIN7B	lin-7 homolog B (C. elegans)	106	0.02741788700222969	0.5872377	Yes	
+row_14	GAD1	GAD1	glutamate decarboxylase 1 (brain, 67kDa)	112	0.026201557368040085	0.610552	Yes	
+row_15	GABRA2	GABRA2	gamma-aminobutyric acid (GABA) A receptor, alpha 2	116	0.025074392557144165	0.6351605	Yes	
+row_16	RAB3B	RAB3B	RAB3B, member RAS oncogene family	151	0.019349031150341034	0.6133714	Yes	
+row_17	GAD2	GAD2	glutamate decarboxylase 2 (pancreatic islets and brain, 65kDa)	155	0.01885189488530159	0.63091487	Yes	
+row_18	SNCG	SNCG	synuclein, gamma (breast cancer-specific protein 1)	157	0.018753686919808388	0.6509208	Yes	
+row_19	PARK2	PARK2	Parkinson disease (autosomal recessive, juvenile) 2, parkin	202	0.01059680711477995	0.60632443	No	
+row_20	NRXN3	NRXN3	neurexin 3	220	0.008779950439929962	0.5944142	No	
+row_21	MEF2C	MEF2C	MADS box transcription enhancer factor 2, polypeptide C (myocyte enhancer factor 2C)	242	0.0060506160371005535	0.574257	No	
+row_22	SYT6	SYT6	synaptotagmin VI	386	-0.009387772530317307	0.4008747	No	
+row_23	PDZD11	PDZD11	PDZ domain containing 11	547	-0.021778417751193047	0.21968175	No	
+row_24	NRXN1	NRXN1	neurexin 1	723	-0.04503365978598595	0.045587823	No	
+row_25	SNCAIP	SNCAIP	synuclein, alpha interacting protein (synphilin)	731	-0.04826344922184944	0.09137721	No	

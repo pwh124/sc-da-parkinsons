@@ -1,0 +1,23 @@
+producer_class	xtools.gsea.GseaPreranked
+producer_timestamp	1490670535140
+param	collapse	true
+param	plot_top_x	20
+param	rnk	/Volumes/PAULHOOK/Th_Experiments/Single-Cell-RNA-seq/TH-E15-P7-Remap-Alt-Filter/File.Output/All.cells.PC1.rnk
+param	norm	meandiv
+param	scoring_scheme	weighted
+param	make_sets	true
+param	mode	Max_probe
+param	gmx	gseaftp.broadinstitute.org://pub/gsea/gene_sets/c5.all.v5.2.symbols.gmt
+param	gui	false
+param	chip	gseaftp.broadinstitute.org://pub/gsea/annotations/GENE_SYMBOL.chip
+param	rpt_label	PC1.all.cells.3_27_17
+param	help	false
+param	out	/Volumes/PAULHOOK/Th_Experiments/Single-Cell-RNA-seq/TH-E15-P7-Remap-Alt-Filter/File.Output
+param	include_only_symbols	true
+param	set_min	15
+param	nperm	1000
+param	rnd_seed	timestamp
+param	zip_report	false
+param	set_max	500
+
+file	/Volumes/PAULHOOK/Th_Experiments/Single-Cell-RNA-seq/TH-E15-P7-Remap-Alt-Filter/File.Output/PC1.all.cells.3_27_17.GseaPreranked.1490670535140/index.html

@@ -1,0 +1,63 @@
+NAME	PROBE	GENE SYMBOL	GENE_TITLE	RANK IN GENE LIST	RANK METRIC SCORE	RUNNING ES	CORE ENRICHMENT	
+row_0	ETV1	ETV1	ets variant gene 1	45	0.04074045270681381	-0.03570559	No	
+row_1	WNT5A	WNT5A	wingless-type MMTV integration site family, member 5A	136	0.022005457431077957	-0.14364712	No	
+row_2	NR4A2	NR4A2	nuclear receptor subfamily 4, group A, member 2	158	0.01850913092494011	-0.16061872	No	
+row_3	PAX6	PAX6	paired box gene 6 (aniridia, keratitis)	163	0.017225682735443115	-0.15543666	No	
+row_4	EGR1	EGR1	early growth response 1	168	0.01687190681695938	-0.1504719	No	
+row_5	FOXP2	FOXP2	forkhead box P2	189	0.012881592847406864	-0.16955046	No	
+row_6	BTG2	BTG2	BTG family, member 2	191	0.01270977035164833	-0.16309354	No	
+row_7	NEUROD6	NEUROD6	neurogenic differentiation 6	200	0.011129098013043404	-0.16705416	No	
+row_8	PARK2	PARK2	Parkinson disease (autosomal recessive, juvenile) 2, parkin	202	0.01059680711477995	-0.16189504	No	
+row_9	CREM	CREM	cAMP responsive element modulator	209	0.009329080581665039	-0.16426219	No	
+row_10	NR4A1	NR4A1	nuclear receptor subfamily 4, group A, member 1	211	0.00929186400026083	-0.15990457	No	
+row_11	PITX3	PITX3	paired-like homeodomain transcription factor 3	229	0.007641457952558994	-0.1781531	No	
+row_12	ZFX	ZFX	zinc finger protein, X-linked	235	0.007097134832292795	-0.1805416	No	
+row_13	MEF2C	MEF2C	MADS box transcription enhancer factor 2, polypeptide C (myocyte enhancer factor 2C)	242	0.0060506160371005535	-0.18492243	No	
+row_14	PLAGL1	PLAGL1	pleiomorphic adenoma gene-like 1	280	0.0015327190048992634	-0.23391354	No	
+row_15	DDIT3	DDIT3	DNA-damage-inducible transcript 3	318	-0.0028054057620465755	-0.28212297	No	
+row_16	ST18	ST18	suppression of tumorigenicity 18 (breast carcinoma) (zinc finger protein)	335	-0.005025133956223726	-0.30062893	No	
+row_17	JUNB	JUNB	jun B proto-oncogene	345	-0.006391759030520916	-0.3088488	No	
+row_18	TCF4	TCF4	transcription factor 4	371	-0.00781452376395464	-0.33778724	No	
+row_19	DLX2	DLX2	distal-less homeobox 2	391	-0.009725539945065975	-0.35745475	No	
+row_20	MYC	MYC	v-myc myelocytomatosis viral oncogene homolog (avian)	403	-0.010294877924025059	-0.36597633	No	
+row_21	SOX6	SOX6	SRY (sex determining region Y)-box 6	404	-0.010301035828888416	-0.35964933	No	
+row_22	TFAM	TFAM	transcription factor A, mitochondrial	409	-0.010737773962318897	-0.35845223	No	
+row_23	MLLT10	MLLT10	myeloid/lymphoid or mixed-lineage leukemia (trithorax homolog, Drosophila); translocated to, 10	445	-0.013473222963511944	-0.3974103	No	
+row_24	MEF2A	MEF2A	MADS box transcription enhancer factor 2, polypeptide A (myocyte enhancer factor 2A)	451	-0.014159025624394417	-0.39546135	No	
+row_25	FOXP1	FOXP1	forkhead box P1	452	-0.014179409481585026	-0.38675222	No	
+row_26	DLX5	DLX5	distal-less homeobox 5	457	-0.014448409900069237	-0.383276	No	
+row_27	PBX3	PBX3	pre-B-cell leukemia transcription factor 3	459	-0.014566278085112572	-0.37567878	No	
+row_28	NFIB	NFIB	nuclear factor I/B	491	-0.0169173963367939	-0.40712333	No	
+row_29	MLX	MLX	MAX-like protein X	521	-0.019325070083141327	-0.43438998	No	
+row_30	RFX3	RFX3	regulatory factor X, 3 (influences HLA class II expression)	555	-0.022236056625843048	-0.4652668	Yes	
+row_31	TCF12	TCF12	transcription factor 12 (HTF4, helix-loop-helix transcription factors 4)	559	-0.022529400885105133	-0.45547763	Yes	
+row_32	TCF7L2	TCF7L2	transcription factor 7-like 2 (T-cell specific, HMG-box)	560	-0.022550130262970924	-0.44162714	Yes	
+row_33	SOX5	SOX5	SRY (sex determining region Y)-box 5	561	-0.0229802168905735	-0.42751247	Yes	
+row_34	MEIS1	MEIS1	Meis1, myeloid ecotropic viral integration site 1 homolog (mouse)	568	-0.023604411631822586	-0.4211116	Yes	
+row_35	ZBTB20	ZBTB20	zinc finger and BTB domain containing 20	582	-0.024833453819155693	-0.42340252	Yes	
+row_36	MGA	MGA	MAX gene associated	601	-0.02698357217013836	-0.43112049	Yes	
+row_37	DMRTB1	DMRTB1	DMRT-like family B with proline-rich C-terminal, 1	604	-0.027365032583475113	-0.41701168	Yes	
+row_38	KLF12	KLF12	Kruppel-like factor 12	605	-0.02749108336865902	-0.4001264	Yes	
+row_39	AFF4	AFF4	AF4/FMR2 family, member 4	617	-0.028437938541173935	-0.39750436	Yes	
+row_40	LMO4	LMO4	LIM domain only 4	618	-0.028705738484859467	-0.37987304	Yes	
+row_41	CHCHD3	CHCHD3	coiled-coil-helix-coiled-coil-helix domain containing 3	619	-0.028766855597496033	-0.3622042	Yes	
+row_42	ISL1	ISL1	ISL1 transcription factor, LIM/homeodomain, (islet-1)	625	-0.02937856689095497	-0.35090724	Yes	
+row_43	MEIS2	MEIS2	Meis1, myeloid ecotropic viral integration site 1 homolog 2 (mouse)	627	-0.02954796887934208	-0.33410814	Yes	
+row_44	EBF1	EBF1	early B-cell factor 1	628	-0.02975841797888279	-0.31583026	Yes	
+row_45	EBF2	EBF2	early B-cell factor 2	637	-0.03070996329188347	-0.30776414	Yes	
+row_46	POU2F1	POU2F1	POU domain, class 2, transcription factor 1	651	-0.03298403322696686	-0.3050489	Yes	
+row_47	FOS	FOS	v-fos FBJ murine osteosarcoma viral oncogene homolog	654	-0.0336926206946373	-0.28705364	Yes	
+row_48	PAX5	PAX5	paired box gene 5 (B-cell lineage specific activator)	655	-0.03410295024514198	-0.2661073	Yes	
+row_49	ESRRG	ESRRG	estrogen-related receptor gamma	672	-0.036082569509744644	-0.2655375	Yes	
+row_50	BCL11A	BCL11A	B-cell CLL/lymphoma 11A (zinc finger protein)	706	-0.0417766310274601	-0.28441232	Yes	
+row_51	NR2F1	NR2F1	nuclear receptor subfamily 2, group F, member 1	711	-0.04218620806932449	-0.2638993	Yes	
+row_52	JUN	JUN	jun oncogene	715	-0.04441137611865997	-0.24067001	Yes	
+row_53	NRF1	NRF1	nuclear respiratory factor 1	724	-0.045442499220371246	-0.22355503	Yes	
+row_54	FOSB	FOSB	FBJ murine osteosarcoma viral oncogene homolog B	730	-0.048211660236120224	-0.20069063	Yes	
+row_55	NR2F2	NR2F2	nuclear receptor subfamily 2, group F, member 2	741	-0.05084751173853874	-0.1829549	Yes	
+row_56	ZSCAN21	ZSCAN21	zinc finger and SCAN domain containing 21	744	-0.05135788396000862	-0.15410948	Yes	
+row_57	USF1	USF1	upstream transcription factor 1	753	-0.05465255677700043	-0.13133761	Yes	
+row_58	KLF6	KLF6	Kruppel-like factor 6	775	-0.06631753593683243	-0.11894486	Yes	
+row_59	SOX4	SOX4	SRY (sex determining region Y)-box 4	787	-0.07749968022108078	-0.08618866	Yes	
+row_60	RUNX1T1	RUNX1T1	runt-related transcription factor 1; translocated to, 1 (cyclin D-related)	790	-0.07870088517665863	-0.040548917	Yes	
+row_61	SOX11	SOX11	SRY (sex determining region Y)-box 11	800	-0.09018711745738983	0.0026990776	Yes	
