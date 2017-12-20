@@ -349,7 +349,7 @@ div.tocify {
 
 <hr />
 <p><strong>Last update:</strong> 2017-12-20</p>
-<p><strong>Code version:</strong> b24e8b0bac64699db4b1b6706e92e0d99334803f</p>
+<p><strong>Code version:</strong> fdf41ffafdc6cf84866246f61ef7f1f60669b9ce</p>
 <hr />
 <div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level3">
 <h3>Setting important directories. Also loading important libraries and custom functions for analysis.</h3>
@@ -391,7 +391,7 @@ dev.off()</code></pre>
 <h3>Figure 2B</h3>
 <p>The following code was used to produce Figure 2B, 2C, and 2D. These figures display the t-SNE results for the regional P7 analyses including FB, OB, and MB.</p>
 <pre class="r"><code># Plotting the t-SNE of P7 OB cells colored by the clusters identified during the iterative analysis
-ob &lt;- myTSNEPlotAlpha.triangle(P7.OB.dat.filter,color=&quot;kmeans_tSNE_cluster&quot;) + scale_color_manual(values = color.P7[7:9], name = &quot;Subset Cluster&quot;, labels = c(&quot;P7.OB.1&quot;,&quot;P7.OB.2&quot;,&quot;P7.OB.3&quot;)) + ggtitle(&quot;P7 OB neurons tSNE&quot;) + xlab(&quot;tSNE 1&quot;) + ylab(&quot;tSNE 2&quot;) + theme(legend.position = &quot;bottom&quot;,axis.line = element_line(colour = &quot;black&quot;)) + theme(plot.title = element_text(hjust = 0.5)) + coord_fixed(ratio = 1) + scale_shape(name = &quot;Age&quot;)</code></pre>
+ob &lt;- myTSNEPlotAlpha.triangle(P7.OB.dat.filter,color=&quot;kmeans_tSNE_cluster&quot;) + scale_color_manual(values = color.P7[7:9], name = &quot;Subset Cluster&quot;, labels = c(&quot;P7.OB.1&quot;,&quot;P7.OB.2&quot;,&quot;P7.OB.3&quot;)) + ggtitle(&quot;P7 OB neurons t-SNE&quot;) + xlab(&quot;t-SNE 1&quot;) + ylab(&quot;t-SNE 2&quot;) + theme(legend.position = &quot;bottom&quot;,axis.line = element_line(colour = &quot;black&quot;)) + theme(plot.title = element_text(hjust = 0.5)) + coord_fixed(ratio = 1) + scale_shape(name = &quot;Age&quot;)</code></pre>
 <pre><code>## Scale for &#39;colour&#39; is already present. Adding another scale for
 ## &#39;colour&#39;, which will replace the existing scale.</code></pre>
 <pre class="r"><code>pdf(file.path(figure_dir,&quot;Figure.2C.pdf&quot;), height = 4, width = 4)
@@ -402,7 +402,7 @@ dev.off()</code></pre>
 <pre class="r"><code>ob</code></pre>
 <p><img src="Figure.2_script_files/figure-html/ob%20tsne-1.png" width="384" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Plotting the t-SNE of P7 FB cells colored by the clusters identified during the iterative analysis
-fb &lt;- myTSNEPlotAlpha.triangle(P7.FB.dat.filter,color=&quot;kmeans_tSNE_cluster&quot;) + scale_color_manual(values = color.P7[1:2], name = &quot;Subset Cluster&quot;, labels = c(&quot;P7.FB.1&quot;,&quot;P7.FB.2&quot;)) + ggtitle(&quot;P7 FB neurons tSNE&quot;) + xlab(&quot;tSNE 1&quot;) + ylab(&quot;tSNE 2&quot;) + theme(legend.position = &quot;bottom&quot;,axis.line = element_line(colour = &quot;black&quot;)) + theme(plot.title = element_text(hjust = 0.5)) + coord_fixed(ratio = 1) + scale_shape(name = &quot;Age&quot;) + coord_equal(ratio = 0.5)</code></pre>
+fb &lt;- myTSNEPlotAlpha.triangle(P7.FB.dat.filter,color=&quot;kmeans_tSNE_cluster&quot;) + scale_color_manual(values = color.P7[1:2], name = &quot;Subset Cluster&quot;, labels = c(&quot;P7.FB.1&quot;,&quot;P7.FB.2&quot;)) + ggtitle(&quot;P7 FB t-SNE&quot;) + xlab(&quot;t-SNE 1&quot;) + ylab(&quot;t-SNE 2&quot;) + theme(legend.position = &quot;bottom&quot;,axis.line = element_line(colour = &quot;black&quot;)) + theme(plot.title = element_text(hjust = 0.5)) + coord_fixed(ratio = 1) + scale_shape(name = &quot;Age&quot;) + coord_equal(ratio = 0.5)</code></pre>
 <pre><code>## Scale for &#39;colour&#39; is already present. Adding another scale for
 ## &#39;colour&#39;, which will replace the existing scale.</code></pre>
 <pre class="r"><code>pdf(file.path(figure_dir,&quot;Figure.2B.pdf&quot;), height = 5, width = 5)
@@ -413,7 +413,7 @@ dev.off()</code></pre>
 <pre class="r"><code>fb</code></pre>
 <p><img src="Figure.2_script_files/figure-html/fb%20tsne%20-1.png" width="480" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Plotting the t-SNE of P7 MB cells colored by the clusters identified during the iterative analysis
-mb &lt;- myTSNEPlotAlpha.triangle(P7.MB.dat.filter,color=&quot;kmeans_tSNE_cluster&quot;) + scale_color_manual(values = color.P7[3:6], name = &quot;Subset Cluster&quot;, labels = c(&quot;P7.MB.1&quot;,&quot;P7.MB.2&quot;,&quot;P7.MB.3&quot;,&quot;P7.MB.4&quot;)) + ggtitle(&quot;P7 MB neurons - tSNE Plot by subset cluster&quot;) + xlab(&quot;tSNE 1&quot;) + ylab(&quot;tSNE 2&quot;) + theme(legend.position = &quot;bottom&quot;,axis.line = element_line(colour = &quot;black&quot;)) + theme(plot.title = element_text(hjust = 0.5)) + coord_fixed(ratio = 0.5) + scale_shape(name = &quot;Age&quot;)</code></pre>
+mb &lt;- myTSNEPlotAlpha.triangle(P7.MB.dat.filter,color=&quot;kmeans_tSNE_cluster&quot;) + scale_color_manual(values = color.P7[3:6], name = &quot;Subset Cluster&quot;, labels = c(&quot;P7.MB.1&quot;,&quot;P7.MB.2&quot;,&quot;P7.MB.3&quot;,&quot;P7.MB.4&quot;)) + ggtitle(&quot;P7 MB t-SNE&quot;) + xlab(&quot;t-SNE 1&quot;) + ylab(&quot;t-SNE 2&quot;) + theme(legend.position = &quot;bottom&quot;,axis.line = element_line(colour = &quot;black&quot;)) + theme(plot.title = element_text(hjust = 0.5)) + coord_fixed(ratio = 0.5) + scale_shape(name = &quot;Age&quot;)</code></pre>
 <pre><code>## Scale for &#39;colour&#39; is already present. Adding another scale for
 ## &#39;colour&#39;, which will replace the existing scale.</code></pre>
 <pre class="r"><code>pdf(file = file.path(figure_dir, &quot;Figure.2D.pdf&quot;), width = 6, height = 4)
