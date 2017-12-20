@@ -1,6 +1,8 @@
 ---
-title: Results
-output: html_document
+title: "Paper Figures Links"
+output:
+  html_document:
+    toc: FALSE
 ---
 * This page contains links to code used to create paper figures
 

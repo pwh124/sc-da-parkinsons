@@ -1,6 +1,8 @@
 ---
-title: Results
-output: html_document
+title: "P7 Analysis Links"
+output:
+  html_document:
+    toc: FALSE
 ---
 
 Below are links to analyses for P7 data

@@ -1,6 +1,8 @@
 ---
-title: Results
-output: html_document
+title: "All Cells Analysis Links"
+output:
+  html_document:
+    toc: FALSE
 ---
 
 Below are links to analyses for the analysis of all cells as one dataset

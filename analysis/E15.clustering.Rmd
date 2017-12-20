@@ -1,6 +1,8 @@
 ---
-title: E15 Results
-output: html_document
+title: "E15.5 Analysis Links"
+output:
+  html_document:
+    toc: FALSE
 ---
 
 Below are links to the various portions of the E15.5 analysis
