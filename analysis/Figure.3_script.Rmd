@@ -32,9 +32,9 @@ library(cowplot)
 dat.filter <- readRDS(file.path(Rdata_dir,"dat.filter.final.Rds"))
 ```
 
-### Making  expression boxplots of genes
+### Figure 3A
 Below is code to make expression boxplots identified as important for the identification of the P7 neuroblast population and as well as the single molecule in situs displayed in the rest of Figure 3.
-```{r P7 Neuroblast Markers, Figure 2e}
+```{r P7 Neuroblast Markers, Figure 3A, fig.align='center'}
 # Setting the colors to follow the rest of the figures
 color <- c("#F6937A","#882F1C","#BF1F36","#C2B280","#F2C318","#E790AC","#F18421","#0168A5","#848483","#A4CAEB","#885793","#008957","#222222")
 
@@ -63,7 +63,7 @@ slc6a3 <- myBoxplot.subset(dat.filter, markers = "Slc6a3", logMode = T) + scale_
         legend.position = "none")
 
 #Write out plots
-pdf(file = file.path(file_dir,"NB-marker.boxplots.pdf"), height = 3, width = 6)
+pdf(file = file.path(figure_dir,"Figure.3A.pdf"), height = 3, width = 6)
 lhx9
 ldb2
 th
