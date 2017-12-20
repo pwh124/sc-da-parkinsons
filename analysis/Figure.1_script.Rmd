@@ -8,7 +8,8 @@ editor_options:
 ***
 **Last update:** `r Sys.Date()`
 
-**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`  
+
 ***
 
 ###Setting important directories. Also loading important libraries and custom functions for analysis.
