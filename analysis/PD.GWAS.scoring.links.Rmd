@@ -1,6 +1,8 @@
 ---
-title: Results
-output: html_document
+title: "PD GWAS Scoring Links"
+output:
+  html_document:
+    toc: FALSE
 ---
 
 Below are links to analyses that allowed for the prioritization of candidate genes in Parkinson's GWAS loci
