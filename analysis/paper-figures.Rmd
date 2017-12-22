@@ -9,6 +9,7 @@ This page contains links to code used to create paper figures
 * [Figure 1](Figure.1_script.html)
 * [Figure 2](Figure.2_script.html)
 * [Figure 3](Figure.3_script.html)
+* [Figure 4](Figure.4_script.html)
 
 ***
 **Last update:** `r Sys.Date()`

@@ -1,0 +1,15 @@
+---
+title: "Figure 4"
+author: "Paul Hook"
+output: html_document
+---
+
+***
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`  
+
+***
+
+All of the raw figures below were generated in the following script:  
+* [WGCNA analysis](WGCNA-final.html#we_then_wanted_to_correlate_the_modules_eigengenes_with_tsne_position_and_plot_7_that_were_found_to_be_significantly_correlated_with_a_p7_subset_cluster)
