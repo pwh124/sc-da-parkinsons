@@ -1,0 +1,130 @@
+---
+title: "Cplx1 Striatum Th+ Density Analysis"
+author: "Paul Hook"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+***
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`  
+
+***
+
+###Setting important directories. Also loading important libraries and custom functions for analysis.
+```{r init, message=FALSE, warning=FALSE}
+seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
+Rdata_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
+source(file.path(Script_dir,'init.R'))
+source(file.path(Script_dir,"tools_R.r"))
+
+#loading any special libraries
+library(nlme)
+library(ggpubr)
+library(ggbeeswarm)
+library(DT)
+```
+
+###Loading data
+First, we need to load the data from _Th_+ striatal quantification in WT and _Cplx1_ KO mice.
+```{r loading}
+# Loading data
+dat <- read.delim(file = file.path(Rdata_dir,"combined_quantification.txt"))
+# Making sure the 'mouse' column is a factor.
+dat$mouse <- as.factor(dat$mouse)
+
+datatable(data = dat, caption = "Th+ density measurements")
+```
+
+
+###Processing and inital visualization of the data
+In order to analyze the data, we had to process it some first. "Blanks" which were measurements of the cortical _Th_+ staining in each section were removed, a unqiue identifier for each section was added and then mice were annotated as being "WT" or "KO"
+```{r processing, fig.align='center'}
+#Remove 0s 'adjusted.mean' which are from the cortical measurements
+dat <- dat[dat$blank == "no",]
+
+#adding a unique section variable
+dat$section.sum <- paste0(dat$mouse, ".", dat$slide, ".", dat$section)
+
+#KO and WT
+ko <- c("xif.288", "xif.291", "xif.263","bif.299", "xim.932","xim.935","xif.122","xif.145")
+wt <- c("xim.636","xim.666","xif.90")
+
+#Annotating with KO or WT
+dat <- dat %>%
+  mutate(condition = factor(if_else(mouse %in% ko, "KO",
+               if_else(mouse %in% wt, "WT", "NA")),levels = c("WT","KO")))
+
+# Inital visualization of the data factored by condition
+p <- ggplot(dat, aes(condition,adjusted.mean))
+p + geom_violin() + geom_jitter(size = 2, width = 0.2) + ylim(c(0,125)) + ggtitle("Initial visualization of the data")
+```
+
+###Summarizing data
+We decided to summarize the data by section since they were all independently stained and measured. This way we could also preserve variation seen within each mouse brain. The data summarized by mouse showed the same outcome. We also added information about age, date IHC was performed, and sex.
+```{r summarizing data}
+# Summarizing the data based on individual section means
+dat.sum <- dat %>%
+  dplyr::group_by(section.sum) %>%
+  dplyr::summarize(section.mean = mean(adjusted.mean))
+
+# Add in mouse annotation column
+dat.sum$mouse <- gsub("^([^.]*.[^.]*)..*$", "\\1",dat.sum$section.sum)
+
+# Add in condition and age annotation columns
+dat.sum.new <- dat.sum %>%
+  mutate(condition = factor(if_else(mouse %in% ko, "KO",
+               if_else(mouse %in% wt, "WT", "NA")), levels = c("WT","KO"))) %>%
+  mutate(age = factor(if_else(mouse %in% c("xif.90","bif.299","xim.932","xim.935","xif.122","xif.145"), "4",
+                              if_else(mouse %in% c("xim.636","xif.288","xif.291", "xif.263"), "7",
+                                      if_else(mouse %in% "xim.666", "7.5", "NA"))), levels = c("4","7",
+                                                                                               "7.5"))) %>%
+  mutate(date = factor(if_else(mouse %in% c("xim.636","xif.288","xif.291"), "4/20/04",
+                              if_else(mouse %in% "xif.263", "12/02/04",
+                                      if_else(mouse %in% "bif.299", "12/09/04",
+                                              if_else(mouse %in% c("xif.90","xif.122","xif.145"), "5/19/05",
+                                                      if_else(mouse %in% "xim.935", "6/12/05",
+                                                              if_else(mouse %in% c("xim.932","xim.666"),
+                                                                      "6/17/05", "NA")))))))) %>%
+  mutate(sex = factor(if_else(mouse %in% c("xim.935", "xim.932","xim.666","xim.636"),"male","female")))
+```
+
+###Statistical Testing
+We now wanted to test to see if there is a statistcally significant difference between _Th_+ fiber density in the striatum between _Cplx1_ KO and WT littermates. We do this by performing a two sided T-test.
+```{r stats}
+# First test if the variances in each condition are unequal
+var <- var.test(section.mean~condition, dat.sum.new)
+var
+
+# Perform a two-sided t-test with equal variance
+test <- t.test(section.mean~condition, dat.sum.new, alternative = "two.sided", var.equal = T, conf.level = 0.95)
+test
+```
+
+###Visualization
+```{r plot, fig.align='center',fig.height=4,fig.width=5}
+# Plot the independent section measurements by condition
+set.seed(2)
+p <- ggplot(dat.sum.new, aes(condition,section.mean))
+final <- p + geom_boxplot() + 
+  geom_point(size = 1, position = position_jitterdodge(jitter.width = 0.5), aes(color = condition)) + 
+  theme_pubr() + 
+  ylab("Th+ striatum density\n(Th+ DAB Intensity/pixel squared)") + 
+  theme(plot.title = element_text(hjust = 0.5)) +
+  scale_color_manual(values = c("blue","red")) + 
+  theme(text = element_text(size=16)) + ylim(c(20,125)) +
+  annotate("text", x=1.5,y=120,label=paste0("P = ",round(test$p.value,11)),size=4) +
+  annotate("segment", x = 1, xend = 2, y = 115, yend = 115, lwd=0.5) +
+  annotate("segment", x=1, xend=1,y=112,yend=115,lwd=0.5) +
+  annotate("segment", x=2, xend=2,y=112,yend=115,lwd=0.5)
+
+pdf(file = file.path(file_dir,"Figure.5E.pdf"), height = 4, width = 5)
+final
+dev.off()
+
+final
+```

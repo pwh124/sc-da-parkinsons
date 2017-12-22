@@ -28,6 +28,8 @@ navbar:
         - text: "---------"
         - text: "PD Gene Scoring"
           href: PD.GWAS.scoring.links.html
+        - text: "Cplx1 Th+ striatum density"
+          href: Cplx1_Th-striatum_analysis.html
     - text: "Paper Figures"
       icon: fa-paperclip
       href: paper-figures.html
