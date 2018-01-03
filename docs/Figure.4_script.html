@@ -20,9 +20,6 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -168,101 +165,6 @@ $(document).ready(function () {
 
 
 
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
-
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
-
-
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -352,11 +254,11 @@ div.tocify {
 
 
 <hr />
-<p><strong>Last update:</strong> 2017-12-22</p>
-<p><strong>Code version:</strong> 230dfcc9a532b08ef93fc39c4931bdf11ddab68b</p>
+<p><strong>Last update:</strong> 2018-01-03</p>
+<p><strong>Code version:</strong> 06c0587ae2d29f615a33a4ad7ab1f16ea9e2b520</p>
 <hr />
-<p>All of the raw figures below were generated in the following script:<br />
-* <a href="WGCNA-final.html#we_then_wanted_to_correlate_the_modules_eigengenes_with_tsne_position_and_plot_7_that_were_found_to_be_significantly_correlated_with_a_p7_subset_cluster">WGCNA analysis</a></p>
+<p>Raw figures were generated within the following scripts: <a href="WGCNA-final.html#now_that_we_have_looked_at_enrichment_for_go_terms_in_our_modules,_we_want_to_correlate_the_modules_with_cellular_traitis,_specifically_subset_cluster_in_order_to_find_modules_that_differentiation_between_da_populations_at_p7">WGCNA analysis - Figure 4C</a></p>
+<p><a href="WGCNA-final.html#we_then_wanted_to_correlate_the_modules_eigengenes_with_tsne_position_and_plot_7_that_were_found_to_be_significantly_correlated_with_a_p7_subset_cluster">WGCNA analysis - Figure 4D</a></p>
 
 <hr>
 <p>
@@ -394,8 +296,6 @@ div.tocify {
 -->
 
 
-</div>
-</div>
 
 </div>
 
