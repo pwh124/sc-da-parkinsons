@@ -6,15 +6,15 @@ output:
     toc: FALSE
 ---
 
+Raw figures were generated within the following scripts:
+
+[Figure 4C - WGCNA Analysis](WGCNA-final.html#now_that_we_have_looked_at_enrichment_for_go_terms_in_our_modules,_we_want_to_correlate_the_modules_with_cellular_traitis,_specifically_subset_cluster_in_order_to_find_modules_that_differentiation_between_da_populations_at_p7)
+
+[Figure 4D - WGCNA Analysis](WGCNA-final.html#we_then_wanted_to_correlate_the_modules_eigengenes_with_tsne_position_and_plot_7_that_were_found_to_be_significantly_correlated_with_a_p7_subset_cluster)
+
 ***
 **Last update:** `r Sys.Date()`
 
 **Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`  
 
 ***
-
-Raw figures were generated within the following scripts:
-
-[Figure 4C - WGCNA Analysis](WGCNA-final.html#now_that_we_have_looked_at_enrichment_for_go_terms_in_our_modules,_we_want_to_correlate_the_modules_with_cellular_traitis,_specifically_subset_cluster_in_order_to_find_modules_that_differentiation_between_da_populations_at_p7)
-
-[Figure 4D - WGCNA Analysis](WGCNA-final.html#we_then_wanted_to_correlate_the_modules_eigengenes_with_tsne_position_and_plot_7_that_were_found_to_be_significantly_correlated_with_a_p7_subset_cluster)
