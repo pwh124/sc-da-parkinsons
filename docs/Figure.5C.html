@@ -9,9 +9,10 @@
 <meta name="generator" content="pandoc" />
 
 
+<meta name="author" content="Paul Hook" />
 
 
-<title>Paper Figures Links</title>
+<title>Figure 5C</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,6 +20,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -164,6 +168,101 @@ $(document).ready(function () {
 
 
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
 
 
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
@@ -246,23 +345,67 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Paper Figures Links</h1>
+<h1 class="title toc-ignore">Figure 5C</h1>
+<h4 class="author"><em>Paul Hook</em></h4>
 
 </div>
 
 
-<p>This page contains links to code used to create paper figures</p>
-<ul>
-<li><a href="Figure.1_script.html">Figure 1</a></li>
-<li><a href="Figure.2_script.html">Figure 2</a></li>
-<li><a href="Figure.3_script.html">Figure 3</a></li>
-<li><a href="Figure.4_script.html">Figure 4</a></li>
-<li><a href="Figure.5_links.html">Figure 5</a></li>
-</ul>
 <hr />
 <p><strong>Last update:</strong> 2018-01-08</p>
 <p><strong>Code version:</strong> ac78709a3bec9386b55893a205be42803eefc99e</p>
 <hr />
+<div id="setting-important-directories-and-loading-important-libraries-and-custom-functions-for-analysis." class="section level3">
+<h3>Setting important directories and loading important libraries and custom functions for analysis.</h3>
+<pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
+file_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/output&quot;
+Rdata_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
+Script_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/code&quot;
+figure_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/figures/&quot;
+source(file.path(Script_dir,&#39;init.R&#39;))
+source(file.path(Script_dir,&quot;tools_R.r&quot;))
+
+#loading special libraries
+library(cowplot)</code></pre>
+</div>
+<div id="loading-the-cds-data-needed-to-produce-figure" class="section level3">
+<h3>Loading the cds data needed to produce figure</h3>
+<pre class="r"><code>dat.filter &lt;- readRDS(file.path(Rdata_dir,&quot;dat.filter.final.Rds&quot;))</code></pre>
+</div>
+<div id="figure-5c" class="section level3">
+<h3>Figure 5C</h3>
+<p>Below is code to make expression boxplots for genes in the <em>MAPT</em> locus.</p>
+<pre class="r"><code>color &lt;- c(&quot;#F6937A&quot;,&quot;#882F1C&quot;,&quot;#BF1F36&quot;,&quot;#C2B280&quot;,&quot;#F2C318&quot;,&quot;#E790AC&quot;,&quot;#F18421&quot;,&quot;#0168A5&quot;,&quot;#848483&quot;,&quot;#A4CAEB&quot;,&quot;#885793&quot;,&quot;#008957&quot;,&quot;#222222&quot;)
+
+crhr1 &lt;- myBoxplot.subset(dat.filter, &quot;Crhr1&quot;, logMode = T) + scale_fill_manual(values = color, name = &quot;Subset Cluster&quot;) + scale_y_continuous(breaks = c(0,1,2,3,4,5))+
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = &quot;none&quot;,
+        strip.text = element_text(family=&quot;Helvetica&quot;,face=&quot;bold.italic&quot;,size=14))
+
+
+mapt &lt;- myBoxplot.subset(dat.filter, &quot;Mapt&quot;, logMode = T) + scale_fill_manual(values = color, name = &quot;Subset Cluster&quot;) + scale_y_continuous(breaks = c(0,1,2,3,4,5))+
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = &quot;none&quot;,
+        strip.text = element_text(family=&quot;Helvetica&quot;,face=&quot;bold.italic&quot;,size=14))
+
+nsf &lt;- myBoxplot.subset(dat.filter, &quot;Nsf&quot;, logMode = T) + scale_fill_manual(values = color, name = &quot;Subset Cluster&quot;) + scale_y_continuous(breaks = c(0,1,2,3,4,5))+
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = &quot;none&quot;,
+        strip.text = element_text(family=&quot;Helvetica&quot;,face=&quot;bold.italic&quot;,size=14))
+
+pdf(file = file.path(file_dir, &quot;Figure.5C.pdf&quot;), width = 4, height = 2.5)
+crhr1
+mapt
+nsf
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+<pre class="r"><code>plot_grid(crhr1,nsf,mapt, ncol = 1)</code></pre>
+<p><img src="Figure.5C_files/figure-html/Making%20Crhr1%20and%20Mapt%20boxplots-1.png" width="384" style="display: block; margin: auto;" /></p>
+</div>
 
 <hr>
 <p>
@@ -300,6 +443,8 @@ $(document).ready(function () {
 -->
 
 
+</div>
+</div>
 
 </div>
 
