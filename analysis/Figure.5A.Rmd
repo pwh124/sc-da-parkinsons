@@ -1,0 +1,129 @@
+---
+title: "Figure 5A"
+author: "Paul Hook"
+output: html_document
+---
+
+***
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`  
+
+***
+
+###Setting important directories and loading important libraries and custom functions for analysis.
+```{r init, message=FALSE, warning=FALSE}
+seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
+Rdata_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
+figure_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/figures/"
+source(file.path(Script_dir,'init.R'))
+source(file.path(Script_dir,"tools_R.r"))
+
+#loading special libraries
+library(biomaRt)
+library(ggrepel)
+```
+
+###Loading data needed
+First, we needed to load the dataframe in which we have the final scoring of PD GWAS genes
+```{r Loading in data needed}
+dat<-read.delim(file.path(file_dir,"PD.GWAS.Score.Final.txt"))
+```
+
+###Retrieving gene information from biomaRt
+Below, we first extracted information about each gene that was scored in our analysis using biomaRt.
+```{r Retrieving information from BiomaRt}
+# Setting Ensembl mart
+ensembl<-useEnsembl("ensembl", dataset = "hsapiens_gene_ensembl", version = 87)
+
+# Extracting positional information about each gene
+positions<-getBM(
+  attributes=c('hgnc_symbol','chromosome_name','start_position','end_position','strand'),
+  filters='hgnc_symbol',
+  values=dat$HumanSymbol,
+  mart=ensembl
+)
+
+# Removing entries from partial chromosomes
+positions<-positions[!grepl("^CHR",positions$chromosome_name),]
+```
+
+###Retrieving SNP information from biomaRt
+Below, we first extracted information about each SNP that was included in our analysis using biomaRt.
+```{r}
+#Setting mart
+snpmart<-useEnsembl(biomart = "snp",dataset = 'hsapiens_snp', version = 87)
+
+#Extracting spatial information
+snpPos<-getBM(attributes = c('refsnp_id','chrom_start'), 
+      filters = c('snp_filter'), 
+      values = dat$snp, 
+      mart = snpmart)
+
+#Removing duplicated entries
+snpPos<-snpPos[!duplicated(snpPos$refsnp_id),]
+
+#Merging gene positional information to the scoring DF
+dat<-merge(dat,positions,by.x="HumanSymbol",by.y="hgnc_symbol")
+
+#Merging SNP positional information to the scoring DF and renaming some columns
+dat<-merge(dat,snpPos,by.x="snp",by.y="refsnp_id")
+names(dat)[19]<-"snp_pos"
+names(dat)[4] <- "human.locus"
+
+#Marking a gene if the locus had previously been named for a gene
+dat$causal<-NA
+dat$causal[as.character(dat$human.locus)==as.character(dat$HumanSymbol)]<-"*"
+
+# Calculating length
+dat$length<-dat$end_position-dat$start_position
+
+# Constructing coordinates
+dat$locus<-paste("chr",dat$chromosome_name,":",dat$snp_pos-1.8e6,"-",dat$snp_pos+1.8e6,sep="")
+
+# Making sure everything is factorized
+dat$human.locus<-factor(dat$human.locus,levels=unique(dat$human.locus[order(as.numeric(dat$chromosome_name))]))
+dat$snp<-factor(dat$snp,levels=unique(dat$snp[order(as.numeric(dat$chromosome_name))]))
+```
+
+###Plotting selected loci
+Now that we have all of our data set-up, we can plot representations of each locus.
+```{r Plotting selected loci, fig.align='center', fig.width=14,fig.height=8, fig.asp=0.5, warning=F, message=FALSE}
+#Loci to plot. All loci plotted had been previously associated with a gene.
+select_loci<-c("MMP16","LRRK2","MAPT","SNCA","DDRGK1","GCH1")
+
+# Plotting representations of each locus
+p <- ggplot(subset(dat,human.locus %in% select_loci))
+q <- p + 
+  geom_rect(aes(xmin=start_position-snp_pos,xmax=(start_position-snp_pos)+
+                  length,ymin=0,ymax=0+strand,fill=score),color="grey80") + 
+  geom_text(aes(x=(start_position-snp_pos)+(length/2),y=strand/2,label=causal),size=8,vjust=0.8) +
+  geom_text(aes(x=-2e6,y=0,label=locus),data=subset(unique(dat[,c("human.locus","locus","snp_pos","snp")]),human.locus %in% select_loci),vjust=-0.250,hjust=0.2,fontface="italic") +
+  geom_text_repel(aes(x=(start_position-snp_pos)+(length/2),y=strand*1.8,label=HumanSymbol),color="black",data=subset(dat,human.locus %in% select_loci & score>=3), fontface = "italic") +
+  geom_vline(xintercept=0,linetype="dashed",color="grey50") +
+  geom_hline(yintercept=0,color="black") +
+  facet_grid(snp~.,scales="free_x",space="free_x") +
+  scale_fill_continuous(low="white",high="darkred") +
+  scale_x_continuous(limits=c(-2e6,2e6)) +
+  coord_equal(1) +
+  monocle:::monocle_theme_opts() + 
+  theme(panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.text.y=element_blank(),axis.line.y=element_blank(),
+        axis.ticks.y=element_blank(),strip.text.y = element_text(angle = 0)) +
+  xlab("Position relative to lead SNP") +
+  ylab("Locus by Strand")
+
+pdf(file = file.path(file_dir,"Figure.5A.pdf"),width=14,height=8)
+q
+dev.off()
+
+q
+```
+
+###Session Info
+```{r session info}
+sessionInfo()
+```

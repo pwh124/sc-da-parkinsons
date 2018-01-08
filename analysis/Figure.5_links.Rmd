@@ -1,0 +1,19 @@
+---
+title: 'Figure 5 Links'
+output:
+  html_document:
+    toc: FALSE
+---
+
+Since Figure 5 involved scripts that were long for individual panels and some panels were found in other analyses, this link page was created.
+
+* [Figure 5A](Figure.5A.html)
+* [Figure 5C](Figure.5C.html)
+* [Figure 5E](Cplx1_Th-striatum_analysis.html#visualization)
+
+***
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`  
+
+***

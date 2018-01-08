@@ -1,0 +1,65 @@
+---
+title: "Figure 5C"
+author: "Paul Hook"
+output: html_document
+---
+
+***
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`  
+
+***
+
+###Setting important directories and loading important libraries and custom functions for analysis.
+```{r init, message=FALSE, warning=FALSE}
+seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
+Rdata_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
+figure_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/figures/"
+source(file.path(Script_dir,'init.R'))
+source(file.path(Script_dir,"tools_R.r"))
+
+#loading special libraries
+library(cowplot)
+```
+
+###Loading the cds data needed to produce figure
+```{r loading data needed}
+dat.filter <- readRDS(file.path(Rdata_dir,"dat.filter.final.Rds"))
+```
+
+### Figure 5C
+Below is code to make expression boxplots for genes in the _MAPT_ locus.
+```{r Making Crhr1 and Mapt boxplots,fig.align='center',fig.height=8,fig.width=4}
+
+color <- c("#F6937A","#882F1C","#BF1F36","#C2B280","#F2C318","#E790AC","#F18421","#0168A5","#848483","#A4CAEB","#885793","#008957","#222222")
+
+crhr1 <- myBoxplot.subset(dat.filter, "Crhr1", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") + scale_y_continuous(breaks = c(0,1,2,3,4,5))+
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "none",
+        strip.text = element_text(family="Helvetica",face="bold.italic",size=14))
+
+
+mapt <- myBoxplot.subset(dat.filter, "Mapt", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") + scale_y_continuous(breaks = c(0,1,2,3,4,5))+
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "none",
+        strip.text = element_text(family="Helvetica",face="bold.italic",size=14))
+
+nsf <- myBoxplot.subset(dat.filter, "Nsf", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") + scale_y_continuous(breaks = c(0,1,2,3,4,5))+
+  theme(axis.title.x = element_blank(),
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "none",
+        strip.text = element_text(family="Helvetica",face="bold.italic",size=14))
+
+pdf(file = file.path(file_dir, "Figure.5C.pdf"), width = 4, height = 2.5)
+crhr1
+mapt
+nsf
+dev.off()
+
+plot_grid(crhr1,nsf,mapt, ncol = 1)
+```
