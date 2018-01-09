@@ -117,7 +117,7 @@ min.mass <- round(min(pData(dat.filter)$total_mass))
 mean.mass <- round(mean(pData(dat.filter)$total_mass))
 
 # Writing out the histogram to a PDF
-pdf(file = file.path(file_dir, "Figure.S3.pdf"), width = 6, height = 6)
+pdf(file = file.path(file_dir, "Figure.S1C.pdf"), width = 6, height = 6)
 hist(pData(dat.filter)$total_mass,
      breaks=50,
      main = NA,
