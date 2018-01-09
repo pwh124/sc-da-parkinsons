@@ -25,7 +25,7 @@ library(cowplot)
 ```
 
 ### Loading the data needed
-The final 'dat' cds was loaded and some summary stats were calculated to quickly check the data
+The final 'dat' cds was loaded and some summary stats were calculated to quickly check the data. Also the PCA plots from P7 regions were loaded in.
 ```{r loading data needed}
 # Filtered final cds
 dat.filter <- readRDS(file.path(Rdata_dir,"dat.filter.final.Rds"))

@@ -1,0 +1,103 @@
+---
+title: "Supplemental Figure S2"
+author: "Paul Hook"
+output: html_document
+---
+***
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`  
+
+***
+
+###Setting important directories. Also loading important libraries and custom functions for analysis.
+```{r init, message=FALSE, warning=FALSE}
+seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
+Rdata_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
+source(file.path(Script_dir,'init.R'))
+source(file.path(Script_dir,"tools_R.r"))
+
+#loading any special libraries
+library(readr)
+library(cowplot)
+```
+
+```{r, setting a theme}
+theme <- theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.title.y = element_text(family="Helvetica",size=8),
+        axis.text.y = element_text(size=6),
+        strip.text = element_text(family="Helvetica",face="bold.italic",size=12))
+
+```
+
+### Loading the data needed
+The final 'dat' cds was loaded
+```{r loading data needed}
+# Filtered final cds
+dat.filter <- readRDS(file.path(Rdata_dir,"dat.filter.final.Rds"))
+```
+
+### Setting the color pallete
+```{r Setting the color pallete}
+#Setting the combination hex codes
+color <- c("#F6937A","#882F1C","#BF1F36","#C2B280","#F2C318","#E790AC","#F18421","#0168A5","#848483","#A4CAEB","#885793","#008957","#222222")
+```
+
+###Neuronal Markers
+```{r,fig.align='center',fig.width=5}
+snap <- myBoxplot.subset(dat.filter, markers = "Snap25", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") + labs(y="log2(Transcripts + 1)") + theme
+
+
+eno <- myBoxplot.subset(dat.filter, markers = "Eno2", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") + labs(y="log2(Transcripts + 1)") + theme
+
+syt1 <- myBoxplot.subset(dat.filter, markers = "Syt1", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") + labs(y="log2(Transcripts + 1)") + theme
+
+pdf(file = file.path(file_dir,"neuronal-marker.boxplots.pdf"), height = 2, width = 6)
+snap
+eno
+syt1
+dev.off()
+
+grid_arrange_shared_legend(snap,eno,syt1,ncol=1,nrow=3, position = "right")
+```
+
+###Astrocyte markers
+```{r, fig.align='center',fig.width=5,height=15}
+ald <-myBoxplot.subset(dat.filter, markers = "Aldh1l1", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") + scale_y_continuous(breaks = c(0,1,2,3,4,5)) + theme
+
+slc <- myBoxplot.subset(dat.filter, markers = "Slc1a3", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") + scale_y_continuous(breaks = c(0,1,2,3,4,5)) + theme
+
+apq <- myBoxplot.subset(dat.filter, markers = "Aqp4", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") + scale_y_continuous(breaks = c(0,1,2,3,4,5)) + theme
+
+gfap <- myBoxplot.subset(dat.filter, markers = "Gfap", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") + scale_y_continuous(breaks = c(0,1,2,3,4,5)) + theme
+
+pdf(file = file.path(file_dir,"astrocyte.boxplots.pdf"), height = 2, width = 6)
+ald
+slc
+apq 
+gfap
+dev.off()
+
+grid_arrange_shared_legend(ald,slc,apq,gfap,ncol=1,nrow=4, position = "right")
+```
+
+###Oligodendrocyte markers
+```{r, fig.align='center',fig.width=5}
+mag <- myBoxplot.subset(dat.filter, markers = "Mag", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") + labs(y="log2(Transcripts + 1)") + theme
+
+mog <- myBoxplot.subset(dat.filter, markers = "Mog", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") + labs(y="log2(Transcripts + 1)") + theme
+
+mbp <- myBoxplot.subset(dat.filter, markers = "Mbp", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") + labs(y="log2(Transcripts + 1)") + theme
+
+pdf(file = file.path(file_dir,"oligo.boxplots.pdf"), height = 2, width = 6)
+mag
+mog
+mbp
+dev.off()
+
+grid_arrange_shared_legend(mag,mog,mbp,ncol=1,nrow=3, position = "right")
+```
