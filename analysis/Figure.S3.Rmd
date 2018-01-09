@@ -1,0 +1,185 @@
+---
+title: "Figure S3"
+author: "Paul Hook"
+output: html_document
+---
+
+***
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`  
+
+***
+
+###Setting important directories. 
+Also loading important libraries and custom functions for analysis.
+```{r init, message=FALSE, warning=FALSE}
+seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
+Rdata_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
+source(file.path(Script_dir,'init.R'))
+source(file.path(Script_dir,"tools_R.r"))
+
+#loading any special libraries
+library(readr)
+library(cowplot)
+```
+
+```{r, setting a theme}
+theme <- theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.title.y = element_text(family="Helvetica",size=8),
+        axis.text.y = element_text(size=6),
+        strip.text = element_text(family="Helvetica",face="bold.italic",size=10))
+
+```
+
+```{r loading data needed and setting color palletes}
+P7.Fb.dat.filter <- readRDS(file.path(Rdata_dir,"P7.Fb.dat.filter.final.Rds"))
+P7.Ob.dat.filter <- readRDS(file.path(Rdata_dir,"P7.Ob.dat.filter.final.Rds"))
+e15.dat.filter <- readRDS(file.path(Rdata_dir,"e15.dat.filter.final.rds"))
+e15.Fb.dat.filter <- readRDS(file.path(Rdata_dir,"e15.Fb.dat.filter.final.rds"))
+e15.Mb.dat.filter <- readRDS(file.path(Rdata_dir,"e15.Mb.dat.filter.final.rds"))
+color.all <- c("#F6937A","#882F1C","#BF1F36","#C2B280","#F2C318","#E790AC","#F18421","#0168A5","#848483","#A4CAEB","#885793","#008957","#222222")
+color.P7 <- c("#F2C318","#E790AC","#F18421","#0168A5","#848483","#A4CAEB","#885793","#008957","#222222")
+```
+
+###Figure S3A
+Plotting E15.5 t-SNE results colored by regional identity as well as subset cluster identity
+```{r Producing tSNE plots,warning=FALSE,message=FALSE,fig.align='center',fig.height=6,fig.width=15}
+#t-SNE plot colored by region
+r <- myTSNEPlotAlpha(e15.dat.filter,color="region", shape="age") +
+  scale_color_brewer(palette="Set1", name = "Region") +
+  xlab("t-SNE 1") + ylab("t-SNE 2") +
+  theme(legend.position = "bottom",
+        axis.line = element_line(colour = "black"),
+        plot.title = element_text(hjust = 0.5),
+        axis.title = element_text(family='Helvetica',size=12)) +
+  coord_fixed(ratio = 1) + guides(shape=FALSE) 
+
+#t-SNE plot colored by subset cluster
+c <- myTSNEPlotAlpha(e15.dat.filter,color="subset.cluster", shape="age") + scale_color_manual(values=color.all[1:4], name = "Subset Cluster") +
+  xlab("t-SNE 1") +
+  theme(legend.position = "bottom", 
+        axis.line = element_line(colour = "black"),
+        plot.title = element_text(hjust = 0.5),
+        axis.title.y=element_blank(),
+        axis.title = element_text(family='Helvetica',size=12)) +
+  coord_fixed(ratio = 1) + guides(shape=FALSE)
+
+# Plotting these in a grid
+plot_grid(r,c,nrow = 1,ncol = 2)
+
+# Writing out to PDF
+pdf(file = file.path(file_dir, "Figure.S3A.pdf"), width = 7, height = 6)
+r
+c
+dev.off()
+
+```
+
+###Figure S3B
+```{r,message=F,fig.align='center',fig.height=5,fig.width=5}
+#t-SNE plot colored by region
+s3b <- myTSNEPlotAlpha(e15.Fb.dat.filter,color="kmeans_tSNE_cluster", shape="age") + scale_color_manual(values=color.all[1:2], name = "Subset Cluster") +
+  xlab("t-SNE 1") + ylab("t-SNE 2") +
+  theme(legend.position = "bottom", 
+        axis.line = element_line(colour = "black"),
+        plot.title = element_text(hjust = 0.5),
+        axis.title = element_text(family='Helvetica',size=10)) +
+  coord_fixed(ratio = 1) + guides(shape=FALSE) +
+  annotate('text',x=-180,y=325,label="Post-mitotic FB\nTh+ neurons",fontface=2,size=3) +
+  annotate('text',x=-250,y=-275,label="FB neuroblast",fontface=2,size=3)
+
+pdf(file = file.path(file_dir, "Figure.S3B.pdf"), height = 5, width = 5)
+s3b
+dev.off()
+
+s3b
+```
+
+###Figure S3C
+```{r,message=F,fig.align='center',fig.height=5,fig.width=5}
+#t-SNE plot colored by region
+s3c <- myTSNEPlotAlpha(e15.Mb.dat.filter,color="kmeans_tSNE_cluster", shape="age") + scale_color_manual(values=color.all[3:4], name = "Subset Cluster") +
+  xlab("t-SNE 1") + ylab("t-SNE 2") +
+  theme(legend.position = "bottom", 
+        axis.line = element_line(colour = "black"),
+        plot.title = element_text(hjust = 0.5),
+        axis.title = element_text(family='Helvetica',size=10)) +
+  coord_fixed(ratio = 1) + guides(shape=FALSE) +
+  annotate('text',x=150,y=225,label="MB neuroblast",fontface=2,size=3) +
+  annotate('text',x=100,y=-250,label="Post-mitotic MB\nDA neurons",fontface=2,size=3)
+
+pdf(file = file.path(file_dir, "Figure.S3C.pdf"), height = 5, width = 5)
+s3c
+dev.off()
+
+s3c
+```
+
+###Figure S3D
+```{r FB Making boxplots, fig.align='center',fig.width=2.5,fig.height=10}
+one <- myBoxplot.cluster(P7.Fb.dat.filter, "Onecut2", logMode = T) + scale_fill_manual(values = color.P7[1:2], name = "P7 FB Cluster") + theme 
+
+arx <- myBoxplot.cluster(P7.Fb.dat.filter, "Arx", logMode = T) + scale_fill_manual(values = color.P7[1:2], name = "P7 FB Cluster") + scale_y_continuous(breaks = c(0,1,2,3)) + theme
+
+prlr <- myBoxplot.cluster(P7.Fb.dat.filter, "Prlr", logMode = T) + scale_fill_manual(values = color.P7[1:2], name = "P7 FB Cluster") + scale_y_continuous(breaks = c(0,1,2,3)) + theme
+
+slc <- myBoxplot.cluster(P7.Fb.dat.filter, "Slc6a3", logMode = T) + scale_fill_manual(values = color.P7[1:2], name = "P7 FB Cluster") + theme
+
+sst <- myBoxplot.cluster(P7.Fb.dat.filter, "Sst", logMode = T) + scale_fill_manual(values = color.P7[1:2], name = "P7 FB Cluster") + scale_y_continuous(breaks = c(0,2,4,6,8)) + theme
+
+grid_arrange_shared_legend(one,arx,prlr,slc,sst,ncol=1,nrow=5, position = "bottom")
+
+pdf(file = file.path(file_dir, "Figure.S3D.pdf"), height = 2, width = 4)
+one
+arx
+prlr
+slc
+sst
+dev.off()
+```
+
+###Figure S3E
+```{r Making P7 OB boxplots, fig.align='center',fig.width=4,fig.height=9}
+pax <- myBoxplot.cluster(P7.Ob.dat.filter, "Pax6", logMode = T) + scale_fill_manual(values = color.P7[7:9], name = "P7 OB Cluster") + theme
+
+meis <- myBoxplot.cluster(P7.Ob.dat.filter, "Meis2", logMode = T) + scale_fill_manual(values = color.P7[7:9], name = "P7 OB Cluster") + theme
+
+nr <- myBoxplot.cluster(P7.Ob.dat.filter, "Nr4a2", logMode = T) + scale_fill_manual(values = color.P7[7:9], name = "P7 OB Cluster") + theme
+
+slc6 <- myBoxplot.cluster(P7.Ob.dat.filter, "Slc6a3", logMode = T) + scale_fill_manual(values = color.P7[7:9], name = "P7 OB Cluster") + theme
+
+slc18 <- myBoxplot.cluster(P7.Ob.dat.filter, "Slc18a2", logMode = T) + scale_fill_manual(values = color.P7[7:9], name = "P7 OB Cluster") + theme
+
+th <- myBoxplot.cluster(P7.Ob.dat.filter, "Th", logMode = T) + scale_fill_manual(values = color.P7[7:9], name = "P7 OB Cluster") + theme
+
+ddc <- myBoxplot.cluster(P7.Ob.dat.filter, "Ddc", logMode = T) + scale_fill_manual(values = color.P7[7:9], name = "P7 OB Cluster")  + theme
+
+snap <- myBoxplot.cluster(P7.Ob.dat.filter, "Snap25", logMode = T) + scale_fill_manual(values = color.P7[7:9], name = "P7 OB Cluster") + theme
+
+dcx <- myBoxplot.cluster(P7.Ob.dat.filter, "Dcx", logMode = T) + scale_fill_manual(values = color.P7[7:9], name = "P7 OB Cluster") + theme
+
+grid_arrange_shared_legend(dcx,th,snap,ddc,pax,slc18,meis,slc6,nr,ncol=2,nrow=5, position = "bottom")
+
+pdf(file = file.path(file_dir, "Figure.S3E.pdf"), height = 2, width = 4)
+dcx
+snap
+pax
+meis
+nr
+th
+ddc
+slc18
+slc6
+dev.off()
+
+```
+
+###Session Info
+```{r session info}
+sessionInfo()
+```

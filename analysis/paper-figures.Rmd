@@ -13,6 +13,7 @@ This page contains links to code used to create paper figures
 * [Figure 5](Figure.5_links.html)
 * [Figure S1](Figure.S1.html)
 * [Figure S2](Figure.S2.html)
+* [Figure S3](Figure.S3.html)
 
 ***
 **Last update:** `r Sys.Date()`
