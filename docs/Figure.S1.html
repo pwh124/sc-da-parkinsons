@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Paul Hook" />
+
+
+<title>Supplemental Figure 1</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 41px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+
+.section h2 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h3 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h4 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h5 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h6 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">sc-da-parkinsons</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-line-chart"></span>
+     
+    Analyses
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="cds_creation-qc_filtering.html">CDS creation and QC</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="E15.clustering.html">E15.5 Analyses</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="P7.analyses.links.html">P7 Analyses</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="All.cells.analyses.links.html">All cell analyses</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="PD.GWAS.scoring.links.html">PD Gene Scoring</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="Cplx1_Th-striatum_analysis.html">Cplx1 Th+ striatum density</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="paper-figures.html">
+    <span class="fa fa-paperclip"></span>
+     
+    Paper Figures
+  </a>
+</li>
+<li>
+  <a href="https://github.com/pwh124/sc-da-parkinsons">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Supplemental Figure 1</h1>
+<h4 class="author"><em>Paul Hook</em></h4>
+
+</div>
+
+
+<hr />
+<p><strong>Last update:</strong> 2018-01-09</p>
+<p><strong>Code version:</strong> 0950e3eaa3bd4600ca217bd97770fea4ca9ec7a8</p>
+<hr />
+<div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level3">
+<h3>Setting important directories. Also loading important libraries and custom functions for analysis.</h3>
+<pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
+file_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/output&quot;
+Rdata_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
+Script_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/code&quot;
+source(file.path(Script_dir,&#39;init.R&#39;))
+source(file.path(Script_dir,&quot;tools_R.r&quot;))
+
+#loading any special libraries
+library(readr)
+library(cowplot)</code></pre>
+</div>
+<div id="loading-the-data-needed" class="section level3">
+<h3>Loading the data needed</h3>
+<p>The final ‘dat’ cds was loaded and some summary stats were calculated to quickly check the data</p>
+<pre class="r"><code># Filtered final cds
+dat.filter &lt;- readRDS(file.path(Rdata_dir,&quot;dat.filter.final.Rds&quot;))
+nrow(pData(dat.filter)) # 396</code></pre>
+<pre><code>## [1] 396</code></pre>
+<pre class="r"><code>with(pData(dat.filter), table(age, region))</code></pre>
+<pre><code>##        region
+## age     FB MB OB
+##   E15.5 84 88  0
+##   P7    81 75 68</code></pre>
+<pre class="r"><code># Outlier plots
+FB.outlier.plot &lt;- readRDS(file = file.path(Rdata_dir,&quot;P7.FB.PCA.outliers.rds&quot;))
+MB.outlier.plot &lt;- readRDS(file = file.path(Rdata_dir,&quot;P7.MB.PCA.outliers.rds&quot;))
+OB.outlier.plot &lt;- readRDS(file = file.path(Rdata_dir,&quot;P7.OB.PCA.outliers.rds&quot;))</code></pre>
+</div>
+<div id="figure-s1a" class="section level3">
+<h3>Figure S1A</h3>
+<p>Histogram displaying number of genes per cell in the final filtered dataset.</p>
+<pre class="r"><code># Number of genes per cell
+max.expressed &lt;- round(max(pData(dat.filter)$num_genes_expressed))
+min.expressed &lt;- round(min(pData(dat.filter)$num_genes_expressed))
+mean.expressed &lt;- round(mean(pData(dat.filter)$num_genes_expressed))
+
+# Writing out histogram to pdf
+pdf(file = file.path(file_dir, &quot;Figure.S1A.pdf&quot;), width = 6, height = 6)
+hist(pData(dat.filter)$num_genes_expressed,
+     breaks=25,
+     main = NA,
+     col=&quot;steelblue&quot;,
+     xlab = &quot;Number of genes expressed&quot;,
+     ylab = &quot;Number of cells&quot;,
+     ylim = c(0,30))
+mtext(text = paste(&quot;Min =&quot;,min.expressed), adj = 0.15, padj = 10)
+mtext(text = paste(&quot;Max =&quot;, max.expressed), adj = 0.15, padj = 12)
+mtext(text = paste(&quot;Mean =&quot;,mean.expressed), adj = 0.15, padj = 14)
+title(&quot;Genes expressed per cell&quot;, line = -0.3)
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+<pre class="r"><code># Plotting histogram
+hist(pData(dat.filter)$num_genes_expressed,
+     breaks=25,
+     main = NA,
+     col=&quot;steelblue&quot;,
+     xlab = &quot;Number of genes expressed&quot;,
+     ylab = &quot;Number of cells&quot;,
+     ylim = c(0,30))
+mtext(text = paste(&quot;Min =&quot;,min.expressed), adj = 0.15, padj = 10)
+mtext(text = paste(&quot;Max =&quot;, max.expressed), adj = 0.15, padj = 12)
+mtext(text = paste(&quot;Mean =&quot;,mean.expressed), adj = 0.15, padj = 14)
+title(&quot;Genes expressed per cell&quot;, line = -0.3)</code></pre>
+<p><img src="Figure.S1_files/figure-html/Generating%20QC%20plots-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="figure-s1b" class="section level3">
+<h3>Figure S1B</h3>
+<p>Histogram displaying mRNA per cell in the final filtered dataset.</p>
+<pre class="r"><code># mRNA per cell
+max.mRNAs &lt;- round(max(pData(dat.filter)$Total_mRNAs))
+min.mRNAs &lt;- round(min(pData(dat.filter)$Total_mRNAs))
+mean.mRNAs &lt;- round(mean(pData(dat.filter)$Total_mRNAs))
+
+# Writing out histograms to pdf
+pdf(file = file.path(file_dir, &quot;Figure.S1B.pdf&quot;), width = 6, height = 6)
+hist(pData(dat.filter)$Total_mRNAs,breaks=50,
+     col=&quot;darkgreen&quot;,
+     main = NA,
+     ylab = &quot;Number of cells&quot;, xlab = &quot;Total mRNAs&quot;,
+     ylim = c(0,25))
+mtext(text = paste(&quot;Min =&quot;,min.mRNAs), adj = 0.15, padj = 10)
+mtext(text = paste(&quot;Max =&quot;, max.mRNAs), adj = 0.15, padj = 12)
+mtext(text = paste(&quot;Mean =&quot;,mean.mRNAs), adj = 0.15, padj = 14)
+title(&quot;Total mRNA per cell&quot;, line = -0.3)
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+<pre class="r"><code># Plotting the histogram
+hist(pData(dat.filter)$Total_mRNAs,breaks=50,
+     col=&quot;darkgreen&quot;,
+     main = NA,
+     ylab = &quot;Number of cells&quot;, xlab = &quot;Total mRNAs&quot;,
+     ylim = c(0,25))
+mtext(text = paste(&quot;Min =&quot;,min.mRNAs), adj = 0.15, padj = 10)
+mtext(text = paste(&quot;Max =&quot;, max.mRNAs), adj = 0.15, padj = 12)
+mtext(text = paste(&quot;Mean =&quot;,mean.mRNAs), adj = 0.15, padj = 14)
+title(&quot;Total mRNA per cell&quot;, line = -0.3)</code></pre>
+<p><img src="Figure.S1_files/figure-html/unnamed-chunk-1-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="figure-s1c" class="section level3">
+<h3>Figure S1C</h3>
+<p>Histogram displaying mass per cell in the final filtered dataset.</p>
+<pre class="r"><code># Mass per cell
+max.mass &lt;- round(max(pData(dat.filter)$total_mass))
+min.mass &lt;- round(min(pData(dat.filter)$total_mass))
+mean.mass &lt;- round(mean(pData(dat.filter)$total_mass))
+
+# Writing out the histogram to a PDF
+pdf(file = file.path(file_dir, &quot;Figure.S3.pdf&quot;), width = 6, height = 6)
+hist(pData(dat.filter)$total_mass,
+     breaks=50,
+     main = NA,
+     col=&quot;darkred&quot;,
+     ylab = &quot;Number of cells&quot;, xlab = &quot;Total mass\n(fragments mapped to transcriptome)&quot;,
+     ylim = c(0,20))
+mtext(text = paste(&quot;Min =&quot;,min.mass), adj = 0.85, padj = 10)
+mtext(text = paste(&quot;Max =&quot;, max.mass), adj = 0.85, padj = 12)
+mtext(text = paste(&quot;Mean =&quot;,mean.mass), adj = 0.85, padj = 14)
+title(&quot;Total mass per cell&quot;, line = -0.3)
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+<pre class="r"><code># Plotting the histogram
+hist(pData(dat.filter)$total_mass,
+     breaks=50,
+     main = NA,
+     col=&quot;darkred&quot;,
+     ylab = &quot;Number of cells&quot;, xlab = &quot;Total mass\n(fragments mapped to transcriptome)&quot;,
+     ylim = c(0,20))
+mtext(text = paste(&quot;Min =&quot;,min.mass), adj = 0.85, padj = 10)
+mtext(text = paste(&quot;Max =&quot;, max.mass), adj = 0.85, padj = 12)
+mtext(text = paste(&quot;Mean =&quot;,mean.mass), adj = 0.85, padj = 14)
+title(&quot;Total mass per cell&quot;, line = -0.3)</code></pre>
+<p><img src="Figure.S1_files/figure-html/unnamed-chunk-2-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="figure-s1d" class="section level3">
+<h3>Figure S1D</h3>
+<p>Barplots showing the number of final cells by condition assayed after filtering</p>
+<pre class="r"><code># Number of cells x condition
+p &lt;- ggplot(pData(dat.filter))
+q &lt;- p + geom_bar(aes(x=region,fill=region),width=0.5) + ggtitle(&quot;Valid cells per condition&quot;) + theme_bw() + scale_fill_brewer(palette=&quot;Set1&quot;, guide = F) + facet_grid(.~age) + ylab(&quot;Number of cells&quot;) + xlab(&quot;Region&quot;) + theme(plot.title = element_text(hjust = 0.5))
+
+pdf(file = file.path(file_dir, &quot;Figure.S1D.pdf&quot;), width = 6, height = 4)
+q
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+<pre class="r"><code>q</code></pre>
+<p><img src="Figure.S1_files/figure-html/unnamed-chunk-3-1.png" width="576" style="display: block; margin: auto;" /></p>
+</div>
+<div id="figure-s1e" class="section level3">
+<h3>Figure S1E</h3>
+<p>PCA plots displaying outliers that were removed during data filtering. Note that circles appearing on the plots were removed.</p>
+<pre class="r"><code>fb &lt;- FB.outlier.plot + scale_color_manual(values = brewer.pal(8,&quot;Set1&quot;)[1], name = &quot;Region&quot;) + monocle:::monocle_theme_opts() + ggtitle(&quot;P7 FB PCA (PC1 vs. PC2)&quot;) +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title.y = element_text(family = &#39;Helvetica&#39;,size=10),
+        axis.title.x = element_text(family = &#39;Helvetica&#39;,size=10))
+
+mb &lt;- MB.outlier.plot + scale_color_manual(values = brewer.pal(8,&quot;Set1&quot;)[2], name = &quot;Region&quot;) + monocle:::monocle_theme_opts() + ggtitle(&quot;P7 MB PCA (PC1 vs. PC2)&quot;) +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title.y = element_text(family = &#39;Helvetica&#39;,size=10),
+        axis.title.x = element_text(family = &#39;Helvetica&#39;,size=10))</code></pre>
+<pre><code>## Scale for &#39;colour&#39; is already present. Adding another scale for
+## &#39;colour&#39;, which will replace the existing scale.</code></pre>
+<pre class="r"><code>ob &lt;- OB.outlier.plot + scale_color_manual(values = brewer.pal(8,&quot;Set1&quot;)[3], name = &quot;Region&quot;) + monocle:::monocle_theme_opts() + ggtitle(&quot;P7 OB PCA (PC1 vs. PC2)&quot;) +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title.y = element_text(family = &#39;Helvetica&#39;,size=10),
+        axis.title.x = element_text(family = &#39;Helvetica&#39;,size=10))</code></pre>
+<pre><code>## Scale for &#39;colour&#39; is already present. Adding another scale for
+## &#39;colour&#39;, which will replace the existing scale.</code></pre>
+<pre class="r"><code>pdf(file = file.path(file_dir, &quot;Figure.S1E.pdf&quot;), width = 4, height = 3)
+fb
+ob
+mb
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+<pre class="r"><code>plot_grid(fb,ob,mb,nrow = 1)</code></pre>
+<p><img src="Figure.S1_files/figure-html/unnamed-chunk-4-1.png" width="1248" style="display: block; margin: auto;" /></p>
+</div>
+<div id="session-info" class="section level3">
+<h3>Session Info</h3>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.3.0 (2016-05-03)
+## Platform: x86_64-apple-darwin13.4.0 (64-bit)
+## Running under: OS X 10.11.6 (El Capitan)
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+##  [1] grid      splines   stats4    parallel  stats     graphics  grDevices
+##  [8] utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] cowplot_0.9.2       readr_1.1.1         ggbiplot_0.55      
+##  [4] scales_0.5.0        SC3_1.1.4           ROCR_1.0-7         
+##  [7] jackstraw_1.1.1     lfa_1.2.2           tsne_0.1-3         
+## [10] gridExtra_2.3       slackr_1.4.2        vegan_2.4-4        
+## [13] permute_0.9-4       MASS_7.3-47         gplots_3.0.1       
+## [16] RColorBrewer_1.1-2  Hmisc_4.0-3         Formula_1.2-2      
+## [19] survival_2.41-3     lattice_0.20-35     Heatplus_2.18.0    
+## [22] Rtsne_0.13          pheatmap_1.0.8      tidyr_0.7.1        
+## [25] dplyr_0.7.4         plyr_1.8.4          heatmap.plus_1.3   
+## [28] stringr_1.2.0       marray_1.50.0       limma_3.28.21      
+## [31] reshape2_1.4.3      monocle_2.2.0       DDRTree_0.1.5      
+## [34] irlba_2.2.1         VGAM_1.0-2          ggplot2_2.2.1      
+## [37] Biobase_2.32.0      BiocGenerics_0.18.0 Matrix_1.2-11      
+## 
+## loaded via a namespace (and not attached):
+##  [1] RSelenium_1.7.1        colorspace_1.3-2       class_7.3-14          
+##  [4] rprojroot_1.2          htmlTable_1.9          corpcor_1.6.9         
+##  [7] base64enc_0.1-3        mvtnorm_1.0-6          codetools_0.2-15      
+## [10] doParallel_1.0.11      robustbase_0.92-7      knitr_1.17            
+## [13] jsonlite_1.5           cluster_2.0.6          semver_0.2.0          
+## [16] shiny_1.0.5            rrcov_1.4-3            httr_1.3.1            
+## [19] backports_1.1.1        assertthat_0.2.0       lazyeval_0.2.1        
+## [22] acepack_1.4.1          htmltools_0.3.6        tools_3.3.0           
+## [25] bindrcpp_0.2           igraph_1.1.2           gtable_0.2.0          
+## [28] glue_1.1.1             binman_0.1.0           doRNG_1.6.6           
+## [31] Rcpp_0.12.14           slam_0.1-37            gdata_2.18.0          
+## [34] nlme_3.1-131           iterators_1.0.8        mime_0.5              
+## [37] rngtools_1.2.4         gtools_3.5.0           WriteXLS_4.0.0        
+## [40] XML_3.98-1.9           DEoptimR_1.0-8         hms_0.3               
+## [43] yaml_2.1.15            pkgmaker_0.22          rpart_4.1-11          
+## [46] fastICA_1.2-1          latticeExtra_0.6-28    stringi_1.1.5         
+## [49] pcaPP_1.9-72           foreach_1.4.3          e1071_1.6-8           
+## [52] checkmate_1.8.4        caTools_1.17.1         rlang_0.1.6           
+## [55] pkgconfig_2.0.1        matrixStats_0.52.2     bitops_1.0-6          
+## [58] qlcMatrix_0.9.5        evaluate_0.10.1        purrr_0.2.4           
+## [61] bindr_0.1              labeling_0.3           htmlwidgets_0.9       
+## [64] magrittr_1.5           R6_2.2.2               combinat_0.0-8        
+## [67] wdman_0.2.2            foreign_0.8-69         mgcv_1.8-22           
+## [70] nnet_7.3-12            tibble_1.3.4           KernSmooth_2.23-15    
+## [73] rmarkdown_1.8          data.table_1.10.4      HSMMSingleCell_0.106.2
+## [76] digest_0.6.12          xtable_1.8-2           httpuv_1.3.5          
+## [79] openssl_0.9.7          munsell_0.4.3          registry_0.3</code></pre>
+</div>
+
+<hr>
+<p>
+    This <a href="http://rmarkdown.rstudio.com">R Markdown</a> site was created with <a href="https://github.com/jdblischak/workflowr">workflowr</a>
+</p>
+<hr>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-318359-10"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-318359-10');
+</script>
+
+<!-- To enable disqus, uncomment the section below and provide your disqus_shortname -->
+
+<!-- disqus
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'rmarkdown'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+-->
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
