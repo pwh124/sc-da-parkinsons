@@ -1,0 +1,190 @@
+---
+title: "Supplemental Figure 1"
+author: "Paul Hook"
+output: html_document
+---
+***
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`  
+
+***
+
+###Setting important directories. Also loading important libraries and custom functions for analysis.
+```{r init, message=FALSE, warning=FALSE}
+seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
+Rdata_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
+source(file.path(Script_dir,'init.R'))
+source(file.path(Script_dir,"tools_R.r"))
+
+#loading any special libraries
+library(readr)
+library(cowplot)
+```
+
+### Loading the data needed
+The final 'dat' cds was loaded and some summary stats were calculated to quickly check the data
+```{r loading data needed}
+# Filtered final cds
+dat.filter <- readRDS(file.path(Rdata_dir,"dat.filter.final.Rds"))
+nrow(pData(dat.filter)) # 396
+with(pData(dat.filter), table(age, region))
+
+# Outlier plots
+FB.outlier.plot <- readRDS(file = file.path(Rdata_dir,"P7.FB.PCA.outliers.rds"))
+MB.outlier.plot <- readRDS(file = file.path(Rdata_dir,"P7.MB.PCA.outliers.rds"))
+OB.outlier.plot <- readRDS(file = file.path(Rdata_dir,"P7.OB.PCA.outliers.rds"))
+```
+
+###Figure S1A
+Histogram displaying number of genes per cell in the final filtered dataset.
+```{r Generating QC plots, fig.align='center',fig.height=6,fig.width=6}
+# Number of genes per cell
+max.expressed <- round(max(pData(dat.filter)$num_genes_expressed))
+min.expressed <- round(min(pData(dat.filter)$num_genes_expressed))
+mean.expressed <- round(mean(pData(dat.filter)$num_genes_expressed))
+
+# Writing out histogram to pdf
+pdf(file = file.path(file_dir, "Figure.S1A.pdf"), width = 6, height = 6)
+hist(pData(dat.filter)$num_genes_expressed,
+     breaks=25,
+     main = NA,
+     col="steelblue",
+     xlab = "Number of genes expressed",
+     ylab = "Number of cells",
+     ylim = c(0,30))
+mtext(text = paste("Min =",min.expressed), adj = 0.15, padj = 10)
+mtext(text = paste("Max =", max.expressed), adj = 0.15, padj = 12)
+mtext(text = paste("Mean =",mean.expressed), adj = 0.15, padj = 14)
+title("Genes expressed per cell", line = -0.3)
+dev.off()
+
+# Plotting histogram
+hist(pData(dat.filter)$num_genes_expressed,
+     breaks=25,
+     main = NA,
+     col="steelblue",
+     xlab = "Number of genes expressed",
+     ylab = "Number of cells",
+     ylim = c(0,30))
+mtext(text = paste("Min =",min.expressed), adj = 0.15, padj = 10)
+mtext(text = paste("Max =", max.expressed), adj = 0.15, padj = 12)
+mtext(text = paste("Mean =",mean.expressed), adj = 0.15, padj = 14)
+title("Genes expressed per cell", line = -0.3)
+```
+
+###Figure S1B
+Histogram displaying mRNA per cell in the final filtered dataset.
+```{r, fig.align='center',fig.height=6, fig.width=6}
+# mRNA per cell
+max.mRNAs <- round(max(pData(dat.filter)$Total_mRNAs))
+min.mRNAs <- round(min(pData(dat.filter)$Total_mRNAs))
+mean.mRNAs <- round(mean(pData(dat.filter)$Total_mRNAs))
+
+# Writing out histograms to pdf
+pdf(file = file.path(file_dir, "Figure.S1B.pdf"), width = 6, height = 6)
+hist(pData(dat.filter)$Total_mRNAs,breaks=50,
+     col="darkgreen",
+     main = NA,
+     ylab = "Number of cells", xlab = "Total mRNAs",
+     ylim = c(0,25))
+mtext(text = paste("Min =",min.mRNAs), adj = 0.15, padj = 10)
+mtext(text = paste("Max =", max.mRNAs), adj = 0.15, padj = 12)
+mtext(text = paste("Mean =",mean.mRNAs), adj = 0.15, padj = 14)
+title("Total mRNA per cell", line = -0.3)
+dev.off()
+
+# Plotting the histogram
+hist(pData(dat.filter)$Total_mRNAs,breaks=50,
+     col="darkgreen",
+     main = NA,
+     ylab = "Number of cells", xlab = "Total mRNAs",
+     ylim = c(0,25))
+mtext(text = paste("Min =",min.mRNAs), adj = 0.15, padj = 10)
+mtext(text = paste("Max =", max.mRNAs), adj = 0.15, padj = 12)
+mtext(text = paste("Mean =",mean.mRNAs), adj = 0.15, padj = 14)
+title("Total mRNA per cell", line = -0.3)
+```
+
+###Figure S1C
+Histogram displaying mass per cell in the final filtered dataset.
+```{r,fig.align='center',fig.height=6, fig.width=6}
+# Mass per cell
+max.mass <- round(max(pData(dat.filter)$total_mass))
+min.mass <- round(min(pData(dat.filter)$total_mass))
+mean.mass <- round(mean(pData(dat.filter)$total_mass))
+
+# Writing out the histogram to a PDF
+pdf(file = file.path(file_dir, "Figure.S3.pdf"), width = 6, height = 6)
+hist(pData(dat.filter)$total_mass,
+     breaks=50,
+     main = NA,
+     col="darkred",
+     ylab = "Number of cells", xlab = "Total mass\n(fragments mapped to transcriptome)",
+     ylim = c(0,20))
+mtext(text = paste("Min =",min.mass), adj = 0.85, padj = 10)
+mtext(text = paste("Max =", max.mass), adj = 0.85, padj = 12)
+mtext(text = paste("Mean =",mean.mass), adj = 0.85, padj = 14)
+title("Total mass per cell", line = -0.3)
+dev.off()
+
+# Plotting the histogram
+hist(pData(dat.filter)$total_mass,
+     breaks=50,
+     main = NA,
+     col="darkred",
+     ylab = "Number of cells", xlab = "Total mass\n(fragments mapped to transcriptome)",
+     ylim = c(0,20))
+mtext(text = paste("Min =",min.mass), adj = 0.85, padj = 10)
+mtext(text = paste("Max =", max.mass), adj = 0.85, padj = 12)
+mtext(text = paste("Mean =",mean.mass), adj = 0.85, padj = 14)
+title("Total mass per cell", line = -0.3)
+```
+
+###Figure S1D
+Barplots showing the number of final cells by condition assayed after filtering
+```{r, fig.align='center',fig.height=4,fig.width=6}
+# Number of cells x condition
+p <- ggplot(pData(dat.filter))
+q <- p + geom_bar(aes(x=region,fill=region),width=0.5) + ggtitle("Valid cells per condition") + theme_bw() + scale_fill_brewer(palette="Set1", guide = F) + facet_grid(.~age) + ylab("Number of cells") + xlab("Region") + theme(plot.title = element_text(hjust = 0.5))
+
+pdf(file = file.path(file_dir, "Figure.S1D.pdf"), width = 6, height = 4)
+q
+dev.off()
+
+q
+```
+
+###Figure S1E
+PCA plots displaying outliers that were removed during data filtering. Note that circles appearing on the plots were removed.
+```{r, fig.align='center',fig.height=3,fig.width=13}
+fb <- FB.outlier.plot + scale_color_manual(values = brewer.pal(8,"Set1")[1], name = "Region") + monocle:::monocle_theme_opts() + ggtitle("P7 FB PCA (PC1 vs. PC2)") +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title.y = element_text(family = 'Helvetica',size=10),
+        axis.title.x = element_text(family = 'Helvetica',size=10))
+
+mb <- MB.outlier.plot + scale_color_manual(values = brewer.pal(8,"Set1")[2], name = "Region") + monocle:::monocle_theme_opts() + ggtitle("P7 MB PCA (PC1 vs. PC2)") +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title.y = element_text(family = 'Helvetica',size=10),
+        axis.title.x = element_text(family = 'Helvetica',size=10))
+
+ob <- OB.outlier.plot + scale_color_manual(values = brewer.pal(8,"Set1")[3], name = "Region") + monocle:::monocle_theme_opts() + ggtitle("P7 OB PCA (PC1 vs. PC2)") +
+  theme(plot.title = element_text(hjust = 0.5),
+        axis.title.y = element_text(family = 'Helvetica',size=10),
+        axis.title.x = element_text(family = 'Helvetica',size=10))
+
+pdf(file = file.path(file_dir, "Figure.S1E.pdf"), width = 4, height = 3)
+fb
+ob
+mb
+dev.off()
+
+plot_grid(fb,ob,mb,nrow = 1)
+```
+
+###Session Info
+```{r session info}
+sessionInfo()
+```

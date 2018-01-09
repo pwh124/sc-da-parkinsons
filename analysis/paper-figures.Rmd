@@ -11,6 +11,7 @@ This page contains links to code used to create paper figures
 * [Figure 3](Figure.3_script.html)
 * [Figure 4](Figure.4_script.html)
 * [Figure 5](Figure.5_links.html)
+* [Figure S1](Figure.S1.html)
 
 ***
 **Last update:** `r Sys.Date()`
