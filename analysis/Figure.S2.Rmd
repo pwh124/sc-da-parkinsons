@@ -101,3 +101,8 @@ dev.off()
 
 grid_arrange_shared_legend(mag,mog,mbp,ncol=1,nrow=3, position = "right")
 ```
+
+###Session Info
+```{r session info}
+sessionInfo()
+```
