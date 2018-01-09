@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Paul Hook" />
+
+
+<title>Figure S3</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/simplex.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-4.5.0/css/font-awesome.min.css" rel="stylesheet" />
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 41px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+
+.section h2 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h3 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h4 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h5 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+.section h6 {
+  padding-top: 46px;
+  margin-top: -46px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+  padding-left: 25px;
+  text-indent: 0;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">sc-da-parkinsons</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fa fa-line-chart"></span>
+     
+    Analyses
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="cds_creation-qc_filtering.html">CDS creation and QC</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="E15.clustering.html">E15.5 Analyses</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="P7.analyses.links.html">P7 Analyses</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="All.cells.analyses.links.html">All cell analyses</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="PD.GWAS.scoring.links.html">PD Gene Scoring</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="Cplx1_Th-striatum_analysis.html">Cplx1 Th+ striatum density</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="paper-figures.html">
+    <span class="fa fa-paperclip"></span>
+     
+    Paper Figures
+  </a>
+</li>
+<li>
+  <a href="https://github.com/pwh124/sc-da-parkinsons">
+    <span class="fa fa-github"></span>
+     
+  </a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Figure S3</h1>
+<h4 class="author"><em>Paul Hook</em></h4>
+
+</div>
+
+
+<hr />
+<p><strong>Last update:</strong> 2018-01-09</p>
+<p><strong>Code version:</strong> 8b265edeb150a23d198e1acd8fc9b42af9cc2c60</p>
+<hr />
+<div id="setting-important-directories." class="section level3">
+<h3>Setting important directories.</h3>
+<p>Also loading important libraries and custom functions for analysis.</p>
+<pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
+file_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/output&quot;
+Rdata_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
+Script_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/code&quot;
+source(file.path(Script_dir,&#39;init.R&#39;))
+source(file.path(Script_dir,&quot;tools_R.r&quot;))
+
+#loading any special libraries
+library(readr)
+library(cowplot)</code></pre>
+<pre class="r"><code>theme &lt;- theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.title.y = element_text(family=&quot;Helvetica&quot;,size=8),
+        axis.text.y = element_text(size=6),
+        strip.text = element_text(family=&quot;Helvetica&quot;,face=&quot;bold.italic&quot;,size=10))</code></pre>
+<pre class="r"><code>P7.Fb.dat.filter &lt;- readRDS(file.path(Rdata_dir,&quot;P7.Fb.dat.filter.final.Rds&quot;))
+P7.Ob.dat.filter &lt;- readRDS(file.path(Rdata_dir,&quot;P7.Ob.dat.filter.final.Rds&quot;))
+e15.dat.filter &lt;- readRDS(file.path(Rdata_dir,&quot;e15.dat.filter.final.rds&quot;))
+e15.Fb.dat.filter &lt;- readRDS(file.path(Rdata_dir,&quot;e15.Fb.dat.filter.final.rds&quot;))
+e15.Mb.dat.filter &lt;- readRDS(file.path(Rdata_dir,&quot;e15.Mb.dat.filter.final.rds&quot;))
+color.all &lt;- c(&quot;#F6937A&quot;,&quot;#882F1C&quot;,&quot;#BF1F36&quot;,&quot;#C2B280&quot;,&quot;#F2C318&quot;,&quot;#E790AC&quot;,&quot;#F18421&quot;,&quot;#0168A5&quot;,&quot;#848483&quot;,&quot;#A4CAEB&quot;,&quot;#885793&quot;,&quot;#008957&quot;,&quot;#222222&quot;)
+color.P7 &lt;- c(&quot;#F2C318&quot;,&quot;#E790AC&quot;,&quot;#F18421&quot;,&quot;#0168A5&quot;,&quot;#848483&quot;,&quot;#A4CAEB&quot;,&quot;#885793&quot;,&quot;#008957&quot;,&quot;#222222&quot;)</code></pre>
+</div>
+<div id="figure-s3a" class="section level3">
+<h3>Figure S3A</h3>
+<p>Plotting E15.5 t-SNE results colored by regional identity as well as subset cluster identity</p>
+<pre class="r"><code>#t-SNE plot colored by region
+r &lt;- myTSNEPlotAlpha(e15.dat.filter,color=&quot;region&quot;, shape=&quot;age&quot;) +
+  scale_color_brewer(palette=&quot;Set1&quot;, name = &quot;Region&quot;) +
+  xlab(&quot;t-SNE 1&quot;) + ylab(&quot;t-SNE 2&quot;) +
+  theme(legend.position = &quot;bottom&quot;,
+        axis.line = element_line(colour = &quot;black&quot;),
+        plot.title = element_text(hjust = 0.5),
+        axis.title = element_text(family=&#39;Helvetica&#39;,size=12)) +
+  coord_fixed(ratio = 1) + guides(shape=FALSE) 
+
+#t-SNE plot colored by subset cluster
+c &lt;- myTSNEPlotAlpha(e15.dat.filter,color=&quot;subset.cluster&quot;, shape=&quot;age&quot;) + scale_color_manual(values=color.all[1:4], name = &quot;Subset Cluster&quot;) +
+  xlab(&quot;t-SNE 1&quot;) +
+  theme(legend.position = &quot;bottom&quot;, 
+        axis.line = element_line(colour = &quot;black&quot;),
+        plot.title = element_text(hjust = 0.5),
+        axis.title.y=element_blank(),
+        axis.title = element_text(family=&#39;Helvetica&#39;,size=12)) +
+  coord_fixed(ratio = 1) + guides(shape=FALSE)
+
+# Plotting these in a grid
+plot_grid(r,c,nrow = 1,ncol = 2)</code></pre>
+<p><img src="Figure.S3_files/figure-html/Producing%20tSNE%20plots-1.png" width="1440" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Writing out to PDF
+pdf(file = file.path(file_dir, &quot;Figure.S3A.pdf&quot;), width = 7, height = 6)
+r
+c
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+</div>
+<div id="figure-s3b" class="section level3">
+<h3>Figure S3B</h3>
+<pre class="r"><code>#t-SNE plot colored by region
+s3b &lt;- myTSNEPlotAlpha(e15.Fb.dat.filter,color=&quot;kmeans_tSNE_cluster&quot;, shape=&quot;age&quot;) + scale_color_manual(values=color.all[1:2], name = &quot;Subset Cluster&quot;) +
+  xlab(&quot;t-SNE 1&quot;) + ylab(&quot;t-SNE 2&quot;) +
+  theme(legend.position = &quot;bottom&quot;, 
+        axis.line = element_line(colour = &quot;black&quot;),
+        plot.title = element_text(hjust = 0.5),
+        axis.title = element_text(family=&#39;Helvetica&#39;,size=10)) +
+  coord_fixed(ratio = 1) + guides(shape=FALSE) +
+  annotate(&#39;text&#39;,x=-180,y=325,label=&quot;Post-mitotic FB\nTh+ neurons&quot;,fontface=2,size=3) +
+  annotate(&#39;text&#39;,x=-250,y=-275,label=&quot;FB neuroblast&quot;,fontface=2,size=3)
+
+pdf(file = file.path(file_dir, &quot;Figure.S3B.pdf&quot;), height = 5, width = 5)
+s3b
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+<pre class="r"><code>s3b</code></pre>
+<p><img src="Figure.S3_files/figure-html/unnamed-chunk-1-1.png" width="480" style="display: block; margin: auto;" /></p>
+</div>
+<div id="figure-s3c" class="section level3">
+<h3>Figure S3C</h3>
+<pre class="r"><code>#t-SNE plot colored by region
+s3c &lt;- myTSNEPlotAlpha(e15.Mb.dat.filter,color=&quot;kmeans_tSNE_cluster&quot;, shape=&quot;age&quot;) + scale_color_manual(values=color.all[3:4], name = &quot;Subset Cluster&quot;) +
+  xlab(&quot;t-SNE 1&quot;) + ylab(&quot;t-SNE 2&quot;) +
+  theme(legend.position = &quot;bottom&quot;, 
+        axis.line = element_line(colour = &quot;black&quot;),
+        plot.title = element_text(hjust = 0.5),
+        axis.title = element_text(family=&#39;Helvetica&#39;,size=10)) +
+  coord_fixed(ratio = 1) + guides(shape=FALSE) +
+  annotate(&#39;text&#39;,x=150,y=225,label=&quot;MB neuroblast&quot;,fontface=2,size=3) +
+  annotate(&#39;text&#39;,x=100,y=-250,label=&quot;Post-mitotic MB\nDA neurons&quot;,fontface=2,size=3)
+
+pdf(file = file.path(file_dir, &quot;Figure.S3C.pdf&quot;), height = 5, width = 5)
+s3c
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+<pre class="r"><code>s3c</code></pre>
+<p><img src="Figure.S3_files/figure-html/unnamed-chunk-2-1.png" width="480" style="display: block; margin: auto;" /></p>
+</div>
+<div id="figure-s3d" class="section level3">
+<h3>Figure S3D</h3>
+<pre class="r"><code>one &lt;- myBoxplot.cluster(P7.Fb.dat.filter, &quot;Onecut2&quot;, logMode = T) + scale_fill_manual(values = color.P7[1:2], name = &quot;P7 FB Cluster&quot;) + theme 
+
+arx &lt;- myBoxplot.cluster(P7.Fb.dat.filter, &quot;Arx&quot;, logMode = T) + scale_fill_manual(values = color.P7[1:2], name = &quot;P7 FB Cluster&quot;) + scale_y_continuous(breaks = c(0,1,2,3)) + theme
+
+prlr &lt;- myBoxplot.cluster(P7.Fb.dat.filter, &quot;Prlr&quot;, logMode = T) + scale_fill_manual(values = color.P7[1:2], name = &quot;P7 FB Cluster&quot;) + scale_y_continuous(breaks = c(0,1,2,3)) + theme
+
+slc &lt;- myBoxplot.cluster(P7.Fb.dat.filter, &quot;Slc6a3&quot;, logMode = T) + scale_fill_manual(values = color.P7[1:2], name = &quot;P7 FB Cluster&quot;) + theme
+
+sst &lt;- myBoxplot.cluster(P7.Fb.dat.filter, &quot;Sst&quot;, logMode = T) + scale_fill_manual(values = color.P7[1:2], name = &quot;P7 FB Cluster&quot;) + scale_y_continuous(breaks = c(0,2,4,6,8)) + theme
+
+grid_arrange_shared_legend(one,arx,prlr,slc,sst,ncol=1,nrow=5, position = &quot;bottom&quot;)</code></pre>
+<p><img src="Figure.S3_files/figure-html/FB%20Making%20boxplots-1.png" width="240" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>pdf(file = file.path(file_dir, &quot;Figure.S3D.pdf&quot;), height = 2, width = 4)
+one
+arx
+prlr
+slc
+sst
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+</div>
+<div id="figure-s3e" class="section level3">
+<h3>Figure S3E</h3>
+<pre class="r"><code>pax &lt;- myBoxplot.cluster(P7.Ob.dat.filter, &quot;Pax6&quot;, logMode = T) + scale_fill_manual(values = color.P7[7:9], name = &quot;P7 OB Cluster&quot;) + theme
+
+meis &lt;- myBoxplot.cluster(P7.Ob.dat.filter, &quot;Meis2&quot;, logMode = T) + scale_fill_manual(values = color.P7[7:9], name = &quot;P7 OB Cluster&quot;) + theme
+
+nr &lt;- myBoxplot.cluster(P7.Ob.dat.filter, &quot;Nr4a2&quot;, logMode = T) + scale_fill_manual(values = color.P7[7:9], name = &quot;P7 OB Cluster&quot;) + theme
+
+slc6 &lt;- myBoxplot.cluster(P7.Ob.dat.filter, &quot;Slc6a3&quot;, logMode = T) + scale_fill_manual(values = color.P7[7:9], name = &quot;P7 OB Cluster&quot;) + theme
+
+slc18 &lt;- myBoxplot.cluster(P7.Ob.dat.filter, &quot;Slc18a2&quot;, logMode = T) + scale_fill_manual(values = color.P7[7:9], name = &quot;P7 OB Cluster&quot;) + theme
+
+th &lt;- myBoxplot.cluster(P7.Ob.dat.filter, &quot;Th&quot;, logMode = T) + scale_fill_manual(values = color.P7[7:9], name = &quot;P7 OB Cluster&quot;) + theme
+
+ddc &lt;- myBoxplot.cluster(P7.Ob.dat.filter, &quot;Ddc&quot;, logMode = T) + scale_fill_manual(values = color.P7[7:9], name = &quot;P7 OB Cluster&quot;)  + theme
+
+snap &lt;- myBoxplot.cluster(P7.Ob.dat.filter, &quot;Snap25&quot;, logMode = T) + scale_fill_manual(values = color.P7[7:9], name = &quot;P7 OB Cluster&quot;) + theme
+
+dcx &lt;- myBoxplot.cluster(P7.Ob.dat.filter, &quot;Dcx&quot;, logMode = T) + scale_fill_manual(values = color.P7[7:9], name = &quot;P7 OB Cluster&quot;) + theme
+
+grid_arrange_shared_legend(dcx,th,snap,ddc,pax,slc18,meis,slc6,nr,ncol=2,nrow=5, position = &quot;bottom&quot;)</code></pre>
+<p><img src="Figure.S3_files/figure-html/Making%20P7%20OB%20boxplots-1.png" width="384" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>pdf(file = file.path(file_dir, &quot;Figure.S3E.pdf&quot;), height = 2, width = 4)
+dcx
+snap
+pax
+meis
+nr
+th
+ddc
+slc18
+slc6
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+</div>
+<div id="session-info" class="section level3">
+<h3>Session Info</h3>
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>## R version 3.3.0 (2016-05-03)
+## Platform: x86_64-apple-darwin13.4.0 (64-bit)
+## Running under: OS X 10.11.6 (El Capitan)
+## 
+## locale:
+## [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+## 
+## attached base packages:
+##  [1] grid      splines   stats4    parallel  stats     graphics  grDevices
+##  [8] utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] cowplot_0.9.2       readr_1.1.1         ggbiplot_0.55      
+##  [4] scales_0.5.0        SC3_1.1.4           ROCR_1.0-7         
+##  [7] jackstraw_1.1.1     lfa_1.2.2           tsne_0.1-3         
+## [10] gridExtra_2.3       slackr_1.4.2        vegan_2.4-4        
+## [13] permute_0.9-4       MASS_7.3-47         gplots_3.0.1       
+## [16] RColorBrewer_1.1-2  Hmisc_4.0-3         Formula_1.2-2      
+## [19] survival_2.41-3     lattice_0.20-35     Heatplus_2.18.0    
+## [22] Rtsne_0.13          pheatmap_1.0.8      tidyr_0.7.1        
+## [25] dplyr_0.7.4         plyr_1.8.4          heatmap.plus_1.3   
+## [28] stringr_1.2.0       marray_1.50.0       limma_3.28.21      
+## [31] reshape2_1.4.3      monocle_2.2.0       DDRTree_0.1.5      
+## [34] irlba_2.2.1         VGAM_1.0-2          ggplot2_2.2.1      
+## [37] Biobase_2.32.0      BiocGenerics_0.18.0 Matrix_1.2-11      
+## 
+## loaded via a namespace (and not attached):
+##  [1] RSelenium_1.7.1        colorspace_1.3-2       class_7.3-14          
+##  [4] rprojroot_1.2          htmlTable_1.9          corpcor_1.6.9         
+##  [7] base64enc_0.1-3        mvtnorm_1.0-6          codetools_0.2-15      
+## [10] doParallel_1.0.11      robustbase_0.92-7      knitr_1.17            
+## [13] jsonlite_1.5           cluster_2.0.6          semver_0.2.0          
+## [16] shiny_1.0.5            rrcov_1.4-3            httr_1.3.1            
+## [19] backports_1.1.1        assertthat_0.2.0       lazyeval_0.2.1        
+## [22] acepack_1.4.1          htmltools_0.3.6        tools_3.3.0           
+## [25] bindrcpp_0.2           igraph_1.1.2           gtable_0.2.0          
+## [28] glue_1.1.1             binman_0.1.0           doRNG_1.6.6           
+## [31] Rcpp_0.12.14           slam_0.1-37            gdata_2.18.0          
+## [34] nlme_3.1-131           iterators_1.0.8        mime_0.5              
+## [37] rngtools_1.2.4         gtools_3.5.0           WriteXLS_4.0.0        
+## [40] XML_3.98-1.9           DEoptimR_1.0-8         hms_0.3               
+## [43] yaml_2.1.15            pkgmaker_0.22          rpart_4.1-11          
+## [46] fastICA_1.2-1          latticeExtra_0.6-28    stringi_1.1.5         
+## [49] pcaPP_1.9-72           foreach_1.4.3          e1071_1.6-8           
+## [52] checkmate_1.8.4        caTools_1.17.1         rlang_0.1.6           
+## [55] pkgconfig_2.0.1        matrixStats_0.52.2     bitops_1.0-6          
+## [58] qlcMatrix_0.9.5        evaluate_0.10.1        purrr_0.2.4           
+## [61] bindr_0.1              labeling_0.3           htmlwidgets_0.9       
+## [64] magrittr_1.5           R6_2.2.2               combinat_0.0-8        
+## [67] wdman_0.2.2            foreign_0.8-69         mgcv_1.8-22           
+## [70] nnet_7.3-12            tibble_1.3.4           KernSmooth_2.23-15    
+## [73] rmarkdown_1.8          data.table_1.10.4      HSMMSingleCell_0.106.2
+## [76] digest_0.6.12          xtable_1.8-2           httpuv_1.3.5          
+## [79] openssl_0.9.7          munsell_0.4.3          registry_0.3</code></pre>
+</div>
+
+<hr>
+<p>
+    This <a href="http://rmarkdown.rstudio.com">R Markdown</a> site was created with <a href="https://github.com/jdblischak/workflowr">workflowr</a>
+</p>
+<hr>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-318359-10"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-318359-10');
+</script>
+
+<!-- To enable disqus, uncomment the section below and provide your disqus_shortname -->
+
+<!-- disqus
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'rmarkdown'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+-->
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
