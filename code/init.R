@@ -120,7 +120,7 @@ myBarMap<-function(cds,geneset,facet_by="kmeans_tSNE_cluster",color_by="factor(k
   sub.melt.summary<-sub.melt %>%
     dplyr::group_by_(.dots=c("gene_short_name",facet_by_melt)) %>%
     dplyr::summarise(mean=mean(value),median=median(value),sd=sd(value),upper_bound=mean+sd,lower_bound=max(mean-sd,0))
-  
+
   if(cluster %in% c("row","both",T)){
     sub.sum.mat<-sub.melt.summary %>%
       recast(as.formula(paste("gene_short_name ~",facet_by)),measure.var="mean",fun.aggregate=mean)
@@ -129,7 +129,7 @@ myBarMap<-function(cds,geneset,facet_by="kmeans_tSNE_cluster",color_by="factor(k
     gene.order<-sub.sum.mat$gene_short_name[gene.order.idx]
     sub.melt$gene_short_name<-factor(sub.melt$gene_short_name, levels=gene.order)
   }
-  
+
   if(cluster %in% c("column","both",T)){
     sub.mat<-sub.melt %>%
       recast(as.formula("gene_short_name ~ cell_id"),measure.var="value",fun.aggregate=mean)
@@ -139,10 +139,10 @@ myBarMap<-function(cds,geneset,facet_by="kmeans_tSNE_cluster",color_by="factor(k
     #print(cell.order)
     sub.melt$cell_id<-factor(sub.melt$cell_id,levels=cell.order)
   }
-  
+
   p<-ggplot(sub.melt)
   p<-p + geom_bar(aes_string(x="cell_id",y="value",fill=color_by,color=color_by),stat="identity")
-  
+
   if(showSummary){
     p<-p + geom_hline(aes(yintercept=mean),data=sub.melt.summary,size=1.0)
     p<-p + geom_hline(aes(yintercept=upper_bound),data=sub.melt.summary,linetype="dashed")
@@ -150,7 +150,7 @@ myBarMap<-function(cds,geneset,facet_by="kmeans_tSNE_cluster",color_by="factor(k
   }
   p<-p +
     facet_grid(as.formula(paste("gene_short_name ~", facet_by)),scale="free",space="free_x",labeller=labeller(.default=label_both,gene_short_name=label_value)) +
-    theme_bw() + guides(color=FALSE) + 
+    theme_bw() + guides(color=FALSE) +
     theme(axis.text.x=element_blank(),
           axis.ticks.x=element_blank(),
           axis.title.x=element_blank(),
@@ -220,11 +220,11 @@ jaccard_sim <- function(x) {
   # initialize similarity matrix
   m <- matrix(NA, nrow=ncol(x),ncol=ncol(x),dimnames=list(colnames(x),colnames(x)))
   jaccard <- as.data.frame(m)
-  
+
   for(i in 1:ncol(x)) {
     for(j in i:ncol(x)) {
       jaccard[i,j]= length(which(x[,i] & x[,j])) / length(which(x[,i] | x[,j]))
-      jaccard[j,i]=jaccard[i,j]        
+      jaccard[j,i]=jaccard[i,j]
     }
   }
 }
@@ -237,10 +237,10 @@ jaccard_distance <- function(m) {
   im = which(A > 0, arr.ind=TRUE)
   ## counts for each row
   b = rowSums(m)
-  
+
   ## only non-zero values of common
   Aim = A[im]
-  
+
   ## Jacard formula: #common / (#i + #j - #common)
   J = sparseMatrix(
     i = im[,1],
@@ -248,7 +248,7 @@ jaccard_distance <- function(m) {
     x = Aim / (b[im[,1]] + b[im[,2]] - Aim),
     dims = dim(A)
   )
-  
+
   return( as.dist(1 - J ))
 }
 
@@ -271,27 +271,27 @@ myggheatmap<-function(cds,geneset=c("CD44","ACHE","ETV4","ISL1","ISL2","NEUROG2"
   if(logMode){
     exprs(sub)<-log10(exprs(sub)+1.0)
   }
-  
+
   row.hclust<-hclust(dist(exprs(sub)))
-  
+
   row.cluster<-as.data.frame(cutree(row.hclust,k=rowK))
   colnames(row.cluster)<-c("rowCluster")
   row.order<-order.dendrogram(as.dendrogram(row.hclust))
-  
+
   sub.melt<-melt(exprs(sub))
-  
+
   colnames(sub.melt)<-c("gene_id","sample_id","fpkm")
-  
+
   sub.melt<-merge(sub.melt,pData(sub),by="sample_id")
-  
+
   sub.melt<-merge(sub.melt,fData(sub)[,c("gene_short_name","gene_id")],by="gene_id")
-  
+
   sub.melt<-merge(sub.melt,row.cluster,by.x="gene_id",by.y="row.names")
-  
+
   sub.melt$gene_short_name<-factor(sub.melt$gene_short_name,levels=fData(sub[row.order,])$gene_short_name)
-  
+
   sub.melt$sample_id <- factor(sub.melt$sample_id,levels=pData(sub)$sample_id[order(pData(sub)$Pseudotime,decreasing=F)])
-  
+
   p <- ggplot(sub.melt)
   p + geom_tile(aes(x=sample_id,y=gene_short_name,fill=fpkm)) + facet_grid(rowCluster~State,scales="free",space="free") + theme_change + scale_fill_gradient(low="white",high="darkred") + theme(axis.text.y=element_blank())
 }
@@ -302,10 +302,10 @@ myCorheatmap<-function(cds,logMode=T,method="color",cor.method="pearson",addrect
     dat<-log2(dat+1)
   }
   dat.cor<-cor(t(dat),method=cor.method)
-  
+
   rownames(dat.cor)<-lookupGeneName(cds,rownames(dat.cor))
   colnames(dat.cor)<-lookupGeneName(cds,colnames(dat.cor))
-  
+
   corrplot(dat.cor,method=method,hclust.method=hclust.method,order=order,addrect=addrect,...)
 }
 
@@ -325,7 +325,7 @@ PCbiplot <- function(PC, x="PC1", y="PC2", color="black", shape=NULL) {
                       v2 = .7 * mult * (get(y))
   )
   plot <- plot + coord_equal() + geom_point(data=datapc, aes(x=v1, y=v2, label=varnames), size = 5, vjust=1,color="red")
-  plot <- plot + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), arrow=arrow(length=unit(0.2,"cm")), alpha=0.75,color="red") 
+  plot <- plot + geom_segment(data=datapc, aes(x=0, y=0, xend=v1, yend=v2), arrow=arrow(length=unit(0.2,"cm")), alpha=0.75,color="red")
   plot <- plot + theme_bw()
   plot
 }
@@ -497,7 +497,7 @@ myTSNEPlotRainbow2<-function(cds,red="Bdnf",green="Fos",blue="empty",logMode=T,s
   if(discrete){
     #genes<-genes/rowSums(genes)
     #genes[is.na(genes)]<-0
-    
+
     genes<-as.data.frame(genes)
     #Map to Rgb
     if(blue=="empty"){
@@ -527,7 +527,7 @@ myTSNEPlotRainbow2<-function(cds,red="Bdnf",green="Fos",blue="empty",logMode=T,s
     }
   }else{
     genes[is.na(genes)]<-1
-    
+
     genes<-as.data.frame(genes)
     #Map to Rgb
     if(blue=="empty"){
@@ -671,7 +671,7 @@ myBoxplot.subset <- function(cds,markers=NULL,logMode=T,color_by="color", scaled
     tmp<-merge(tmp,genes,by.x=0,by.y="cell_id")
     tmp$gene_short_name <- factor(tmp$gene_short_name, levels = markers)
     #print(head(tmp))
-    
+
     p<-ggplot(tmp,aes(factor(subset.cluster),value, fill = subset.cluster))
     p + geom_boxplot() + facet_wrap('gene_short_name', scales = "free_y") + theme_bw() + ylab("log2(Transcripts+1)")
   }
@@ -696,7 +696,7 @@ myBoxplot.cluster <- function(cds,markers=NULL,logMode=T,color_by="color", scale
     tmp<-merge(tmp,genes,by.x=0,by.y="cell_id")
     tmp$gene_short_name <- factor(tmp$gene_short_name, levels = markers)
     #print(head(tmp))
-    
+
     p<-ggplot(tmp,aes(factor(kmeans_tSNE_cluster),value, fill = kmeans_tSNE_cluster))
     p + geom_boxplot() + facet_wrap('gene_short_name', scales = "free_y") + theme_bw() + ylab("log2(Transcripts+1)")
   }
@@ -723,5 +723,34 @@ cbindPad <- function(...){
   }
   rs <- lapply(args,pad,mx)
   return(do.call(cbind,rs))
+}
+
+grid_arrange_shared_legend <- function(..., ncol = length(list(...)), nrow = 1, position = c("bottom", "right")) {
+
+  plots <- list(...)
+  position <- match.arg(position)
+  g <- ggplotGrob(plots[[1]] + theme(legend.position = position))$grobs
+  legend <- g[[which(sapply(g, function(x) x$name) == "guide-box")]]
+  lheight <- sum(legend$height)
+  lwidth <- sum(legend$width)
+  gl <- lapply(plots, function(x) x + theme(legend.position="none"))
+  gl <- c(gl, ncol = ncol, nrow = nrow)
+
+  combined <- switch(position,
+                     "bottom" = arrangeGrob(do.call(arrangeGrob, gl),
+                                            legend,
+                                            ncol = 1,
+                                            heights = unit.c(unit(1, "npc") - lheight, lheight)),
+                     "right" = arrangeGrob(do.call(arrangeGrob, gl),
+                                           legend,
+                                           ncol = 2,
+                                           widths = unit.c(unit(1, "npc") - lwidth, lwidth)))
+
+  grid.newpage()
+  grid.draw(combined)
+
+  # return gtable invisibly
+  invisible(combined)
+
 }
 
