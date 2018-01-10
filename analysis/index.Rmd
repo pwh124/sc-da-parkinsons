@@ -39,7 +39,10 @@ Single-cell RNA-seq of mouse dopaminergic neurons informs candidate gene selecti
 
 ***
 
-Inspiration for this website layout was adapted from: https://github.com/jdblischak/singleCellSeq
+Inspiration for this website layout was adapted from: 
+
+* https://github.com/jdblischak/singleCellSeq
+* https://jdblischak.github.io/workflowr/
 
 ***
 
