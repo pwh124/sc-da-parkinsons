@@ -6,24 +6,33 @@ output:
 editor_options: 
   chunk_output_type: console
 ---
-#####Welcome to the website designed to display the code and analysis associated with [Hook _et al_., 2017](https://doi.org/10.1101/148049)!
 
-<center>
-![A P7 mouse SN neuron](Composite-Ldb2-22-SN.png){ width=50% }
-<br>
-A single P7 mouse _substantia nigra_ dopaminergic neuron (60x).
-<br>
-Single molecule FISH against _Slc6a3_ (green) and _Th_ (red) is shown. DAPI in blue.
-</center>
+
+<div class="row">
+
+<div class="col-xs-12 col-sm-6 text-left">
+<br/>
+Welcome to the website designed to display the code and analysis associated with [Hook _et al_., 2017](https://doi.org/10.1101/148049)!
+
+Do you want to see the expression of your favorite gene in our data? [Click here](https://pwh124.shinyapps.io/expressionshiny/)
+</div>
+
+<div class="col-xs-12 col-sm-6 text-center">
+<br/>
+<img src="Composite-Ldb2-22-SN.png" alt="coffee" style="width:600px;" align = "top"/>
+<figcaption> A single P7 substantia nigra dopaminergic neuron (60x)</figcaption>
+<figcaption> Single molecule FISH against Slc6a3 (green) and Th (red) is shown.</figcaption>
+<figcaption>The cell nucleus is in blue (DAPI)</figcaption>
+</div>
+</div>
 
 ***
-#####Do you want to see the expression of your favorite gene in our data? [Click here](https://pwh124.shinyapps.io/expressionshiny/)
-
-***
-
+####bioRxiv Citation  
 Single-cell RNA-seq of mouse dopaminergic neurons informs candidate gene selection for sporadic Parkinson's disease. Paul W. Hook, Sarah A. McClymont, Gabrielle H. Cannon, William D. Law, A. Jennifer Morton, Loyal A. Goff, Andrew S. McCallion. bioRxiv 148049; doi: https://doi.org/10.1101/148049
 
-The template for this was adapted from: https://github.com/jdblischak/singleCellSeq
+***
+
+The template for this website was adapted from: https://github.com/jdblischak/singleCellSeq
 
 ***
 
