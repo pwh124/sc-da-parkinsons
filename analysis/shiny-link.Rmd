@@ -18,7 +18,6 @@ Explore expression data</a>
 </div>
 
 <div class="col-md-6 text-center">
-<br/>
-<img src="Figure.5C_Page_2.png" alt="boxplots" width=400 align = "top"/>
+<img src="gapdh_box.png" alt="boxplots" width=400 align = "top"/>
 </div>
 </div>
