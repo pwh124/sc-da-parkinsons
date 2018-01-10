@@ -34,6 +34,9 @@ navbar:
     - text: "Paper Figures"
       icon: fa-paperclip
       href: paper-figures.html
+    - text: "Explore Data"
+      icon: bar-chart-o
+      href: shiny-link.html
     - icon: fa-github
       href: https://github.com/pwh124/sc-da-parkinsons
 output:

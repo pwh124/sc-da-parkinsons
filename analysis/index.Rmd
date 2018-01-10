@@ -20,14 +20,13 @@ This website contains:
 * A [License](license.html) section containing copyright information  
 * An Analyses section (see navbar above) containing reproducible analysis code  
 * A [Paper Figures](paper-figures.html) section containing reproducible figure production code  
+* A [Shiny app](shiny-link.html) that allows for exploration of the expression data
 
-Do you want to see the expression of your favorite gene in our data? [Click here](https://pwh124.shinyapps.io/expressionshiny/)
-</font>
 </div>
 
 <div class="col-md-5 text-center">
 <br/>
-<img src="Composite-Ldb2-22-SN.png" alt="coffee" style="width:400px;" align = "top"/>
+<img src="Composite-Ldb2-22-SN.png" alt="neuron" style="width:400px;" align = "top"/>
 <figcaption> A single P7 <i>substantia nigra</i> dopaminergic neuron (60x)</figcaption>
 <figcaption> Single molecule FISH against <i>Slc6a3</i> (green) and <i>Th</i> (red).</figcaption>
 <figcaption>The cell nucleus is in blue (DAPI)</figcaption>

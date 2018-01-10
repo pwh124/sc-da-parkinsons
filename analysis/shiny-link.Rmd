@@ -1,0 +1,24 @@
+---
+title: Explore Expression Data
+output:
+  html_document:
+    toc: FALSE
+---
+</br></br>
+<div class="row">
+<div class="col-md-6 text-center">
+<font size="4">
+In order for everyone to look at the expression of their favorite gene in our data, we have created a rudimentary Shiny app. Click the button below to begin making plots like the one on the right!
+</font>
+</br></br></br>
+<a class="btn btn-default" href="https://pwh124.shinyapps.io/expressionshiny/" role="button">
+Explore expression data</a>
+</br>
+<span style="color:red">Warning: The page may take a minute to load</span>
+</div>
+
+<div class="col-md-6 text-center">
+<br/>
+<img src="Figure.5C_Page_2.png" alt="boxplots" width=400 align = "top"/>
+</div>
+</div>
