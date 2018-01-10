@@ -1,0 +1,92 @@
+---
+title: "Figure.S4.Rmd"
+author: "Paul Hook"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+***
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`  
+
+***
+
+###Setting important directories. 
+Also loading important libraries and custom functions for analysis.
+```{r init, message=FALSE, warning=FALSE}
+seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
+Rdata_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
+source(file.path(Script_dir,'init.R'))
+source(file.path(Script_dir,"tools_R.r"))
+
+#loading any special libraries
+library(readr)
+library(cowplot)
+```
+
+###Setting a plot theme
+```{r, setting a theme}
+theme <- theme(axis.title.x = element_blank(),
+        axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.title.y = element_text(family="Helvetica",size=8),
+        axis.text.y = element_text(size=6),
+        strip.text = element_text(family="Helvetica",face="bold.italic",size=10))
+
+```
+
+###Loading the data needed
+```{r loading data needed,message=FALSE,warning=FALSE}
+###Loading the cds data needed to produce figures
+dat.filter <- readRDS(file.path(Rdata_dir,"dat.filter.final.Rds"))
+color <- c("#F6937A","#882F1C","#BF1F36","#C2B280","#F2C318","#E790AC","#F18421","#0168A5","#848483","#A4CAEB","#885793","#008957","#222222")
+```
+
+###Figure S4A
+This panel consisted for various boxplots related to canonical markers of neuronal subtypes including dopaminergic, GABAergic, and glutamatergic neurons. Labels seen in Figure S4A were added later.
+```{r FB Making boxplots, fig.align='center',fig.width=8,fig.height=8}
+th <- myBoxplot.subset(dat.filter, "Th", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") + theme 
+
+gad1 <- myBoxplot.subset(dat.filter, "Gad1", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") + theme + theme(axis.title.y=element_blank())
+
+slc6a3 <- myBoxplot.subset(dat.filter, "Slc6a3", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") + theme 
+
+gad2 <- myBoxplot.subset(dat.filter, "Gad2", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") + theme + theme(axis.title.y=element_blank())
+
+slc18a2 <- myBoxplot.subset(dat.filter, "Slc18a2", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") + theme
+
+slc32a1 <- myBoxplot.subset(dat.filter, "Slc32a1", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") + theme + theme(axis.title.y=element_blank()) + scale_y_continuous(breaks = c(0,1,2,3,4))
+
+ddc <- myBoxplot.subset(dat.filter, "Ddc", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") + theme
+
+#Make blank plot
+df <- data.frame()
+blank <- ggplot(df) + geom_point() + xlim(0, 10) + ylim(0, 100) + geom_blank() + theme_nothing()
+
+egfp <- myBoxplot.subset(dat.filter, "eGFP", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") + theme
+
+slc17a6 <- myBoxplot.subset(dat.filter, "Slc17a6", logMode = T) + scale_fill_manual(values = color, name = "Subset Cluster") + theme + theme(axis.title.y=element_blank())
+
+grid_arrange_shared_legend(th,gad1,slc6a3,gad2,slc18a2,slc32a1,ddc,blank,egfp,slc17a6,ncol=2,nrow=5, position = "right")
+
+pdf(file = file.path(file_dir, "Figure.S4A.pdf"), height = 2, width = 4)
+th
+slc6a3
+slc18a2
+ddc
+egfp
+gad1
+gad2
+slc32a1
+slc17a6
+dev.off()
+```
+
+###Session Info
+```{r session info}
+sessionInfo()
+```
