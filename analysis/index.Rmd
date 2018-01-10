@@ -1,5 +1,5 @@
 ---
-title: "Home"
+title: Welcome
 output:
   html_document:
     toc: false
@@ -10,18 +10,26 @@ editor_options:
 
 <div class="row">
 
-<div class="col-xs-12 col-sm-6 text-left">
+<div class="col-md-7 text-left">
 <br/>
 Welcome to the website designed to display the code and analysis associated with [Hook _et al_., 2017](https://doi.org/10.1101/148049)!
 
+This website contains:
+
+* An [About](about.html) section containing our paper abstract   
+* A [License](license.html) section containing copyright information  
+* An Analyses section (see navbar above) containing reproducible analysis code  
+* A [Paper Figures](paper-figures.html) section containing reproducible figure production code  
+
 Do you want to see the expression of your favorite gene in our data? [Click here](https://pwh124.shinyapps.io/expressionshiny/)
+</font>
 </div>
 
-<div class="col-xs-12 col-sm-6 text-center">
+<div class="col-md-5 text-center">
 <br/>
-<img src="Composite-Ldb2-22-SN.png" alt="coffee" style="width:600px;" align = "top"/>
-<figcaption> A single P7 substantia nigra dopaminergic neuron (60x)</figcaption>
-<figcaption> Single molecule FISH against Slc6a3 (green) and Th (red) is shown.</figcaption>
+<img src="Composite-Ldb2-22-SN.png" alt="coffee" style="width:400px;" align = "top"/>
+<figcaption> A single P7 <i>substantia nigra</i> dopaminergic neuron (60x)</figcaption>
+<figcaption> Single molecule FISH against <i>Slc6a3</i> (green) and <i>Th</i> (red).</figcaption>
 <figcaption>The cell nucleus is in blue (DAPI)</figcaption>
 </div>
 </div>
@@ -32,7 +40,7 @@ Single-cell RNA-seq of mouse dopaminergic neurons informs candidate gene selecti
 
 ***
 
-The template for this website was adapted from: https://github.com/jdblischak/singleCellSeq
+Inspiration for this website layout was adapted from: https://github.com/jdblischak/singleCellSeq
 
 ***
 
