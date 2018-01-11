@@ -7,15 +7,26 @@ output:
 This page contains links to code used to create paper figures that were made in R.  
 Aesthetics of raw figures were sometimes tweaked in Adobe Illustrator.
 
-* [Figure 1](Figure.1_script.html)
-* [Figure 2](Figure.2_script.html)
-* [Figure 3](Figure.3_script.html)
-* [Figure 4](Figure.4_script.html)
-* [Figure 5](Figure.5_links.html)
-* [Figure S1](Figure.S1.html)
-* [Figure S2](Figure.S2.html)
-* [Figure S3](Figure.S3.html)
-* [Figure S4](Figure.S4.html)
+<div class="row">
+<div class="col-md-3 text-center">
+####Main Figures  
+[Figure 1](Figure.1_script.html)  
+[Figure 2](Figure.2_script.html)  
+[Figure 3](Figure.3_script.html)  
+[Figure 4](Figure.4_script.html)  
+[Figure 5](Figure.5_links.html)  
+</div>
+
+<div class="col-md-3 text-center">
+####Supplemental Figures  
+[Figure S1](Figure.S1.html)  
+[Figure S2](Figure.S2.html)  
+[Figure S3](Figure.S3.html)  
+[Figure S4](Figure.S4.html)  
+[Figure S5](Figure.S5.html)  
+
+</div>
+</div>
 
 ***
 **Last update:** `r Sys.Date()`

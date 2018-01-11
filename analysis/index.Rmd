@@ -20,7 +20,9 @@ This website contains:
 * A [License](license.html) section containing copyright information  
 * An Analyses section (see navbar above) containing reproducible analysis code  
 * A [Paper Figures](paper-figures.html) section containing reproducible figure production code  
-* A [Shiny app](shiny-link.html) that allows for exploration of the expression data
+* A [Shiny app](shiny-link.html) that allows for exploration of the expression data  
+
+This website was designed and created by Paul Hook.
 
 </div>
 
