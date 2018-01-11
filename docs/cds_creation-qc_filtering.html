@@ -314,6 +314,10 @@ div.tocify {
     <li>
       <a href="PD.GWAS.scoring.links.html">PD Gene Scoring</a>
     </li>
+    <li class="divider"></li>
+    <li>
+      <a href="Cplx1_Th-striatum_analysis.html">Cplx1 Th+ striatum density</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -321,6 +325,13 @@ div.tocify {
     <span class="fa fa-paperclip"></span>
      
     Paper Figures
+  </a>
+</li>
+<li>
+  <a href="shiny-link.html">
+    <span class="fa fa-bar-chart"></span>
+     
+    Explore Data
   </a>
 </li>
 <li>
@@ -347,19 +358,26 @@ div.tocify {
 </div>
 
 
-<p><strong>Last update:</strong> 2017-12-15</p>
-<p><strong>Code version:</strong> 97cdbba92f549b083d57cc1acd1fcd954ca4c492</p>
-<p><strong>Setting important directories. Also loading important libraries and custom functions for analysis.</strong></p>
+<p><strong>Last update:</strong> 2018-01-11</p>
+<p><strong>Code version:</strong> a83e2a08247af26554eff0d7909a4b2b0fdbf023</p>
+<div id="setting-important-directories." class="section level3">
+<h3>Setting important directories.</h3>
+<p>Also loading important libraries and custom functions for analysis</p>
 <pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
 file_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/output&quot;
 Rdata_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
 Script_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/code&quot;
 source(file.path(Script_dir,&#39;init.R&#39;))</code></pre>
-<p><strong>Untarring big files</strong></p>
+</div>
+<div id="untarring-big-files" class="section level3">
+<h3>Untarring big files</h3>
 <pre class="r"><code>untar(file.path(seq_dir,&quot;genes.fpkm_table.tar.gz&quot;), exdir = seq_dir)
 untar(file.path(seq_dir, &quot;isoforms.fpkm_table.tar.gz&quot;), exdir = seq_dir)
 untar(file.path(seq_dir, &quot;isoforms.count_table.tar.gz&quot;), exdir = seq_dir)</code></pre>
-<p><strong>Loading FPKM datasets generated through cuffquant at the gene and isoform levels</strong></p>
+</div>
+<div id="loading-fpkm-datasets" class="section level3">
+<h3>Loading FPKM datasets</h3>
+<p>These datasets were generated through cuffquant at the gene and isoform levels</p>
 <pre class="r"><code>#Gene FPKMs
 fpkms&lt;-read.delim(file.path(seq_dir,&quot;genes.fpkm_table&quot;),row.names=1) # reading in the fpkm table produced by cuffquant
 gene_ann&lt;-read.delim(file.path(seq_dir,&quot;genes.attr_table&quot;)) # reading in the gene annotation table
@@ -369,7 +387,9 @@ rownames(gene_ann)&lt;-gene_ann$tracking_id #renaming row names
 isoform_fpkms&lt;-read.delim(file.path(seq_dir,&quot;isoforms.fpkm_table&quot;)) # reading in isoform fpkm table produced from cuffquant
 row.names(isoform_fpkms) &lt;- isoform_fpkms$tracking_id # renaming rows
 isoform_fpkms &lt;- isoform_fpkms[,-1] # removing the first column</code></pre>
-<p><strong>Annotating the single-cell samples and genes</strong></p>
+</div>
+<div id="annotating-the-single-cell-samples-and-genes" class="section level3">
+<h3>Annotating the single-cell samples and genes</h3>
 <pre class="r"><code>#Sample Annotation
 sample_ann&lt;-read.delim(file.path(seq_dir,&quot;samples.table&quot;)) # reading in sample table
 sample_ann$cell_id&lt;-str_extract(as.character(sample_ann$sample_id),&quot;TH_0[0-9]+_[A-H][0-9]+&quot;) #assigning cell IDs to the sample annotation table
@@ -393,7 +413,10 @@ tmp&lt;-tmp[,-1] # getting rid of &quot;Row.names&quot; column
 gene_ann&lt;-tmp # create final annotation table
 
 lncRNA_geneIds&lt;-gene_info$gene_id[gene_info$gene_type == &quot;lincRNA&quot;] # pulling out all long non-coding RNA genes</code></pre>
-<p><strong>Creating the CellDataSet (cds) and removing negative controls/empty wells</strong></p>
+</div>
+<div id="creating-the-celldataset-cds" class="section level3">
+<h3>Creating the CellDataSet (cds)</h3>
+<p>Negative controls/empty wells are removed as part of this process</p>
 <pre class="r"><code>fd&lt;-new(&quot;AnnotatedDataFrame&quot;,data=gene_ann) # officially making fData for genes
 pd&lt;-new(&quot;AnnotatedDataFrame&quot;,data=sample_info) # officially making pData for cells
 
@@ -409,7 +432,10 @@ nrow(pData(dat.relative)) # 480 cells</code></pre>
 dat.relative &lt;- dat.relative[,pData(dat.relative)$type==&quot;sample&quot;]
 nrow(pData(dat.relative)) # 473 cells</code></pre>
 <pre><code>## [1] 473</code></pre>
-<p><strong>Using the Monocle Census algorithm to infer RNA copies per cell and creating a new cds</strong></p>
+</div>
+<div id="infer-rna-copies-per-cell" class="section level3">
+<h3>Infer RNA copies per cell</h3>
+<p>Using the Monocle Census algorithm to infer RNA copies per cell and create a new cds</p>
 <pre class="r"><code># Infer RNA copies per cell using relative2abs on isoform-level estimated t with the Census algorithm
 fpkm_matrix_adj &lt;- relative2abs(dat.relative, t_estimate=estimate_t(isoform_fpkms),cores=4)
 
@@ -422,8 +448,9 @@ dat &lt;- newCellDataSet(as(as.matrix(fpkm_matrix_adj),&quot;sparseMatrix&quot;)
                       featureData = fd,
                       expressionFamily=negbinomial.size(),
                       lowerDetectionLimit=0.1)</code></pre>
-<p><strong>Filtering on all cells</strong></p>
-<p><strong>Filtering based on number of genes detected in each cell and removing cells that fall outside of determined ranges</strong></p>
+</div>
+<div id="filtering-cells-based-on-number-of-genes-detected" class="section level3">
+<h3>Filtering cells based on number of genes detected</h3>
 <pre class="r"><code># Loading the data
 dat.filter &lt;- dat
 
@@ -463,7 +490,9 @@ abline(v=high.num.genes.threshold,lty=&quot;dashed&quot;)</code></pre>
 <pre class="r"><code># Number of cells left
 nrow(pData(dat.filter)) #431</code></pre>
 <pre><code>## [1] 431</code></pre>
-<p><strong>Filtering based on the total mass of each cell and removing cells that fall outside of determined ranges</strong></p>
+</div>
+<div id="filtering-cells-based-on-cell-mass" class="section level3">
+<h3>Filtering cells based on cell mass</h3>
 <pre class="r"><code># Plotting the distribution of total cell mass
 hist(pData(dat.filter)$total_mass,
      breaks=50,
@@ -495,7 +524,9 @@ hist(pData(dat.filter)$total_mass,
 abline(v=massThreshold,lty=&quot;dashed&quot;)
 abline(v=massThreshold.2,lty=&quot;dashed&quot;)</code></pre>
 <p><img src="cds_creation-qc_filtering_files/figure-html/Cell%20mass%20threshold%20filtering-2.png" width="672" /></p>
-<p><strong>Filtering based on the total mRNAs in each cell and removing cells that fall outside of determined ranges</strong></p>
+</div>
+<div id="filtering-cells-based-on-total-mrnas" class="section level3">
+<h3>Filtering cells based on total mRNAs</h3>
 <pre class="r"><code># Calculate total RNA mass per cell
 pData(dat.filter)$Total_mRNAs &lt;- colSums(exprs(dat.filter))
 
@@ -523,10 +554,16 @@ nrow(pData(dat.filter)) # 410</code></pre>
 <pre class="r"><code>dat.filter&lt;-dat.filter[,pData(dat.filter)$Total_mRNAs &lt;= high.numGeneThreshold]
 nrow(pData(dat.filter)) # 410</code></pre>
 <pre><code>## [1] 410</code></pre>
-<p><strong>Now that only high quality cells are retained, the detectGenes function is used to recalculate the # of genes detected in each cell</strong></p>
+</div>
+<div id="recalculate-detected-genes" class="section level3">
+<h3>Recalculate detected genes</h3>
+<p>Now that only high quality cells are retained, the detectGenes function is used to recalculate the # of genes detected in each cell</p>
 <pre class="r"><code># Recalculate # of genes
 dat.filter&lt;-detectGenes(dat.filter,min_expr=0.1)</code></pre>
-<p><strong>Before beginning Monocle analysis, the data needs to be checked to ensure that it follows a log-normal distribution. We find that our data follows a log-normal distribution. Script is pulled directly from Monocle manual.</strong></p>
+</div>
+<div id="checking-log-normal-distribution" class="section level3">
+<h3>Checking log-normal distribution</h3>
+<p>Before beginning Monocle analysis, the data needs to be checked to ensure that it follows a log-normal distribution. We find that our data follows a log-normal distribution. Script is pulled directly from Monocle manual</p>
 <pre class="r"><code># Log-transform each value in the expression matrix.
 L &lt;- log(exprs(dat.filter))
 # Standardize each gene, so that they are all on the same scale, Then melt
@@ -538,7 +575,10 @@ size = 0.5, color = &quot;red&quot;) + xlab(&quot;Standardized log(Transcripts)&
 <pre><code>## Warning: Removed 11850640 rows containing non-finite values (stat_density).</code></pre>
 <p><img src="cds_creation-qc_filtering_files/figure-html/Checking%20to%20see%20if%20final%20expression%20matrix%20is%20log-normal-1.png" width="672" /></p>
 <pre class="r"><code>## Warning: Removed 11850640 rows containing non-finite values (stat_density).</code></pre>
-<p><strong>The data is subsetted according to age and region. These subsetted cds are saved as .rds objects to be used in subsequent analyses</strong></p>
+</div>
+<div id="subsetting-the-data" class="section level3">
+<h3>Subsetting the data</h3>
+<p>The data is subsetted according to age and region. These subsetted cds are saved as .rds objects to be used in subsequent analyses</p>
 <pre class="r"><code>nrow(pData(dat.filter)) # 410 cells</code></pre>
 <pre><code>## [1] 410</code></pre>
 <pre class="r"><code>saveRDS(object = dat.filter, file = file.path(Rdata_dir,&quot;dat.filter.rds&quot;))</code></pre>
@@ -570,13 +610,18 @@ nrow(pData(P7.Fb.dat.filter)) # 84</code></pre>
 nrow(pData(P7.Ob.dat.filter)) # 74</code></pre>
 <pre><code>## [1] 74</code></pre>
 <pre class="r"><code>saveRDS(object = P7.Ob.dat.filter, file = file.path(Rdata_dir, &quot;P7.Ob.dat.filter.rds&quot;))</code></pre>
-<p><strong>Removing uncompressed large files before commit</strong></p>
+</div>
+<div id="removing-uncompressed-large-files-before-commit" class="section level3">
+<h3>Removing uncompressed large files before commit</h3>
 <pre class="r"><code>file.remove(file.path(seq_dir, &quot;isoforms.fpkm_table&quot;))</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code>file.remove(file.path(seq_dir, &quot;genes.fpkm_table&quot;))</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <pre class="r"><code>file.remove(file.path(seq_dir, &quot;isoforms.count_table&quot;))</code></pre>
 <pre><code>## [1] TRUE</code></pre>
+</div>
+<div id="session-information" class="section level3">
+<h3>Session Information</h3>
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>## R version 3.3.0 (2016-05-03)
 ## Platform: x86_64-apple-darwin13.4.0 (64-bit)
@@ -599,7 +644,7 @@ nrow(pData(P7.Ob.dat.filter)) # 74</code></pre>
 ## [19] Heatplus_2.18.0     Rtsne_0.13          pheatmap_1.0.8     
 ## [22] tidyr_0.7.1         dplyr_0.7.4         plyr_1.8.4         
 ## [25] heatmap.plus_1.3    stringr_1.2.0       marray_1.50.0      
-## [28] limma_3.28.21       reshape2_1.4.2      monocle_2.2.0      
+## [28] limma_3.28.21       reshape2_1.4.3      monocle_2.2.0      
 ## [31] DDRTree_0.1.5       irlba_2.2.1         VGAM_1.0-2         
 ## [34] ggplot2_2.2.1       Biobase_2.32.0      BiocGenerics_0.18.0
 ## [37] Matrix_1.2-11      
@@ -615,16 +660,16 @@ nrow(pData(P7.Ob.dat.filter)) # 74</code></pre>
 ## [22] acepack_1.4.1          htmltools_0.3.6        tools_3.3.0           
 ## [25] bindrcpp_0.2           igraph_1.1.2           gtable_0.2.0          
 ## [28] glue_1.1.1             binman_0.1.0           doRNG_1.6.6           
-## [31] Rcpp_0.12.13           slam_0.1-37            gdata_2.18.0          
+## [31] Rcpp_0.12.14           slam_0.1-37            gdata_2.18.0          
 ## [34] nlme_3.1-131           iterators_1.0.8        mime_0.5              
 ## [37] rngtools_1.2.4         gtools_3.5.0           WriteXLS_4.0.0        
 ## [40] XML_3.98-1.9           DEoptimR_1.0-8         yaml_2.1.15           
 ## [43] pkgmaker_0.22          rpart_4.1-11           fastICA_1.2-1         
 ## [46] latticeExtra_0.6-28    stringi_1.1.5          pcaPP_1.9-72          
 ## [49] foreach_1.4.3          e1071_1.6-8            checkmate_1.8.4       
-## [52] caTools_1.17.1         rlang_0.1.2            pkgconfig_2.0.1       
+## [52] caTools_1.17.1         rlang_0.1.6            pkgconfig_2.0.1       
 ## [55] matrixStats_0.52.2     bitops_1.0-6           qlcMatrix_0.9.5       
-## [58] evaluate_0.10.1        purrr_0.2.3            bindr_0.1             
+## [58] evaluate_0.10.1        purrr_0.2.4            bindr_0.1             
 ## [61] labeling_0.3           htmlwidgets_0.9        magrittr_1.5          
 ## [64] R6_2.2.2               combinat_0.0-8         wdman_0.2.2           
 ## [67] foreign_0.8-69         mgcv_1.8-22            nnet_7.3-12           
@@ -632,6 +677,7 @@ nrow(pData(P7.Ob.dat.filter)) # 74</code></pre>
 ## [73] data.table_1.10.4      HSMMSingleCell_0.106.2 digest_0.6.12         
 ## [76] xtable_1.8-2           httpuv_1.3.5           openssl_0.9.7         
 ## [79] munsell_0.4.3          registry_0.3</code></pre>
+</div>
 
 <hr>
 <p>
