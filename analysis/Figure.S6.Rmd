@@ -1,0 +1,79 @@
+---
+title: "Figure S6"
+author: "Paul Hook"
+output: html_document
+---
+
+***
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`  
+
+***
+
+###Setting important directories
+Also loading important libraries and custom functions for analysis.
+```{r init, message=FALSE, warning=FALSE}
+seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
+Rdata_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
+source(file.path(Script_dir,'init.R'))
+source(file.path(Script_dir,"tools_R.r"))
+
+#loading any special libraries
+library(readr)
+library(cowplot)
+library(forcats)
+library(reshape2)
+```
+
+###Loading in data need
+The final PD GWAS gene scoring data frame was loaded in.
+```{r Loading in the final PD GWAS gene table}
+final.gwas.table <- read.delim(file = file.path(file_dir, "PD.GWAS.Score.Final.txt"))
+```
+
+###Figure S6A
+Since 'gene_biotype' was included in the information extracted for each gene, we plotted the number of genes with each particular biotype in our data.
+```{r, fig.align='center',fig.height=6,fig.width=10,fig.asp=0.5}
+# Make bar plot for genes by gene_biotype
+gwas.gene.biotype.df <- final.gwas.table %>%
+  filter(is.na(MouseSymbol)) %>%
+  group_by(gene_biotype)
+  
+biotype.plot <- ggplot(gwas.gene.biotype.df, aes(x= fct_rev(fct_infreq(gene_biotype)))) + 
+  geom_bar(fill = "gray48") + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(),   axis.line = element_line(colour = "black"), plot.title = element_text(hjust = 0.5)) +
+  xlab("Gene Biotype") + ylab("Number of genes without a defined mouse homolog") +
+  ggtitle("Biotype frequency of genes in PD GWAS loci\nwithout mouse homologs identified through MGI") +
+  coord_flip() + scale_y_continuous(limits = c(0,210), expand = c(0,0)) +
+  stat_count(aes(label=paste(..count..)), vjust=0.5, hjust = -0.5,geom="text", color = "brown4", size = 5)
+
+biotype.plot
+```
+
+###Figure S6B
+We plotted the number of protein coding genes _without_ a mouse homolog in each locus.
+```{r,fig.align='center',fig.height=8,fig.width=10}
+# Make bar plot for protein coding genes without homologs by locus
+gwas.gene.locus.df <- final.gwas.table %>%
+  filter(is.na(MouseSymbol)) %>%
+  group_by(locus) %>%
+  filter(gene_biotype == "protein_coding")
+
+locus.plot <- ggplot(gwas.gene.locus.df, aes(x= fct_rev(fct_infreq(snp)))) + 
+  geom_bar(fill = "grey48") +
+  xlab("Human PD Locus") + ylab("Number of protein coding genes without identified mouse homologs") +
+  ggtitle("Frequency of protein coding genes in each PD GWAS locus\nwithout mouse homologs identified through NCBI Homologene ") + 
+  scale_x_discrete(drop = F) + coord_flip() + scale_y_continuous(limits = c(0,15),expand = c(0,0)) +
+  stat_count(aes(label=paste(..count..)), vjust=0.5, hjust = -0.5,geom="text", color = "brown4", size = 3) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(),   axis.line = element_line(colour = "black"), plot.title = element_text(hjust = 0.5))
+
+locus.plot
+```
+
+###Session Info
+```{r session info}
+sessionInfo()
+```

@@ -24,7 +24,7 @@ Aesthetics of raw figures were sometimes tweaked in Adobe Illustrator.
 [Figure S3](Figure.S3.html)  
 [Figure S4](Figure.S4.html)  
 [Figure S5](Figure.S5.html)  
-
+[Figure S6](Figure.S6.html)
 </div>
 </div>
 

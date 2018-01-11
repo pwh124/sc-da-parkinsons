@@ -22,7 +22,8 @@ This website contains:
 * A [Paper Figures](paper-figures.html) section containing reproducible figure production code  
 * A [Shiny app](shiny-link.html) that allows for exploration of the expression data  
 
-This website was designed and created by Paul Hook.
+This website was designed and created by Paul Hook.  
+Raw sequencing data can be found at [GEO:GSE108020](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE108020)
 
 </div>
 
