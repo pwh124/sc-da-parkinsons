@@ -3,8 +3,6 @@ title: Welcome
 output:
   html_document:
     toc: false
-editor_options: 
-  chunk_output_type: console
 ---
 
 
