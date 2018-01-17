@@ -8,9 +8,9 @@ output:
 
 Raw figures were generated within the following scripts:
 
-[Figure 4C - WGCNA Analysis](WGCNA-final.html#Correlation_of_modules_with_traits)
+[Figure 4C - WGCNA Analysis](WGCNA-final.html#correlation_of_modules_with_traits)
 
-[Figure 4D - WGCNA Analysis](WGCNA-final.html#Correlate_eigengenes_with_tSNE)
+[Figure 4D - WGCNA Analysis](WGCNA-final.html#correlate_eigengenes_with_tsne)
 
 ***
 **Last update:** `r Sys.Date()`
