@@ -314,6 +314,10 @@ div.tocify {
     <li>
       <a href="PD.GWAS.scoring.links.html">PD Gene Scoring</a>
     </li>
+    <li class="divider"></li>
+    <li>
+      <a href="Cplx1_Th-striatum_analysis.html">Cplx1 Th+ striatum density</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -324,9 +328,17 @@ div.tocify {
   </a>
 </li>
 <li>
+  <a href="shiny-link.html">
+    <span class="fa fa-bar-chart"></span>
+     
+    Explore Data
+  </a>
+</li>
+<li>
   <a href="https://github.com/pwh124/sc-da-parkinsons">
     <span class="fa fa-github"></span>
      
+    GitHub Repo
   </a>
 </li>
       </ul>
@@ -347,10 +359,11 @@ div.tocify {
 </div>
 
 
-<p><strong>Last update:</strong> 2017-12-15</p>
-<p><strong>Code version:</strong> 97cdbba92f549b083d57cc1acd1fcd954ca4c492</p>
-<div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level3">
-<h3>Setting important directories. Also loading important libraries and custom functions for analysis.</h3>
+<p><strong>Last update:</strong> 2018-01-17</p>
+<p><strong>Code version:</strong> c1ce671c84988e8358008fed98eb33615d2103b8</p>
+<div id="setting-important-directories" class="section level3">
+<h3>Setting important directories</h3>
+<p>Also loading important libraries and custom functions for analysis.</p>
 <pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
 file_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/output&quot;
 Rdata_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
@@ -411,8 +424,9 @@ dim(P7.dat.filter)</code></pre>
 <pre><code>## Features  Samples 
 ##    13746      224</code></pre>
 </div>
-<div id="preparing-the-data-for-wgcna-analysis.-the-genes-used-in-the-analysis-were-filtered-to-only-include-genes-that-were-determined-to-be-expressed-in-at-least-20-cells-9-of-the-total-cells-in-the-data-set." class="section level3">
-<h3>Preparing the data for WGCNA analysis. The genes used in the analysis were filtered to only include genes that were determined to be expressed in at least 20 cells (9% of the total cells in the data set).</h3>
+<div id="preparing-data-for-wgcna-analysis" class="section level3">
+<h3>Preparing data for WGCNA analysis</h3>
+<p>Preparing the data for WGCNA analysis. The genes used in the analysis were filtered to only include genes that were determined to be expressed in at least 20 cells (9% of the total cells in the data set).</p>
 <pre class="r"><code># Identifying genes only expressed in at least 20 cells
 P7.expressed_genes.WGCNA&lt;-row.names(subset(fData(P7.dat.filter),num_cells_expressed &gt;= 20))
 length(P7.expressed_genes.WGCNA)</code></pre>
@@ -433,8 +447,9 @@ dim(mydata)</code></pre>
 mydata.trans=t(mydata)
 datExpr &lt;- mydata.trans</code></pre>
 </div>
-<div id="next-heirarchial-clutering-was-used-to-cluster-the-data-and-look-for-any-outliers.-there-seems-to-be-only-one-glaring-outlier." class="section level3">
-<h3>Next, heirarchial clutering was used to cluster the data and look for any outliers. There seems to be only one glaring outlier.</h3>
+<div id="heirarchial-clustering-of-cells" class="section level3">
+<h3>Heirarchial clustering of cells</h3>
+<p>Next, heirarchial clutering was used to cluster the data and look for any outliers. There seems to be only one glaring outlier.</p>
 <pre class="r"><code># Clustering the data by using heirarchial clustering
 sampleTree &lt;- flashClust(dist(datExpr), method = &quot;average&quot;)
 
@@ -459,8 +474,9 @@ datExpr &lt;- datExpr[keepSamples,]
 nGenes &lt;- ncol(datExpr)
 nSamples &lt;- nrow(datExpr)</code></pre>
 </div>
-<div id="making-a-data-frame-that-can-be-filled-with-meta-data-about-the-cells-and-can-be-used-to-annotate-the-heirarchial-clustering" class="section level3">
-<h3>Making a data frame that can be filled with meta-data about the cells and can be used to annotate the heirarchial clustering</h3>
+<div id="making-simple-trait-dataframe" class="section level3">
+<h3>Making simple trait dataframe</h3>
+<p>Making a data frame that can be filled with meta-data about the cells and can be used to annotate the heirarchial clustering</p>
 <pre class="r"><code># subsetting out trait data from the initial cds
 datTraits &lt;- pData(P7.dat.WGCNA[,keepSamples])
 datTraits&lt;-datTraits[,c(&quot;region&quot;,&quot;subset.cluster&quot;,&quot;num_genes_expressed&quot;)]
@@ -492,8 +508,9 @@ plotDendroAndColors(sampleTree2, datTraits$x,
                 main = &quot;Sample dendrogram and regional identity&quot;)</code></pre>
 <p><img src="WGCNA-final_files/figure-html/-%20Making%20trait%20dataframe-1.png" width="672" /></p>
 </div>
-<div id="in-order-to-now-perform-wgcna-on-our-data-a-soft-threshold-needs-to-be-calculated" class="section level3">
-<h3>In order to now perform WGCNA on our data, a “soft threshold” needs to be calculated</h3>
+<div id="choosing-a-soft-threshold" class="section level3">
+<h3>Choosing a soft threshold</h3>
+<p>In order to now perform WGCNA on our data, a “soft threshold” needs to be calculated. This produces some NAs (warning message suppressed)</p>
 <pre class="r"><code># Setting what soft thresholds (powers) should be tested for potential use as a soft threshold
 powers &lt;- c(c(1:10), seq(from = 12, to=20, by=2))
 
@@ -504,31 +521,11 @@ sft &lt;- pickSoftThreshold(datExpr, powerVector = powers,
                         moreNetworkConcepts = F)</code></pre>
 <pre><code>## pickSoftThreshold: will use block size 3542.
 ##  pickSoftThreshold: calculating connectivity for given powers...
-##    ..working on genes 1 through 3542 of 12628</code></pre>
-<pre><code>## Warning: executing %dopar% sequentially: no parallel backend registered</code></pre>
-<pre><code>## Warning: Some correlations are NA in block 1 : 3542 .</code></pre>
-<pre><code>##    ..working on genes 3543 through 7084 of 12628</code></pre>
-<pre><code>## Warning: Some correlations are NA in block 3543 : 7084 .</code></pre>
-<pre><code>##    ..working on genes 7085 through 10626 of 12628</code></pre>
-<pre><code>## Warning: Some correlations are NA in block 7085 : 10626 .</code></pre>
-<pre><code>##    ..working on genes 10627 through 12628 of 12628</code></pre>
-<pre><code>## Warning: Some correlations are NA in block 10627 : 12628 .</code></pre>
-<pre><code>## Warning in as.vector(log10(dk)): NaNs produced
-
-## Warning in as.vector(log10(dk)): NaNs produced
-
-## Warning in as.vector(log10(dk)): NaNs produced
-
-## Warning in as.vector(log10(dk)): NaNs produced
-
-## Warning in as.vector(log10(dk)): NaNs produced
-
-## Warning in as.vector(log10(dk)): NaNs produced
-
-## Warning in as.vector(log10(dk)): NaNs produced
-
-## Warning in as.vector(log10(dk)): NaNs produced</code></pre>
-<pre><code>##    Power SFT.R.sq slope truncated.R.sq  mean.k. median.k. max.k.
+##    ..working on genes 1 through 3542 of 12628
+##    ..working on genes 3543 through 7084 of 12628
+##    ..working on genes 7085 through 10626 of 12628
+##    ..working on genes 10627 through 12628 of 12628
+##    Power SFT.R.sq slope truncated.R.sq  mean.k. median.k. max.k.
 ## 1      1  0.50600 10.80          0.842 6580.000  6.56e+03 7440.0
 ## 2      2  0.74000 13.30          0.776 3460.000  3.43e+03 4490.0
 ## 3      3  0.74700 12.90          0.667 1830.000  1.80e+03 2770.0
@@ -580,8 +577,9 @@ dev.off()</code></pre>
 <pre><code>## quartz_off_screen 
 ##                 2</code></pre>
 </div>
-<div id="a-soft-threshold-of-10-was-chosen-based-on-the-scale-independence-plot-beginning-to-finally-level-out-at-that-point-for-good.-the-dip-from-8-to-9-prevented-me-from-choosing-8.-we-choose-a-topology-cut-off-of-0.80-which-is-arbitary-but-similar-to-the-number-suggested-in-wgcna-tutorials-see-a-general-framework-for-weighted-gene-coexpression-network-analysis-2005." class="section level3">
-<h3>A soft threshold of 10 was chosen based on the scale independence plot beginning to finally level out at that point for good. The dip from 8 to 9 prevented me from choosing 8. We choose a topology cut-off of 0.80, which is arbitary but similar to the number suggested in WGCNA tutorials (see “A General Framework for Weighted Gene CoExpression Network Analysis”, 2005).</h3>
+<div id="performing-topological-overlap" class="section level3">
+<h3>Performing topological overlap</h3>
+<p>A soft threshold of 10 was chosen based on the scale independence plot beginning to finally level out at that point for good. The dip from 8 to 9 prevented me from choosing 8. We choose a topology cut-off of 0.80, which is arbitary but similar to the number suggested in WGCNA tutorials (see “A General Framework for Weighted Gene CoExpression Network Analysis”, 2005).</p>
 <pre class="r"><code># Choosing a power of 10 based on Scale independence plot and 0.8 threshold
 softPower &lt;- 10
 adjacency &lt;- adjacency(datExpr, power = softPower, type = &quot;signed&quot;)
@@ -635,8 +633,9 @@ plotDendroAndColors(geneTree, dynamicColors, &quot;Dynamic Tree Cut&quot;,
                     guideHang = 0.04, main = &quot;Gene dendrogram and module colors&quot;)</code></pre>
 <p><img src="WGCNA-final_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
 </div>
-<div id="now-that-we-have-identified-modules-in-our-data-we-want-to-explore-the-relationships-between-those-modules-a-little-more.-note-that-grey-and-turquoise-modules-were-removed-in-these-analyses-because-turquoise-contained-all-genes-that-did-not-get-slotted-in-to-a-specific-module-and-grey-had-only-4-genes-below-our-set-module-size" class="section level3">
-<h3>Now that we have identified modules in our data, we want to explore the relationships between those modules a little more. Note that grey and turquoise modules were removed in these analyses because turquoise contained all genes that did not get slotted in to a specific module and grey had only 4 genes (below our set module size)</h3>
+<div id="relationships-between-modules" class="section level3">
+<h3>Relationships between modules</h3>
+<p>Now that we have identified modules in our data, we want to explore the relationships between those modules a little more. Note that grey and turquoise modules were removed in these analyses because turquoise contained all genes that did not get slotted in to a specific module and grey had only 4 genes (below our set module size)</p>
 <pre class="r"><code># Calculate eigengenes for each module
 MEList &lt;- moduleEigengenes(datExpr, colors = dynamicColors)
 MEs &lt;- MEList$eigengenes
@@ -699,8 +698,9 @@ dev.off()</code></pre>
 <pre><code>## quartz_off_screen 
 ##                 2</code></pre>
 </div>
-<div id="now-that-we-had-explored-the-modules-relationship-to-each-other-we-wanted-to-see-if-the-genes-within-each-module-were-enriched-for-gene-ontology-kegg-and-reactome-terms.-not-all-genes-map-through-bitr-so-warnings-were-supressed" class="section level3">
-<h3>Now that we had explored the modules relationship to each other, we wanted to see if the genes within each module were enriched for gene ontology, KEGG, and Reactome terms. Not all genes map through ‘bitr’ so warnings were supressed</h3>
+<div id="gene-enrichment-analyses" class="section level3">
+<h3>Gene enrichment analyses</h3>
+<p>Now that we had explored the modules relationship to each other, we wanted to see if the genes within each module were enriched for gene ontology, KEGG, and Reactome terms. Not all genes map through ‘bitr’ so warnings were supressed</p>
 <pre class="r"><code># Making a list of module names
 modNames &lt;- substring(names(MEs), 3)
 
@@ -732,26 +732,26 @@ moduleGeneSets.Entrez&lt;-lapply(moduleGeneSets.trimmed,function(x){
 ck&lt;-compareCluster(geneCluster=moduleGeneSets.Entrez,
                    fun=&quot;enrichKEGG&quot;,organism=&quot;mmu&quot;,pvalueCutoff = 0.1)
 plot(ck,showCategory=10)+ggtitle(&quot;KEGG geneset enrichment by module&quot;) #width = 0.5</code></pre>
-<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-6-1.png" width="1728" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Looking at molecular function geneset enrichment
 cg.mf&lt;-compareCluster(geneCluster=moduleGeneSets.Entrez,fun=&quot;enrichGO&quot;,
                       OrgDb = &quot;org.Mm.eg.db&quot;,pvalueCutoff = 0.01,ont=&quot;MF&quot;, readable = T)
 plot(cg.mf,showCategory=20)+ggtitle(&quot;GO MF geneset enrichment by module&quot;)</code></pre>
-<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-6-2.png" width="672" /></p>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-6-2.png" width="1728" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Looking at biological process geneset enrichment 
 cg.bp&lt;-compareCluster(geneCluster=moduleGeneSets.Entrez,fun=&quot;enrichGO&quot;,
                       OrgDb = &quot;org.Mm.eg.db&quot;, pvalueCutoff = 0.01,ont=&quot;BP&quot;, readable = T)
 plot(cg.bp,showCategory=15)+ggtitle(&quot;GO BP geneset enrichment by module&quot;)</code></pre>
-<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-6-3.png" width="672" /></p>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-6-3.png" width="1728" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>cg.cc&lt;-compareCluster(geneCluster=moduleGeneSets.Entrez,fun=&quot;enrichGO&quot;,
                       OrgDb = &quot;org.Mm.eg.db&quot;, pvalueCutoff = 0.01,ont=&quot;CC&quot;, readable = T)
 plot(cg.cc,showCategory=15)+ggtitle(&quot;GO CC geneset enrichment by module&quot;)</code></pre>
-<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-6-4.png" width="672" /></p>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-6-4.png" width="1728" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Looking at reactome enrichment
 cr&lt;-compareCluster(geneCluster=moduleGeneSets.Entrez,fun=&quot;enrichPathway&quot;,
                    organism=&quot;mouse&quot;,pvalueCutoff = 0.1, readable = T)
 plot(cr,showCategory=10)+ggtitle(&quot;Reactome geneset enrichment by module&quot;)</code></pre>
-<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-6-5.png" width="672" /></p>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-6-5.png" width="1728" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Printing out the cluster enrichment diagrams. These will be useful for annotating the 
 pdf(file.path(file_dir,&quot;P7-all-module_geneset_enrichments.pdf&quot;),width=18,height=10, useDingbats = F)
 plot(ck,showCategory=10)+ggtitle(&quot;KEGG geneset enrichment by module&quot;)
@@ -762,6 +762,10 @@ plot(cg.cc,showCategory = 10) + ggtitle(&quot;GO CC geneset enrichment by module
 dev.off()</code></pre>
 <pre><code>## quartz_off_screen 
 ##                 2</code></pre>
+</div>
+<div id="writing-out-go-tables" class="section level3">
+<h3>Writing out GO tables</h3>
+<p>In order to output all of our GO data in a relatively simple way, all gene enrichment results were written out to a tables</p>
 <pre class="r"><code># Gene enrichment tables are found in &#39;ck&#39;,&#39;cg.mf&#39;,&#39;cg.bp&#39;,&#39;cg.cc&#39;, &#39;cr&#39;
 # summary() allows for the S4 objects created by clusterProfiler to be converted in to dataframes
 kegg.table &lt;- summary(ck)
@@ -774,163 +778,9 @@ for(i in 1:nrow(kegg.table.clone)){
   genes.symbol &lt;- bitr(gene.split, fromType = &quot;ENTREZID&quot;, toType = &quot;SYMBOL&quot;, OrgDb = &#39;org.Mm.eg.db&#39;)
   converted.gene.string &lt;- paste0(genes.symbol$SYMBOL,collapse = &quot;/&quot;)
   kegg.table.clone[i,9] &lt;- converted.gene.string
-}</code></pre>
-<pre><code>## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns
-## &#39;select()&#39; returned 1:1 mapping between keys and columns</code></pre>
-<pre class="r"><code># Easy enough to do for the others when you can set it at &#39;readable&#39; in the functions above
+}
+
+# Easy enough to do for the others when you can set it at &#39;readable&#39; in the functions above
 go.molecular.function.table &lt;- summary(cg.mf)
 go.bio.process.table &lt;- summary(cg.bp)
 go.cell.comp.table &lt;- summary(cg.cc)
@@ -947,8 +797,9 @@ write.table(x = go.cell.comp.table, file = file.path(file_dir,&quot;GO.CC.table.
 
 write.table(x = reactome.table, file = file.path(file_dir,&quot;Reactome.table.txt&quot;), quote = F, sep = &quot;\t&quot;, row.names = F)</code></pre>
 </div>
-<div id="in-order-to-use-them-in-downstream-analyses-a-table-was-written-out-in-order-to-show-all-the-genes-in-each-module-identified-in-our-analysis-table-s6" class="section level3">
-<h3>In order to use them in downstream analyses, a table was written out in order to show all the genes in each module identified in our analysis (Table S6)</h3>
+<div id="writing-out-gene-table" class="section level3">
+<h3>Writing out gene table</h3>
+<p>In order to use them in downstream analyses, a table was written out in order to show all the genes in each module identified in our analysis (Table S6)</p>
 <pre class="r"><code>library(reshape2)
 # Turn the &#39;moduleGeneSets&#39; list in to a data.frame, copy the columns and rename them &#39;module&#39; and &#39;gene&#39;, select only the &#39;module&#39; and &#39;gene&#39; columns
 module.df &lt;- ldply(moduleGeneSets, data.frame) %&gt;%
@@ -979,8 +830,9 @@ for(i in 1:ncol(module.genes.df)){
 # Write out the table
 write.table(module.genes.df, file = file.path(file_dir,&quot;WGCNA.module.gene.lists.txt&quot;), quote = F, row.names = F, sep = &quot;\t&quot;)</code></pre>
 </div>
-<div id="now-that-we-have-looked-at-enrichment-for-go-terms-in-our-modules-we-want-to-correlate-the-modules-with-cellular-traitis-specifically-subset-cluster-in-order-to-find-modules-that-differentiation-between-da-populations-at-p7" class="section level3">
-<h3>Now that we have looked at enrichment for GO terms in our modules, we want to correlate the modules with cellular traitis, specifically subset cluster in order to find modules that differentiation between DA populations at P7</h3>
+<div id="correlation-of-modules-with-traits" class="section level3">
+<h3>Correlation of modules with traits</h3>
+<p>Now that we have looked at enrichment for GO terms in our modules, we want to correlate the modules with cellular traitis, specifically subset cluster in order to find modules that differentiation between DA populations at P7</p>
 <pre class="r"><code># The first step to find these correlations is to make a trait table
 # Copying over the datTraits dataframe
 datTraits.new &lt;- datTraits
@@ -1054,8 +906,9 @@ labeledHeatmap(Matrix = t(moduleTraitCor),
                main = paste(&quot;Module-trait relationships&quot;))</code></pre>
 <p><img src="WGCNA-final_files/figure-html/Making%20a%20correlation%20table%20with%20all%20clusters%20called%20in%20P7%20data-1.png" width="672" /></p>
 </div>
-<div id="we-then-wanted-to-correlate-the-modules-eigengenes-with-tsne-position-and-plot-7-that-were-found-to-be-significantly-correlated-with-a-p7-subset-cluster" class="section level3">
-<h3>We then wanted to correlate the modules eigengenes with tSNE position and plot 7 that were found to be significantly correlated with a P7 subset cluster</h3>
+<div id="correlate-eigengenes-with-tsne" class="section level3">
+<h3>Correlate eigengenes with tSNE</h3>
+<p>We then wanted to correlate the modules eigengenes with tSNE position and plot 7 that were found to be significantly correlated with a P7 subset cluster</p>
 <pre class="r"><code># Correlating tSNE position with eigenvectors
 eigentSNE&lt;-cbind(pData(P7.dat.WGCNA[,keepSamples])$tSNE1_pos,pData(P7.dat.WGCNA[,keepSamples,])$tSNE2_pos,MEs)
 colnames(eigentSNE)&lt;-c(&quot;tSNE1_pos&quot;,&quot;tSNE2_pos&quot;,modNames)
@@ -1079,8 +932,9 @@ dev.off()</code></pre>
 <pre class="r"><code>p2.subset.all</code></pre>
 <p><img src="WGCNA-final_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 </div>
-<div id="save-modules-that-were-enriched-for-pd-genesets" class="section level3">
-<h3>Save modules that were enriched for PD genesets</h3>
+<div id="save-modules" class="section level3">
+<h3>Save modules</h3>
+<p>Save modules that were enriched for PD genesets</p>
 <pre class="r"><code>saveRDS(moduleGeneSets$green, file = file.path(file_dir,&quot;WGCNA.ParkGeneSet.Green.rds&quot;))
 saveRDS(moduleGeneSets$brown, file = file.path(file_dir,&quot;WGCNA.ParkGeneSet.Brown.rds&quot;))</code></pre>
 </div>
@@ -1117,7 +971,7 @@ saveRDS(moduleGeneSets$brown, file = file.path(file_dir,&quot;WGCNA.ParkGeneSet.
 ## [46] Rtsne_0.13            pheatmap_1.0.8        tidyr_0.7.1          
 ## [49] dplyr_0.7.4           plyr_1.8.4            heatmap.plus_1.3     
 ## [52] stringr_1.2.0         marray_1.50.0         limma_3.28.21        
-## [55] reshape2_1.4.2        monocle_2.2.0         DDRTree_0.1.5        
+## [55] reshape2_1.4.3        monocle_2.2.0         DDRTree_0.1.5        
 ## [58] irlba_2.2.1           VGAM_1.0-2            ggplot2_2.2.1        
 ## [61] Biobase_2.32.0        BiocGenerics_0.18.0   Matrix_1.2-11        
 ## 
@@ -1134,15 +988,15 @@ saveRDS(moduleGeneSets$brown, file = file.path(file_dir,&quot;WGCNA.ParkGeneSet.
 ##  [19] biovizBase_1.20.0             R6_2.2.2                     
 ##  [21] bitops_1.0-6                  assertthat_0.2.0             
 ##  [23] nnet_7.3-12                   gtable_0.2.0                 
-##  [25] ensembldb_1.4.7               rlang_0.1.2                  
+##  [25] ensembldb_1.4.7               rlang_0.1.6                  
 ##  [27] lazyeval_0.2.1                acepack_1.4.1                
 ##  [29] dichromat_2.0-0               checkmate_1.8.4              
 ##  [31] yaml_2.1.15                   semver_0.2.0                 
 ##  [33] GenomicFeatures_1.24.5        backports_1.1.1              
 ##  [35] httpuv_1.3.5                  qvalue_2.4.2                 
-##  [37] tools_3.3.0                   Rcpp_0.12.13                 
+##  [37] tools_3.3.0                   Rcpp_0.12.14                 
 ##  [39] base64enc_0.1-3               zlibbioc_1.18.0              
-##  [41] purrr_0.2.3                   RCurl_1.95-4.8               
+##  [41] purrr_0.2.4                   RCurl_1.95-4.9               
 ##  [43] rpart_4.1-11                  openssl_0.9.7                
 ##  [45] SummarizedExperiment_1.2.3    cluster_2.0.6                
 ##  [47] magrittr_1.5                  data.table_1.10.4            
