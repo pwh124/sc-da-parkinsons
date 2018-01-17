@@ -37,7 +37,8 @@ navbar:
     - text: "Explore Data"
       icon: fa-bar-chart
       href: shiny-link.html
-    - icon: fa-github
+    - text: "GitHub Repo"
+      icon: fa-github
       href: https://github.com/pwh124/sc-da-parkinsons
 output:
   html_document:

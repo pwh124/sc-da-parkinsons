@@ -10,19 +10,19 @@ output:
 
 <div class="col-md-7 text-left">
 <br/>
-Welcome to the website designed to display the code and analysis associated with ["Single-cell RNA-seq of mouse dopaminergic neurons informs candidate gene selection for sporadic Parkinson’s disease" (Hook _et al_., 2017)](https://doi.org/10.1101/148049)
+Welcome to the website designed to display the code and analysis associated with <a href="https://doi.org/10.1101/148049" target="_blank">"Single-cell RNA-seq of mouse dopaminergic neurons informs candidate gene selection for sporadic Parkinson’s disease" (Hook _et al_., 2017)</a>
 
 This website contains:
 
 * An [About](about.html) section containing our paper abstract   
-* A [License](license.html) section containing copyright information  
 * An Analyses section (see navbar above) containing reproducible analysis code  
 * A [Paper Figures](paper-figures.html) section containing reproducible figure production code  
-* A [Shiny app](shiny-link.html) that allows for exploration of the expression data    
+* A [Shiny app](shiny-link.html) that allows for exploration of the expression data  
+* A [License](license.html) section containing copyright information  
 
-Raw sequencing data can be found at [GEO:GSE108020](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE108020)
+Raw sequencing data can be found at <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE108020" target="_blank">GEO:GSE108020</a>
 
-This website was designed and created by Paul Hook.
+This website was designed and created by Paul Hook [<img src="twitter-bird.png" alt="twitter" style="width:20px;" align = "top"/>](https://twitter.com/paul_hook_hugen)
 
 </div>
 
@@ -37,14 +37,14 @@ This website was designed and created by Paul Hook.
 
 ***
 ####bioRxiv Citation  
-Single-cell RNA-seq of mouse dopaminergic neurons informs candidate gene selection for sporadic Parkinson's disease. Paul W. Hook, Sarah A. McClymont, Gabrielle H. Cannon, William D. Law, A. Jennifer Morton, Loyal A. Goff, Andrew S. McCallion. bioRxiv 148049; doi: https://doi.org/10.1101/148049
+Single-cell RNA-seq of mouse dopaminergic neurons informs candidate gene selection for sporadic Parkinson's disease. **Paul W. Hook**, Sarah A. McClymont, Gabrielle H. Cannon, William D. Law, A. Jennifer Morton, Loyal A. Goff, Andrew S. McCallion. bioRxiv 148049; doi: <a href="https://doi.org/10.1101/148049" target="_blank">https://doi.org/10.1101/148049</a>
 
 ***
 
 Inspiration for this website layout was adapted from: 
 
-* https://github.com/jdblischak/singleCellSeq
-* https://jdblischak.github.io/workflowr/
+* <a href="https://github.com/jdblischak/singleCellSeq" target="_blank">https://github.com/jdblischak/singleCellSeq</a>
+* <a href="https://jdblischak.github.io/workflowr/" target="_blank">https://jdblischak.github.io/workflowr/</a>
 
 ***
 
