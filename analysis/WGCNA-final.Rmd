@@ -8,7 +8,8 @@ output: html_document
 
 **Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
 
-###Setting important directories. Also loading important libraries and custom functions for analysis.
+###Setting important directories
+Also loading important libraries and custom functions for analysis.
 ```{r init, message=FALSE, warning=FALSE}
 seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
 file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
@@ -44,7 +45,8 @@ P7.dat.filter <- readRDS(file.path(Rdata_dir,"P7.dat.filter.final.Rds"))
 dim(P7.dat.filter)
 ```
 
-### Preparing the data for WGCNA analysis. The genes used in the analysis were filtered to only include genes that were determined to be expressed in at least 20 cells (9% of the total cells in the data set).
+### Preparing data for WGCNA analysis
+Preparing the data for WGCNA analysis. The genes used in the analysis were filtered to only include genes that were determined to be expressed in at least 20 cells (9% of the total cells in the data set).
 ```{r}
 # Identifying genes only expressed in at least 20 cells
 P7.expressed_genes.WGCNA<-row.names(subset(fData(P7.dat.filter),num_cells_expressed >= 20))
@@ -67,7 +69,8 @@ mydata.trans=t(mydata)
 datExpr <- mydata.trans
 ```
 
-### Next, heirarchial clutering was used to cluster the data and look for any outliers. There seems to be only one glaring outlier.
+### Heirarchial clustering of cells
+Next, heirarchial clutering was used to cluster the data and look for any outliers. There seems to be only one glaring outlier.
 ```{r Clustering cells and plotting}
 # Clustering the data by using heirarchial clustering
 sampleTree <- flashClust(dist(datExpr), method = "average")
@@ -92,7 +95,8 @@ nGenes <- ncol(datExpr)
 nSamples <- nrow(datExpr)
 ```
 
-### Making a data frame that can be filled with meta-data about the cells and can be used to annotate the heirarchial clustering
+### Making simple trait dataframe
+Making a data frame that can be filled with meta-data about the cells and can be used to annotate the heirarchial clustering
 ```{r - Making trait dataframe, message=FALSE, warning=FALSE}
 # subsetting out trait data from the initial cds
 datTraits <- pData(P7.dat.WGCNA[,keepSamples])
@@ -125,8 +129,9 @@ plotDendroAndColors(sampleTree2, datTraits$x,
 
 ```
 
-### In order to now perform WGCNA on our data, a "soft threshold" needs to be calculated
-```{r}
+###Choosing a soft threshold 
+In order to now perform WGCNA on our data, a "soft threshold" needs to be calculated. This produces some NAs (warning message suppressed)
+```{r, message=FALSE,warning=FALSE}
 # Setting what soft thresholds (powers) should be tested for potential use as a soft threshold
 powers <- c(c(1:10), seq(from = 12, to=20, by=2))
 
@@ -171,9 +176,8 @@ text(sft$fitIndices[,1], sft$fitIndices[,5], labels=powers, cex=cex1,col="red")
 dev.off()
 ```
 
-
-### A soft threshold of 10 was chosen based on the scale independence plot beginning to finally level out at that point for good. The dip from 8 to 9 prevented me from choosing 8. We choose a topology cut-off of 0.80, which is arbitary but similar to the number suggested in WGCNA tutorials (see "A General Framework for Weighted Gene CoExpression
-Network Analysis", 2005).
+### Performing topological overlap
+A soft threshold of 10 was chosen based on the scale independence plot beginning to finally level out at that point for good. The dip from 8 to 9 prevented me from choosing 8. We choose a topology cut-off of 0.80, which is arbitary but similar to the number suggested in WGCNA tutorials (see "A General Framework for Weighted Gene CoExpression Network Analysis", 2005).
 ```{r}
 # Choosing a power of 10 based on Scale independence plot and 0.8 threshold
 softPower <- 10
@@ -211,7 +215,8 @@ plotDendroAndColors(geneTree, dynamicColors, "Dynamic Tree Cut",
 
 ```
 
-### Now that we have identified modules in our data, we want to explore the relationships between those modules a little more. Note that grey and turquoise modules were removed in these analyses because turquoise contained all genes that did not get slotted in to a specific module and grey had only 4 genes (below our set module size)
+### Relationships between modules
+Now that we have identified modules in our data, we want to explore the relationships between those modules a little more. Note that grey and turquoise modules were removed in these analyses because turquoise contained all genes that did not get slotted in to a specific module and grey had only 4 genes (below our set module size)
 ```{r}
 # Calculate eigengenes for each module
 MEList <- moduleEigengenes(datExpr, colors = dynamicColors)
@@ -263,7 +268,8 @@ plot(METree, main = "Clustering of module eigengenes",xlab = "", sub = "")
 dev.off()
 ```
 
-### Now that we had explored the modules relationship to each other, we wanted to see if the genes within each module were enriched for gene ontology, KEGG, and Reactome terms. Not all genes map through 'bitr' so warnings were supressed
+### Gene enrichment analyses
+Now that we had explored the modules relationship to each other, we wanted to see if the genes within each module were enriched for gene ontology, KEGG, and Reactome terms. Not all genes map through 'bitr' so warnings were supressed
 ```{r, eval=T, message=F, warning=FALSE}
 # Making a list of module names
 modNames <- substring(names(MEs), 3)
@@ -293,7 +299,7 @@ moduleGeneSets.Entrez<-lapply(moduleGeneSets.trimmed,function(x){
 ```
 
 ### Running geneset enrichment analyses
-```{r, eval=T, message=F, warning=FALSE}
+```{r, eval=T, message=F, warning=FALSE,fig.align='center',fig.height=10,fig.width=18,fig.asp=0.25}
 # Looking at KEGG Geneset Enrichment
 ck<-compareCluster(geneCluster=moduleGeneSets.Entrez,
                    fun="enrichKEGG",organism="mmu",pvalueCutoff = 0.1)
@@ -329,7 +335,9 @@ dev.off()
 
 ```
 
-```{r Getting outputs of cluster tables, eval=T}
+### Writing out GO tables
+In order to output all of our GO data in a relatively simple way, all gene enrichment results were written out to a tables
+```{r Getting outputs of cluster tables, eval=T,message=FALSE,warning=FALSE}
 
 # Gene enrichment tables are found in 'ck','cg.mf','cg.bp','cg.cc', 'cr'
 # summary() allows for the S4 objects created by clusterProfiler to be converted in to dataframes
@@ -364,7 +372,8 @@ write.table(x = reactome.table, file = file.path(file_dir,"Reactome.table.txt"),
 
 ```
 
-### In order to use them in downstream analyses, a table was written out in order to show all the genes in each module identified in our analysis (Table S6)
+### Writing out gene table 
+In order to use them in downstream analyses, a table was written out in order to show all the genes in each module identified in our analysis (Table S6)
 ```{r writing a table out of genes in modules, eval=T,warning=F,message=FALSE}
 library(reshape2)
 # Turn the 'moduleGeneSets' list in to a data.frame, copy the columns and rename them 'module' and 'gene', select only the 'module' and 'gene' columns
@@ -397,7 +406,8 @@ for(i in 1:ncol(module.genes.df)){
 write.table(module.genes.df, file = file.path(file_dir,"WGCNA.module.gene.lists.txt"), quote = F, row.names = F, sep = "\t")
 ```
 
-### Now that we have looked at enrichment for GO terms in our modules, we want to correlate the modules with cellular traitis, specifically subset cluster in order to find modules that differentiation between DA populations at P7
+### Correlation of modules with traits 
+Now that we have looked at enrichment for GO terms in our modules, we want to correlate the modules with cellular traitis, specifically subset cluster in order to find modules that differentiation between DA populations at P7
 ```{r Making a correlation table with all clusters called in P7 data}
 # The first step to find these correlations is to make a trait table
 # Copying over the datTraits dataframe
@@ -471,7 +481,8 @@ labeledHeatmap(Matrix = t(moduleTraitCor),
                main = paste("Module-trait relationships"))
 ```
 
-### We then wanted to correlate the modules eigengenes with tSNE position and plot 7 that were found to be significantly correlated with a P7 subset cluster
+### Correlate eigengenes with tSNE 
+We then wanted to correlate the modules eigengenes with tSNE position and plot 7 that were found to be significantly correlated with a P7 subset cluster
 ```{r}
 # Correlating tSNE position with eigenvectors
 eigentSNE<-cbind(pData(P7.dat.WGCNA[,keepSamples])$tSNE1_pos,pData(P7.dat.WGCNA[,keepSamples,])$tSNE2_pos,MEs)
@@ -495,7 +506,8 @@ dev.off()
 p2.subset.all
 ```
 
-###Save modules that were enriched for PD genesets
+### Save modules
+Save modules that were enriched for PD genesets
 ```{r save park geneset}
 saveRDS(moduleGeneSets$green, file = file.path(file_dir,"WGCNA.ParkGeneSet.Green.rds"))
 saveRDS(moduleGeneSets$brown, file = file.path(file_dir,"WGCNA.ParkGeneSet.Brown.rds"))
