@@ -8,10 +8,10 @@ output:
 
 Raw figures were generated within the following scripts:
 
-[Figure 4C - WGCNA Analysis](WGCNA-final.html#correlation_of_modules_with_traits)
+[Figure 4C - WGCNA Analysis](WGCNA-final.html#correlation_of_modules_with_traits)  
 A plot of a matrix showing the degree of correlation between modules identified in WGCNA analysis and subset cluster cell population identity.
 
-[Figure 4D - WGCNA Analysis](WGCNA-final.html#correlate_eigengenes_with_tsne)
+[Figure 4D - WGCNA Analysis](WGCNA-final.html#correlate_eigengenes_with_tsne)  
 t-SNE plots showing the degree of correlation between modules identified in WGCNA analysis and spatial locations of cells in the P7 t-SNE plot.
 
 ***
