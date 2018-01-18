@@ -12,7 +12,7 @@
 <meta name="author" content="Paul Hook" />
 
 
-<title>E15 MB Analysis</title>
+<title>E15.5 MB Recursive Analysis</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -314,6 +314,10 @@ div.tocify {
     <li>
       <a href="PD.GWAS.scoring.links.html">PD Gene Scoring</a>
     </li>
+    <li class="divider"></li>
+    <li>
+      <a href="Cplx1_Th-striatum_analysis.html">Cplx1 Th+ striatum density</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -324,9 +328,17 @@ div.tocify {
   </a>
 </li>
 <li>
+  <a href="shiny-link.html">
+    <span class="fa fa-bar-chart"></span>
+     
+    Explore Data
+  </a>
+</li>
+<li>
   <a href="https://github.com/pwh124/sc-da-parkinsons">
     <span class="fa fa-github"></span>
      
+    GitHub Repo
   </a>
 </li>
       </ul>
@@ -341,24 +353,30 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">E15 MB Analysis</h1>
+<h1 class="title toc-ignore">E15.5 MB Recursive Analysis</h1>
 <h4 class="author"><em>Paul Hook</em></h4>
 
 </div>
 
 
-<p><strong>Last update:</strong> 2017-12-15</p>
-<p><strong>Code version:</strong> 97cdbba92f549b083d57cc1acd1fcd954ca4c492</p>
-<p><strong>Setting important directories. Also loading important libraries and custom functions for analysis.</strong></p>
+<p><strong>Last update:</strong> 2018-01-18</p>
+<p><strong>Code version:</strong> 5996c19850dc5fc65723f30bc33ab1c8d083a7e6</p>
+<div id="setting-important-directories." class="section level3">
+<h3>Setting important directories.</h3>
+<p>Also loading important libraries and custom functions for analysis.</p>
 <pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
 file_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/output&quot;
 Rdata_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
 Script_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/code&quot;
 source(file.path(Script_dir,&#39;init.R&#39;))
 source(file.path(Script_dir,&quot;tools_R.r&quot;))</code></pre>
-<p><strong>Loading the E15 cds</strong></p>
+</div>
+<div id="loading-the-e15-cds" class="section level3">
+<h3>Loading the E15 cds</h3>
 <pre class="r"><code>e15.Mb.dat.filter &lt;- readRDS(file = file.path(Rdata_dir, &quot;e15.Mb.dat.filter.rds&quot;))</code></pre>
-<p><strong>Filter genes by percentage of cells expresssing each gene</strong></p>
+</div>
+<div id="filter-genes-by-percentage-of-cells-expresssing-each-gene" class="section level3">
+<h3>Filter genes by percentage of cells expresssing each gene</h3>
 <pre class="r"><code># Plot number of cells expressing each gene as histogram
 hist(fData(e15.Mb.dat.filter)$num_cells_expressed,breaks=50,col=&quot;red&quot;,main=&quot;Cells expressed per gene&quot;)</code></pre>
 <p><img src="E15_Mb.recursive_analysis_files/figure-html/filter%20by%20cells%20expressing%20each%20gene-1.png" width="672" /></p>
@@ -370,7 +388,9 @@ e15.Mb.dat.expressed_genes&lt;-row.names(subset(fData(e15.Mb.dat.filter),num_cel
 hist(fData(e15.Mb.dat.filter)$num_cells_expressed,breaks=50,col=&quot;red&quot;,main=&quot;Cells expressed per gene - threshold&quot;)
 abline(v=numCellThreshold,lty=&quot;dashed&quot;)</code></pre>
 <p><img src="E15_Mb.recursive_analysis_files/figure-html/filter%20by%20cells%20expressing%20each%20gene-2.png" width="672" /></p>
-<p><strong>Prepping the Monocole model for analysis</strong></p>
+</div>
+<div id="prepping-the-monocle-model-for-analysis" class="section level3">
+<h3>Prepping the Monocle model for analysis</h3>
 <pre class="r"><code># Only keeping &quot;expressed&quot; genes
 e15.Mb.dat.filter &lt;-e15.Mb.dat.filter[e15.Mb.dat.expressed_genes,]
 
@@ -384,13 +404,17 @@ e15.Mb.dat.filter &lt;- estimateDispersions(e15.Mb.dat.filter,cores=8)</code></p
 <pre class="r"><code># Removing 134 outliers
 # Warning message:
 # Deprecated, use tibble::rownames_to_column() instead. </code></pre>
-<p><strong>Calculating summary stats</strong></p>
+</div>
+<div id="calculating-summary-stats" class="section level3">
+<h3>Calculating summary stats</h3>
 <pre class="r"><code># Calculating summary stats
 fData(e15.Mb.dat.filter)$mean_expr&lt;-apply(round(exprs(e15.Mb.dat.filter)),1,mean) # mean expression
 fData(e15.Mb.dat.filter)$sd_expr&lt;-apply(round(exprs(e15.Mb.dat.filter)),1,sd) # sd expression
 fData(e15.Mb.dat.filter)$bcv&lt;-(fData(e15.Mb.dat.filter)$sd_expr/fData(e15.Mb.dat.filter)$mean_expr)**2 # calculating biological coefficient of variation
 fData(e15.Mb.dat.filter)$percent_detection&lt;-(fData(e15.Mb.dat.filter)$num_cells_expressed/dim(e15.Mb.dat.filter)[2])*100 # calculating % detection</code></pre>
-<p><strong>Identifying high dispersion genes</strong></p>
+</div>
+<div id="identifying-high-dispersion-genes" class="section level3">
+<h3>Identifying high dispersion genes</h3>
 <pre class="r"><code>e15.Mb.dat.filter.genes &lt;- e15.Mb.dat.filter # spoofing the CellDataSet
 disp_table &lt;- dispersionTable(e15.Mb.dat.filter.genes) # pulling out the dispersion table
 unsup_clustering_genes &lt;-subset(disp_table, mean_expression &gt;= 0.5 &amp; dispersion_empirical &gt;= 2 * dispersion_fit) # subsetting the data to pull out genes with expression above 0.5 and dispersion empirical &gt; 2
@@ -401,7 +425,9 @@ plot_ordering_genes(e15.Mb.dat.filter.order) # plotting the dispersion and genes
 <p><img src="E15_Mb.recursive_analysis_files/figure-html/high_dispersion_genes_monocle%20-%20Pulling%20out%20the%20high%20dispersion%20genes%20for%20PCA%20analysis-1.png" width="672" /></p>
 <pre class="r"><code>length(e15.Mb.dat.high_bcv_genes) # 778</code></pre>
 <pre><code>## [1] 778</code></pre>
-<p><strong>Running PCA with high dispersion genes</strong></p>
+</div>
+<div id="running-pca-with-high-dispersion-genes" class="section level3">
+<h3>Running PCA with high dispersion genes</h3>
 <pre class="r"><code># BCV Identified high dispersion genes. Running PC analysis
 e15.Mb.dat.filter.BCV.pca&lt;-prcomp(t(log2(exprs(e15.Mb.dat.filter[e15.Mb.dat.high_bcv_genes,])+1)),center=T,scale. = TRUE)
 
@@ -422,7 +448,10 @@ hvPCA1</code></pre>
 <p><img src="E15_Mb.recursive_analysis_files/figure-html/Run%20PCA%20with%20high%20BCV%20genes-2.png" width="672" /></p>
 <pre class="r"><code>hvPCA3</code></pre>
 <p><img src="E15_Mb.recursive_analysis_files/figure-html/Run%20PCA%20with%20high%20BCV%20genes-3.png" width="672" /></p>
-<p><strong>Viewing screeplots and determining the number of “significant” PCs</strong></p>
+</div>
+<div id="screeplots" class="section level3">
+<h3>Screeplots</h3>
+<p>Viewing screeplots and determining the number of “significant” PCs</p>
 <pre class="r"><code># Making a screeplot of the BCV PCA. This will help determine how many
 # principal components we should use in our tSNE visualization
 
@@ -435,7 +464,9 @@ abline(v = 5, lwd = 2, col = &quot;red&quot;)</code></pre>
 <p><img src="E15_Mb.recursive_analysis_files/figure-html/Screeplots%20of%20Data-2.png" width="672" /></p>
 <pre class="r"><code># Conclustion: Seems to be clear that just the first four PCs explain the
 # most variation in our data</code></pre>
-<p><strong>Creating a t-SNE plot from the “significant” PCs</strong></p>
+</div>
+<div id="creating-a-t-sne-plot-from-the-significant-pcs" class="section level3">
+<h3>Creating a t-SNE plot from the “significant” PCs</h3>
 <pre class="r"><code>nComponents&lt;-4 # estimated from the screeplots
 #seed &lt;- runif(1,1,9999) # determined by testing random seeds
 seed &lt;- 223.3888
@@ -450,7 +481,10 @@ e15.Mb.dat.filter.BCV.tsne.plot&lt;-myTSNEPlotAlpha(e15.Mb.dat.filter,color=&quo
 
 e15.Mb.dat.filter.BCV.tsne.plot</code></pre>
 <p><img src="E15_Mb.recursive_analysis_files/figure-html/tsne-1.png" width="672" /></p>
-<p><strong>Identifying clusters in the data in an unsupervised manner</strong></p>
+</div>
+<div id="identifying-clusters" class="section level3">
+<h3>Identifying clusters</h3>
+<p>Identifying clusters in the data in an unsupervised manner</p>
 <pre class="r"><code># Going to attempt to use the R program &#39;ADPclust&#39; to determine how many
 # clusters our data has
 
@@ -472,7 +506,9 @@ myTSNEPlotAlpha(e15.Mb.dat.filter, color = &quot;kmeans_tSNE_cluster&quot;, shap
 <pre><code>## Scale for &#39;colour&#39; is already present. Adding another scale for
 ## &#39;colour&#39;, which will replace the existing scale.</code></pre>
 <p><img src="E15_Mb.recursive_analysis_files/figure-html/-%20attempting%20to%20cluster-2.png" width="672" /></p>
-<p><strong>QC on the clusters</strong></p>
+</div>
+<div id="qc-on-the-clusters" class="section level3">
+<h3>QC on the clusters</h3>
 <pre class="r"><code># Distribution of number of genes expressed in clusters
 q &lt;- ggplot(pData(e15.Mb.dat.filter)) +
   geom_density(aes(x=num_genes_expressed,fill=kmeans_tSNE_cluster),alpha=0.3) + scale_fill_brewer(palette=&quot;Set1&quot;) + facet_grid(.~age) + monocle:::monocle_theme_opts()
@@ -485,12 +521,17 @@ q&lt;-ggplot(pData(e15.Mb.dat.filter)) +
 
 q</code></pre>
 <p><img src="E15_Mb.recursive_analysis_files/figure-html/check%20the%20clusters%20-%20qc%20on%20clusters-2.png" width="672" /></p>
-<p><strong>Saving the E15.5 MB final cds</strong></p>
+</div>
+<div id="saving-the-e15.5-mb-final-cds" class="section level3">
+<h3>Saving the E15.5 MB final cds</h3>
 <pre class="r"><code>e15.Mb.dat.filter.final &lt;- e15.Mb.dat.filter
 saveRDS(object = e15.Mb.dat.filter.final, file = file.path(Rdata_dir, &quot;e15.Mb.dat.filter.final.Rds&quot;))</code></pre>
-<p><strong>Extracting pData information and saving it</strong></p>
+</div>
+<div id="extracting-pdata-information-and-saving-it" class="section level3">
+<h3>Extracting pData information and saving it</h3>
 <pre class="r"><code>e15.Mb.clusters.df &lt;- pData(e15.Mb.dat.filter)[,c(1,39)]
 saveRDS(e15.Mb.clusters.df, file = file.path(Rdata_dir, &quot;e15.Mb.clusters.df.rds&quot;))</code></pre>
+</div>
 <div id="session-info" class="section level3">
 <h3>Session Info</h3>
 <pre class="r"><code>sessionInfo()</code></pre>
@@ -515,7 +556,7 @@ saveRDS(e15.Mb.clusters.df, file = file.path(Rdata_dir, &quot;e15.Mb.clusters.df
 ## [19] lattice_0.20-35     Heatplus_2.18.0     Rtsne_0.13         
 ## [22] pheatmap_1.0.8      tidyr_0.7.1         dplyr_0.7.4        
 ## [25] plyr_1.8.4          heatmap.plus_1.3    stringr_1.2.0      
-## [28] marray_1.50.0       limma_3.28.21       reshape2_1.4.2     
+## [28] marray_1.50.0       limma_3.28.21       reshape2_1.4.3     
 ## [31] monocle_2.2.0       DDRTree_0.1.5       irlba_2.2.1        
 ## [34] VGAM_1.0-2          ggplot2_2.2.1       Biobase_2.32.0     
 ## [37] BiocGenerics_0.18.0 Matrix_1.2-11      
@@ -531,16 +572,16 @@ saveRDS(e15.Mb.clusters.df, file = file.path(Rdata_dir, &quot;e15.Mb.clusters.df
 ## [22] formatR_1.5            acepack_1.4.1          htmltools_0.3.6       
 ## [25] tools_3.3.0            bindrcpp_0.2           igraph_1.1.2          
 ## [28] gtable_0.2.0           glue_1.1.1             binman_0.1.0          
-## [31] doRNG_1.6.6            Rcpp_0.12.13           slam_0.1-37           
+## [31] doRNG_1.6.6            Rcpp_0.12.14           slam_0.1-37           
 ## [34] gdata_2.18.0           nlme_3.1-131           iterators_1.0.8       
 ## [37] mime_0.5               rngtools_1.2.4         gtools_3.5.0          
 ## [40] WriteXLS_4.0.0         XML_3.98-1.9           DEoptimR_1.0-8        
 ## [43] yaml_2.1.15            pkgmaker_0.22          rpart_4.1-11          
 ## [46] fastICA_1.2-1          latticeExtra_0.6-28    stringi_1.1.5         
 ## [49] pcaPP_1.9-72           foreach_1.4.3          e1071_1.6-8           
-## [52] checkmate_1.8.4        caTools_1.17.1         rlang_0.1.2           
+## [52] checkmate_1.8.4        caTools_1.17.1         rlang_0.1.6           
 ## [55] pkgconfig_2.0.1        matrixStats_0.52.2     bitops_1.0-6          
-## [58] qlcMatrix_0.9.5        evaluate_0.10.1        purrr_0.2.3           
+## [58] qlcMatrix_0.9.5        evaluate_0.10.1        purrr_0.2.4           
 ## [61] bindr_0.1              labeling_0.3           htmlwidgets_0.9       
 ## [64] magrittr_1.5           R6_2.2.2               combinat_0.0-8        
 ## [67] wdman_0.2.2            foreign_0.8-69         mgcv_1.8-22           

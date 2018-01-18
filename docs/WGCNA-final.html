@@ -359,8 +359,8 @@ div.tocify {
 </div>
 
 
-<p><strong>Last update:</strong> 2018-01-17</p>
-<p><strong>Code version:</strong> c1ce671c84988e8358008fed98eb33615d2103b8</p>
+<p><strong>Last update:</strong> 2018-01-18</p>
+<p><strong>Code version:</strong> 5996c19850dc5fc65723f30bc33ab1c8d083a7e6</p>
 <div id="setting-important-directories" class="section level3">
 <h3>Setting important directories</h3>
 <p>Also loading important libraries and custom functions for analysis.</p>
@@ -506,7 +506,7 @@ dev.off()</code></pre>
 plotDendroAndColors(sampleTree2, datTraits$x,
                 groupLabels = names(datTraits),
                 main = &quot;Sample dendrogram and regional identity&quot;)</code></pre>
-<p><img src="WGCNA-final_files/figure-html/-%20Making%20trait%20dataframe-1.png" width="672" /></p>
+<p><img src="WGCNA-final_files/figure-html/Making%20trait%20dataframe-1.png" width="672" /></p>
 </div>
 <div id="choosing-a-soft-threshold" class="section level3">
 <h3>Choosing a soft threshold</h3>
@@ -553,13 +553,13 @@ plot(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
 text(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
 labels=powers,cex=cex1,col=&quot;red&quot;)
 abline(h=0.8,col=&quot;red&quot;) # this line corresponds to using an R^2 cut-off of h that could be used as a guide to picking a soft threshold</code></pre>
-<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p><img src="WGCNA-final_files/figure-html/picking%20soft%20threshold-1.png" width="672" /></p>
 <pre class="r"><code># Mean connectivity as a function of the soft-thresholding power. Again, we are looking at when the plot begins leveling out.
 plot(sft$fitIndices[,1], sft$fitIndices[,5],
 xlab=&quot;Soft Threshold (power)&quot;,ylab=&quot;Mean Connectivity&quot;, type=&quot;n&quot;,
 main = paste(&quot;Mean connectivity&quot;))
 text(sft$fitIndices[,1], sft$fitIndices[,5], labels=powers, cex=cex1,col=&quot;red&quot;)</code></pre>
-<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
+<p><img src="WGCNA-final_files/figure-html/picking%20soft%20threshold-2.png" width="672" /></p>
 <pre class="r"><code># Writing out these plots
 pdf(file = file.path(file_dir, &quot;WGCNA.softpower.pdf&quot;), width = 6, height = 6)
 plot(sft$fitIndices[,1], -sign(sft$fitIndices[,3])*sft$fitIndices[,2],
@@ -599,7 +599,7 @@ geneTree &lt;- flashClust(as.dist(dissTOM), method = &quot;average&quot;)
 par(mfrow=c(1,1))
 plot(geneTree, xlab=&quot;&quot;, sub=&quot;&quot;, main = &quot;Gene clustering on TOM-based dissimilarity&quot;,
      labels = FALSE, hang = 0.01)</code></pre>
-<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><img src="WGCNA-final_files/figure-html/performing%20topological%20overlap-1.png" width="672" /></p>
 <pre class="r"><code># We like large modules, so we set the minimum module size relatively high:
 minModuleSize &lt;- 20
 
@@ -631,7 +631,7 @@ table(dynamicColors)</code></pre>
 plotDendroAndColors(geneTree, dynamicColors, &quot;Dynamic Tree Cut&quot;, 
                     dendroLabels = FALSE, hang = 0.03, addGuide = TRUE, 
                     guideHang = 0.04, main = &quot;Gene dendrogram and module colors&quot;)</code></pre>
-<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<p><img src="WGCNA-final_files/figure-html/performing%20topological%20overlap-2.png" width="672" /></p>
 </div>
 <div id="relationships-between-modules" class="section level3">
 <h3>Relationships between modules</h3>
@@ -654,7 +654,7 @@ par(mfrow=c(1,1))
 plot(METree, main = &quot;Clustering of module eigengenes&quot;,xlab = &quot;&quot;, sub = &quot;&quot;)
 MEDissThres = 0.2
 abline(h=MEDissThres, col = &quot;red&quot;) # Plot the cut line into the dendrogram. Branches falling below this line will be merged. It does not look like any will get merged, but we run it anyways.</code></pre>
-<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p><img src="WGCNA-final_files/figure-html/relationships%20between%20modules-1.png" width="672" /></p>
 <pre class="r"><code># Call an automatic merging function
 merge &lt;- mergeCloseModules(datExpr, dynamicColors, cutHeight = MEDissThres, verbose = 3)</code></pre>
 <pre><code>##  mergeCloseModules: Merging modules whose distance is less than 0.2
@@ -690,7 +690,7 @@ METree &lt;- flashClust(as.dist(MEDiss), method = &quot;average&quot;)
 # Plot the result
 par(mfrow=c(1,1))
 plot(METree, main = &quot;Clustering of module eigengenes&quot;,xlab = &quot;&quot;, sub = &quot;&quot;)</code></pre>
-<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+<p><img src="WGCNA-final_files/figure-html/relationships%20between%20modules-2.png" width="672" /></p>
 <pre class="r"><code># write out the final plot to a pdf
 pdf(file = file.path(file_dir,&quot;Module_Eigengene_Tree.pdf&quot;), height = 6, width = 8)
 plot(METree, main = &quot;Clustering of module eigengenes&quot;,xlab = &quot;&quot;, sub = &quot;&quot;)
@@ -732,26 +732,26 @@ moduleGeneSets.Entrez&lt;-lapply(moduleGeneSets.trimmed,function(x){
 ck&lt;-compareCluster(geneCluster=moduleGeneSets.Entrez,
                    fun=&quot;enrichKEGG&quot;,organism=&quot;mmu&quot;,pvalueCutoff = 0.1)
 plot(ck,showCategory=10)+ggtitle(&quot;KEGG geneset enrichment by module&quot;) #width = 0.5</code></pre>
-<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-6-1.png" width="1728" style="display: block; margin: auto;" /></p>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-2-1.png" width="1728" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Looking at molecular function geneset enrichment
 cg.mf&lt;-compareCluster(geneCluster=moduleGeneSets.Entrez,fun=&quot;enrichGO&quot;,
                       OrgDb = &quot;org.Mm.eg.db&quot;,pvalueCutoff = 0.01,ont=&quot;MF&quot;, readable = T)
 plot(cg.mf,showCategory=20)+ggtitle(&quot;GO MF geneset enrichment by module&quot;)</code></pre>
-<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-6-2.png" width="1728" style="display: block; margin: auto;" /></p>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-2-2.png" width="1728" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Looking at biological process geneset enrichment 
 cg.bp&lt;-compareCluster(geneCluster=moduleGeneSets.Entrez,fun=&quot;enrichGO&quot;,
                       OrgDb = &quot;org.Mm.eg.db&quot;, pvalueCutoff = 0.01,ont=&quot;BP&quot;, readable = T)
 plot(cg.bp,showCategory=15)+ggtitle(&quot;GO BP geneset enrichment by module&quot;)</code></pre>
-<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-6-3.png" width="1728" style="display: block; margin: auto;" /></p>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-2-3.png" width="1728" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>cg.cc&lt;-compareCluster(geneCluster=moduleGeneSets.Entrez,fun=&quot;enrichGO&quot;,
                       OrgDb = &quot;org.Mm.eg.db&quot;, pvalueCutoff = 0.01,ont=&quot;CC&quot;, readable = T)
 plot(cg.cc,showCategory=15)+ggtitle(&quot;GO CC geneset enrichment by module&quot;)</code></pre>
-<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-6-4.png" width="1728" style="display: block; margin: auto;" /></p>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-2-4.png" width="1728" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Looking at reactome enrichment
 cr&lt;-compareCluster(geneCluster=moduleGeneSets.Entrez,fun=&quot;enrichPathway&quot;,
                    organism=&quot;mouse&quot;,pvalueCutoff = 0.1, readable = T)
 plot(cr,showCategory=10)+ggtitle(&quot;Reactome geneset enrichment by module&quot;)</code></pre>
-<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-6-5.png" width="1728" style="display: block; margin: auto;" /></p>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-2-5.png" width="1728" style="display: block; margin: auto;" /></p>
 <pre class="r"><code># Printing out the cluster enrichment diagrams. These will be useful for annotating the 
 pdf(file.path(file_dir,&quot;P7-all-module_geneset_enrichments.pdf&quot;),width=18,height=10, useDingbats = F)
 plot(ck,showCategory=10)+ggtitle(&quot;KEGG geneset enrichment by module&quot;)
@@ -930,7 +930,7 @@ dev.off()</code></pre>
 <pre><code>## quartz_off_screen 
 ##                 2</code></pre>
 <pre class="r"><code>p2.subset.all</code></pre>
-<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p><img src="WGCNA-final_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 </div>
 <div id="save-modules" class="section level3">
 <h3>Save modules</h3>

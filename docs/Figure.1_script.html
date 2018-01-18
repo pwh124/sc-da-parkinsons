@@ -314,6 +314,10 @@ div.tocify {
     <li>
       <a href="PD.GWAS.scoring.links.html">PD Gene Scoring</a>
     </li>
+    <li class="divider"></li>
+    <li>
+      <a href="Cplx1_Th-striatum_analysis.html">Cplx1 Th+ striatum density</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -324,9 +328,17 @@ div.tocify {
   </a>
 </li>
 <li>
+  <a href="shiny-link.html">
+    <span class="fa fa-bar-chart"></span>
+     
+    Explore Data
+  </a>
+</li>
+<li>
   <a href="https://github.com/pwh124/sc-da-parkinsons">
     <span class="fa fa-github"></span>
      
+    GitHub Repo
   </a>
 </li>
       </ul>
@@ -348,8 +360,8 @@ div.tocify {
 
 
 <hr />
-<p><strong>Last update:</strong> 2017-12-20</p>
-<p><strong>Code version:</strong> 0b77a64dab0950c144158dfe6c30a145bfd598ab</p>
+<p><strong>Last update:</strong> 2018-01-18</p>
+<p><strong>Code version:</strong> 5996c19850dc5fc65723f30bc33ab1c8d083a7e6</p>
 <hr />
 <div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level3">
 <h3>Setting important directories. Also loading important libraries and custom functions for analysis.</h3>
@@ -366,7 +378,14 @@ library(cowplot)</code></pre>
 </div>
 <div id="loading-the-cds-data-needed-to-produce-figures" class="section level3">
 <h3>Loading the cds data needed to produce figures</h3>
-<p>In order to produce the figures seen in Figure 1, we needed to load: <em>The final valid cell dataset (dat.filter.final.Rds) </em>The PCA results using genes with a high biological variance in the entire dataset *GSEA results for PC1</p>
+<p>In order to produce the figures seen in Figure 1, we needed to load:</p>
+<ul>
+<li>The final valid cell dataset (dat.filter.final.Rds)<br />
+</li>
+<li>The PCA results using genes with a high biological variance in the entire dataset<br />
+</li>
+<li>GSEA results for PC1</li>
+</ul>
 <pre class="r"><code>dat.filter &lt;- readRDS(file.path(Rdata_dir,&quot;dat.filter.final.Rds&quot;))
 dat.filter.BCV.pca &lt;- readRDS(file.path(Rdata_dir, &quot;dat.filter.BCV.pca&quot;))
 path_to_sheets &lt;- file.path(file_dir, &quot;PC1.all.cells.3_27_17.GseaPreranked.1490670535140&quot;)</code></pre>
@@ -541,7 +560,7 @@ dev.off()</code></pre>
 ## [25] Rtsne_0.13          pheatmap_1.0.8      tidyr_0.7.1        
 ## [28] dplyr_0.7.4         plyr_1.8.4          heatmap.plus_1.3   
 ## [31] stringr_1.2.0       marray_1.50.0       limma_3.28.21      
-## [34] reshape2_1.4.2      monocle_2.2.0       DDRTree_0.1.5      
+## [34] reshape2_1.4.3      monocle_2.2.0       DDRTree_0.1.5      
 ## [37] irlba_2.2.1         VGAM_1.0-2          ggplot2_2.2.1      
 ## [40] Biobase_2.32.0      BiocGenerics_0.18.0 Matrix_1.2-11      
 ## 
@@ -556,7 +575,7 @@ dev.off()</code></pre>
 ## [22] assertthat_0.2.0       lazyeval_0.2.1         acepack_1.4.1         
 ## [25] htmltools_0.3.6        tools_3.3.0            igraph_1.1.2          
 ## [28] gtable_0.2.0           glue_1.1.1             binman_0.1.0          
-## [31] doRNG_1.6.6            Rcpp_0.12.13           slam_0.1-37           
+## [31] doRNG_1.6.6            Rcpp_0.12.14           slam_0.1-37           
 ## [34] gdata_2.18.0           nlme_3.1-131           iterators_1.0.8       
 ## [37] mime_0.5               rngtools_1.2.4         gtools_3.5.0          
 ## [40] WriteXLS_4.0.0         XML_3.98-1.9           DEoptimR_1.0-8        
@@ -564,9 +583,9 @@ dev.off()</code></pre>
 ## [46] rpart_4.1-11           fastICA_1.2-1          latticeExtra_0.6-28   
 ## [49] stringi_1.1.5          pcaPP_1.9-72           foreach_1.4.3         
 ## [52] e1071_1.6-8            checkmate_1.8.4        caTools_1.17.1        
-## [55] rlang_0.1.2            pkgconfig_2.0.1        matrixStats_0.52.2    
+## [55] rlang_0.1.6            pkgconfig_2.0.1        matrixStats_0.52.2    
 ## [58] bitops_1.0-6           rgl_0.98.1             qlcMatrix_0.9.5       
-## [61] evaluate_0.10.1        purrr_0.2.3            bindr_0.1             
+## [61] evaluate_0.10.1        purrr_0.2.4            bindr_0.1             
 ## [64] labeling_0.3           htmlwidgets_0.9        magrittr_1.5          
 ## [67] R6_2.2.2               combinat_0.0-8         wdman_0.2.2           
 ## [70] foreign_0.8-69         mgcv_1.8-22            nnet_7.3-12           

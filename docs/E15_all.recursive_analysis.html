@@ -12,7 +12,7 @@
 <meta name="author" content="Paul Hook" />
 
 
-<title>E15.5 Recursive data analysis</title>
+<title>E15.5 all cells recursive data analysis</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -314,6 +314,10 @@ div.tocify {
     <li>
       <a href="PD.GWAS.scoring.links.html">PD Gene Scoring</a>
     </li>
+    <li class="divider"></li>
+    <li>
+      <a href="Cplx1_Th-striatum_analysis.html">Cplx1 Th+ striatum density</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -324,9 +328,17 @@ div.tocify {
   </a>
 </li>
 <li>
+  <a href="shiny-link.html">
+    <span class="fa fa-bar-chart"></span>
+     
+    Explore Data
+  </a>
+</li>
+<li>
   <a href="https://github.com/pwh124/sc-da-parkinsons">
     <span class="fa fa-github"></span>
      
+    GitHub Repo
   </a>
 </li>
       </ul>
@@ -341,14 +353,14 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">E15.5 Recursive data analysis</h1>
+<h1 class="title toc-ignore">E15.5 all cells recursive data analysis</h1>
 <h4 class="author"><em>Paul Hook</em></h4>
 
 </div>
 
 
-<p><strong>Last update:</strong> 2017-12-15</p>
-<p><strong>Code version:</strong> 97cdbba92f549b083d57cc1acd1fcd954ca4c492</p>
+<p><strong>Last update:</strong> 2018-01-18</p>
+<p><strong>Code version:</strong> 5996c19850dc5fc65723f30bc33ab1c8d083a7e6</p>
 <div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level3">
 <h3>Setting important directories. Also loading important libraries and custom functions for analysis.</h3>
 <pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
@@ -381,9 +393,9 @@ source(file.path(Script_dir,&quot;tools_R.r&quot;))</code></pre>
 <h3>Running PCA with high dispersion genes</h3>
 <p><img src="E15_all.recursive_analysis_files/figure-html/Run%20PCA%20with%20high%20BCV%20genes-1.png" width="672" /><img src="E15_all.recursive_analysis_files/figure-html/Run%20PCA%20with%20high%20BCV%20genes-2.png" width="672" /><img src="E15_all.recursive_analysis_files/figure-html/Run%20PCA%20with%20high%20BCV%20genes-3.png" width="672" /></p>
 </div>
-<div id="viewing-screeplots-and-determining-the-number-of-significant-pcs" class="section level3">
-<h3>Viewing screeplots and determining the number of “significant” PCs</h3>
-<p><img src="E15_all.recursive_analysis_files/figure-html/Screeplots%20of%20Data-1.png" width="672" /><img src="E15_all.recursive_analysis_files/figure-html/Screeplots%20of%20Data-2.png" width="672" /></p>
+<div id="screeplots" class="section level3">
+<h3>Screeplots</h3>
+<p>Viewing screeplots and determining the number of “significant” PCs <img src="E15_all.recursive_analysis_files/figure-html/Screeplots%20of%20Data-1.png" width="672" /><img src="E15_all.recursive_analysis_files/figure-html/Screeplots%20of%20Data-2.png" width="672" /></p>
 </div>
 <div id="creating-a-t-sne-plot-from-the-significant-pcs" class="section level3">
 <h3>Creating a t-SNE plot from the “significant” PCs</h3>
@@ -439,7 +451,7 @@ myTSNEPlotAlpha(e15.dat.filter,color=&quot;subset.cluster&quot;, shape=&quot;reg
 ## [19] Heatplus_2.18.0     Rtsne_0.13          pheatmap_1.0.8     
 ## [22] tidyr_0.7.1         dplyr_0.7.4         plyr_1.8.4         
 ## [25] heatmap.plus_1.3    stringr_1.2.0       marray_1.50.0      
-## [28] limma_3.28.21       reshape2_1.4.2      monocle_2.2.0      
+## [28] limma_3.28.21       reshape2_1.4.3      monocle_2.2.0      
 ## [31] DDRTree_0.1.5       irlba_2.2.1         VGAM_1.0-2         
 ## [34] ggplot2_2.2.1       Biobase_2.32.0      BiocGenerics_0.18.0
 ## [37] Matrix_1.2-11      
@@ -455,16 +467,16 @@ myTSNEPlotAlpha(e15.dat.filter,color=&quot;subset.cluster&quot;, shape=&quot;reg
 ## [22] acepack_1.4.1          htmltools_0.3.6        tools_3.3.0           
 ## [25] bindrcpp_0.2           igraph_1.1.2           gtable_0.2.0          
 ## [28] glue_1.1.1             binman_0.1.0           doRNG_1.6.6           
-## [31] Rcpp_0.12.13           slam_0.1-37            gdata_2.18.0          
+## [31] Rcpp_0.12.14           slam_0.1-37            gdata_2.18.0          
 ## [34] nlme_3.1-131           iterators_1.0.8        mime_0.5              
 ## [37] rngtools_1.2.4         gtools_3.5.0           WriteXLS_4.0.0        
 ## [40] XML_3.98-1.9           DEoptimR_1.0-8         yaml_2.1.15           
 ## [43] pkgmaker_0.22          rpart_4.1-11           fastICA_1.2-1         
 ## [46] latticeExtra_0.6-28    stringi_1.1.5          pcaPP_1.9-72          
 ## [49] foreach_1.4.3          e1071_1.6-8            checkmate_1.8.4       
-## [52] caTools_1.17.1         rlang_0.1.2            pkgconfig_2.0.1       
+## [52] caTools_1.17.1         rlang_0.1.6            pkgconfig_2.0.1       
 ## [55] matrixStats_0.52.2     bitops_1.0-6           qlcMatrix_0.9.5       
-## [58] evaluate_0.10.1        purrr_0.2.3            bindr_0.1             
+## [58] evaluate_0.10.1        purrr_0.2.4            bindr_0.1             
 ## [61] labeling_0.3           htmlwidgets_0.9        magrittr_1.5          
 ## [64] R6_2.2.2               combinat_0.0-8         wdman_0.2.2           
 ## [67] foreign_0.8-69         mgcv_1.8-22            nnet_7.3-12           

@@ -314,6 +314,10 @@ div.tocify {
     <li>
       <a href="PD.GWAS.scoring.links.html">PD Gene Scoring</a>
     </li>
+    <li class="divider"></li>
+    <li>
+      <a href="Cplx1_Th-striatum_analysis.html">Cplx1 Th+ striatum density</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -324,9 +328,17 @@ div.tocify {
   </a>
 </li>
 <li>
+  <a href="shiny-link.html">
+    <span class="fa fa-bar-chart"></span>
+     
+    Explore Data
+  </a>
+</li>
+<li>
   <a href="https://github.com/pwh124/sc-da-parkinsons">
     <span class="fa fa-github"></span>
      
+    GitHub Repo
   </a>
 </li>
       </ul>
@@ -347,10 +359,11 @@ div.tocify {
 </div>
 
 
-<p><strong>Last update:</strong> 2017-12-19</p>
-<p><strong>Code version:</strong> 8ac2e1736fd4b2e7f4a9bdfa1a82f781822ac8e8</p>
-<div id="setting-important-directories.-also-loading-important-libraries-and-custom-functions-for-analysis." class="section level3">
-<h3>Setting important directories. Also loading important libraries and custom functions for analysis.</h3>
+<p><strong>Last update:</strong> 2018-01-18</p>
+<p><strong>Code version:</strong> 5996c19850dc5fc65723f30bc33ab1c8d083a7e6</p>
+<div id="setting-important-directories" class="section level3">
+<h3>Setting important directories</h3>
+<p>Also loading important libraries and custom functions for analysis.</p>
 <pre class="r"><code>seq_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
 file_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/output&quot;
 Rdata_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/data&quot;
@@ -376,8 +389,8 @@ hist(fData(P7.Mb.dat.filter)$num_cells_expressed,breaks=100,col=&quot;red&quot;,
 abline(v=numCellThreshold,lty=&quot;dashed&quot;)</code></pre>
 <p><img src="P7_Mb.recursive_analysis_files/figure-html/filter%20by%20cells%20expressing%20each%20gene-2.png" width="672" /></p>
 </div>
-<div id="prepping-the-monocole-model-for-analysis" class="section level3">
-<h3>Prepping the Monocole model for analysis</h3>
+<div id="prepping-the-monocle-model-for-analysis" class="section level3">
+<h3>Prepping the Monocle model for analysis</h3>
 <pre class="r"><code># Only keeping &quot;expressed&quot; genes
 P7.Mb.dat.filter &lt;-P7.Mb.dat.filter[P7.Mb.dat.expressed_genes,]
 
@@ -436,16 +449,18 @@ hvPCA1</code></pre>
 <pre class="r"><code>hvPCA3</code></pre>
 <p><img src="P7_Mb.recursive_analysis_files/figure-html/Run%20PCA%20with%20high%20BCV%20genes-3.png" width="672" /></p>
 </div>
-<div id="the-first-pass-analysis-seems-to-show-obvious-outliers-in-the-pca.-below-the-relevant-data-is-saved-to-look-at-outliers-in-the-future" class="section level3">
-<h3>The first pass analysis seems to show obvious outliers in the PCA. Below, the relevant data is saved to look at outliers in the future</h3>
+<div id="outlier-identification" class="section level3">
+<h3>Outlier identification</h3>
+<p>The first pass analysis seems to show obvious outliers in the PCA. Below, the relevant data is saved to look at outliers in the future</p>
 <pre class="r"><code>MB.outlier.plot &lt;- ggbiplot(P7.Mb.dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(P7.Mb.dat.filter)$region,ellipse=F,var.axes=F)
 
 saveRDS(MB.outlier.plot, file = file.path(Rdata_dir,&quot;P7.MB.PCA.outliers.rds&quot;))
 
 saveRDS(hvPCA2, file = file.path(Rdata_dir,&quot;P7.MB.PCA.outliers.rds&quot;))</code></pre>
 </div>
-<div id="in-an-attempt-to-identify-what-the-outliers-are-genes-driving-the-outlier-appearance-are-extracted-and-saved-for-gsea-analysis" class="section level3">
-<h3>In an attempt to identify what the outliers are, genes driving the outlier appearance are extracted and saved for GSEA analysis</h3>
+<div id="outlier-analysis" class="section level3">
+<h3>Outlier analysis</h3>
+<p>In an attempt to identify what the outliers are, genes driving the outlier appearance are extracted and saved for GSEA analysis</p>
 <pre class="r"><code># PC1 seems to describe outliers in the data
 P7.MB.dat.pca.rotations.df &lt;- as.data.frame(P7.Mb.dat.filter.BCV.pca$rotation[,1:6])
 genes.tmp &lt;- P7.MB.dat.pca.rotations.df[order(-P7.MB.dat.pca.rotations.df$PC1),]
@@ -484,8 +499,10 @@ nrow(pData(P7.Mb.dat.filter)) #75</code></pre>
 <pre><code>## [1] 75</code></pre>
 <pre class="r"><code>saveRDS(object = P7.Mb.outliers, file = file.path(Rdata_dir,&quot;P7.Mb.outliers.rds&quot;))</code></pre>
 </div>
-<div id="rerunning-analysis-on-p7-mb-with-outliers-removed." class="section level2">
-<h2>Rerunning analysis on P7 MB with outliers removed.</h2>
+<div id="rerunning-analysis-on-p7-mb-with-outliers-removed." class="section level3">
+<h3>Rerunning analysis on P7 MB with outliers removed.</h3>
+<p>Starting here, all work performed above was re-run with the outliers removed.</p>
+</div>
 <div id="filter-genes-by-percentage-of-cells-expresssing-each-gene-with-outliers-removed" class="section level3">
 <h3>Filter genes by percentage of cells expresssing each gene with outliers removed</h3>
 <pre class="r"><code># Plot number of cells expressing each gene as histogram
@@ -500,8 +517,8 @@ hist(fData(P7.Mb.dat.filter)$num_cells_expressed,breaks=100,col=&quot;red&quot;,
 abline(v=numCellThreshold,lty=&quot;dashed&quot;)</code></pre>
 <p><img src="P7_Mb.recursive_analysis_files/figure-html/filter%20by%20cells%20expressing%20each%20gene%20with%20outliers%20removed-2.png" width="672" /></p>
 </div>
-<div id="prepping-the-monocole-model-for-analysis-with-outliers-removed" class="section level3">
-<h3>Prepping the Monocole model for analysis with outliers removed</h3>
+<div id="prepping-the-monocle-model-for-analysis-with-outliers-removed" class="section level3">
+<h3>Prepping the Monocle model for analysis with outliers removed</h3>
 <pre class="r"><code># Only keeping &quot;expressed&quot; genes
 P7.Mb.dat.filter &lt;-P7.Mb.dat.filter[P7.Mb.dat.expressed_genes,]
 
@@ -561,8 +578,9 @@ hvPCA1</code></pre>
 <p><img src="P7_Mb.recursive_analysis_files/figure-html/Run%20PCA%20with%20high%20BCV%20genes%20with%20outliers%20removed-3.png" width="672" /></p>
 <pre class="r"><code># No real outliers seen</code></pre>
 </div>
-<div id="viewing-screeplots-and-determining-the-number-of-significant-pcs.-since-no-outliers-were-identified-above-we-will-continue-with-the-analysis-with-outliers-removed" class="section level3">
-<h3>Viewing screeplots and determining the number of “significant” PCs. Since no outliers were identified above, we will continue with the analysis with outliers removed</h3>
+<div id="screeplots" class="section level3">
+<h3>Screeplots</h3>
+<p>Viewing screeplots and determining the number of “significant” PCs. Since no additional outliers were identified in the PCA plot above, we will continue with the analysis with only the original outliers removed</p>
 <pre class="r"><code># Making a screeplot of the BCV PCA. This will help determine how many
 # principal components we should use in our tSNE visualization Show this
 # plot
@@ -591,8 +609,9 @@ P7.Mb.dat.filter.BCV.tsne.plot&lt;-myTSNEPlotAlpha(P7.Mb.dat.filter,color=&quot;
 P7.Mb.dat.filter.BCV.tsne.plot</code></pre>
 <p><img src="P7_Mb.recursive_analysis_files/figure-html/tsne%20with%20outliers%20removed-1.png" width="672" /></p>
 </div>
-<div id="identifying-clusters-in-the-data-in-an-unsupervised-manner-with-outliers-removed" class="section level3">
-<h3>Identifying clusters in the data in an unsupervised manner with outliers removed</h3>
+<div id="identifying-clusters" class="section level3">
+<h3>Identifying clusters</h3>
+<p>Identifying clusters in the data in an unsupervised manner with outliers removed</p>
 <pre class="r"><code># Going to attempt to use the R program &#39;ADPclust&#39; to determine how many
 # clusters our data has
 
@@ -692,7 +711,7 @@ saveRDS(SN.expressed.genes, file = file.path(Rdata_dir,&quot;SN.expressed.genes.
 ## [19] lattice_0.20-35     Heatplus_2.18.0     Rtsne_0.13         
 ## [22] pheatmap_1.0.8      tidyr_0.7.1         dplyr_0.7.4        
 ## [25] plyr_1.8.4          heatmap.plus_1.3    stringr_1.2.0      
-## [28] marray_1.50.0       limma_3.28.21       reshape2_1.4.2     
+## [28] marray_1.50.0       limma_3.28.21       reshape2_1.4.3     
 ## [31] monocle_2.2.0       DDRTree_0.1.5       irlba_2.2.1        
 ## [34] VGAM_1.0-2          ggplot2_2.2.1       Biobase_2.32.0     
 ## [37] BiocGenerics_0.18.0 Matrix_1.2-11      
@@ -708,16 +727,16 @@ saveRDS(SN.expressed.genes, file = file.path(Rdata_dir,&quot;SN.expressed.genes.
 ## [22] formatR_1.5            acepack_1.4.1          htmltools_0.3.6       
 ## [25] tools_3.3.0            bindrcpp_0.2           igraph_1.1.2          
 ## [28] gtable_0.2.0           glue_1.1.1             binman_0.1.0          
-## [31] doRNG_1.6.6            Rcpp_0.12.13           slam_0.1-37           
+## [31] doRNG_1.6.6            Rcpp_0.12.14           slam_0.1-37           
 ## [34] gdata_2.18.0           nlme_3.1-131           iterators_1.0.8       
 ## [37] mime_0.5               rngtools_1.2.4         gtools_3.5.0          
 ## [40] WriteXLS_4.0.0         XML_3.98-1.9           DEoptimR_1.0-8        
 ## [43] yaml_2.1.15            pkgmaker_0.22          rpart_4.1-11          
 ## [46] fastICA_1.2-1          latticeExtra_0.6-28    stringi_1.1.5         
 ## [49] pcaPP_1.9-72           foreach_1.4.3          e1071_1.6-8           
-## [52] checkmate_1.8.4        caTools_1.17.1         rlang_0.1.2           
+## [52] checkmate_1.8.4        caTools_1.17.1         rlang_0.1.6           
 ## [55] pkgconfig_2.0.1        matrixStats_0.52.2     bitops_1.0-6          
-## [58] qlcMatrix_0.9.5        evaluate_0.10.1        purrr_0.2.3           
+## [58] qlcMatrix_0.9.5        evaluate_0.10.1        purrr_0.2.4           
 ## [61] bindr_0.1              labeling_0.3           htmlwidgets_0.9       
 ## [64] magrittr_1.5           R6_2.2.2               combinat_0.0-8        
 ## [67] wdman_0.2.2            foreign_0.8-69         mgcv_1.8-22           
@@ -725,7 +744,6 @@ saveRDS(SN.expressed.genes, file = file.path(Rdata_dir,&quot;SN.expressed.genes.
 ## [73] rmarkdown_1.8          data.table_1.10.4      HSMMSingleCell_0.106.2
 ## [76] digest_0.6.12          xtable_1.8-2           httpuv_1.3.5          
 ## [79] openssl_0.9.7          munsell_0.4.3          registry_0.3</code></pre>
-</div>
 </div>
 
 <hr>
