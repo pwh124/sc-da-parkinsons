@@ -10,7 +10,8 @@ editor_options:
 
 **Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
 
-###Setting important directories. Also loading important libraries and custom functions for analysis.
+###Setting important directories
+Also loading important libraries and custom functions for analysis.
 ```{r init, message=FALSE, warning=FALSE}
 seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
 file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
@@ -39,7 +40,7 @@ hist(fData(P7.Mb.dat.filter)$num_cells_expressed,breaks=100,col="red",main="Cell
 abline(v=numCellThreshold,lty="dashed")
 ```
 
-###Prepping the Monocole model for analysis
+###Prepping the Monocle model for analysis
 ```{r model_prep - Preparing the data for monocle analysis}
 # Only keeping "expressed" genes
 P7.Mb.dat.filter <-P7.Mb.dat.filter[P7.Mb.dat.expressed_genes,]
@@ -95,7 +96,8 @@ hvPCA2
 hvPCA3
 ```
 
-###The first pass analysis seems to show obvious outliers in the PCA. Below, the relevant data is saved to look at outliers in the future
+###Outlier identification
+The first pass analysis seems to show obvious outliers in the PCA. Below, the relevant data is saved to look at outliers in the future
 ```{r saving .rds of outliers}
 MB.outlier.plot <- ggbiplot(P7.Mb.dat.filter.BCV.pca,choices=c(1,2),scale=0,groups=pData(P7.Mb.dat.filter)$region,ellipse=F,var.axes=F)
 
@@ -104,7 +106,8 @@ saveRDS(MB.outlier.plot, file = file.path(Rdata_dir,"P7.MB.PCA.outliers.rds"))
 saveRDS(hvPCA2, file = file.path(Rdata_dir,"P7.MB.PCA.outliers.rds"))
 ```
 
-###In an attempt to identify what the outliers are, genes driving the outlier appearance are extracted and saved for GSEA analysis
+###Outlier analysis
+In an attempt to identify what the outliers are, genes driving the outlier appearance are extracted and saved for GSEA analysis
 ```{r what are these outliers}
 # PC1 seems to describe outliers in the data
 P7.MB.dat.pca.rotations.df <- as.data.frame(P7.Mb.dat.filter.BCV.pca$rotation[,1:6])
@@ -146,7 +149,8 @@ nrow(pData(P7.Mb.dat.filter)) #75
 saveRDS(object = P7.Mb.outliers, file = file.path(Rdata_dir,"P7.Mb.outliers.rds"))
 ```
 
-##Rerunning analysis on P7 MB with outliers removed. 
+###Rerunning analysis on P7 MB with outliers removed.
+Starting here, all work performed above was re-run with the outliers removed.
 
 ###Filter genes by percentage of cells expresssing each gene with outliers removed
 ```{r filter by cells expressing each gene with outliers removed}
@@ -162,7 +166,7 @@ hist(fData(P7.Mb.dat.filter)$num_cells_expressed,breaks=100,col="red",main="Cell
 abline(v=numCellThreshold,lty="dashed")
 ```
 
-###Prepping the Monocole model for analysis with outliers removed
+###Prepping the Monocle model for analysis with outliers removed
 ```{r model_prep - Preparing the data for monocle analysis with outliers removed}
 # Only keeping "expressed" genes
 P7.Mb.dat.filter <-P7.Mb.dat.filter[P7.Mb.dat.expressed_genes,]
@@ -220,7 +224,8 @@ hvPCA3
 # No real outliers seen
 ```
 
-###Viewing screeplots and determining the number of "significant" PCs. Since no outliers were identified above, we will continue with the analysis with outliers removed
+###Screeplots
+Viewing screeplots and determining the number of "significant" PCs. Since no additional outliers were identified in the PCA plot above, we will continue with the analysis with only the original outliers removed
 ```{r Screeplots of Data,tidy=TRUE}
 # Making a screeplot of the BCV PCA. This will help determine how 
 # many principal components we should use in our tSNE visualization
@@ -250,7 +255,8 @@ P7.Mb.dat.filter.BCV.tsne.plot<-myTSNEPlotAlpha(P7.Mb.dat.filter,color="region",
 P7.Mb.dat.filter.BCV.tsne.plot
 ```
 
-###Identifying clusters in the data in an unsupervised manner with outliers removed
+###Identifying clusters
+Identifying clusters in the data in an unsupervised manner with outliers removed
 ```{r - attempting to cluster,tidy=TRUE}
 # Going to attempt to use the R program "ADPclust" to determine how many clusters our data has
 

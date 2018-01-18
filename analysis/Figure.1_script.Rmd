@@ -27,10 +27,12 @@ library(cowplot)
 ```
 
 ###Loading the cds data needed to produce figures
-In order to produce the figures seen in Figure 1, we needed to load:
-*The final valid cell dataset (dat.filter.final.Rds)
-*The PCA results using genes with a high biological variance in the entire dataset
-*GSEA results for PC1
+In order to produce the figures seen in Figure 1, we needed to load:  
+
+* The final valid cell dataset (dat.filter.final.Rds)  
+* The PCA results using genes with a high biological variance in the entire dataset  
+* GSEA results for PC1  
+
 ```{r loading data needed}
 dat.filter <- readRDS(file.path(Rdata_dir,"dat.filter.final.Rds"))
 dat.filter.BCV.pca <- readRDS(file.path(Rdata_dir, "dat.filter.BCV.pca"))

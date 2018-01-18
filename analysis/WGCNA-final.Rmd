@@ -71,7 +71,7 @@ datExpr <- mydata.trans
 
 ### Heirarchial clustering of cells
 Next, heirarchial clutering was used to cluster the data and look for any outliers. There seems to be only one glaring outlier.
-```{r Clustering cells and plotting}
+```{r Clustering cells and plotting, cache=TRUE}
 # Clustering the data by using heirarchial clustering
 sampleTree <- flashClust(dist(datExpr), method = "average")
 
@@ -97,7 +97,7 @@ nSamples <- nrow(datExpr)
 
 ### Making simple trait dataframe
 Making a data frame that can be filled with meta-data about the cells and can be used to annotate the heirarchial clustering
-```{r - Making trait dataframe, message=FALSE, warning=FALSE}
+```{r Making trait dataframe, message=FALSE, warning=FALSE}
 # subsetting out trait data from the initial cds
 datTraits <- pData(P7.dat.WGCNA[,keepSamples])
 datTraits<-datTraits[,c("region","subset.cluster","num_genes_expressed")]
@@ -131,7 +131,7 @@ plotDendroAndColors(sampleTree2, datTraits$x,
 
 ###Choosing a soft threshold 
 In order to now perform WGCNA on our data, a "soft threshold" needs to be calculated. This produces some NAs (warning message suppressed)
-```{r, message=FALSE,warning=FALSE}
+```{r picking soft threshold, message=FALSE,warning=FALSE, cache=TRUE}
 # Setting what soft thresholds (powers) should be tested for potential use as a soft threshold
 powers <- c(c(1:10), seq(from = 12, to=20, by=2))
 
@@ -178,7 +178,7 @@ dev.off()
 
 ### Performing topological overlap
 A soft threshold of 10 was chosen based on the scale independence plot beginning to finally level out at that point for good. The dip from 8 to 9 prevented me from choosing 8. We choose a topology cut-off of 0.80, which is arbitary but similar to the number suggested in WGCNA tutorials (see "A General Framework for Weighted Gene CoExpression Network Analysis", 2005).
-```{r}
+```{r performing topological overlap, cache=TRUE}
 # Choosing a power of 10 based on Scale independence plot and 0.8 threshold
 softPower <- 10
 adjacency <- adjacency(datExpr, power = softPower, type = "signed")
@@ -217,7 +217,7 @@ plotDendroAndColors(geneTree, dynamicColors, "Dynamic Tree Cut",
 
 ### Relationships between modules
 Now that we have identified modules in our data, we want to explore the relationships between those modules a little more. Note that grey and turquoise modules were removed in these analyses because turquoise contained all genes that did not get slotted in to a specific module and grey had only 4 genes (below our set module size)
-```{r}
+```{r relationships between modules, cache=TRUE}
 # Calculate eigengenes for each module
 MEList <- moduleEigengenes(datExpr, colors = dynamicColors)
 MEs <- MEList$eigengenes
@@ -270,7 +270,7 @@ dev.off()
 
 ### Gene enrichment analyses
 Now that we had explored the modules relationship to each other, we wanted to see if the genes within each module were enriched for gene ontology, KEGG, and Reactome terms. Not all genes map through 'bitr' so warnings were supressed
-```{r, eval=T, message=F, warning=FALSE}
+```{r gene enrichment analyses, message=F, warning=FALSE, cache=T}
 # Making a list of module names
 modNames <- substring(names(MEs), 3)
 
@@ -337,7 +337,7 @@ dev.off()
 
 ### Writing out GO tables
 In order to output all of our GO data in a relatively simple way, all gene enrichment results were written out to a tables
-```{r Getting outputs of cluster tables, eval=T,message=FALSE,warning=FALSE}
+```{r Getting outputs of cluster tables, eval=T,message=FALSE,warning=FALSE, cache=TRUE}
 
 # Gene enrichment tables are found in 'ck','cg.mf','cg.bp','cg.cc', 'cr'
 # summary() allows for the S4 objects created by clusterProfiler to be converted in to dataframes

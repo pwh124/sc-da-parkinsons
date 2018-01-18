@@ -1,5 +1,5 @@
 ---
-title: "E15.5 Recursive data analysis"
+title: "E15.5 all cells recursive data analysis"
 author: "Paul Hook"
 output: html_document
 ---
@@ -90,7 +90,8 @@ hvPCA2
 hvPCA3
 ```
 
-###Viewing screeplots and determining the number of "significant" PCs
+### Screeplots
+Viewing screeplots and determining the number of "significant" PCs
 ```{r Screeplots of Data,echo=FALSE,message=FALSE, error=FALSE, warning=FALSE, tidy=TRUE}
 # Making a screeplot of the BCV PCA. This will help determine how 
 # many principal components we should use in our tSNE visualization

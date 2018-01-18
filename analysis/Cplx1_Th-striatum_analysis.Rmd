@@ -41,7 +41,7 @@ datatable(data = dat, caption = "Th+ density measurements")
 ```
 
 
-###Processing and inital visualization of the data
+###Processing and initial visualization of the data
 In order to analyze the data, we had to process it some first. "Blanks" which were measurements of the cortical _Th_+ staining in each section were removed, a unqiue identifier for each section was added and then mice were annotated as being "WT" or "KO"
 ```{r processing, fig.align='center'}
 #Remove 0s 'adjusted.mean' which are from the cortical measurements

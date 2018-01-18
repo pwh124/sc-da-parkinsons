@@ -8,7 +8,8 @@ output: html_document
 
 **Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
 
-###Setting important directories. Also loading important libraries and custom functions for analysis.
+###Setting important directories
+Also loading important libraries and custom functions for analysis.
 ```{r init, message=FALSE, warning=FALSE}
 seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
 file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
@@ -58,7 +59,7 @@ hist(fData(P7.dat.filter)$num_cells_expressed,breaks=50,col="red",main="Cells ex
 abline(v=numCellThreshold,lty="dashed")
 ```
 
-###Prepping the Monocole model for analysis
+###Prepping the Monocle model for analysis
 ```{r model_prep - Preparing the data for monocle analysis}
 # Only keeping "expressed" genes
 P7.dat.filter <-P7.dat.filter[P7.dat.expressed_genes,]
@@ -120,7 +121,8 @@ hvPCA3
 ```
 
 
-###Viewing screeplots and determining the number of "significant" PCs.
+###Screeplots
+Viewing screeplots and determining the number of "significant" PCs.
 ```{r Screeplots of Data,tidy=TRUE}
 # Making a screeplot of the BCV PCA. This will help determine how 
 # many principal components we should use in our tSNE visualization

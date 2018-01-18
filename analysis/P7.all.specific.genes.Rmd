@@ -1,5 +1,5 @@
 ---
-title: "P7 Analysis"
+title: "P7 cluster specific genes"
 author: "Paul Hook"
 output: html_document
 ---
@@ -8,7 +8,8 @@ output: html_document
 
 **Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
 
-###Setting important directories. Also loading important libraries and custom functions for analysis.
+###Setting important directories
+Also loading important libraries and custom functions for analysis.
 ```{r init, message=FALSE, warning=FALSE}
 seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
 file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
@@ -24,7 +25,7 @@ P7.dat.filter <- readRDS(file = file.path(Rdata_dir, "P7.dat.filter.final.Rds"))
 nrow(pData(P7.dat.filter)) # 224
 ```
 
-###Performing differentially expression
+###Performing differential expression
 ```{r Differential expression, message=FALSE, warning=FALSE}
 
 P7.Diff.Test <- differentialGeneTest(P7.dat.filter, 
@@ -90,7 +91,8 @@ row.names(merged.df) <- merged.df$Row.names
 merged.df <- merged.df[,-1]
 ```
 
-###Determining the specificity score to use as a cutoff
+###Specificity score
+Determining the specificity score to use as a cutoff
 ```{r Determining the specificity score to use as a cutoff}
 color <- c("#F2C318","#E790AC","#F18421","#0168A5","#848483","#A4CAEB","#885793","#008957","#222222")
 color.transparent <- adjustcolor(color, alpha.f = 0.3)
@@ -108,7 +110,8 @@ hist(dat.JSD$P7.OB.3.mean, breaks = bins, add = T, col = color.transparent[9])
 abline(v = 0.3, lwd = 2)
 ```
 
-###Determining specific genes for each cluster and writing out a table
+###Specific genes
+Determining specific genes for each cluster and writing out a table
 ```{r determining the specific genes}
 P7.specific.genes <- data.frame()
 
@@ -124,7 +127,7 @@ names(P7.specific.genes) <- c("P7.FB.1","P7.FB.2","P7.MB.1","P7.MB.2","P7.MB.3",
 write.table(P7.specific.genes, file = file.path(file_dir, "P7.specific.genes.txt"), sep = "\t", quote = F, row.names = F)
 ```
 
-###Making an interactive table for specific genes
+###Interactive table for specific genes
 ```{r}
 library(DT)
 datatable(P7.specific.genes)

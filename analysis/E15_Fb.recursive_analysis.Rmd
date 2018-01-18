@@ -37,7 +37,7 @@ hist(fData(e15.Fb.dat.filter)$num_cells_expressed,breaks=50,col="red",main="Cell
 abline(v=numCellThreshold,lty="dashed")
 ```
 
-###Prepping the Monocole model for analysis
+###Prepping the Monocle model for analysis
 ```{r model_prep - Preparing the data for monocle analysis}
 # Only keeping "expressed" genes
 e15.Fb.dat.filter <-e15.Fb.dat.filter[e15.Fb.dat.expressed_genes,]
@@ -95,7 +95,8 @@ hvPCA3
 # No real outliers seen
 ```
 
-###Viewing screeplots and determining the number of "significant" PCs
+###Screeplots
+Viewing screeplots and determining the number of "significant" PCs
 ```{r Screeplots of Data,tidy=TRUE}
 # Making a screeplot of the BCV PCA. This will help determine how 
 # many principal components we should use in our tSNE visualization
@@ -125,7 +126,8 @@ e15.Fb.dat.filter.BCV.tsne.plot<-myTSNEPlotAlpha(e15.Fb.dat.filter,color="region
 e15.Fb.dat.filter.BCV.tsne.plot
 ```
 
-###Identifying clusters in the data in an unsupervised manner
+###Identifying clusters
+Identifying clusters in the data in an unsupervised manner
 ```{r - attempting to cluster,tidy=TRUE}
 # Going to attempt to use the R program "ADPclust" to determine how many clusters our data has
 

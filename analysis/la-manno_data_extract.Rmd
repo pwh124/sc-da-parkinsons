@@ -10,7 +10,8 @@ editor_options:
 
 **Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
 
-###Setting important directories. Also loading important libraries and custom functions for analysis.
+###Setting important directories
+Also loading important libraries and custom functions for analysis.
 ```{r init, message=FALSE, warning=FALSE}
 seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
 file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
@@ -23,7 +24,7 @@ library(DT)
 ```
 
 ###Loading La Manno (2016) data
-In order to incorporate other information about expression of genes in SN DA neurons, we downloaded expression data from adult midbrain. This came from La Manno, et al. (2016) courtesy of GEO:GSE76381. This data was not in a very friendly format (an extensive header; see below), so it had to be extensively processed.
+In order to incorporate other information about expression of genes in SN DA neurons, we downloaded expression data from adult midbrain. This came from La Manno, et al. (2016) courtesy of <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE76381" target="_blank">GEO:GSE76381</a>. This data was not in a very friendly format (an extensive header; see below), so it had to be extensively processed. This data is referred to as "linnarsson" (who is the senior author on the paper) because it was easier to remember.
 ```{r loading data}
 # Loading in the data
 linnarsson.adult <- read.csv(file = file.path(Rdata_dir,"GSE76381_MouseAdultDAMoleculeCounts.cef.txt"), stringsAsFactors = F)
