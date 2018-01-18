@@ -10,6 +10,7 @@ Since Figure 5 involved scripts that were long for individual panels and some pa
 * [Figure 5A](Figure.5A.html)
 * [Figure 5C](Figure.5C.html)
 * [Figure 5E](Cplx1_Th-striatum_analysis.html#visualization)
+This links to a boxplot that shows the comparison of _Th_+ striatum staining between WT and _Cplx1_ KO mice
 
 ***
 **Last update:** `r Sys.Date()`
