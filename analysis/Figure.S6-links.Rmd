@@ -9,9 +9,7 @@ output:
 Figure S6 displays results from simulations performed in order to give context to the scoring of PD GWAS genes in our paper.
 
 * [Making a SNP-Gene Master Sheet](Revision_Simulation_website.html)
-* [Figure S6A](Figure.S6A.html)
-* [Figure S6B](Figure.S6B.html)  
-* [Figure S6C](Figure.S6B.html)
+* [Figure S6](Figure.S6-new.html)
 
 ***
 **Last update:** `r Sys.Date()`

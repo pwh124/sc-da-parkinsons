@@ -34,7 +34,7 @@ The final PD GWAS gene scoring data frame was loaded in.
 final.gwas.table <- read.delim(file = file.path(file_dir, "PD.GWAS.Score.Final.txt"))
 ```
 
-###Figure S6A
+###Figure S7A
 Since 'gene_biotype' was included in the information extracted for each gene, we plotted the number of genes with each particular biotype in our data.
 ```{r, fig.align='center',fig.height=6,fig.width=10,fig.asp=0.5}
 # Make bar plot for genes by gene_biotype
@@ -53,7 +53,7 @@ biotype.plot <- ggplot(gwas.gene.biotype.df, aes(x= fct_rev(fct_infreq(gene_biot
 biotype.plot
 ```
 
-###Figure S6B
+###Figure S7B
 We plotted the number of protein coding genes _without_ a mouse homolog in each locus.
 ```{r,fig.align='center',fig.height=8,fig.width=10}
 # Make bar plot for protein coding genes without homologs by locus

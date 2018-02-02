@@ -1,0 +1,218 @@
+---
+title: "Figure.S6.Rmd"
+author: "Paul Hook"
+output: html_document
+---
+
+***
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`  
+
+***
+
+###Setting important directories
+Also loading important libraries and custom functions for analysis.
+```{r init, message=FALSE, warning=FALSE}
+seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
+Rdata_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
+source(file.path(Script_dir,'init.R'))
+source(file.path(Script_dir,"tools_R.r"))
+
+library(pryr)
+
+## Add an alpha value to a colour
+add.alpha <- function(col, alpha=1){
+  if(missing(col))
+    stop("Please provide a vector of colours.")
+  apply(sapply(col, col2rgb)/255, 2, 
+                     function(x) 
+                       rgb(x[1], x[2], x[3], alpha=alpha))  
+}
+```
+
+## Loading and summarizing the data
+First we need to load the data into R. The gene-SNP data was compiled from Ensembl, using NHGRI GWAS catalog SNPs with +/- 1 Mb coordinates.
+```{r}
+# Loading gene-SNP-data complied from Ensembl
+dat <- read.delim(file.path(file_dir,"gwas.snp_results.txt"))
+
+# Changing SNP column to factor
+dat$snp <- as.factor(dat$snp)
+
+# Check on how many SNPs we have
+length(levels(dat$snp)) 
+```
+
+###Adding mouse homolog data
+In order to do any simulation, we need to add mouse homologs to the mix. I used a modified version of the Homologene database from MGI, which only contained genes with 1-to-1 mouse-human homologs. I then will merge the tables and remove genes with no 1-to-1 mouse homolog, much like a did when calculated numbers for our analyses.
+```{r}
+# First need to load and process the mouse MGI data
+# Processed in the "biomart.finding.genes.Rmd"
+homolog.table <- read.delim(file.path(file_dir,"one-one.homologs.txt"))
+
+# Merge these tables in order to add mouse genes to dat os they can be scored
+dat.merge <- unique(merge(dat, homolog.table, by.x = "hgnc_symbol", by.y = "HumanSymbol", all.x = T))
+
+# Check for duplicated rows
+summary(duplicated(dat.merge))
+
+# Check number of unique SNPs queried
+length(levels(dat.merge$snp))
+
+# Remove those without mouse homologs
+filtered.dat.merge <- dat.merge[!is.na(dat.merge$MouseSymbol),]
+
+# Check number of unique SNPs again
+length(levels(filtered.dat.merge$snp))
+```
+
+###Score genes for expression
+Now that I have a final dataset to work with, I can score the genes based on expression in our SN DA cluster as well as from the La Manno SN DA cluster.
+```{r,tidy=TRUE}
+# Loading in the SN expression data
+# SNC expressed genes in our data
+SN.expressed.genes <- readRDS(file = file.path(Rdata_dir,'SN.expressed.genes.rds'))
+
+# SNC expresed genes in Linnarsson Data
+lin.snc.exprs <- readRDS(file = file.path(Rdata_dir,"lin.snc.expressed.rds"))
+
+# Scoring based on expression
+filtered.dat.merge$expression <- as.factor(if_else(filtered.dat.merge$MouseSymbol %in% SN.expressed.genes, 1, 0))
+
+# Scoring based on being expressed in Lin
+filtered.dat.merge$lin.exprs <- as.factor(if_else(filtered.dat.merge$MouseSymbol %in% lin.snc.exprs, 1, 0))
+```
+
+###Summarizing data
+Now that every gene in every locus is scored for expression, the data needed to be summarized by locus. Data will be summarized at the level of total genes with 1:1 human:mouse homologs in the locus as well as by how many genes are expressed in each locus
+```{r}
+# Summarizing
+dat.merge.sum <- filtered.dat.merge %>%
+  dplyr::group_by(snp) %>%
+  dplyr::summarise(total.genes = n(),
+                   exprs.genes = sum(expression == 1 | lin.exprs == 1))
+```
+
+###Figure S6A
+A permutation needed to be set up that would randomly sample 49 loci from the summarized dataset we have (dat.merge.sum) and then compute the frequency of genes in those randomly sampled loci that are expressed. This simulation would give us some idea as to whether the percentage of expressed genes in SN DA neurons in PD GWAS loci is similar to that of random GWAS loci. Since the data appeared to be normal, the 43% figure in our data was tested for signficance.
+```{r, Figure 6A, fig.align='center'}
+# Setting up blank vectors to be populated
+count.freq <- c()
+total.freq <- c()
+exprs.freq <- c()
+
+# Running my for loop
+set.seed(24)
+for(i in 1:10000){
+  temp <- sample_n(dat.merge.sum,49) # sampling 49 loci
+  total <- sum(temp$total.genes) # Getting total number of genes in that sampling
+  total.freq <- c(total,total.freq) # Collecting that number
+  exprs <- sum(temp$exprs.genes) # Getting total number of expressed genes in that sampling
+  exprs.freq <- c(exprs, exprs.freq) # Collecting that number
+  freq <- exprs/total # Calculating percentage of expressed genes
+  count.freq <- c(freq, count.freq) # Collecting that number
+  i = i + 1 # Moving the counter forward
+}
+
+# Looking at normality of the data
+qqnorm(count.freq)
+qqline(count.freq, col=2)
+
+# Looking at the significance of 0.43
+p.test <- pnorm(0.43,mean=mean(count.freq),sd=sd(count.freq), lower.tail = F)
+
+p1 %<a-% {
+  hist(count.freq, breaks=50,
+     xlab="Percentage of genes expressed in 49 loci",
+     main="",
+     ylab = "Number of simulations",
+     col = "#2E8B5766")
+  abline(v=0.43,lwd=2,col="red")
+  text(c(0.455,0.455),
+      c(900,930),
+      labels = c(paste0("P = ",round(p.test,5)),
+                  paste0("0.43")), col = "red", font = 2)
+}
+
+pdf(file.path(file_dir,"Figure.6A.pdf"),height = 3, width = 2.5, pointsize = 8, family = 'Helvetica')
+p1
+dev.off()
+
+p1
+```
+
+###Figure S6B
+A permutation was run to see whether or not we are seeing a greater than expected number of loci with >= 1 SN expressed gene in our PD GWAS loci when compared to random GWAS loci. It does look like the majority of permutations have less than 49 loci (to the left of red line) with at least 1 gene expressed.
+```{r, fig.align='center'}
+# Setting up blank vector to be populated
+count.1 <- c()
+# Running my for loop
+set.seed(24)
+for(i in 1:10000){
+  temp <- sample_n(dat.merge.sum,49) # randomly sample 49 loci
+  tf <- temp$exprs.genes >= 1 # Create a logical vector 
+  num <- length(tf[tf==TRUE]) # Count loci wtih >= 1 gene expressed
+  count.1 <- c(num, count.1) # Collect that number
+  i = i + 1 # Move the counter
+}
+
+# Plotting
+p2 %<a-% {
+  hist(count.1, breaks=10,
+     xlab = "Number of loci out of 49",
+     ylab = "Number of simulations",
+     main = "",
+     col="#6A5ACD66")
+  abline(v=48, lwd=2, col="red")
+  text("49",col='red',y=750,x=49)
+  arrows(x0=48,x1=49,y0=2600,y1=2600, col='red',lwd=2)
+}
+
+pdf(file.path(file_dir,"one.gene_loci_simulation.pdf"), height = 3, width = 2.5, pointsize = 8, family = 'Helvetica')
+p2
+dev.off()
+
+p2
+```
+
+###Figure S6C
+A permutation was run in order to see if the number of PD GWAS loci with *only* one SN DA neuron expressed gene that we find in our paper (n = 3) is different than what we would expect from 49 random GWAS loci. We see that only finding 3/49 loci wtih 1 gene expressed is actually lower than what would be expected from random loci.
+`````{r Figure S6C, fig.align='center'}
+# Set up blank vector
+count <- c()
+# Running for loop
+set.seed(24)
+for(i in 1:10000){
+  temp <- sample_n(dat.merge.sum,49) # sampling 49 loci
+  tf <- temp$exprs.genes == 1 # Making on a logical vector
+  num <- length(tf[tf==TRUE]) # counting number of loci wtih exactly 1 gene expressed
+  count <- c(num, count) # Collecting that number
+  i = i + 1 # Move that counter!
+}
+
+p3 %<a-% {
+  hist(count, breaks=20,
+       xlab = "Number of loci out of 49",
+       ylab = "Number of simulations",
+       main = "",
+       col = add.alpha("sienna3",alpha=0.4))
+  abline(v=3, lwd=2, col="red")
+  text("n = 3",x=1,y=1500, font = 2, col = 'red')
+}
+
+#main = "Simulation of NHGRI GWAS loci\nwith *only* 1 gene expressed in SN DA neurons"
+
+pdf(file.path(file_dir,"only.one_simulation.pdf"), width = 3, height = 2.5, pointsize = 8, family = 'Helvetica')
+p3
+dev.off()
+
+p3
+```
+
+###Session Info
+```{r sessioninfo}
+sessionInfo()
+```
