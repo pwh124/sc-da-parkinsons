@@ -8,7 +8,7 @@ output:
 <div class="row">
 <div class="col-md-6 text-center">
 <font size="4">
-In order for everyone to look at the expression of their favorite gene in our data, we have created a rudimentary Shiny app. Click the button below to begin making plots like the one on the right!
+In order for everyone to look at the expression of their favorite gene in our data, we have created a rudimentary Shiny app. Click the button below to begin making plots like the one on the right! Code for this Shiny app can be found [here](https://github.com/pwh124/th-expression-shiny)
 </font>
 </br></br></br>
 <a class="btn btn-default" href="https://pwh124.shinyapps.io/expressionshiny/" role="button">
