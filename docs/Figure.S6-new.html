@@ -12,7 +12,7 @@
 <meta name="author" content="Paul Hook" />
 
 
-<title>Figure S7</title>
+<title>Figure.S6.Rmd</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -353,7 +353,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Figure S7</h1>
+<h1 class="title toc-ignore">Figure.S6.Rmd</h1>
 <h4 class="author"><em>Paul Hook</em></h4>
 
 </div>
@@ -373,55 +373,198 @@ Script_dir &lt;- &quot;/Volumes/PAULHOOK/sc-da-parkinsons/code&quot;
 source(file.path(Script_dir,&#39;init.R&#39;))
 source(file.path(Script_dir,&quot;tools_R.r&quot;))
 
-#loading any special libraries
-library(readr)
-library(cowplot)
-library(forcats)
-library(reshape2)</code></pre>
+library(pryr)
+
+## Add an alpha value to a colour
+add.alpha &lt;- function(col, alpha=1){
+  if(missing(col))
+    stop(&quot;Please provide a vector of colours.&quot;)
+  apply(sapply(col, col2rgb)/255, 2, 
+                     function(x) 
+                       rgb(x[1], x[2], x[3], alpha=alpha))  
+}</code></pre>
 </div>
-<div id="loading-in-data-need" class="section level3">
-<h3>Loading in data need</h3>
-<p>The final PD GWAS gene scoring data frame was loaded in.</p>
-<pre class="r"><code>final.gwas.table &lt;- read.delim(file = file.path(file_dir, &quot;PD.GWAS.Score.Final.txt&quot;))</code></pre>
+<div id="loading-and-summarizing-the-data" class="section level2">
+<h2>Loading and summarizing the data</h2>
+<p>First we need to load the data into R. The gene-SNP data was compiled from Ensembl, using NHGRI GWAS catalog SNPs with +/- 1 Mb coordinates.</p>
+<pre class="r"><code># Loading gene-SNP-data complied from Ensembl
+dat &lt;- read.delim(file.path(file_dir,&quot;gwas.snp_results.txt&quot;))
+
+# Changing SNP column to factor
+dat$snp &lt;- as.factor(dat$snp)
+
+# Check on how many SNPs we have
+length(levels(dat$snp)) </code></pre>
+<pre><code>## [1] 40213</code></pre>
+<div id="adding-mouse-homolog-data" class="section level3">
+<h3>Adding mouse homolog data</h3>
+<p>In order to do any simulation, we need to add mouse homologs to the mix. I used a modified version of the Homologene database from MGI, which only contained genes with 1-to-1 mouse-human homologs. I then will merge the tables and remove genes with no 1-to-1 mouse homolog, much like a did when calculated numbers for our analyses.</p>
+<pre class="r"><code># First need to load and process the mouse MGI data
+# Processed in the &quot;biomart.finding.genes.Rmd&quot;
+homolog.table &lt;- read.delim(file.path(file_dir,&quot;one-one.homologs.txt&quot;))
+
+# Merge these tables in order to add mouse genes to dat os they can be scored
+dat.merge &lt;- unique(merge(dat, homolog.table, by.x = &quot;hgnc_symbol&quot;, by.y = &quot;HumanSymbol&quot;, all.x = T))
+
+# Check for duplicated rows
+summary(duplicated(dat.merge))</code></pre>
+<pre><code>##    Mode   FALSE    NA&#39;s 
+## logical 1308796       0</code></pre>
+<pre class="r"><code># Check number of unique SNPs queried
+length(levels(dat.merge$snp))</code></pre>
+<pre><code>## [1] 40213</code></pre>
+<pre class="r"><code># Remove those without mouse homologs
+filtered.dat.merge &lt;- dat.merge[!is.na(dat.merge$MouseSymbol),]
+
+# Check number of unique SNPs again
+length(levels(filtered.dat.merge$snp))</code></pre>
+<pre><code>## [1] 40213</code></pre>
 </div>
-<div id="figure-s7a" class="section level3">
-<h3>Figure S7A</h3>
-<p>Since ‘gene_biotype’ was included in the information extracted for each gene, we plotted the number of genes with each particular biotype in our data.</p>
-<pre class="r"><code># Make bar plot for genes by gene_biotype
-gwas.gene.biotype.df &lt;- final.gwas.table %&gt;%
-  filter(is.na(MouseSymbol)) %&gt;%
-  group_by(gene_biotype)</code></pre>
+<div id="score-genes-for-expression" class="section level3">
+<h3>Score genes for expression</h3>
+<p>Now that I have a final dataset to work with, I can score the genes based on expression in our SN DA cluster as well as from the La Manno SN DA cluster.</p>
+<pre class="r"><code># Loading in the SN expression data SNC expressed genes in our data
+SN.expressed.genes &lt;- readRDS(file = file.path(Rdata_dir, &quot;SN.expressed.genes.rds&quot;))
+
+# SNC expresed genes in Linnarsson Data
+lin.snc.exprs &lt;- readRDS(file = file.path(Rdata_dir, &quot;lin.snc.expressed.rds&quot;))
+
+# Scoring based on expression
+filtered.dat.merge$expression &lt;- as.factor(if_else(filtered.dat.merge$MouseSymbol %in% 
+    SN.expressed.genes, 1, 0))
+
+# Scoring based on being expressed in Lin
+filtered.dat.merge$lin.exprs &lt;- as.factor(if_else(filtered.dat.merge$MouseSymbol %in% 
+    lin.snc.exprs, 1, 0))</code></pre>
+</div>
+<div id="summarizing-data" class="section level3">
+<h3>Summarizing data</h3>
+<p>Now that every gene in every locus is scored for expression, the data needed to be summarized by locus. Data will be summarized at the level of total genes with 1:1 human:mouse homologs in the locus as well as by how many genes are expressed in each locus</p>
+<pre class="r"><code># Summarizing
+dat.merge.sum &lt;- filtered.dat.merge %&gt;%
+  dplyr::group_by(snp) %&gt;%
+  dplyr::summarise(total.genes = n(),
+                   exprs.genes = sum(expression == 1 | lin.exprs == 1))</code></pre>
 <pre><code>## Warning: package &#39;bindrcpp&#39; was built under R version 3.3.2</code></pre>
-<pre class="r"><code>biotype.plot &lt;- ggplot(gwas.gene.biotype.df, aes(x= fct_rev(fct_infreq(gene_biotype)))) + 
-  geom_bar(fill = &quot;gray48&quot;) + 
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(),   axis.line = element_line(colour = &quot;black&quot;), plot.title = element_text(hjust = 0.5)) +
-  xlab(&quot;Gene Biotype&quot;) + ylab(&quot;Number of genes without a defined mouse homolog&quot;) +
-  ggtitle(&quot;Biotype frequency of genes in PD GWAS loci\nwithout mouse homologs identified through MGI&quot;) +
-  coord_flip() + scale_y_continuous(limits = c(0,210), expand = c(0,0)) +
-  stat_count(aes(label=paste(..count..)), vjust=0.5, hjust = -0.5,geom=&quot;text&quot;, color = &quot;brown4&quot;, size = 5)
-
-biotype.plot</code></pre>
-<p><img src="Figure.S7_files/figure-html/unnamed-chunk-1-1.png" width="960" style="display: block; margin: auto;" /></p>
 </div>
-<div id="figure-s7b" class="section level3">
-<h3>Figure S7B</h3>
-<p>We plotted the number of protein coding genes <em>without</em> a mouse homolog in each locus.</p>
-<pre class="r"><code># Make bar plot for protein coding genes without homologs by locus
-gwas.gene.locus.df &lt;- final.gwas.table %&gt;%
-  filter(is.na(MouseSymbol)) %&gt;%
-  group_by(locus) %&gt;%
-  filter(gene_biotype == &quot;protein_coding&quot;)
+<div id="figure-s6a" class="section level3">
+<h3>Figure S6A</h3>
+<p>A permutation needed to be set up that would randomly sample 49 loci from the summarized dataset we have (dat.merge.sum) and then compute the frequency of genes in those randomly sampled loci that are expressed. This simulation would give us some idea as to whether the percentage of expressed genes in SN DA neurons in PD GWAS loci is similar to that of random GWAS loci. Since the data appeared to be normal, the 43% figure in our data was tested for signficance.</p>
+<pre class="r"><code># Setting up blank vectors to be populated
+count.freq &lt;- c()
+total.freq &lt;- c()
+exprs.freq &lt;- c()
 
-locus.plot &lt;- ggplot(gwas.gene.locus.df, aes(x= fct_rev(fct_infreq(snp)))) + 
-  geom_bar(fill = &quot;grey48&quot;) +
-  xlab(&quot;Human PD Locus&quot;) + ylab(&quot;Number of protein coding genes without identified mouse homologs&quot;) +
-  ggtitle(&quot;Frequency of protein coding genes in each PD GWAS locus\nwithout mouse homologs identified through NCBI Homologene &quot;) + 
-  scale_x_discrete(drop = F) + coord_flip() + scale_y_continuous(limits = c(0,15),expand = c(0,0)) +
-  stat_count(aes(label=paste(..count..)), vjust=0.5, hjust = -0.5,geom=&quot;text&quot;, color = &quot;brown4&quot;, size = 3) + 
-  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),panel.background = element_blank(),   axis.line = element_line(colour = &quot;black&quot;), plot.title = element_text(hjust = 0.5))
+# Running my for loop
+set.seed(24)
+for(i in 1:10000){
+  temp &lt;- sample_n(dat.merge.sum,49) # sampling 49 loci
+  total &lt;- sum(temp$total.genes) # Getting total number of genes in that sampling
+  total.freq &lt;- c(total,total.freq) # Collecting that number
+  exprs &lt;- sum(temp$exprs.genes) # Getting total number of expressed genes in that sampling
+  exprs.freq &lt;- c(exprs, exprs.freq) # Collecting that number
+  freq &lt;- exprs/total # Calculating percentage of expressed genes
+  count.freq &lt;- c(freq, count.freq) # Collecting that number
+  i = i + 1 # Moving the counter forward
+}
 
-locus.plot</code></pre>
-<p><img src="Figure.S7_files/figure-html/unnamed-chunk-2-1.png" width="960" style="display: block; margin: auto;" /></p>
+# Looking at normality of the data
+qqnorm(count.freq)
+qqline(count.freq, col=2)</code></pre>
+<p><img src="Figure.S6-new_files/figure-html/Figure%206A-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Looking at the significance of 0.43
+p.test &lt;- pnorm(0.43,mean=mean(count.freq),sd=sd(count.freq), lower.tail = F)
+
+p1 %&lt;a-% {
+  hist(count.freq, breaks=50,
+     xlab=&quot;Percentage of genes expressed in 49 loci&quot;,
+     main=&quot;&quot;,
+     ylab = &quot;Number of simulations&quot;,
+     col = &quot;#2E8B5766&quot;)
+  abline(v=0.43,lwd=2,col=&quot;red&quot;)
+  text(c(0.455,0.455),
+      c(900,930),
+      labels = c(paste0(&quot;P = &quot;,round(p.test,5)),
+                  paste0(&quot;0.43&quot;)), col = &quot;red&quot;, font = 2)
+}
+
+pdf(file.path(file_dir,&quot;Figure.6A.pdf&quot;),height = 3, width = 2.5, pointsize = 8, family = &#39;Helvetica&#39;)
+p1
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+<pre class="r"><code>p1</code></pre>
+<p><img src="Figure.S6-new_files/figure-html/Figure%206A-2.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="figure-s6b" class="section level3">
+<h3>Figure S6B</h3>
+<p>A permutation was run to see whether or not we are seeing a greater than expected number of loci with &gt;= 1 SN expressed gene in our PD GWAS loci when compared to random GWAS loci. It does look like the majority of permutations have less than 49 loci (to the left of red line) with at least 1 gene expressed.</p>
+<pre class="r"><code># Setting up blank vector to be populated
+count.1 &lt;- c()
+# Running my for loop
+set.seed(24)
+for(i in 1:10000){
+  temp &lt;- sample_n(dat.merge.sum,49) # randomly sample 49 loci
+  tf &lt;- temp$exprs.genes &gt;= 1 # Create a logical vector 
+  num &lt;- length(tf[tf==TRUE]) # Count loci wtih &gt;= 1 gene expressed
+  count.1 &lt;- c(num, count.1) # Collect that number
+  i = i + 1 # Move the counter
+}
+
+# Plotting
+p2 %&lt;a-% {
+  hist(count.1, breaks=10,
+     xlab = &quot;Number of loci out of 49&quot;,
+     ylab = &quot;Number of simulations&quot;,
+     main = &quot;&quot;,
+     col=&quot;#6A5ACD66&quot;)
+  abline(v=48, lwd=2, col=&quot;red&quot;)
+  text(&quot;49&quot;,col=&#39;red&#39;,y=750,x=49)
+  arrows(x0=48,x1=49,y0=2600,y1=2600, col=&#39;red&#39;,lwd=2)
+}
+
+pdf(file.path(file_dir,&quot;one.gene_loci_simulation.pdf&quot;), height = 3, width = 2.5, pointsize = 8, family = &#39;Helvetica&#39;)
+p2
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+<pre class="r"><code>p2</code></pre>
+<p><img src="Figure.S6-new_files/figure-html/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="figure-s6c" class="section level3">
+<h3>Figure S6C</h3>
+<p>A permutation was run in order to see if the number of PD GWAS loci with <em>only</em> one SN DA neuron expressed gene that we find in our paper (n = 3) is different than what we would expect from 49 random GWAS loci. We see that only finding 3/49 loci wtih 1 gene expressed is actually lower than what would be expected from random loci.</p>
+<pre class="r"><code># Set up blank vector
+count &lt;- c()
+# Running for loop
+set.seed(24)
+for(i in 1:10000){
+  temp &lt;- sample_n(dat.merge.sum,49) # sampling 49 loci
+  tf &lt;- temp$exprs.genes == 1 # Making on a logical vector
+  num &lt;- length(tf[tf==TRUE]) # counting number of loci wtih exactly 1 gene expressed
+  count &lt;- c(num, count) # Collecting that number
+  i = i + 1 # Move that counter!
+}
+
+p3 %&lt;a-% {
+  hist(count, breaks=20,
+       xlab = &quot;Number of loci out of 49&quot;,
+       ylab = &quot;Number of simulations&quot;,
+       main = &quot;&quot;,
+       col = add.alpha(&quot;sienna3&quot;,alpha=0.4))
+  abline(v=3, lwd=2, col=&quot;red&quot;)
+  text(&quot;n = 3&quot;,x=1,y=1500, font = 2, col = &#39;red&#39;)
+}
+
+#main = &quot;Simulation of NHGRI GWAS loci\nwith *only* 1 gene expressed in SN DA neurons&quot;
+
+pdf(file.path(file_dir,&quot;only.one_simulation.pdf&quot;), width = 3, height = 2.5, pointsize = 8, family = &#39;Helvetica&#39;)
+p3
+dev.off()</code></pre>
+<pre><code>## quartz_off_screen 
+##                 2</code></pre>
+<pre class="r"><code>p3</code></pre>
+<p><img src="Figure.S6-new_files/figure-html/Figure%20S6C-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="session-info" class="section level3">
 <h3>Session Info</h3>
@@ -438,20 +581,19 @@ locus.plot</code></pre>
 ##  [8] utils     datasets  methods   base     
 ## 
 ## other attached packages:
-##  [1] bindrcpp_0.2        forcats_0.2.0       cowplot_0.9.2      
-##  [4] readr_1.1.1         ggbiplot_0.55       scales_0.5.0       
-##  [7] SC3_1.1.4           ROCR_1.0-7          jackstraw_1.1.1    
-## [10] lfa_1.2.2           tsne_0.1-3          gridExtra_2.3      
-## [13] slackr_1.4.2        vegan_2.4-4         permute_0.9-4      
-## [16] MASS_7.3-47         gplots_3.0.1        RColorBrewer_1.1-2 
-## [19] Hmisc_4.0-3         Formula_1.2-2       survival_2.41-3    
-## [22] lattice_0.20-35     Heatplus_2.18.0     Rtsne_0.13         
-## [25] pheatmap_1.0.8      tidyr_0.7.1         dplyr_0.7.4        
-## [28] plyr_1.8.4          heatmap.plus_1.3    stringr_1.2.0      
-## [31] marray_1.50.0       limma_3.28.21       reshape2_1.4.3     
-## [34] monocle_2.2.0       DDRTree_0.1.5       irlba_2.2.1        
-## [37] VGAM_1.0-2          ggplot2_2.2.1       Biobase_2.32.0     
-## [40] BiocGenerics_0.18.0 Matrix_1.2-11      
+##  [1] bindrcpp_0.2        pryr_0.1.3          ggbiplot_0.55      
+##  [4] scales_0.5.0        SC3_1.1.4           ROCR_1.0-7         
+##  [7] jackstraw_1.1.1     lfa_1.2.2           tsne_0.1-3         
+## [10] gridExtra_2.3       slackr_1.4.2        vegan_2.4-4        
+## [13] permute_0.9-4       MASS_7.3-47         gplots_3.0.1       
+## [16] RColorBrewer_1.1-2  Hmisc_4.0-3         Formula_1.2-2      
+## [19] survival_2.41-3     lattice_0.20-35     Heatplus_2.18.0    
+## [22] Rtsne_0.13          pheatmap_1.0.8      tidyr_0.7.1        
+## [25] dplyr_0.7.4         plyr_1.8.4          heatmap.plus_1.3   
+## [28] stringr_1.2.0       marray_1.50.0       limma_3.28.21      
+## [31] reshape2_1.4.3      monocle_2.2.0       DDRTree_0.1.5      
+## [34] irlba_2.2.1         VGAM_1.0-2          ggplot2_2.2.1      
+## [37] Biobase_2.32.0      BiocGenerics_0.18.0 Matrix_1.2-11      
 ## 
 ## loaded via a namespace (and not attached):
 ##  [1] RSelenium_1.7.1        colorspace_1.3-2       class_7.3-14          
@@ -461,26 +603,27 @@ locus.plot</code></pre>
 ## [13] jsonlite_1.5           cluster_2.0.6          semver_0.2.0          
 ## [16] shiny_1.0.5            rrcov_1.4-3            httr_1.3.1            
 ## [19] backports_1.1.1        assertthat_0.2.0       lazyeval_0.2.1        
-## [22] acepack_1.4.1          htmltools_0.3.6        tools_3.3.0           
-## [25] igraph_1.1.2           gtable_0.2.0           glue_1.1.1            
-## [28] binman_0.1.0           doRNG_1.6.6            Rcpp_0.12.14          
-## [31] slam_0.1-37            gdata_2.18.0           nlme_3.1-131          
-## [34] iterators_1.0.8        mime_0.5               rngtools_1.2.4        
-## [37] gtools_3.5.0           WriteXLS_4.0.0         XML_3.98-1.9          
-## [40] DEoptimR_1.0-8         hms_0.3                yaml_2.1.15           
+## [22] formatR_1.5            acepack_1.4.1          htmltools_0.3.6       
+## [25] tools_3.3.0            igraph_1.1.2           gtable_0.2.0          
+## [28] glue_1.1.1             binman_0.1.0           doRNG_1.6.6           
+## [31] Rcpp_0.12.14           slam_0.1-37            gdata_2.18.0          
+## [34] nlme_3.1-131           iterators_1.0.8        mime_0.5              
+## [37] rngtools_1.2.4         gtools_3.5.0           WriteXLS_4.0.0        
+## [40] XML_3.98-1.9           DEoptimR_1.0-8         yaml_2.1.15           
 ## [43] pkgmaker_0.22          rpart_4.1-11           fastICA_1.2-1         
 ## [46] latticeExtra_0.6-28    stringi_1.1.5          pcaPP_1.9-72          
 ## [49] foreach_1.4.3          e1071_1.6-8            checkmate_1.8.4       
 ## [52] caTools_1.17.1         rlang_0.1.6            pkgconfig_2.0.1       
 ## [55] matrixStats_0.52.2     bitops_1.0-6           qlcMatrix_0.9.5       
 ## [58] evaluate_0.10.1        purrr_0.2.4            bindr_0.1             
-## [61] labeling_0.3           htmlwidgets_0.9        magrittr_1.5          
-## [64] R6_2.2.2               combinat_0.0-8         wdman_0.2.2           
-## [67] foreign_0.8-69         mgcv_1.8-22            nnet_7.3-12           
-## [70] tibble_1.3.4           KernSmooth_2.23-15     rmarkdown_1.8         
-## [73] data.table_1.10.4      HSMMSingleCell_0.106.2 digest_0.6.12         
-## [76] xtable_1.8-2           httpuv_1.3.5           openssl_0.9.7         
-## [79] munsell_0.4.3          registry_0.3</code></pre>
+## [61] htmlwidgets_0.9        magrittr_1.5           R6_2.2.2              
+## [64] combinat_0.0-8         wdman_0.2.2            foreign_0.8-69        
+## [67] mgcv_1.8-22            nnet_7.3-12            tibble_1.3.4          
+## [70] KernSmooth_2.23-15     rmarkdown_1.8          data.table_1.10.4     
+## [73] HSMMSingleCell_0.106.2 digest_0.6.12          xtable_1.8-2          
+## [76] httpuv_1.3.5           openssl_0.9.7          munsell_0.4.3         
+## [79] registry_0.3</code></pre>
+</div>
 </div>
 
 <hr>
