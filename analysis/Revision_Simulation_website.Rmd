@@ -1,0 +1,98 @@
+---
+title: "Creating GWAS SNP-Gene Master Table"
+author: "Paul Hook"
+output: html_document
+---
+
+**Last update:** `r Sys.Date()`
+
+**Code version:** `r system("git log -1 --format='%H'", intern = TRUE)`
+
+###Setting important directories.
+Also loading important libraries and custom functions for analysis.
+```{r init, message=FALSE, warning=FALSE}
+seq_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+file_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/output"
+Rdata_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/data"
+Script_dir <- "/Volumes/PAULHOOK/sc-da-parkinsons/code"
+source(file.path(Script_dir,'init.R'))
+source(file.path(Script_dir,"tools_R.r"))
+
+library(biomaRt)
+```
+
+### Downloading and loading in the NHGRI data
+First, we need to download all GWAS SNPs from the NHGRI GWAS catalog. The current NHGRI catalog was downloaded from https://www.ebi.ac.uk/gwas/api/search/downloads/full on December 1, 2017. Information about column headers are here (https://www.ebi.ac.uk/gwas/docs/fileheaders). The data was then loaded in to R and data was cleaned.
+
+```{r loading in data, eval=TRUE}
+gwas.cat.meta <- read.delim(file.path(file_dir,"gwas_catalog_v1.0-associations_e90_r2017-11-27.tsv")) %>%
+  dplyr::select(SNP_ID_CURRENT, DISEASE.TRAIT, PUBMEDID) %>%
+  dplyr::mutate(snp_id = paste0("rs",SNP_ID_CURRENT)) %>%
+  dplyr::rename(trait = DISEASE.TRAIT, pmid = PUBMEDID) %>%
+  dplyr::select(snp_id, trait, pmid)
+
+head(gwas.cat.meta)
+```
+
+###Getting SNP coordinates
+```{r getting snp coordinates, eval=T}
+# Using GRCh38 - run on 12-1-17 - important to use 87
+snpmart<-useEnsembl(biomart = "snp",dataset = 'hsapiens_snp', version = 87)
+
+# Looking up the SNPs. This is going to take a while.
+snpPos<-getBM(attributes = c('refsnp_id','chr_name','chrom_start','chrom_end'), 
+      filters = c('snp_filter'), 
+      values = as.character(gwas.cat.meta$snp_id),
+      mart = snpmart)
+
+snpPos<-snpPos[!duplicated(snpPos$refsnp_id),]
+
+names(snpPos) <- c('snp','chr','start','end')
+
+snpPos <- snpPos[,c(2,3,4,1)]
+
+head(snpPos)
+```
+
+###Calculating +/- 1 Mb lead SNP coordinates
+```{r calculating coordinates, eval=T}
+mega.snp <- snpPos
+
+# +/- 1 Mb
+mega.snp$upstream <- mega.snp$start-1e+06
+mega.snp$downstream <- mega.snp$end+1e+06
+
+# add chromosome coordinates
+mega.snp$coordinates <- paste0(mega.snp$chr,":",mega.snp$upstream,":", mega.snp$downstream)
+saveRDS(mega.snp, file = "mega.snp.rds")
+
+# Using biomart to find genes
+ensembl<-useEnsembl("ensembl", dataset = "hsapiens_gene_ensembl", version = 87)
+
+# From https://www.biostars.org/p/167818/
+mega.coords.list <- as.list(mega.snp$coordinates)
+saveRDS(mega.coords.list, file = file.path(Rdata_dir,"mega.coords.list.rds"))
+```
+
+###Finding all genes
+In order to find all the genes within +/- 1 Mb of each lead SNP in the NHGRI GWAS catalog, the following for loop was used. This for loop takes coordinates and pulls out information about all genes within that region. There are ~40,000 SNPs in the GWAS catalog, so this script had to be run in parallel which involved splitting the SNP coordinates in to 10 separate files. All of the SNP-gene tables were combined in to a final list called "gwas.snp_results.txt" that is processed in another script.
+```{r finding all genes, eval=F}
+# Finding all genes in the intervials in CRCh38, ensembl version 87
+mega.results <- data.frame() # creating blank df
+for(i in 1:length(mega.coords.list)){
+  results<-getBM(attributes = c("hgnc_symbol", "chromosome_name", "start_position",
+                                "end_position","gene_biotype"),
+                 filters = c("chromosomal_region"),
+                 values = list(chromosomal_region=mega.coords.list[i]), 
+                 mart = ensembl) # finding the genes through biomaRt
+  results$snp <- mega.snp$snp[i] # populating the SNP column
+  mega.results <- rbind(mega.results,results) # Adding new rows on to df
+  mega.results <- mega.results[!(mega.results$hgnc_symbol == ""),] # Removing blank gene names
+}
+```
+
+###Session Info
+```{r Session Info}
+sessionInfo()
+```
+
