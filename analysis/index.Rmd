@@ -10,7 +10,7 @@ output:
 
 <div class="col-md-7 text-left">
 <br/>
-Welcome to the website designed to display the code and analysis associated with <a href="https://doi.org/10.1101/148049" target="_blank">"Single-cell RNA-seq of mouse dopaminergic neurons informs candidate gene selection for sporadic Parkinson’s disease" (Hook _et al_., 2017)</a>
+Welcome to the website designed to display the code and analysis associated with <a href="http://dx.doi.org/10.1016/j.ajhg.2018.02.001" target="_blank">"Single-Cell RNA-Seq of Mouse Dopaminergic Neurons Informs Candidate Gene Selection for Sporadic Parkinson Disease" (Hook _et al_., 2018)</a>
 
 This website contains:
 
