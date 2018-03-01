@@ -10,9 +10,8 @@ output:
 Genetic variation modulating risk of sporadic Parkinson’s disease (PD) has been primarily explored through genome wide association studies (GWAS). However, like many other common genetic diseases, the impacted genes remain largely unknown. Here, we used single-cell RNA-seq to characterize dopaminergic (DA) neuron populations in the mouse brain at embryonic and early postnatal timepoints. These data facilitated unbiased identification of DA neuron subpopulations through their unique transcriptional profiles, including a novel postnatal neuroblast population and substantia nigra (SN) DA neurons. We use these population-specific data to develop a scoring system to prioritize candidate genes in all 49 GWAS intervals implicated in PD risk, including known PD genes and many with extensive supporting literature. As proof of principle, we confirm that the nigrostriatal pathway is compromised in Cplx1 null mice. Ultimately, this systematic approach establishes biologically pertinent candidates and testable hypotheses for sporadic PD, informing a new era of PD genetic research.  
 <br>
 
-####BIORXIV CITATION  
-Single-cell RNA-seq of mouse dopaminergic neurons informs candidate gene selection for sporadic Parkinson's disease. Paul W. Hook, Sarah A. McClymont, Gabrielle H. Cannon, William D. Law, A. Jennifer Morton, Loyal A. Goff, Andrew S. McCallion. bioRxiv 148049; doi: https://doi.org/10.1101/148049
-
+####CITATION  
+Single-Cell RNA-Seq of Mouse Dopaminergic Neurons Informs Candidate Gene Selection for Sporadic Parkinson Disease. **Paul W. Hook**, Sarah A. McClymont, Gabrielle H. Cannon, William D. Law, A. Jennifer Morton, Loyal A. Goff, Andrew S. McCallion. The American Journal of Human Genetics, Volume 102, Issue 3, 427 - 446. doi: <a href="http://dx.doi.org/10.1016/j.ajhg.2018.02.001" target="_blank">http://dx.doi.org/10.1016/j.ajhg.2018.02.001</a>
 ***
 
 **Last update:** `r Sys.Date()`
