@@ -13,7 +13,16 @@ Genetic variation modulating risk of sporadic Parkinson’s disease (PD) has bee
 ####CITATION  
 Single-Cell RNA-Seq of Mouse Dopaminergic Neurons Informs Candidate Gene Selection for Sporadic Parkinson Disease. **Paul W. Hook**, Sarah A. McClymont, Gabrielle H. Cannon, William D. Law, A. Jennifer Morton, Loyal A. Goff, Andrew S. McCallion. The American Journal of Human Genetics, Volume 102, Issue 3, 427 - 446. doi: <a href="http://dx.doi.org/10.1016/j.ajhg.2018.02.001" target="_blank">http://dx.doi.org/10.1016/j.ajhg.2018.02.001</a>
 
-If DOI links do not work yet, find the paper <a href="http://www.cell.com/ajhg/fulltext/S0002-9297(18)30046-6" target="_blank">here</a>
+If DOI links do not work yet, find the paper <a href="http://www.cell.com/ajhg/fulltext/S0002-9297(18)30046-6" target="_blank">here</a>  
+
+***
+
+####CONTACT
+This website was designed and created by **Paul Hook**  
+[Twitter](https://twitter.com/paul_hook_hugen)    
+[Website](https://pwh124.github.io/)       
+email: phook2 [at] jhmi.edu    
+
 ***
 
 **Last update:** `r Sys.Date()`

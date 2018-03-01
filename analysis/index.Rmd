@@ -22,7 +22,10 @@ This website contains:
 
 Raw sequencing data can be found at <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE108020" target="_blank">GEO:GSE108020</a>
 
-This website was designed and created by Paul Hook [<img src="twitter-bird.png" alt="twitter" style="width:20px;" align = "top"/>](https://twitter.com/paul_hook_hugen)
+This website was designed and created by **Paul Hook**  
+[Twitter](https://twitter.com/paul_hook_hugen)    
+[Website](https://pwh124.github.io/)       
+email: phook2 [at] jhmi.edu    
 
 </div>
 
